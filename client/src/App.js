@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom'
+import { ConnectedRouter } from 'react-router-redux'
+import createBrowserHistory from 'history/createBrowserHistory'
+
+import Login from './Login/Container'
+import createStore from './Store/Store'
+
+const history = createBrowserHistory()
+const store = createStore(history)
 
 export default class App extends Component {
   render () {
     return (
-      <Provider>
-        <Router>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
           <Switch>
-            {/* <Route path='/login' component={Base} />
-            <Route path='/reg' component={Base} />
-            <Route path='/' component={Auth} /> */}
+            <Route exact path='/' component={Login} />
           </Switch>
-        </Router>
+        </ConnectedRouter>
       </Provider>
     )
   }

@@ -41,3 +41,8 @@ app.use('/reg', express.static(client))
 app.use('/login', express.static(client))
 
 // api設定
+app.post('/api/test', (req, res) => {
+  const text = req.body.text
+  console.log('[' + lib.showTime() + '] api/test: ' + text)
+  res.json({status: true})
+})
