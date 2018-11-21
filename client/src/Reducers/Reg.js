@@ -23,17 +23,17 @@ export default function regReducer(state = initialState, action) {
         ...state,
         approvalKey: action.payload.approvalKey
       }
-    case 'LOGIN_TOKEN':
-      return {
-        ...state,
-        token: action.payload.token
-      }
-    case 'ERROR':
+    // case 'LOGIN_TOKEN':
+    //   return {
+    //     ...state,
+    //     token: action.payload.token
+    //   }
+    case 'REG_ERROR':
       return {
         ...state,
         error: action.payload.error
       }
-    case 'LOADING':
+    case 'REG_LOADING':
       return {
         ...state,
         loading: action.payload.loading

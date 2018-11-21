@@ -1,27 +1,28 @@
 const initialState = {
+  login: false,
   windsid: '',
-  password: '',
+  token: '',
   loading: false
 }
 
-export default function loginReducer(state = initialState, action) {
+export default function statusReducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGIN_INPUT_WINDSID':
+    case 'STATUS_LOGIN':
+      return {
+        ...state,
+        login: action.payload.login
+      }
+    case 'STATUS_WINDSID':
       return {
         ...state,
         windsid: action.payload.windsid
       }
-    case 'LOGIN_INPUT_PASSWORD':
-      return {
-        ...state,
-        password: action.payload.password
-      }
-    case 'LOGIN_TOKEN':
+    case 'STATUS_TOKEN':
       return {
         ...state,
         token: action.payload.token
       }
-    case 'LOGIN_LOADING':
+    case 'STATUS_LOADING':
       return {
         ...state,
         loading: action.payload.loading

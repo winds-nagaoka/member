@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Reg from './Component'
-import { changeWindsid, changePassword, changeKey, register } from '../../Actions/Reg'
+import { changeWindsid, changePassword, changeKey, register } from '../../../Actions/Reg'
 
 function mapStateToProps(state) {
   return {

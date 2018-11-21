@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Login from './Component'
-import { changeWindsid, changePassword, login } from '../../Actions/Login'
+import { changeWindsid, changePassword, login } from '../../../Actions/Login'
 
 function mapStateToProps(state) {
   return {
@@ -18,8 +18,8 @@ function mapDispatchToProps(dispatch) {
     changePassword (password) {
       dispatch(changePassword(password))
     },
-    login (windsid, password) {
-      dispatch(login(windsid, password))
+    login () {
+      dispatch(login())
     }
   }
 }

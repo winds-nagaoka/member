@@ -1,4 +1,45 @@
-import request from 'superagent'
+import * as Status from './Status'
+import * as request from '../Library/Request'
+
+export const login = () => {
+  return async (dispatch, getState) => {
+    const { login: {windsid, password} } = getState()
+    if (windsid === '' || password === '') {
+      return dispatch(error('入力を確認してください'))
+    }
+    dispatch(loading(true))
+    const send = {
+      userid: windsid,
+      passwd: password
+    }
+    request.post('https://auth.winds-n.com/login', send, (err, res) => {
+      if (err) {
+        dispatch(error('ログインできませんでした'))
+      } else {
+        if (res.body.status) {
+          console.warn('Login OK')
+          dispatch(Status.windsidUpdate(windsid))
+          dispatch(Status.tokenUpdate(res.body.token))
+          dispatch(Status.loginUpdate(true))
+        } else {
+          console.warn('Login NG')
+          dispatch(Status.tokenUpdate(false))
+          dispatch(Status.loginUpdate(false))
+          dispatch(error('ログインできませんでした'))
+        }  
+      }
+      dispatch(changePassword(''))
+      dispatch(loading(false))
+    })
+  }
+}
+
+export const loading = (loading) => ({
+  type: 'LOGIN_LOADING',
+  payload: {
+    loading: loading
+  }
+})
 
 export const changeWindsid = (windsid) => ({
   type: 'LOGIN_INPUT_WINDSID',
@@ -14,44 +55,9 @@ export const changePassword = (password) => ({
   }
 })
 
-export const loginToken = (token) => {
-  token ? window.localStorage.setItem('token', token) : false
-  return({
-    type: 'LOGIN',
-    payload: {
-      token
-    }
-  })
-}
-
-export const loading = (loading) => ({
-  type: 'LOADING',
+export const error = (str) => ({
+  type: 'LOGIN_ERROR',
   payload: {
-    loading: loading
+    error: str
   }
 })
-
-export const login = (windsid, password) => {
-  return async (dispatch) => {
-    dispatch(loading(true))
-    console.warn('login')
-    request.post('https://auth.winds-n.com/login')
-      .type('form')
-      .send({
-        userid: windsid,
-        passwd: password
-      })
-      .end((err, res) => {
-        console.log(res)
-        if (err) return console.log('request')
-        if (res.body.status) {
-          console.log('Login OK: ' + status)
-          dispatch(loginToken(token))
-        } else {
-          console.log('Login NG: ' + status)
-          dispatch(loginToken(false))
-        }
-        dispatch(loading(false))
-      })
-  }
-}

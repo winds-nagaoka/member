@@ -5,8 +5,8 @@ import { ConnectedRouter } from 'react-router-redux'
 import createBrowserHistory from 'history/createBrowserHistory'
 import createStore from './Store/Store'
 
-import Login from './Component/Login/Container'
-import Reg from './Component/Reg/Container'
+import Base from './Component/Base/Base'
+import Auth from './Component/Auth/Auth'
 
 const history = createBrowserHistory()
 const store = createStore(history)
@@ -17,8 +17,9 @@ export default class App extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/reg' component={Reg} />
+            <Route path='/login' component={Base} />
+            <Route path='/reg' component={Base} />
+            <Route path='/' component={Auth} />
           </Switch>
         </ConnectedRouter>
       </Provider>

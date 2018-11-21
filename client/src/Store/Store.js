@@ -6,6 +6,8 @@ import {
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
+// import authenticateReducer from '../Reducers/Authenticate'
+import statusReducer from '../Reducers/Status'
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
@@ -13,13 +15,16 @@ import regReducer from '../Reducers/Reg'
 export default function createStore(history) {
   return reduxCreateStore(
     combineReducers({
+      // authenticate: authenticateReducer,
+      status: statusReducer,
       reg: regReducer,
       login: loginReducer,
       // react-router-reduxのReducer
       router: routerReducer,
     }),
     applyMiddleware(
-      logger, thunk,
+      // logger,
+      thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)
     )
