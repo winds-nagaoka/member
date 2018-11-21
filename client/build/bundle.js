@@ -102,7 +102,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! superagent */ "./node_modules/superagent/lib/client.js");
 /* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(superagent__WEBPACK_IMPORTED_MODULE_0__);
-const changeWindsid=windsid=>({type:'INPUT_WINDSID',payload:{windsid}});const changePassword=password=>({type:'INPUT_PASSWORD',payload:{password}});const loginToken=token=>{token?window.localStorage.setItem('token',token):false;return{type:'LOGIN',payload:{token}};};const loading=loading=>({type:'LOGIN_LOADING',payload:{loading:loading}});const login=(windsid,password)=>{return async dispatch=>{dispatch(loading(true));console.warn('login');superagent__WEBPACK_IMPORTED_MODULE_0___default.a.post('https://auth.winds-n.com/login').type('form').send({userid:windsid,passwd:password}).end((err,res)=>{console.log(res);if(err)return console.log('request');if(res.body.status){console.log('Login OK: '+status);dispatch(loginToken(token));}else{console.log('Login NG: '+status);dispatch(loginToken(false));}dispatch(loading(false));});};};
+const changeWindsid=windsid=>({type:'LOGIN_INPUT_WINDSID',payload:{windsid}});const changePassword=password=>({type:'LOGIN_INPUT_PASSWORD',payload:{password}});const loginToken=token=>{token?window.localStorage.setItem('token',token):false;return{type:'LOGIN',payload:{token}};};const loading=loading=>({type:'LOADING',payload:{loading:loading}});const login=(windsid,password)=>{return async dispatch=>{dispatch(loading(true));console.warn('login');superagent__WEBPACK_IMPORTED_MODULE_0___default.a.post('https://auth.winds-n.com/login').type('form').send({userid:windsid,passwd:password}).end((err,res)=>{console.log(res);if(err)return console.log('request');if(res.body.status){console.log('Login OK: '+status);dispatch(loginToken(token));}else{console.log('Login NG: '+status);dispatch(loginToken(false));}dispatch(loading(false));});};};
+
+/***/ }),
+
+/***/ "./client/src/Actions/Reg.js":
+/*!***********************************!*\
+  !*** ./client/src/Actions/Reg.js ***!
+  \***********************************/
+/*! exports provided: changeWindsid, changePassword, changeKey, registerToken, error, loading, register */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeWindsid", function() { return changeWindsid; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changePassword", function() { return changePassword; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeKey", function() { return changeKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerToken", function() { return registerToken; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "error", function() { return error; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "register", function() { return register; });
+/* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! superagent */ "./node_modules/superagent/lib/client.js");
+/* harmony import */ var superagent__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(superagent__WEBPACK_IMPORTED_MODULE_0__);
+const changeWindsid=windsid=>({type:'REG_INPUT_WINDSID',payload:{windsid}});const changePassword=password=>({type:'REG_INPUT_PASSWORD',payload:{password}});const changeKey=approvalKey=>({type:'REG_INPUT_KEY',payload:{approvalKey}});const registerToken=token=>{token?window.localStorage.setItem('token',token):false;return{type:'LOGIN',payload:{token}};};const error=str=>({type:'ERROR',payload:{error:str}});const loading=loading=>({type:'LOADING',payload:{loading:loading}});const register=()=>{return async(dispatch,getState)=>{const{reg:{windsid,password,approvalKey}}=getState();if(windsid===''||password===''||approvalKey===''){return dispatch(error('入力を確認してください'));}dispatch(loading(true));console.warn('Register',windsid);superagent__WEBPACK_IMPORTED_MODULE_0___default.a.post('https://auth.winds-n.com/adduser').type('form').send({userid:windsid,passwd:password,key:approvalKey}).end((err,res)=>{console.log(res);if(err)return console.log('request');if(res.body.status){console.log('Register OK: '+status);dispatch(registerToken(res.body.token));}else{console.log('Register NG: '+status);dispatch(registerToken(false));}dispatch(loading(false));dispatch(changePassword(''));});};};
 
 /***/ }),
 
@@ -123,16 +145,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-redux */ "./node_modules/react-router-redux/es/index.js");
 /* harmony import */ var history_createBrowserHistory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! history/createBrowserHistory */ "./node_modules/history/createBrowserHistory.js");
 /* harmony import */ var history_createBrowserHistory__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(history_createBrowserHistory__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Login_Container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Login/Container */ "./client/src/Login/Container.js");
-/* harmony import */ var _Store_Store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Store/Store */ "./client/src/Store/Store.js");
-const history=history_createBrowserHistory__WEBPACK_IMPORTED_MODULE_4___default()();const store=Object(_Store_Store__WEBPACK_IMPORTED_MODULE_6__["default"])(history);class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"],{store:store},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_redux__WEBPACK_IMPORTED_MODULE_3__["ConnectedRouter"],{history:history},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/",component:_Login_Container__WEBPACK_IMPORTED_MODULE_5__["default"]}))));}}
+/* harmony import */ var _Store_Store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Store/Store */ "./client/src/Store/Store.js");
+/* harmony import */ var _Component_Login_Container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Component/Login/Container */ "./client/src/Component/Login/Container.js");
+/* harmony import */ var _Component_Reg_Container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Component/Reg/Container */ "./client/src/Component/Reg/Container.js");
+const history=history_createBrowserHistory__WEBPACK_IMPORTED_MODULE_4___default()();const store=Object(_Store_Store__WEBPACK_IMPORTED_MODULE_5__["default"])(history);class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"],{store:store},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_redux__WEBPACK_IMPORTED_MODULE_3__["ConnectedRouter"],{history:history},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/login",component:_Component_Login_Container__WEBPACK_IMPORTED_MODULE_6__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/reg",component:_Component_Reg_Container__WEBPACK_IMPORTED_MODULE_7__["default"]}))));}}
 
 /***/ }),
 
-/***/ "./client/src/Login/Component.js":
-/*!***************************************!*\
-  !*** ./client/src/Login/Component.js ***!
-  \***************************************/
+/***/ "./client/src/Component/Login/Component.js":
+/*!*************************************************!*\
+  !*** ./client/src/Component/Login/Component.js ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -141,26 +164,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Login; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-class Login extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){const{windsid,password,loading}=this.props;const{changeWindsid,changePassword,login}=this.props;const buttonLabel=loading?'読み込み中':'送信';return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"text",onChange:e=>changeWindsid(e.target.value)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"pass",onChange:e=>changePassword(e.target.value)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>login(windsid,password)},buttonLabel));}}
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+class Login extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){const{windsid,password,loading}=this.props;const{changeWindsid,changePassword,login}=this.props;const buttonLabel=loading?'読み込み中':'送信';return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"\u30ED\u30B0\u30A4\u30F3"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/reg"},"\u65B0\u898F\u767B\u9332")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"text",onChange:e=>changeWindsid(e.target.value)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"pass",onChange:e=>changePassword(e.target.value)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>login(windsid,password)},buttonLabel));}}
 
 /***/ }),
 
-/***/ "./client/src/Login/Container.js":
-/*!***************************************!*\
-  !*** ./client/src/Login/Container.js ***!
-  \***************************************/
+/***/ "./client/src/Component/Login/Container.js":
+/*!*************************************************!*\
+  !*** ./client/src/Component/Login/Container.js ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Component */ "./client/src/Login/Component.js");
-/* harmony import */ var _Actions_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Actions/Login */ "./client/src/Actions/Login.js");
-function mapStateToProps(state){return{windsid:state.login.windsid,password:state.login.password,loading:state.login.loading};}function mapDispatchToProps(dispatch){return{changeWindsid(windsid){dispatch(Object(_Actions_Login__WEBPACK_IMPORTED_MODULE_2__["changeWindsid"])(windsid));},changePassword(password){dispatch(Object(_Actions_Login__WEBPACK_IMPORTED_MODULE_2__["changePassword"])(password));},// login (windsid, password) {
-//   dispatch(login(windsid, password))
-// },
-login(windsid,password){dispatch(Object(_Actions_Login__WEBPACK_IMPORTED_MODULE_2__["login"])(windsid,password));}};}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps,mapDispatchToProps)(_Component__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony import */ var _Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Component */ "./client/src/Component/Login/Component.js");
+/* harmony import */ var _Actions_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Actions/Login */ "./client/src/Actions/Login.js");
+function mapStateToProps(state){return{windsid:state.login.windsid,password:state.login.password,loading:state.login.loading};}function mapDispatchToProps(dispatch){return{changeWindsid(windsid){dispatch(Object(_Actions_Login__WEBPACK_IMPORTED_MODULE_2__["changeWindsid"])(windsid));},changePassword(password){dispatch(Object(_Actions_Login__WEBPACK_IMPORTED_MODULE_2__["changePassword"])(password));},login(windsid,password){dispatch(Object(_Actions_Login__WEBPACK_IMPORTED_MODULE_2__["login"])(windsid,password));}};}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps,mapDispatchToProps)(_Component__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./client/src/Component/Reg/Component.js":
+/*!***********************************************!*\
+  !*** ./client/src/Component/Reg/Component.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Reg; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+class Reg extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{keyPress(e){if(e.which===13)this.props.register();}render(){const{windsid,password,approvalKey,error,loading}=this.props;const{changeWindsid,changePassword,changeKey,keyPress,register}=this.props;const buttonLabel=loading?'読み込み中':'送信';const showError=error?react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,error):false;return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"\u65B0\u898F\u767B\u9332"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/login"},"\u30ED\u30B0\u30A4\u30F3")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"text",value:windsid,onChange:e=>changeWindsid(e.target.value),onKeyPress:e=>this.keyPress(e)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"pass",value:password,onChange:e=>changePassword(e.target.value),onKeyPress:e=>this.keyPress(e)}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"text",value:approvalKey,onChange:e=>changeKey(e.target.value),onKeyPress:e=>this.keyPress(e)}),showError,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>register()},buttonLabel));}}
+
+/***/ }),
+
+/***/ "./client/src/Component/Reg/Container.js":
+/*!***********************************************!*\
+  !*** ./client/src/Component/Reg/Container.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Component */ "./client/src/Component/Reg/Component.js");
+/* harmony import */ var _Actions_Reg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Actions/Reg */ "./client/src/Actions/Reg.js");
+function mapStateToProps(state){return{windsid:state.reg.windsid,password:state.reg.password,approvalKey:state.reg.approvalKey,error:state.reg.error,loading:state.reg.loading};}function mapDispatchToProps(dispatch){return{changeWindsid(windsid){dispatch(Object(_Actions_Reg__WEBPACK_IMPORTED_MODULE_2__["changeWindsid"])(windsid));},changePassword(password){dispatch(Object(_Actions_Reg__WEBPACK_IMPORTED_MODULE_2__["changePassword"])(password));},changeKey(approvalKey){dispatch(Object(_Actions_Reg__WEBPACK_IMPORTED_MODULE_2__["changeKey"])(approvalKey));},register(){dispatch(Object(_Actions_Reg__WEBPACK_IMPORTED_MODULE_2__["register"])());}};}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps,mapDispatchToProps)(_Component__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -174,7 +228,21 @@ login(windsid,password){dispatch(Object(_Actions_Login__WEBPACK_IMPORTED_MODULE_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return loginReducer; });
-const initialState={windsid:'',password:'',loading:false};function loginReducer(state=initialState,action){switch(action.type){case'INPUT_WINDSID':return{...state,windsid:action.payload.windsid};case'INPUT_PASSWORD':return{...state,password:action.payload.password};case'LOGIN_TOKEN':return{...state,token:action.payload.token};case'LOGIN_LOADING':return{...state,loading:action.payload.loading};default:return state;}}
+const initialState={windsid:'',password:'',loading:false};function loginReducer(state=initialState,action){switch(action.type){case'LOGIN_INPUT_WINDSID':return{...state,windsid:action.payload.windsid};case'LOGIN_INPUT_PASSWORD':return{...state,password:action.payload.password};case'LOGIN_TOKEN':return{...state,token:action.payload.token};case'LOADING':return{...state,loading:action.payload.loading};default:return state;}}
+
+/***/ }),
+
+/***/ "./client/src/Reducers/Reg.js":
+/*!************************************!*\
+  !*** ./client/src/Reducers/Reg.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return regReducer; });
+const initialState={windsid:'',password:'',approvalKey:'',error:false,loading:false};function regReducer(state=initialState,action){switch(action.type){case'REG_INPUT_WINDSID':return{...state,windsid:action.payload.windsid};case'REG_INPUT_PASSWORD':return{...state,password:action.payload.password};case'REG_INPUT_KEY':return{...state,approvalKey:action.payload.approvalKey};case'LOGIN_TOKEN':return{...state,token:action.payload.token};case'ERROR':return{...state,error:action.payload.error};case'LOADING':return{...state,loading:action.payload.loading};default:return state;}}
 
 /***/ }),
 
@@ -194,8 +262,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _Reducers_Login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Reducers/Login */ "./client/src/Reducers/Login.js");
+/* harmony import */ var _Reducers_Reg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Reducers/Reg */ "./client/src/Reducers/Reg.js");
 // historyはsrc/index.jsから渡す
-function createStore(history){return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({login:_Reducers_Login__WEBPACK_IMPORTED_MODULE_4__["default"],// react-router-reduxのReducer
+function createStore(history){return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({reg:_Reducers_Reg__WEBPACK_IMPORTED_MODULE_5__["default"],login:_Reducers_Login__WEBPACK_IMPORTED_MODULE_4__["default"],// react-router-reduxのReducer
 router:react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerReducer"]}),Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a,redux_thunk__WEBPACK_IMPORTED_MODULE_3__["default"],// react-router-reduxのRedux Middleware
 Object(react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerMiddleware"])(history)));}
 

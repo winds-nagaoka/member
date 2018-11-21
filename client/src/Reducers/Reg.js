@@ -1,25 +1,37 @@
 const initialState = {
   windsid: '',
   password: '',
+  approvalKey: '',
+  error: false,
   loading: false
 }
 
-export default function loginReducer(state = initialState, action) {
+export default function regReducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGIN_INPUT_WINDSID':
+    case 'REG_INPUT_WINDSID':
       return {
         ...state,
         windsid: action.payload.windsid
       }
-    case 'LOGIN_INPUT_PASSWORD':
+    case 'REG_INPUT_PASSWORD':
       return {
         ...state,
         password: action.payload.password
+      }
+    case 'REG_INPUT_KEY':
+      return {
+        ...state,
+        approvalKey: action.payload.approvalKey
       }
     case 'LOGIN_TOKEN':
       return {
         ...state,
         token: action.payload.token
+      }
+    case 'ERROR':
+      return {
+        ...state,
+        error: action.payload.error
       }
     case 'LOADING':
       return {

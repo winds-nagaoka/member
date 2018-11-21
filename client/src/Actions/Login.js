@@ -1,14 +1,14 @@
 import request from 'superagent'
 
 export const changeWindsid = (windsid) => ({
-  type: 'INPUT_WINDSID',
+  type: 'LOGIN_INPUT_WINDSID',
   payload: {
     windsid
   }
 })
 
 export const changePassword = (password) => ({
-  type: 'INPUT_PASSWORD',
+  type: 'LOGIN_INPUT_PASSWORD',
   payload: {
     password
   }
@@ -25,7 +25,7 @@ export const loginToken = (token) => {
 }
 
 export const loading = (loading) => ({
-  type: 'LOGIN_LOADING',
+  type: 'LOADING',
   payload: {
     loading: loading
   }
