@@ -23,6 +23,7 @@ export const login = () => {
           dispatch(Status.loginUpdate(true))
         } else {
           console.warn('Login NG')
+          dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
           dispatch(error('ログインできませんでした'))

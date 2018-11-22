@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Dashboard from './Component'
 // import { changeWindsid, changePassword, login } from '../../../Actions/Login'
+import { logout } from '../../../Actions/Status'
 
 function mapStateToProps(state) {
   return {
@@ -9,6 +10,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    logout () {
+      dispatch(logout())
+    }
   }
 }
 

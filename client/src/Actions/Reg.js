@@ -24,6 +24,7 @@ export const register = () => {
           dispatch(Status.loginUpdate(true))
         } else {
           console.log('Register NG')
+          dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
           dispatch(error('登録できませんでした'))
