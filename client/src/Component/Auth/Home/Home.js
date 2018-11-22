@@ -8,6 +8,8 @@ import { logout } from '../../../Actions/Status'
 import { getSchedule } from '../../../Actions/Schedule'
 import { getManager } from '../../../Actions/Manager'
 
+import { showToast } from '../../../Actions/Toast'
+
 function mapStateToProps(state) {
   return {
     socketid: state.socket.id,
@@ -32,6 +34,10 @@ function mapDispatchToProps(dispatch) {
     },
     getManager () {
       dispatch(getManager())
+    },
+
+    showToast (string) {
+      dispatch(showToast(string))
     }
   }
 }
@@ -43,14 +49,6 @@ class Home extends Component {
     this.props.getSchedule()
     this.props.getManager()
   }
-
-  unescapeHTML(html) {
-    // var escapeEl = 
-    // escapeEl.innerHTML = html;
-    // return escapeEl.textContent;
-  }
-
-
 
   renderSchedule (loading, schedule) {
     if (loading || !schedule) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
@@ -92,6 +90,7 @@ class Home extends Component {
         <div>
           <Link to='/manager'>Manager</Link>
         </div>
+        <button onClick={() => this.props.showToast('Toast!!!')}>Toast</button>
       </div>
     )
   }

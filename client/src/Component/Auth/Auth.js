@@ -8,6 +8,8 @@ import Home from './Home/Home'
 import Schedule from './Schedule/Schedule'
 import Manager from './Manager/Manager'
 
+import Toast from '../Component/Toast/Toast'
+
 // import './Auth.css'
 
 function mapStateToProps(state) {
@@ -36,6 +38,7 @@ class Auth extends Component {
     if (!login) return <Redirect to='/login' />
     return (
       <div className='auth'>
+        <Toast />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/schedule' component={Schedule} />

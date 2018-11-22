@@ -247,6 +247,23 @@ const loginAuth=()=>{return async(dispatch,getState)=>{if(!window.localStorage.t
 
 /***/ }),
 
+/***/ "./client/src/Actions/Toast.js":
+/*!*************************************!*\
+  !*** ./client/src/Actions/Toast.js ***!
+  \*************************************/
+/*! exports provided: showToast, display, hide, end */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showToast", function() { return showToast; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "display", function() { return display; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hide", function() { return hide; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "end", function() { return end; });
+const showToast=string=>{return async(dispatch,getState)=>{if(getState().toast.status)return false;const timeout=3600;dispatch(display(string));setTimeout(()=>{dispatch(hide(true));},timeout-600);setTimeout(()=>{dispatch(end());},timeout);};};const display=string=>{return{type:'TOAST_DISPLAY',payload:{string,status:true,hide:false,end:false}};};const hide=()=>({type:'TOAST_HIDE',payload:{status:true,hide:true,end:false}});const end=()=>({type:'TOAST_END',payload:{string:'',status:false,hide:true,end:true}});
+
+/***/ }),
+
 /***/ "./client/src/App.js":
 /*!***************************!*\
   !*** ./client/src/App.js ***!
@@ -267,6 +284,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Store_Store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Store/Store */ "./client/src/Store/Store.js");
 /* harmony import */ var _Component_Base_Base__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Component/Base/Base */ "./client/src/Component/Base/Base.js");
 /* harmony import */ var _Component_Auth_Auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Component/Auth/Auth */ "./client/src/Component/Auth/Auth.js");
+// import Toast from './Component/Component/Toast/Toast'
 const history=history_createBrowserHistory__WEBPACK_IMPORTED_MODULE_4___default()();const store=Object(_Store_Store__WEBPACK_IMPORTED_MODULE_5__["default"])(history);class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"],{store:store},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_redux__WEBPACK_IMPORTED_MODULE_3__["ConnectedRouter"],{history:history},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/login",component:_Component_Base_Base__WEBPACK_IMPORTED_MODULE_6__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/reg",component:_Component_Base_Base__WEBPACK_IMPORTED_MODULE_6__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/",component:_Component_Auth_Auth__WEBPACK_IMPORTED_MODULE_7__["default"]}))));}}
 
 /***/ }),
@@ -288,10 +306,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home/Home */ "./client/src/Component/Auth/Home/Home.js");
 /* harmony import */ var _Schedule_Schedule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Schedule/Schedule */ "./client/src/Component/Auth/Schedule/Schedule.js");
 /* harmony import */ var _Manager_Manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Manager/Manager */ "./client/src/Component/Auth/Manager/Manager.js");
-// import Login from './Login/Container'
-// import Reg from './Reg/Container'
-// import './Base.css'
-function mapStateToProps(state){return{login:state.status.login,loading:state.status.loading};}function mapDispatchToProps(dispatch){return{loginAuth(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_3__["loginAuth"])());}};}class Auth extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentWillMount(){this.props.loginAuth();}render(){const{login,loading}=this.props;if(loading)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"full-loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"})));if(!login)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"],{to:"/login"});return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"auth"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/",component:_Home_Home__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/schedule",component:_Schedule_Schedule__WEBPACK_IMPORTED_MODULE_5__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/manager",component:_Manager_Manager__WEBPACK_IMPORTED_MODULE_6__["default"]})));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Auth));
+/* harmony import */ var _Component_Toast_Toast__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Component/Toast/Toast */ "./client/src/Component/Component/Toast/Toast.js");
+// import './Auth.css'
+function mapStateToProps(state){return{login:state.status.login,loading:state.status.loading};}function mapDispatchToProps(dispatch){return{loginAuth(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_3__["loginAuth"])());}};}class Auth extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentWillMount(){this.props.loginAuth();}render(){const{login,loading}=this.props;if(loading)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"full-loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"})));if(!login)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"],{to:"/login"});return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"auth"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Component_Toast_Toast__WEBPACK_IMPORTED_MODULE_7__["default"],null),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/",component:_Home_Home__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/schedule",component:_Schedule_Schedule__WEBPACK_IMPORTED_MODULE_5__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/manager",component:_Manager_Manager__WEBPACK_IMPORTED_MODULE_6__["default"]})));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Auth));
 
 /***/ }),
 
@@ -312,14 +329,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Actions_Status__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Actions/Status */ "./client/src/Actions/Status.js");
 /* harmony import */ var _Actions_Schedule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Actions/Schedule */ "./client/src/Actions/Schedule.js");
 /* harmony import */ var _Actions_Manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../Actions/Manager */ "./client/src/Actions/Manager.js");
-function mapStateToProps(state){return{socketid:state.socket.id,loadingSchedule:state.schedule.loading,schedule:state.schedule.data,loadingManager:state.manager.loading,manager:state.manager.data};}function mapDispatchToProps(dispatch){return{connectSocket(){dispatch(Object(_Actions_Socket__WEBPACK_IMPORTED_MODULE_3__["connectSocket"])());},logout(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_4__["logout"])());},getSchedule(){dispatch(Object(_Actions_Schedule__WEBPACK_IMPORTED_MODULE_5__["getSchedule"])());},getManager(){dispatch(Object(_Actions_Manager__WEBPACK_IMPORTED_MODULE_6__["getManager"])());}};}class Home extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.connectSocket();this.props.getSchedule();this.props.getManager();}unescapeHTML(html){// var escapeEl = 
-// escapeEl.innerHTML = html;
-// return escapeEl.textContent;
-}renderSchedule(loading,schedule){if(loading||!schedule)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,schedule.next.date);}renderManager(loading,manager){if(loading||!manager)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,manager.manager[0].title),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{dangerouslySetInnerHTML:{__html:manager.manager[0].text}}));}render(){// State List
+/* harmony import */ var _Actions_Toast__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../Actions/Toast */ "./client/src/Actions/Toast.js");
+function mapStateToProps(state){return{socketid:state.socket.id,loadingSchedule:state.schedule.loading,schedule:state.schedule.data,loadingManager:state.manager.loading,manager:state.manager.data};}function mapDispatchToProps(dispatch){return{connectSocket(){dispatch(Object(_Actions_Socket__WEBPACK_IMPORTED_MODULE_3__["connectSocket"])());},logout(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_4__["logout"])());},getSchedule(){dispatch(Object(_Actions_Schedule__WEBPACK_IMPORTED_MODULE_5__["getSchedule"])());},getManager(){dispatch(Object(_Actions_Manager__WEBPACK_IMPORTED_MODULE_6__["getManager"])());},showToast(string){dispatch(Object(_Actions_Toast__WEBPACK_IMPORTED_MODULE_7__["showToast"])(string));}};}class Home extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.connectSocket();this.props.getSchedule();this.props.getManager();}renderSchedule(loading,schedule){if(loading||!schedule)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,schedule.next.date);}renderManager(loading,manager){if(loading||!manager)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,manager.manager[0].title),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{dangerouslySetInnerHTML:{__html:manager.manager[0].text}}));}render(){// State List
 const{socketid,loadingSchedule,schedule,loadingManager,manager}=this.props;// Dispatch List
 const{logout}=this.props;// const showLoadingSchedule = loadingSchedule ? '読み込み中' : ''
 const showScheduleNext=this.renderSchedule(loadingSchedule,schedule);// const showLoadingManager = loadingManager ? '読み込み中' : ''
-const showManager=this.renderManager(loadingManager,manager);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"Auth",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>logout()},"\u30ED\u30B0\u30A2\u30A6\u30C8"),socketid,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showScheduleNext)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/schedule"},"Schedule")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showManager)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/manager"},"Manager")));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Home));
+const showManager=this.renderManager(loadingManager,manager);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"Auth",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>logout()},"\u30ED\u30B0\u30A2\u30A6\u30C8"),socketid,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showScheduleNext)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/schedule"},"Schedule")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showManager)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/manager"},"Manager")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>this.props.showToast('Toast!!!')},"Toast"));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Home));
 
 /***/ }),
 
@@ -453,6 +468,62 @@ function mapStateToProps(state){return{windsid:state.reg.windsid,password:state.
 
 /***/ }),
 
+/***/ "./client/src/Component/Component/Toast/Toast.css":
+/*!********************************************************!*\
+  !*** ./client/src/Component/Component/Toast/Toast.css ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--5-1!./Toast.css */ "./node_modules/css-loader/index.js?!./client/src/Component/Component/Toast/Toast.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./client/src/Component/Component/Toast/Toast.js":
+/*!*******************************************************!*\
+  !*** ./client/src/Component/Component/Toast/Toast.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Toast_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Toast.css */ "./client/src/Component/Component/Toast/Toast.css");
+/* harmony import */ var _Toast_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Toast_css__WEBPACK_IMPORTED_MODULE_2__);
+// import { showToast } from '../../Actions/Toast'
+function mapStateToProps(state){return{string:state.toast.string,status:state.toast.status,hide:state.toast.hide,end:state.toast.end};}function mapDispatchToProps(dispatch){return{// showToast (string) {
+//   dispatch(showToast(string))
+// }
+};}class Toast extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){const{string,status,hide,end}=this.props;// const { showToast } = this.props
+console.log('Toast Render: Show: '+status+', Message: '+string);if(status){var className='toast';if(hide){className+=' hide';}// else if (end) {
+//   className += 'end'
+// }
+console.warn(className);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:className},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,string));}else{return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null);}}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps,mapDispatchToProps)(Toast));
+
+/***/ }),
+
 /***/ "./client/src/Library/Library.js":
 /*!***************************************!*\
   !*** ./client/src/Library/Library.js ***!
@@ -573,6 +644,20 @@ const initialState={login:false,windsid:'',token:'',loading:false};function stat
 
 /***/ }),
 
+/***/ "./client/src/Reducers/Toast.js":
+/*!**************************************!*\
+  !*** ./client/src/Reducers/Toast.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return toastReducer; });
+const initialState={string:'',status:false,hide:true,end:true};function toastReducer(state=initialState,action){switch(action.type){case'TOAST_DISPLAY':return{...state,string:action.payload.string,status:action.payload.status,hide:action.payload.hide,end:action.payload.end};case'TOAST_HIDE':return{...state,status:action.payload.status,hide:action.payload.hide,end:action.payload.end};case'TOAST_END':return{...state,string:action.payload.status,status:action.payload.status,hide:action.payload.hide,end:action.payload.end};default:return state;}}
+
+/***/ }),
+
 /***/ "./client/src/Store/Store.js":
 /*!***********************************!*\
   !*** ./client/src/Store/Store.js ***!
@@ -590,14 +675,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _Reducers_Status__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Reducers/Status */ "./client/src/Reducers/Status.js");
 /* harmony import */ var _Reducers_Socket__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Reducers/Socket */ "./client/src/Reducers/Socket.js");
-/* harmony import */ var _Reducers_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Reducers/Login */ "./client/src/Reducers/Login.js");
-/* harmony import */ var _Reducers_Reg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Reducers/Reg */ "./client/src/Reducers/Reg.js");
-/* harmony import */ var _Reducers_Manager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Reducers/Manager */ "./client/src/Reducers/Manager.js");
-/* harmony import */ var _Reducers_Schedule__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Reducers/Schedule */ "./client/src/Reducers/Schedule.js");
+/* harmony import */ var _Reducers_Toast__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Reducers/Toast */ "./client/src/Reducers/Toast.js");
+/* harmony import */ var _Reducers_Manager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Reducers/Manager */ "./client/src/Reducers/Manager.js");
+/* harmony import */ var _Reducers_Schedule__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Reducers/Schedule */ "./client/src/Reducers/Schedule.js");
+/* harmony import */ var _Reducers_Login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Reducers/Login */ "./client/src/Reducers/Login.js");
+/* harmony import */ var _Reducers_Reg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Reducers/Reg */ "./client/src/Reducers/Reg.js");
 // import authenticateReducer from '../Reducers/Authenticate'
 // historyはsrc/index.jsから渡す
 function createStore(history){return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({// authenticate: authenticateReducer,
-status:_Reducers_Status__WEBPACK_IMPORTED_MODULE_4__["default"],socket:_Reducers_Socket__WEBPACK_IMPORTED_MODULE_5__["default"],reg:_Reducers_Reg__WEBPACK_IMPORTED_MODULE_7__["default"],login:_Reducers_Login__WEBPACK_IMPORTED_MODULE_6__["default"],schedule:_Reducers_Schedule__WEBPACK_IMPORTED_MODULE_9__["default"],manager:_Reducers_Manager__WEBPACK_IMPORTED_MODULE_8__["default"],// react-router-reduxのReducer
+status:_Reducers_Status__WEBPACK_IMPORTED_MODULE_4__["default"],socket:_Reducers_Socket__WEBPACK_IMPORTED_MODULE_5__["default"],toast:_Reducers_Toast__WEBPACK_IMPORTED_MODULE_6__["default"],schedule:_Reducers_Schedule__WEBPACK_IMPORTED_MODULE_8__["default"],manager:_Reducers_Manager__WEBPACK_IMPORTED_MODULE_7__["default"],reg:_Reducers_Reg__WEBPACK_IMPORTED_MODULE_10__["default"],login:_Reducers_Login__WEBPACK_IMPORTED_MODULE_9__["default"],// react-router-reduxのReducer
 router:react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerReducer"]}),Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a,redux_thunk__WEBPACK_IMPORTED_MODULE_3__["default"],// react-router-reduxのRedux Middleware
 Object(react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerMiddleware"])(history)));}
 
@@ -3337,6 +3423,25 @@ exports.push([module.i, ".base label{display:block}.base input{display:block}\n"
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./client/src/Component/Component/Toast/Toast.css":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./client/src/Component/Component/Toast/Toast.css ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".toast{position:absolute;top:-70px;left:10px;right:10px;margin:auto;border-radius:10px;background:rgba(0,0,0,0.9);color:white;transform:translateY(80px);transition-delay:initial;transition-property:none;transition:transform .2s ease-in-out;z-index:99}.toast>div{padding:16px 16px;font-size:13px}.toast>div b{font-weight:600}.toast.hide{transform:translateY(-80px);transition-delay:initial;transition-property:none;transition:transform .6s ease-in-out}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./client/src/index.css":
 /*!******************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./client/src/index.css ***!
@@ -3349,7 +3454,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "body{margin:0;padding:0;font-family:-apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '\\6E38\\30B4\\30B7\\30C3\\30AF    Medium', meiryo, sans-serif;line-height:1}*{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}a{-webkit-touch-callout:none}input:focus,input[type=\"password\"]:focus{border:solid 1px #b80006 !important;outline:0}::selection{background:rgba(184,0,6,0.4);color:#ffffff}::-moz-selection{background:rgba(184,0,6,0.4);color:#ffffff}div{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}@-webkit-keyframes fadein{0%{opacity:0}100%{opacity:1}}@keyframes fadein{0%{opacity:0}100%{opacity:1}}.full-loading{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center}.loading{margin:0 auto;width:60px;display:flex;justify-content:space-between}.loading>div{width:16px;height:16px;background-color:#ccc;border-radius:100%;display:inline-block;-webkit-animation:sk-bouncedelay 1.4s infinite ease-in-out both;animation:sk-bouncedelay 1.4s infinite ease-in-out both}.loading .loading1{-webkit-animation-delay:-0.32s;animation-delay:-0.32s}.loading .loading2{-webkit-animation-delay:-0.16s;animation-delay:-0.16s}@-webkit-keyframes sk-bouncedelay{0%,80%,100%{-webkit-transform:scale(0)}40%{-webkit-transform:scale(1)}}@keyframes sk-bouncedelay{0%,80%,100%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.react-confirm-alert-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:10;background:rgba(0,0,0,0.3);display:flex;justify-content:center;-ms-align-items:center;align-items:center}.react-confirm-alert-body{width:270px;padding:0;background:#fcfcfc;border-radius:2px;color:#000}.react-confirm-alert-body>h1{padding:16px 16px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert-button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert-button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert-button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert-button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert{width:270px;padding:0;background:#f8f8f8;border-radius:2px;color:#000}.react-confirm-alert .alert>h1{padding:12px 16px 7px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert .alert>p{padding:0 16px 21px;margin:0;text-align:center;font-size:13px}.react-confirm-alert .alert>.button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert .alert>.button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert .alert>.button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert .alert>.button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert>.button-group>button:hover{background:#e9e9e9}\n", ""]);
+exports.push([module.i, "body{margin:0;padding:0;font-family:-apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '\\6E38\\30B4\\30B7\\30C3\\30AF    Medium', meiryo, sans-serif;line-height:1}*{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}a{-webkit-touch-callout:none}input:focus,input[type=\"password\"]:focus{border:solid 1px #b80006 !important;outline:0}::selection{background:rgba(184,0,6,0.4);color:#ffffff}::-moz-selection{background:rgba(184,0,6,0.4);color:#ffffff}div{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}@-webkit-keyframes fadein{0%{opacity:0}100%{opacity:1}}@keyframes fadein{0%{opacity:0}100%{opacity:1}}.full-loading{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center}.loading{margin:16px auto;width:60px;display:flex;justify-content:space-between}.loading>div{width:16px;height:16px;background-color:#ccc;border-radius:100%;display:inline-block;-webkit-animation:sk-bouncedelay 1.4s infinite ease-in-out both;animation:sk-bouncedelay 1.4s infinite ease-in-out both}.loading .loading1{-webkit-animation-delay:-0.32s;animation-delay:-0.32s}.loading .loading2{-webkit-animation-delay:-0.16s;animation-delay:-0.16s}@-webkit-keyframes sk-bouncedelay{0%,80%,100%{-webkit-transform:scale(0)}40%{-webkit-transform:scale(1)}}@keyframes sk-bouncedelay{0%,80%,100%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.react-confirm-alert-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:10;background:rgba(0,0,0,0.3);display:flex;justify-content:center;-ms-align-items:center;align-items:center}.react-confirm-alert-body{width:270px;padding:0;background:#fcfcfc;border-radius:2px;color:#000}.react-confirm-alert-body>h1{padding:16px 16px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert-button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert-button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert-button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert-button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert{width:270px;padding:0;background:#f8f8f8;border-radius:2px;color:#000}.react-confirm-alert .alert>h1{padding:12px 16px 7px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert .alert>p{padding:0 16px 21px;margin:0;text-align:center;font-size:13px}.react-confirm-alert .alert>.button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert .alert>.button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert .alert>.button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert .alert>.button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert>.button-group>button:hover{background:#e9e9e9}\n", ""]);
 
 // exports
 

@@ -9,11 +9,14 @@ import thunk from 'redux-thunk'
 // import authenticateReducer from '../Reducers/Authenticate'
 import statusReducer from '../Reducers/Status'
 import socketReducer from '../Reducers/Socket'
-import loginReducer from '../Reducers/Login'
-import regReducer from '../Reducers/Reg'
+
+import toastReducer from '../Reducers/Toast'
 
 import managerReducer from '../Reducers/Manager'
 import scheduleReducer from '../Reducers/Schedule'
+
+import loginReducer from '../Reducers/Login'
+import regReducer from '../Reducers/Reg'
 
 // historyはsrc/index.jsから渡す
 export default function createStore(history) {
@@ -22,10 +25,14 @@ export default function createStore(history) {
       // authenticate: authenticateReducer,
       status: statusReducer,
       socket: socketReducer,
-      reg: regReducer,
-      login: loginReducer,
+      toast: toastReducer,
+
       schedule: scheduleReducer,
       manager: managerReducer,
+
+      reg: regReducer,
+      login: loginReducer,
+
       // react-router-reduxのReducer
       router: routerReducer,
     }),
