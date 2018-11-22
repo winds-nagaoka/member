@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+
 import { connect } from 'react-redux'
 import { loginAuth } from '../../Actions/Status'
 
 // import Login from './Login/Container'
 // import Reg from './Reg/Container'
 
-import Dashboard from './Dashboard/Container'
+import Home from './Home/Home'
 
 // import './Base.css'
 
@@ -32,12 +33,12 @@ class Auth extends Component {
 
   render () {
     const { login, loading } = this.props
-    if (!login) return <Redirect to='/login' />
     if (loading) return <div>読み込み中...</div>
+    if (!login) return <Redirect to='/login' />
     return (
       <div className='auth'>
         <Switch>
-          <Route exact path='/' component={Dashboard} />
+          <Route exact path='/' component={Home} />
         </Switch>
       </div>
     )

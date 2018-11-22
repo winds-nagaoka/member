@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+
 import { connect } from 'react-redux'
 import { loginAuth } from '../../Actions/Status'
 
-import Login from './Login/Container'
-import Reg from './Reg/Container'
+import Login from './Login/Login'
+import Reg from './Reg/Reg'
 
 import './Base.css'
 

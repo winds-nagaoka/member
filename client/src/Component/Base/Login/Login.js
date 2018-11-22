@@ -1,7 +1,32 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-export default class Login extends Component {
+import { connect } from 'react-redux'
+import { changeWindsid, changePassword, login } from '../../../Actions/Login'
+
+function mapStateToProps(state) {
+  return {
+    windsid: state.login.windsid,
+    password: state.login.password,
+    loading: state.login.loading
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    changeWindsid (windsid) {
+      dispatch(changeWindsid(windsid))
+    },
+    changePassword (password) {
+      dispatch(changePassword(password))
+    },
+    login () {
+      dispatch(login())
+    }
+  }
+}
+
+class Login extends Component {
   keyPress (e) {
     if (e.which === 13) this.props.login()
   }
@@ -25,3 +50,5 @@ export default class Login extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -8,6 +8,7 @@ import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 // import authenticateReducer from '../Reducers/Authenticate'
 import statusReducer from '../Reducers/Status'
+import socketReducer from '../Reducers/Socket'
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
@@ -17,13 +18,14 @@ export default function createStore(history) {
     combineReducers({
       // authenticate: authenticateReducer,
       status: statusReducer,
+      socket: socketReducer,
       reg: regReducer,
       login: loginReducer,
       // react-router-reduxのReducer
       router: routerReducer,
     }),
     applyMiddleware(
-      // logger,
+      logger,
       thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)

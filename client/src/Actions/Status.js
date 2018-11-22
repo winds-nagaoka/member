@@ -10,15 +10,15 @@ export const loginAuth = () => {
       token: window.localStorage.token,
       version
     }
-    request.post('https://api.winds-n.com/manager/', {}, (err, res) => {
-      console.log(res)
-    })
-    request.post('https://auth.winds-n.com/auth', send, (err, res) => {
+    // request.post('https://api.winds-n.com/manager/', {}, (err, res) => {
+    //   console.log(res)
+    // })
+    await request.post('https://auth.winds-n.com/auth', send, (err, res) => {
       if (err) {
         return false
       } else {
         if (res.body.status) {
-          console.log('Auth OK')
+          console.error('Auth OK')
           dispatch(windsidUpdate(window.localStorage.windsid))
           dispatch(tokenUpdate(res.body.token))
           dispatch(loginUpdate(true))
