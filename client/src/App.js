@@ -8,8 +8,6 @@ import createStore from './Store/Store'
 import Base from './Component/Base/Base'
 import Auth from './Component/Auth/Auth'
 
-// import Toast from './Component/Component/Toast/Toast'
-
 const history = createBrowserHistory()
 const store = createStore(history)
 

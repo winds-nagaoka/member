@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
-// import { showToast } from '../../Actions/Toast'
 
 import './Toast.css'
 
@@ -25,16 +24,11 @@ function mapDispatchToProps(dispatch) {
 class Toast extends Component {
   render () {
     const { string, status, hide, end } = this.props
-    // const { showToast } = this.props
-    console.log('Toast Render: Show: ' + status + ', Message: ' + string)
     if (status) {
       var className = 'toast'
       if (hide) {
         className += ' hide'
-      }// else if (end) {
-      //   className += 'end'
-      // }
-      console.warn(className)
+      }
       return (
         <div className={className}>
           <div>

@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { loginAuth } from '../../Actions/Status'
+import { loginAuth, windowWidthChange } from '../../Actions/Status'
 
 import Home from './Home/Home'
 import Schedule from './Schedule/Schedule'
 import Manager from './Manager/Manager'
 
-import Toast from '../Component/Toast/Toast'
+import Navigation from './Component/Navigation/Navigation'
+
+import Toast from './Component/Toast/Toast'
 
 // import './Auth.css'
 
@@ -23,13 +25,28 @@ function mapDispatchToProps(dispatch) {
   return {
     loginAuth () {
       dispatch(loginAuth())
+    },
+    windowWidthChange () {
+      dispatch(windowWidthChange())
     }
   }
 }
 
 class Auth extends Component {
+
   componentWillMount () {
     this.props.loginAuth()
+  }
+  
+  componentDidMount () {
+    this.props.windowWidthChange()
+    window.addEventListener('resize', () => {
+      this.props.windowWidthChange()
+    })
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', () => {})
   }
 
   render () {
@@ -39,6 +56,7 @@ class Auth extends Component {
     return (
       <div className='auth'>
         <Toast />
+        <Navigation />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/schedule' component={Schedule} />

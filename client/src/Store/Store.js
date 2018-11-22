@@ -10,6 +10,8 @@ import thunk from 'redux-thunk'
 import statusReducer from '../Reducers/Status'
 import socketReducer from '../Reducers/Socket'
 
+import navigationReducer from '../Reducers/Navigation'
+
 import toastReducer from '../Reducers/Toast'
 
 import managerReducer from '../Reducers/Manager'
@@ -25,6 +27,8 @@ export default function createStore(history) {
       // authenticate: authenticateReducer,
       status: statusReducer,
       socket: socketReducer,
+
+      navigation: navigationReducer,
       toast: toastReducer,
 
       schedule: scheduleReducer,
@@ -37,7 +41,7 @@ export default function createStore(history) {
       router: routerReducer,
     }),
     applyMiddleware(
-      logger,
+      // logger,
       thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)

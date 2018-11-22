@@ -77,6 +77,15 @@ export const loading = (loading) => ({
   }
 })
 
+export const windowWidthChange = () => {
+  return {
+    type: 'STATUS_WINDOW_WIDTH',
+    payload: {
+      width: window.innerWidth
+    }
+  }
+}
+
 // function tokenUpdate (token) {
 //   return({
 //     type: 'STATUS_TOKEN',
