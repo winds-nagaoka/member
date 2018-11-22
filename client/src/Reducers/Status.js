@@ -3,7 +3,9 @@ const initialState = {
   windsid: '',
   token: '',
   loading: false,
-  width: 0
+  width: 0,
+  pc: true,
+  mobile: false,
 }
 
 export default function statusReducer (state = initialState, action) {
@@ -32,7 +34,9 @@ export default function statusReducer (state = initialState, action) {
     case 'STATUS_WINDOW_WIDTH':
       return {
         ...state,
-        width: action.payload.width
+        width: action.payload.width,
+        pc: action.payload.pc,
+        mobile: action.payload.mobile
       }
     default:
       return state

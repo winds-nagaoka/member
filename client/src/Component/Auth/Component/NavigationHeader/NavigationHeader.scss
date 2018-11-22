@@ -1,11 +1,14 @@
-.navigation {
+.navigation-header {
+  width: 100%;
+
 
   .header {
     position: fixed;
     height: 44px;
     width: 100%;
+    // max-width: 960px;
     // border-bottom: 1px solid #ccc;
-    border-bottom: 1px solid #d3d3d3;
+    border-bottom: .5px solid #d3d3d3;
     background: #fff;
     text-align: center;
     z-index: 20;
@@ -22,9 +25,15 @@
     justify-content: center;
     align-items: center;
 
+    .title {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
     .logo {
       width: calc(100% - 44px);
-      height: 44px;
+      height: 36px;
       // width: 80%;
       overflow: hidden;
 

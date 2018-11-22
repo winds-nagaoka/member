@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import { getManager } from '../../../Actions/Manager'
 
+import './Manager.css'
+
 function mapStateToProps(state) {
   return {
     loadingManager: state.manager.loading,
@@ -40,7 +42,7 @@ class Manager extends Component {
 
     const showManager = this.renderManager(loadingManager, manager)
     return (
-      <div>
+      <div className='manager'>
         Manager
         <div>
           <div>

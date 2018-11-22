@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import { getSchedule } from '../../../Actions/Schedule'
 
+import './Schedule.css'
+
 function mapStateToProps(state) {
   return {
     loadingSchedule: state.schedule.loading,
@@ -48,7 +50,7 @@ class Schedule extends Component {
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
     return (
-      <div>
+      <div className='schedule'>
         Schedule
         <div>
           <div>

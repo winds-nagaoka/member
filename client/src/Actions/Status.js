@@ -1,3 +1,4 @@
+import { navigationMenu } from './Navigation'
 import * as request from '../Library/Request'
 import { version } from '../Library/Library'
 
@@ -77,33 +78,43 @@ export const loading = (loading) => ({
   }
 })
 
+// export const windowWidthChange = () => {
+//   const width = window.innerWidth
+//   const pc = width > 960 ? true : false
+//   const mobile = !pc
+//   return {
+//     type: 'STATUS_WINDOW_WIDTH',
+//     payload: {
+//       width,
+//       pc,
+//       mobile
+//     }
+//   }
+// }
+
 export const windowWidthChange = () => {
-  return {
-    type: 'STATUS_WINDOW_WIDTH',
-    payload: {
-      width: window.innerWidth
-    }
+  return (dispatch) => {
+    const width = window.innerWidth
+    const pc = width > 960 ? true : false
+    const mobile = !pc
+    dispatch(setWidth(width, pc, mobile))
+    if (pc) dispatch(navigationMenu(false))
+    // return {
+    //   type: 'STATUS_WINDOW_WIDTH',
+    //   payload: {
+    //     width,
+    //     pc,
+    //     mobile
+    //   }
+    // }
   }
 }
 
-// function tokenUpdate (token) {
-//   return({
-//     type: 'STATUS_TOKEN',
-//     payload: {
-//       token
-//     }
-//   })
-// }
-
-// function loginUpdate (status) {
-//   return({
-//     type: 'STATUS_LOGIN',
-//     payload: {
-//       status
-//     }
-//   })
-// }
-
-// module.exports = {
-//   tokenUpdate, loginUpdate
-// }
+export const setWidth = (width, pc, mobile) => ({
+  type: 'STATUS_WINDOW_WIDTH',
+  payload: {
+    width,
+    pc,
+    mobile
+  }
+})

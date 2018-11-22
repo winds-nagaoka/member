@@ -8,16 +8,18 @@ import Home from './Home/Home'
 import Schedule from './Schedule/Schedule'
 import Manager from './Manager/Manager'
 
-import Navigation from './Component/Navigation/Navigation'
+import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
+import NavigationInline from './Component/NavigationInline/NavigationInline'
 
 import Toast from './Component/Toast/Toast'
 
-// import './Auth.css'
+import './Auth.css'
 
 function mapStateToProps(state) {
   return {
     login: state.status.login,
-    loading: state.status.loading
+    loading: state.status.loading,
+    pc: state.status.pc
   }
 }
 
@@ -50,18 +52,27 @@ class Auth extends Component {
   }
 
   render () {
-    const { login, loading } = this.props
+    const { login, loading, pc } = this.props
     if (loading) return <div className='full-loading'><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
     if (!login) return <Redirect to='/login' />
+    const className = pc ? 'inline-contents' : ''
+    const flexFrame = pc ? 'flex-frame': ''
     return (
       <div className='auth'>
         <Toast />
-        <Navigation />
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/schedule' component={Schedule} />
-          <Route path='/manager' component={Manager} />
-        </Switch>
+        <NavigationHeader />
+        <div className='contents'>
+          <div className={flexFrame}>
+            <NavigationInline />
+            <div className={className}>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/schedule' component={Schedule} />
+                <Route path='/manager' component={Manager} />
+              </Switch>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

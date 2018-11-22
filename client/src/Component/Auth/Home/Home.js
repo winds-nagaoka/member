@@ -10,6 +10,8 @@ import { getManager } from '../../../Actions/Manager'
 
 import { showToast } from '../../../Actions/Toast'
 
+import './Home.css'
+
 function mapStateToProps(state) {
   return {
     socketid: state.socket.id,
@@ -70,7 +72,7 @@ class Home extends Component {
     // const showLoadingManager = loadingManager ? '読み込み中' : ''
     const showManager = this.renderManager(loadingManager, manager)
     return (
-      <div>
+      <div className='home'>
         Auth
         <button onClick={() => logout()}>ログアウト</button>
         {socketid}
