@@ -15,6 +15,10 @@
     contain: size style layout;
     z-index: 1;
 
+    &.pc {
+      margin: 61px 0 0 0;
+    }
+
     div.flex-frame {
       max-width: 960px;
       margin: 0 auto;

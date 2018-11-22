@@ -35,7 +35,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Auth extends Component {
-
   componentWillMount () {
     this.props.loginAuth()
   }
@@ -55,16 +54,14 @@ class Auth extends Component {
     const { login, loading, pc } = this.props
     if (loading) return <div className='full-loading'><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
     if (!login) return <Redirect to='/login' />
-    const className = pc ? 'inline-contents' : ''
-    const flexFrame = pc ? 'flex-frame': ''
     return (
       <div className='auth'>
         <Toast />
         <NavigationHeader />
-        <div className='contents'>
-          <div className={flexFrame}>
+        <div className={'contents' + (pc ? ' pc' : '')}>
+          <div className={pc ? 'flex-frame': ''}>
             <NavigationInline />
-            <div className={className}>
+            <div className={pc ? 'inline-contents' : ''}>
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/schedule' component={Schedule} />

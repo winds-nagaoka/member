@@ -8,8 +8,7 @@ import './NavigationInline.css'
 
 function mapStateToProps(state) {
   return {
-    width: state.status.width,
-    pc: state.status.pc,
+    pc: state.status.pc
   }
 }
 
@@ -20,7 +19,7 @@ function mapDispatchToProps(dispatch) {
 
 class NavigationInline extends Component {
   render () {
-    const { width, pc } = this.props
+    const { pc } = this.props
     if (pc) {
       return (
         <div className='menu-contents-inline'>

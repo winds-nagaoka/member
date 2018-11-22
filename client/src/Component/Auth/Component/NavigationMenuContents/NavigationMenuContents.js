@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, NavLink } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
@@ -9,12 +9,9 @@ import './NavigationMenuContents.css'
 
 function mapStateToProps(state) {
   return {
-    width: state.status.width,
     pc: state.status.pc,
     mobile: state.status.mobile,
-
-    menuOpen: state.navigation.menuOpen,
-    title: state.navigation.title,
+    path: state.router.location.pathname
   }
 }
 
@@ -29,18 +26,23 @@ function mapDispatchToProps(dispatch) {
 class NavigationMenuContents extends Component {
 
   render () {
-    const { width, pc, mobile, menuOpen, title } = this.props
+    const { pc, mobile, path } = this.props
     const { navigationMenu } = this.props
+    console.warn('Menu render: ' + path)
     return (
-      <div className='navigation-menu-contents'>
+      <div className={'navigation-menu-contents' + (pc ? ' pc' : '')}>
         <div className='app-info'>
           <img src='https://winds-n.com/img/apple-icon-archive.png' alt='logo' />
           <span>団員専用ページ</span>
         </div>
         <ol>
-          <li><CustomLink activeOnlyWhenExact={true} to='/' label='ホーム' icon='fas fa-home' onClick={() => {navigationMenu(false)}} /></li>
-          <li><CustomLink to='/schedule' label='練習日程' icon='far fa-thumbs-up' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink to='/manager' label='お知らせ' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} activeOnlyWhenExact={true} to='/' label='ホーム' icon='fas fa-home' onClick={() => {navigationMenu(false)}} /></li>
+          <li><CustomLink path={path} to='/schedule' label='練習日程' icon='far fa-thumbs-up' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/manager' label='キャスト' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/manager' label='お知らせ' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/manager' label='掲示板' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/manager' label='アーカイブ' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/manager' label='楽譜' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
         </ol>
         <ol>
           <li><div className='link' onClick={() => this.logout()}><div><i className='fas fa-sign-out-alt'></i>ログアウト</div></div></li>
@@ -51,17 +53,12 @@ class NavigationMenuContents extends Component {
   }
 }
 
-const CustomLink = ({ label, icon, to, activeOnlyWhenExact, onClick }) => {
+const CustomLink = ({ label, icon, to, path, activeOnlyWhenExact, onClick }) => {
+  const match = activeOnlyWhenExact ? (to === path ? ' active' : '') : (path.indexOf(to) === 0 ? ' active' : '')
   return (
-    <Route
-      path={to}
-      exact={activeOnlyWhenExact}
-      children={({ match }) => (
-        <div className={'link ' + (match ? 'active' : '')}>
-          <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}><div><i className={icon}></i>{label}</div></Link>
-        </div>
-      )}
-    />
+    <div className={'link' + match}>
+      <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}><div><i className={icon}></i>{label}</div></Link>
+    </div>
   )
 }
 

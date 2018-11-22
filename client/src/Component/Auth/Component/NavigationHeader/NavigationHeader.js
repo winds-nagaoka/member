@@ -13,7 +13,7 @@ import './NavigationHeader.css'
 
 function mapStateToProps(state) {
   return {
-    width: state.status.width,
+    pc: state.status.pc,
     mobile: state.status.mobile,
 
     menuOpen: state.navigation.menuOpen,
@@ -35,8 +35,8 @@ function mapDispatchToProps(dispatch) {
 class NavigationHeader extends Component {
 
   render () {
-    const { width, mobile, menuOpen, title } = this.props
-    const { navigationMenuToggle, navigationMenu } = this.props
+    const { pc, mobile, menuOpen, title } = this.props
+    const { navigationMenuToggle } = this.props
 
     const menuContentClass = menuOpen ? 'menu-content open' : 'menu-content'
     const menuBackgroundClass = menuOpen ? 'menu-background open' : 'menu-background'
@@ -51,7 +51,7 @@ class NavigationHeader extends Component {
     const searchIcon = ''
     return (
       <div className='navigation-header'>
-        <div className='header'>
+        <div className={'header' + (pc ? ' pc' : '')}>
           <div className={titleHeaderClass}>
             {showTitle}
           </div>

@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import { getManager } from '../../../Actions/Manager'
 
+import { showToast } from '../../../Actions/Toast'
+
 import './Manager.css'
 
 function mapStateToProps(state) {
@@ -18,6 +20,10 @@ function mapDispatchToProps(dispatch) {
   return {
     getManager () {
       dispatch(getManager())
+    },
+
+    showToast (string) {
+      dispatch(showToast(string))
     }
   }
 }
@@ -52,6 +58,7 @@ class Manager extends Component {
         <div>
           <Link to='/'>ホーム</Link>
         </div>
+        <button onClick={() => this.props.showToast('Toast!!!')}>Toast</button>
       </div>
     )
   }
