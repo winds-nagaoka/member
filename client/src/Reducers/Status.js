@@ -5,7 +5,7 @@ const initialState = {
   loading: false
 }
 
-export default function statusReducer(state = initialState, action) {
+export default function statusReducer (state = initialState, action) {
   switch (action.type) {
     case 'STATUS_LOGIN':
       return {

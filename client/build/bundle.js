@@ -106,6 +106,35 @@ const login=()=>{return async(dispatch,getState)=>{const{login:{windsid,password
 
 /***/ }),
 
+/***/ "./client/src/Actions/Manager.js":
+/*!***************************************!*\
+  !*** ./client/src/Actions/Manager.js ***!
+  \***************************************/
+/*! exports provided: getManager, update, acquired, loading */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getManager", function() { return getManager; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "update", function() { return update; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "acquired", function() { return acquired; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
+/* harmony import */ var _Library_Request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Library/Request */ "./client/src/Library/Request.js");
+const getManager=()=>{return async(dispatch,getState)=>{if(!window.localStorage.token)return false;if(getState().manager.acquired)return false;dispatch(loading(true));_Library_Request__WEBPACK_IMPORTED_MODULE_0__["post"]('https://api.winds-n.com/manager/',{},(err,res)=>{if(err){return false;}else{dispatch(update(res.body));dispatch(acquired(true));// if (res.body.status) {
+//   console.error('Schedule OK')
+//   dispatch(windsidUpdate(window.localStorage.windsid))
+//   dispatch(tokenUpdate(res.body.token))
+//   dispatch(loginUpdate(true))
+// } else {
+//   console.log('Schedule NG')
+//   dispatch(windsidUpdate(false))
+//   dispatch(tokenUpdate(false))
+//   dispatch(loginUpdate(false))
+// }
+}dispatch(loading(false));});};};const update=data=>({type:'MANAGER_UPDATE',payload:{data}});const acquired=acquired=>({type:'MANAGER_ACQUIRED',payload:{acquired}});const loading=loading=>({type:'MANAGER_LOADING',payload:{loading:loading}});
+
+/***/ }),
+
 /***/ "./client/src/Actions/Reg.js":
 /*!***********************************!*\
   !*** ./client/src/Actions/Reg.js ***!
@@ -124,6 +153,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Status__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Status */ "./client/src/Actions/Status.js");
 /* harmony import */ var _Library_Request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Library/Request */ "./client/src/Library/Request.js");
 const register=()=>{return async(dispatch,getState)=>{const{reg:{windsid,password,approvalKey}}=getState();if(windsid===''||password===''||approvalKey===''){return dispatch(error('入力を確認してください'));}dispatch(loading(true));const send={userid:windsid,passwd:password,key:approvalKey};_Library_Request__WEBPACK_IMPORTED_MODULE_1__["post"]('https://auth.winds-n.com/adduser',send,(err,res)=>{if(err){dispatch(error('登録できませんでした'));}else{if(res.body.status){console.log('Register OK');dispatch(_Status__WEBPACK_IMPORTED_MODULE_0__["windsidUpdate"](windsid));dispatch(_Status__WEBPACK_IMPORTED_MODULE_0__["tokenUpdate"](res.body.token));dispatch(_Status__WEBPACK_IMPORTED_MODULE_0__["loginUpdate"](true));}else{console.log('Register NG');dispatch(_Status__WEBPACK_IMPORTED_MODULE_0__["windsidUpdate"](false));dispatch(_Status__WEBPACK_IMPORTED_MODULE_0__["tokenUpdate"](false));dispatch(_Status__WEBPACK_IMPORTED_MODULE_0__["loginUpdate"](false));dispatch(error('登録できませんでした'));}}dispatch(changePassword(''));dispatch(loading(false));});};};const loading=loading=>({type:'REG_LOADING',payload:{loading:loading}});const changeWindsid=windsid=>({type:'REG_INPUT_WINDSID',payload:{windsid}});const changePassword=password=>({type:'REG_INPUT_PASSWORD',payload:{password}});const changeKey=approvalKey=>({type:'REG_INPUT_KEY',payload:{approvalKey}});const error=str=>({type:'REG_ERROR',payload:{error:str}});
+
+/***/ }),
+
+/***/ "./client/src/Actions/Schedule.js":
+/*!****************************************!*\
+  !*** ./client/src/Actions/Schedule.js ***!
+  \****************************************/
+/*! exports provided: getSchedule, update, acquired, loading */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSchedule", function() { return getSchedule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "update", function() { return update; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "acquired", function() { return acquired; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
+/* harmony import */ var _Library_Request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Library/Request */ "./client/src/Library/Request.js");
+const getSchedule=()=>{return async(dispatch,getState)=>{if(!window.localStorage.token)return false;if(getState().schedule.acquired)return false;dispatch(loading(true));_Library_Request__WEBPACK_IMPORTED_MODULE_0__["post"]('https://api.winds-n.com/schedule/',{},(err,res)=>{if(err){return false;}else{dispatch(update(res.body));dispatch(acquired(true));// if (res.body.status) {
+//   console.error('Schedule OK')
+//   dispatch(windsidUpdate(window.localStorage.windsid))
+//   dispatch(tokenUpdate(res.body.token))
+//   dispatch(loginUpdate(true))
+// } else {
+//   console.log('Schedule NG')
+//   dispatch(windsidUpdate(false))
+//   dispatch(tokenUpdate(false))
+//   dispatch(loginUpdate(false))
+// }
+}dispatch(loading(false));});};};const update=data=>({type:'SCHEDULE_UPDATE',payload:{data}});const acquired=acquired=>({type:'SCHEDULE_ACQUIRED',payload:{acquired}});const loading=loading=>({type:'SCHEDULE_LOADING',payload:{loading:loading}});
 
 /***/ }),
 
@@ -167,10 +225,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
 /* harmony import */ var _Library_Request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Library/Request */ "./client/src/Library/Request.js");
 /* harmony import */ var _Library_Library__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Library/Library */ "./client/src/Library/Library.js");
-const loginAuth=()=>{return async dispatch=>{if(!window.localStorage.token)return dispatch(loginUpdate(false));dispatch(loading(true));const send={userid:window.localStorage.windsid,token:window.localStorage.token,version: _Library_Library__WEBPACK_IMPORTED_MODULE_1__["version"]// request.post('https://api.winds-n.com/manager/', {}, (err, res) => {
-//   console.log(res)
-// })
-};await _Library_Request__WEBPACK_IMPORTED_MODULE_0__["post"]('https://auth.winds-n.com/auth',send,(err,res)=>{if(err){return false;}else{if(res.body.status){console.error('Auth OK');dispatch(windsidUpdate(window.localStorage.windsid));dispatch(tokenUpdate(res.body.token));dispatch(loginUpdate(true));}else{console.log('Auth NG');dispatch(windsidUpdate(false));dispatch(tokenUpdate(false));dispatch(loginUpdate(false));}}dispatch(loading(false));});};};const logout=()=>{return async dispatch=>{window.localStorage.clear();dispatch(windsidUpdate(false));dispatch(tokenUpdate(false));dispatch(loginUpdate(false));};};const loginUpdate=login=>{return{type:'STATUS_LOGIN',payload:{login}};};const windsidUpdate=windsid=>{windsid?window.localStorage.setItem('windsid',windsid):false;return{type:'STATUS_WINDSID',payload:{windsid}};};const tokenUpdate=token=>{token?window.localStorage.setItem('token',token):false;return{type:'STATUS_TOKEN',payload:{token}};};const loading=loading=>({type:'STATUS_LOADING',payload:{loading:loading}});// function tokenUpdate (token) {
+const loginAuth=()=>{return async(dispatch,getState)=>{if(!window.localStorage.token)return dispatch(loginUpdate(false));if(getState().status.loading)return false;dispatch(loading(true));const send={userid:window.localStorage.windsid,token:window.localStorage.token,version: _Library_Library__WEBPACK_IMPORTED_MODULE_1__["version"]};_Library_Request__WEBPACK_IMPORTED_MODULE_0__["post"]('https://auth.winds-n.com/auth',send,(err,res)=>{if(err){return false;}else{if(res.body.status){console.log('Auth OK');dispatch(windsidUpdate(window.localStorage.windsid));dispatch(tokenUpdate(res.body.token));dispatch(loginUpdate(true));}else{console.log('Auth NG');dispatch(windsidUpdate(false));dispatch(tokenUpdate(false));dispatch(loginUpdate(false));}}dispatch(loading(false));});};};const logout=()=>{return async dispatch=>{window.localStorage.clear();dispatch(windsidUpdate(false));dispatch(tokenUpdate(false));dispatch(loginUpdate(false));};};const loginUpdate=login=>{return{type:'STATUS_LOGIN',payload:{login}};};const windsidUpdate=windsid=>{windsid?window.localStorage.setItem('windsid',windsid):false;return{type:'STATUS_WINDSID',payload:{windsid}};};const tokenUpdate=token=>{token?window.localStorage.setItem('token',token):false;return{type:'STATUS_TOKEN',payload:{token}};};const loading=loading=>({type:'STATUS_LOADING',payload:{loading:loading}});// function tokenUpdate (token) {
 //   return({
 //     type: 'STATUS_TOKEN',
 //     payload: {
@@ -231,10 +286,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_Status__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Actions/Status */ "./client/src/Actions/Status.js");
 /* harmony import */ var _Home_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home/Home */ "./client/src/Component/Auth/Home/Home.js");
+/* harmony import */ var _Schedule_Schedule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Schedule/Schedule */ "./client/src/Component/Auth/Schedule/Schedule.js");
+/* harmony import */ var _Manager_Manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Manager/Manager */ "./client/src/Component/Auth/Manager/Manager.js");
 // import Login from './Login/Container'
 // import Reg from './Reg/Container'
 // import './Base.css'
-function mapStateToProps(state){return{login:state.status.login,loading:state.status.loading};}function mapDispatchToProps(dispatch){return{loginAuth(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_3__["loginAuth"])());}};}class Auth extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentWillMount(){this.props.loginAuth();}render(){const{login,loading}=this.props;if(loading)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"\u8AAD\u307F\u8FBC\u307F\u4E2D...");if(!login)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"],{to:"/login"});return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"auth"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/",component:_Home_Home__WEBPACK_IMPORTED_MODULE_4__["default"]})));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Auth));
+function mapStateToProps(state){return{login:state.status.login,loading:state.status.loading};}function mapDispatchToProps(dispatch){return{loginAuth(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_3__["loginAuth"])());}};}class Auth extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentWillMount(){this.props.loginAuth();}render(){const{login,loading}=this.props;if(loading)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"full-loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"})));if(!login)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"],{to:"/login"});return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"auth"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/",component:_Home_Home__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/schedule",component:_Schedule_Schedule__WEBPACK_IMPORTED_MODULE_5__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/manager",component:_Manager_Manager__WEBPACK_IMPORTED_MODULE_6__["default"]})));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Auth));
 
 /***/ }),
 
@@ -253,9 +310,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Actions_Socket__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Actions/Socket */ "./client/src/Actions/Socket.js");
 /* harmony import */ var _Actions_Status__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Actions/Status */ "./client/src/Actions/Status.js");
-function mapStateToProps(state){return{socketid:state.socket.id};}function mapDispatchToProps(dispatch){return{connectSocket(){dispatch(Object(_Actions_Socket__WEBPACK_IMPORTED_MODULE_3__["connectSocket"])());},logout(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_4__["logout"])());}};}class Home extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.connectSocket();}render(){// State List
-const{socketid}=this.props;// Dispatch List
-const{logout}=this.props;return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"Auth",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>logout()},"\u30ED\u30B0\u30A2\u30A6\u30C8"),socketid);}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Home));
+/* harmony import */ var _Actions_Schedule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Actions/Schedule */ "./client/src/Actions/Schedule.js");
+/* harmony import */ var _Actions_Manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../Actions/Manager */ "./client/src/Actions/Manager.js");
+function mapStateToProps(state){return{socketid:state.socket.id,loadingSchedule:state.schedule.loading,schedule:state.schedule.data,loadingManager:state.manager.loading,manager:state.manager.data};}function mapDispatchToProps(dispatch){return{connectSocket(){dispatch(Object(_Actions_Socket__WEBPACK_IMPORTED_MODULE_3__["connectSocket"])());},logout(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_4__["logout"])());},getSchedule(){dispatch(Object(_Actions_Schedule__WEBPACK_IMPORTED_MODULE_5__["getSchedule"])());},getManager(){dispatch(Object(_Actions_Manager__WEBPACK_IMPORTED_MODULE_6__["getManager"])());}};}class Home extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.connectSocket();this.props.getSchedule();this.props.getManager();}unescapeHTML(html){// var escapeEl = 
+// escapeEl.innerHTML = html;
+// return escapeEl.textContent;
+}renderSchedule(loading,schedule){if(loading||!schedule)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,schedule.next.date);}renderManager(loading,manager){if(loading||!manager)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,manager.manager[0].title),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{dangerouslySetInnerHTML:{__html:manager.manager[0].text}}));}render(){// State List
+const{socketid,loadingSchedule,schedule,loadingManager,manager}=this.props;// Dispatch List
+const{logout}=this.props;// const showLoadingSchedule = loadingSchedule ? '読み込み中' : ''
+const showScheduleNext=this.renderSchedule(loadingSchedule,schedule);// const showLoadingManager = loadingManager ? '読み込み中' : ''
+const showManager=this.renderManager(loadingManager,manager);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"Auth",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button",{onClick:()=>logout()},"\u30ED\u30B0\u30A2\u30A6\u30C8"),socketid,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showScheduleNext)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/schedule"},"Schedule")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showManager)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/manager"},"Manager")));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Home));
+
+/***/ }),
+
+/***/ "./client/src/Component/Auth/Manager/Manager.js":
+/*!******************************************************!*\
+  !*** ./client/src/Component/Auth/Manager/Manager.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Actions_Manager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Actions/Manager */ "./client/src/Actions/Manager.js");
+function mapStateToProps(state){return{loadingManager:state.manager.loading,manager:state.manager.data};}function mapDispatchToProps(dispatch){return{getManager(){dispatch(Object(_Actions_Manager__WEBPACK_IMPORTED_MODULE_3__["getManager"])());}};}class Manager extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.getManager();}renderManager(loading,manager){if(loading||!manager)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return manager.manager.map((each,i)=>{return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{key:'manager'+i},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,each.title),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{dangerouslySetInnerHTML:{__html:each.text}}));});}render(){// State List
+const{loadingManager,manager}=this.props;// Dispatch List
+// none
+const showManager=this.renderManager(loadingManager,manager);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"Manager",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showManager)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},"\u30DB\u30FC\u30E0")));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Manager));
+
+/***/ }),
+
+/***/ "./client/src/Component/Auth/Schedule/Schedule.js":
+/*!********************************************************!*\
+  !*** ./client/src/Component/Auth/Schedule/Schedule.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Actions_Schedule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Actions/Schedule */ "./client/src/Actions/Schedule.js");
+function mapStateToProps(state){return{loadingSchedule:state.schedule.loading,schedule:state.schedule.data,loadingManager:state.manager.loading,manager:state.manager.data};}function mapDispatchToProps(dispatch){return{getSchedule(){dispatch(Object(_Actions_Schedule__WEBPACK_IMPORTED_MODULE_3__["getSchedule"])());}};}class Schedule extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.getSchedule();}renderScheduleNext(loading,schedule){if(loading||!schedule)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,schedule.next.date);}renderScheduleList(loading,schedule){if(loading||!schedule)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return schedule.schedule.map((each,i)=>{return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{key:'schedule'+i},each.date);});}render(){// State List
+const{loadingSchedule,schedule}=this.props;// Dispatch List
+// none
+const showScheduleNext=this.renderScheduleNext(loadingSchedule,schedule);const showScheduleList=this.renderScheduleList(loadingSchedule,schedule);return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"Schedule",react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showScheduleNext)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,showScheduleList)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},"\u30DB\u30FC\u30E0"));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Schedule));
 
 /***/ }),
 
@@ -307,7 +413,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Reg_Reg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Reg/Reg */ "./client/src/Component/Base/Reg/Reg.js");
 /* harmony import */ var _Base_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Base.css */ "./client/src/Component/Base/Base.css");
 /* harmony import */ var _Base_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Base_css__WEBPACK_IMPORTED_MODULE_6__);
-function mapStateToProps(state){return{login:state.status.login,loading:state.status.loading};}function mapDispatchToProps(dispatch){return{loginAuth(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_3__["loginAuth"])());}};}class Base extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentWillMount(){this.props.loginAuth();}render(){const{login,loading}=this.props;if(login)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"],{to:"/"});if(loading)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,"\u8AAD\u307F\u8FBC\u307F\u4E2D...");return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"base"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/login",component:_Login_Login__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/reg",component:_Reg_Reg__WEBPACK_IMPORTED_MODULE_5__["default"]})));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Base));
+function mapStateToProps(state){return{login:state.status.login,loading:state.status.loading};}function mapDispatchToProps(dispatch){return{loginAuth(){dispatch(Object(_Actions_Status__WEBPACK_IMPORTED_MODULE_3__["loginAuth"])());}};}class Base extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentWillMount(){this.props.loginAuth();}render(){const{login,loading}=this.props;if(login)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"],{to:"/"});if(loading)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"full-loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"})));return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"base"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/login",component:_Login_Login__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/reg",component:_Reg_Reg__WEBPACK_IMPORTED_MODULE_5__["default"]})));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Base));
 
 /***/ }),
 
@@ -392,6 +498,20 @@ const initialState={windsid:'',password:'',loading:false};function loginReducer(
 
 /***/ }),
 
+/***/ "./client/src/Reducers/Manager.js":
+/*!****************************************!*\
+  !*** ./client/src/Reducers/Manager.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return managerReducer; });
+const initialState={data:undefined,acquired:false,loading:false};function managerReducer(state=initialState,action){switch(action.type){case'MANAGER_UPDATE':return{...state,data:action.payload.data};case'MANAGER_ACQUIRED':return{...state,acquired:action.payload.acquired};case'MANAGER_LOADING':return{...state,loading:action.payload.loading};default:return state;}}
+
+/***/ }),
+
 /***/ "./client/src/Reducers/Reg.js":
 /*!************************************!*\
   !*** ./client/src/Reducers/Reg.js ***!
@@ -408,6 +528,20 @@ const initialState={windsid:'',password:'',approvalKey:'',error:false,loading:fa
 //     token: action.payload.token
 //   }
 };case'REG_ERROR':return{...state,error:action.payload.error};case'REG_LOADING':return{...state,loading:action.payload.loading};default:return state;}}
+
+/***/ }),
+
+/***/ "./client/src/Reducers/Schedule.js":
+/*!*****************************************!*\
+  !*** ./client/src/Reducers/Schedule.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return scheduleReducer; });
+const initialState={data:undefined,acquired:false,loading:false};function scheduleReducer(state=initialState,action){switch(action.type){case'SCHEDULE_UPDATE':return{...state,data:action.payload.data};case'SCHEDULE_ACQUIRED':return{...state,acquired:action.payload.acquired};case'SCHEDULE_LOADING':return{...state,loading:action.payload.loading};default:return state;}}
 
 /***/ }),
 
@@ -458,10 +592,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Reducers_Socket__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Reducers/Socket */ "./client/src/Reducers/Socket.js");
 /* harmony import */ var _Reducers_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Reducers/Login */ "./client/src/Reducers/Login.js");
 /* harmony import */ var _Reducers_Reg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Reducers/Reg */ "./client/src/Reducers/Reg.js");
+/* harmony import */ var _Reducers_Manager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Reducers/Manager */ "./client/src/Reducers/Manager.js");
+/* harmony import */ var _Reducers_Schedule__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Reducers/Schedule */ "./client/src/Reducers/Schedule.js");
 // import authenticateReducer from '../Reducers/Authenticate'
 // historyはsrc/index.jsから渡す
 function createStore(history){return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({// authenticate: authenticateReducer,
-status:_Reducers_Status__WEBPACK_IMPORTED_MODULE_4__["default"],socket:_Reducers_Socket__WEBPACK_IMPORTED_MODULE_5__["default"],reg:_Reducers_Reg__WEBPACK_IMPORTED_MODULE_7__["default"],login:_Reducers_Login__WEBPACK_IMPORTED_MODULE_6__["default"],// react-router-reduxのReducer
+status:_Reducers_Status__WEBPACK_IMPORTED_MODULE_4__["default"],socket:_Reducers_Socket__WEBPACK_IMPORTED_MODULE_5__["default"],reg:_Reducers_Reg__WEBPACK_IMPORTED_MODULE_7__["default"],login:_Reducers_Login__WEBPACK_IMPORTED_MODULE_6__["default"],schedule:_Reducers_Schedule__WEBPACK_IMPORTED_MODULE_9__["default"],manager:_Reducers_Manager__WEBPACK_IMPORTED_MODULE_8__["default"],// react-router-reduxのReducer
 router:react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerReducer"]}),Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a,redux_thunk__WEBPACK_IMPORTED_MODULE_3__["default"],// react-router-reduxのRedux Middleware
 Object(react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerMiddleware"])(history)));}
 
@@ -3213,7 +3349,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "body{margin:0;padding:0;font-family:-apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '\\6E38\\30B4\\30B7\\30C3\\30AF    Medium', meiryo, sans-serif;line-height:1;-webkit-touch-callout:none;-webkit-user-select:none}*{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}a{-webkit-touch-callout:none}input:focus,input[type=\"password\"]:focus{border:solid 1px #b80006 !important;outline:0}::selection{background:rgba(184,0,6,0.4);color:#ffffff}::-moz-selection{background:rgba(184,0,6,0.4);color:#ffffff}div{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}@-webkit-keyframes fadein{0%{opacity:0}100%{opacity:1}}@keyframes fadein{0%{opacity:0}100%{opacity:1}}.react-confirm-alert-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:10;background:rgba(0,0,0,0.3);display:flex;justify-content:center;-ms-align-items:center;align-items:center}.react-confirm-alert-body{width:270px;padding:0;background:#fcfcfc;border-radius:2px;color:#000}.react-confirm-alert-body>h1{padding:16px 16px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert-button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert-button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert-button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert-button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert{width:270px;padding:0;background:#f8f8f8;border-radius:2px;color:#000}.react-confirm-alert .alert>h1{padding:12px 16px 7px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert .alert>p{padding:0 16px 21px;margin:0;text-align:center;font-size:13px}.react-confirm-alert .alert>.button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert .alert>.button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert .alert>.button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert .alert>.button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert>.button-group>button:hover{background:#e9e9e9}\n", ""]);
+exports.push([module.i, "body{margin:0;padding:0;font-family:-apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '\\6E38\\30B4\\30B7\\30C3\\30AF    Medium', meiryo, sans-serif;line-height:1}*{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}a{-webkit-touch-callout:none}input:focus,input[type=\"password\"]:focus{border:solid 1px #b80006 !important;outline:0}::selection{background:rgba(184,0,6,0.4);color:#ffffff}::-moz-selection{background:rgba(184,0,6,0.4);color:#ffffff}div{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:none}@-webkit-keyframes fadein{0%{opacity:0}100%{opacity:1}}@keyframes fadein{0%{opacity:0}100%{opacity:1}}.full-loading{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center}.loading{margin:0 auto;width:60px;display:flex;justify-content:space-between}.loading>div{width:16px;height:16px;background-color:#ccc;border-radius:100%;display:inline-block;-webkit-animation:sk-bouncedelay 1.4s infinite ease-in-out both;animation:sk-bouncedelay 1.4s infinite ease-in-out both}.loading .loading1{-webkit-animation-delay:-0.32s;animation-delay:-0.32s}.loading .loading2{-webkit-animation-delay:-0.16s;animation-delay:-0.16s}@-webkit-keyframes sk-bouncedelay{0%,80%,100%{-webkit-transform:scale(0)}40%{-webkit-transform:scale(1)}}@keyframes sk-bouncedelay{0%,80%,100%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.react-confirm-alert-overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:10;background:rgba(0,0,0,0.3);display:flex;justify-content:center;-ms-align-items:center;align-items:center}.react-confirm-alert-body{width:270px;padding:0;background:#fcfcfc;border-radius:2px;color:#000}.react-confirm-alert-body>h1{padding:16px 16px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert-button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert-button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert-button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert-button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert{width:270px;padding:0;background:#f8f8f8;border-radius:2px;color:#000}.react-confirm-alert .alert>h1{padding:12px 16px 7px;margin:8px 0 0 0;font-size:17px;font-weight:600;text-align:center}.react-confirm-alert .alert>p{padding:0 16px 21px;margin:0;text-align:center;font-size:13px}.react-confirm-alert .alert>.button-group{display:flex;justify-content:flex-start;margin:0;border-top:1px solid #dbdbdf}.react-confirm-alert .alert>.button-group>button{display:inline-block;width:50%;height:44px;margin:0;padding:6px 18px;border:none;background:#f8f8f8;font-size:17px;cursor:pointer;outline:none}.react-confirm-alert .alert>.button-group>button:first-child{border-right:1px solid #dbdbdf;border-radius:0 0 0 2px;color:#488aff;font-weight:600}.react-confirm-alert .alert>.button-group>button:last-child{border-radius:0 0 2px 0;color:#f53d3d}.react-confirm-alert .alert>.button-group>button:hover{background:#e9e9e9}\n", ""]);
 
 // exports
 

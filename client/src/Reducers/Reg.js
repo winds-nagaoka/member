@@ -6,7 +6,7 @@ const initialState = {
   loading: false
 }
 
-export default function regReducer(state = initialState, action) {
+export default function regReducer (state = initialState, action) {
   switch (action.type) {
     case 'REG_INPUT_WINDSID':
       return {

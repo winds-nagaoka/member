@@ -2,23 +2,21 @@ import * as request from '../Library/Request'
 import { version } from '../Library/Library'
 
 export const loginAuth = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     if (!window.localStorage.token) return dispatch(loginUpdate(false))
+    if(getState().status.loading) return false
     dispatch(loading(true))
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       version
     }
-    // request.post('https://api.winds-n.com/manager/', {}, (err, res) => {
-    //   console.log(res)
-    // })
-    await request.post('https://auth.winds-n.com/auth', send, (err, res) => {
+    request.post('https://auth.winds-n.com/auth', send, (err, res) => {
       if (err) {
         return false
       } else {
         if (res.body.status) {
-          console.error('Auth OK')
+          console.log('Auth OK')
           dispatch(windsidUpdate(window.localStorage.windsid))
           dispatch(tokenUpdate(res.body.token))
           dispatch(loginUpdate(true))
@@ -78,7 +76,6 @@ export const loading = (loading) => ({
     loading: loading
   }
 })
-
 
 // function tokenUpdate (token) {
 //   return({

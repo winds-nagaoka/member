@@ -3,7 +3,7 @@ const initialState = {
   id: undefined
 }
 
-export default function socketReducer(state = initialState, action) {
+export default function socketReducer (state = initialState, action) {
   switch (action.type) {
     case 'SOCKET_CONNECT':
       return {

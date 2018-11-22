@@ -32,7 +32,7 @@ class Base extends Component {
   render () {
     const { login, loading } = this.props
     if (login) return <Redirect to='/' />
-    if (loading) return <div>読み込み中...</div>
+    if (loading) return <div className='full-loading'><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
     return (
       <div className='base'>
         <Switch>

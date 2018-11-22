@@ -12,6 +12,9 @@ import socketReducer from '../Reducers/Socket'
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
+import managerReducer from '../Reducers/Manager'
+import scheduleReducer from '../Reducers/Schedule'
+
 // historyはsrc/index.jsから渡す
 export default function createStore(history) {
   return reduxCreateStore(
@@ -21,6 +24,8 @@ export default function createStore(history) {
       socket: socketReducer,
       reg: regReducer,
       login: loginReducer,
+      schedule: scheduleReducer,
+      manager: managerReducer,
       // react-router-reduxのReducer
       router: routerReducer,
     }),

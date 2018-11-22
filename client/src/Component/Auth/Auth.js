@@ -4,12 +4,11 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { loginAuth } from '../../Actions/Status'
 
-// import Login from './Login/Container'
-// import Reg from './Reg/Container'
-
 import Home from './Home/Home'
+import Schedule from './Schedule/Schedule'
+import Manager from './Manager/Manager'
 
-// import './Base.css'
+// import './Auth.css'
 
 function mapStateToProps(state) {
   return {
@@ -33,12 +32,14 @@ class Auth extends Component {
 
   render () {
     const { login, loading } = this.props
-    if (loading) return <div>読み込み中...</div>
+    if (loading) return <div className='full-loading'><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
     if (!login) return <Redirect to='/login' />
     return (
       <div className='auth'>
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route path='/schedule' component={Schedule} />
+          <Route path='/manager' component={Manager} />
         </Switch>
       </div>
     )
