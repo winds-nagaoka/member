@@ -58,7 +58,7 @@ class Auth extends Component {
       <div className='auth'>
         <Toast />
         <NavigationHeader />
-        <div className={'contents' + (pc ? ' pc' : '')}>
+        <div className={'contents' + (pc ? ' pc' : ' mobile')}>
           <div className={pc ? 'flex-frame': ''}>
             <NavigationInline />
             <div className={pc ? 'inline-contents' : ''}>

@@ -41,7 +41,7 @@ export default function createStore(history) {
       router: routerReducer,
     }),
     applyMiddleware(
-      logger,
+      // logger,
       thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)

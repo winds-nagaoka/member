@@ -38,28 +38,28 @@ class NavigationHeader extends Component {
     const { pc, mobile, menuOpen, title } = this.props
     const { navigationMenuToggle } = this.props
 
-    const menuContentClass = menuOpen ? 'menu-content open' : 'menu-content'
-    const menuBackgroundClass = menuOpen ? 'menu-background open' : 'menu-background'
-    const showTitle = title ? <div className='title' onClick={() => this.titleClick()}>{title}</div> : <div className='logo'><WindsLogo onClick={() => this.titleClick()} /></div>
+    // const menuContentClass = 
+    // const menuBackgroundClass = 
+    const showTitle = title ? <div className='title-text' onClick={() => this.titleClick()}>{title}</div> : <div className='logo'><WindsLogo onClick={() => this.titleClick()} /></div>
 
     // const backNavAndMenuToggle = this.state.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
     const backNavAndMenuToggle = mobile ? <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div> : <div></div>
 
     // const headerClass = ((this.state.titleBar) || (this.state.titleSearchStatus) ? 'header no-border' : 'header') + (this.state.titleFont ? ' font' : '')
-    const titleHeaderClass = 'title'
+    // const titleHeaderClass = 'title'
     // const searchIcon = this.state.titleSearch ? <div className={'label search' + (this.state.titleSearchStatus ? '' : ' close')} onClick={() => this.toggleSearch()}><i className="fas fa-search"></i></div> : ''
     const searchIcon = ''
     return (
       <div className='navigation-header'>
         <div className={'header' + (pc ? ' pc' : '')}>
-          <div className={titleHeaderClass}>
+          {/* <div className={'title'}> */}
             {showTitle}
-          </div>
+          {/* </div> */}
           {backNavAndMenuToggle}
           {searchIcon}
         </div>
-        <div className={menuBackgroundClass} onClick={() => navigationMenuToggle()}></div>
-        <div className={menuContentClass}>
+        <div className={'menu-background' + (menuOpen ? ' open' : '')} onClick={() => navigationMenuToggle()}></div>
+        <div className={'menu-content' + (menuOpen ? ' open' : '')}>
           <NavigationMenuContents />
         </div>
       </div>

@@ -1,6 +1,146 @@
 .home {
   width: 100%;
-  max-width: 600px;
-  margin: 16px auto 0;
-  font-size: 13px;
+  // max-width: 600px;
+  margin: 0 auto;
+  // font-size: 13px;
+
+  &.mobile {
+    margin: 12px 0;
+  }
+
+  // background: #fff;
+
+  .contents-header {
+    margin: 0;
+    padding: 16px 0;
+    background: #fff;
+
+    h2 {
+      padding: 0 16px;
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+
+  .home-schedule {
+    .next {
+
+      .today {
+        margin: 0 .5em 0 0;
+        padding: .2em .5em;
+        border-radius: 5px;
+        color: #fff;
+        background: #B60005;
+        font-size: .9rem;
+      }
+      .memo {
+        padding: .2em .5em;
+        border-radius: 5px;
+        color: #fff;
+        background: #3396ff;
+        font-size: .9rem;
+      }
+
+      .next-day {
+        display: inline;
+
+        // .year {
+        //   display: none;
+        // }
+  
+        .month {
+          font-size: 2rem;
+  
+          span {
+            padding-left: .2em;
+            font-size: 1.2rem;
+          }
+        }
+        .day {
+          padding-left: .2em;
+          font-size: 2rem;
+  
+          span {
+            padding-left: .2em;
+            font-size: 1.2rem;
+          }
+        }
+  
+        .date {
+          display: inline-block;
+          width: 1.5em;
+          height: 1.5em;
+          border-radius: 5px;
+          margin-left: .2em;
+          text-align: center;
+          vertical-align: text-bottom;
+          font-size: 1.2em;
+          font-weight: bold;
+          background: rgba(150,150,150,1);
+          color: rgba(255,255,255,1);
+  
+          &.saturday {
+            background: rgba(0,103,192,.8);
+          }
+  
+          &.sunday {
+            background: rgba(237,26,61,.8);
+          }
+        }
+      }
+
+      .next-time {
+        display: inline;
+        padding-left: 8px;
+
+        .time {
+          font-size: 1.2rem;
+        }
+
+        .while {
+          padding: 0 2px;
+          font-size: 1rem;
+        }
+      }
+
+      .next-place {
+        display: block;
+
+        .studio {
+          padding-left: 16px;
+
+          span {
+            span {
+              padding: 0 6px;
+              font-size: 1.6em;
+            }
+          }
+        }
+      }
+
+      // article.card div.card-text p .time {
+      //   font-size: 1.2em;
+      //   padding-left: 1em;
+      //   color: #666;
+      // }
+    }
+  }
+
+  .home-manager {
+    .top-notice {
+      padding: 0;
+      background: #eee;
+
+      .top-notice-title {
+        padding: 8px 12px;
+        font-size: .9rem;        
+        background: #ddd;
+      }
+
+      .top-notice-text {
+        padding: 4px 12px 8px 12px;
+        font-size: .9rem;
+      }
+    }
+  }
 }

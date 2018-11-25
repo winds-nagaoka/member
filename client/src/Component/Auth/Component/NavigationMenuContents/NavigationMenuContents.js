@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Route, Link, NavLink } from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert'
 
 import { connect } from 'react-redux'
 
 import { navigationMenu } from '../../../../Actions/Navigation'
+import { logout } from '../../../../Actions/Status'
 
 import './NavigationMenuContents.css'
 
@@ -19,16 +21,40 @@ function mapDispatchToProps(dispatch) {
   return {
     navigationMenu (open) {
       dispatch(navigationMenu(open))
+    },
+    logout () {
+      dispatch(logout())
     }
   }
 }
 
 class NavigationMenuContents extends Component {
 
+  logout () {
+    this.props.navigationMenu(false)
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='alert'>
+            <h1>ログアウトしますか？</h1>
+            <p>ユーザー情報は端末に残りません。</p>
+            <div className='button-group'>
+              <button onClick={onClose}>キャンセル</button>
+              <button onClick={() => {
+                this.props.logout()
+                // Actions.toastShow('ログアウトしました')
+                onClose()
+              }}>ログアウト</button>
+            </div>
+          </div>
+        )
+      }
+    })
+  }
+
   render () {
     const { pc, mobile, path } = this.props
     const { navigationMenu } = this.props
-    console.warn('Menu render: ' + path)
     return (
       <div className={'navigation-menu-contents' + (pc ? ' pc' : '')}>
         <div className='app-info'>
