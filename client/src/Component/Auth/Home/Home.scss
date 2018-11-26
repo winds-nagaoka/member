@@ -143,4 +143,57 @@
       }
     }
   }
+
+  .home-bbs-list {
+
+    .home-bbs-item {
+      padding: 12px;
+      background: #f6f6f6;
+
+      &:not(:first-child){
+        margin-top: 12px;
+      }
+
+      .home-bbs-title {
+        display: flex;
+        align-items: center;
+
+        .number {
+          min-width: 20px;
+          min-height: 20px;
+          border-radius: 5px;
+          padding: 4px 6px;
+          text-align: center;
+          line-height: 20px;
+          font-size: 1em;
+          font-weight: bold;
+          background: rgba(150,150,150,1);
+          color: rgba(255,255,255,1);
+        }
+
+        .name {
+          padding-left: 8px;
+          font-size: .8rem;
+          color: #333;
+        }
+  
+        .time {
+          margin-left: auto;
+          font-size: .8rem;
+          color: #aaa;
+        }
+      }
+
+      .home-bbs-text {
+        margin-top: 8px;
+        font-size: .9rem;
+
+        p {
+          margin: 0;
+          padding: 0;
+        }
+      }
+      
+    }
+  }
 }

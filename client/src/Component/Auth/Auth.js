@@ -9,6 +9,7 @@ import { loginAuth, windowWidthChange } from '../../Actions/Status'
 import Home from './Home/Home'
 import Schedule from './Schedule/Schedule'
 import Manager from './Manager/Manager'
+import BBS from './BBS/BBS'
 
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
@@ -41,15 +42,19 @@ function mapDispatchToProps(dispatch) {
 
 class Auth extends Component {
   componentWillMount () {
+    // 過去のlocation情報が存在する場合はそのページへRedirect
     this.props.loginAuth(window.localStorage.location ? window.localStorage.location : false)
   }
 
   componentWillReceiveProps () {
     // this.contents.scrollTop = 0
+
+    if(this.contents) {
+      this.contents.scrollTop = 0
+    }
   }
 
   componentDidUpdate () {
-
     // console.warn('update')
   }
   
@@ -58,8 +63,6 @@ class Auth extends Component {
     window.addEventListener('resize', () => {
       this.props.windowWidthChange()
     })
-
-    // this.contents.scrollTop = 0
   }
 
   componentWillUnmount () {
@@ -82,6 +85,7 @@ class Auth extends Component {
                 <Route exact path='/' component={Home} />
                 <Route path='/schedule' component={Schedule} />
                 <Route path='/manager' component={Manager} />
+                <Route path='/bbs' component={BBS} />
               </Switch>
             </div>
           </div>

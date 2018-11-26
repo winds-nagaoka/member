@@ -4,6 +4,8 @@ import { navigationMenu } from './Navigation'
 import * as request from '../Library/Request'
 import { version } from '../Library/Library'
 
+// import { listen } from 'react-router-redux'
+
 export const loginAuth = (location) => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return dispatch(loginUpdate(false))

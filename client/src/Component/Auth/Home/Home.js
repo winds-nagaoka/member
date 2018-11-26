@@ -6,6 +6,7 @@ import { connectSocket } from '../../../Actions/Socket'
 
 import { getSchedule } from '../../../Actions/Schedule'
 import { getManager } from '../../../Actions/Manager'
+import { getBBSList } from '../../../Actions/BBS'
 
 import { showToast } from '../../../Actions/Toast'
 
@@ -19,7 +20,9 @@ function mapStateToProps(state) {
     loadingSchedule: state.schedule.loading,
     schedule: state.schedule.data,
     loadingManager: state.manager.loading,
-    manager: state.manager.data
+    manager: state.manager.data,
+    loadingBBS: state.bbs.loading,
+    BBSList: state.bbs.data
   }
 }
 
@@ -34,6 +37,9 @@ function mapDispatchToProps(dispatch) {
     getManager () {
       dispatch(getManager())
     },
+    getBBSList () {
+      dispatch(getBBSList())
+    },
 
     showToast (string) {
       dispatch(showToast(string))
@@ -47,6 +53,7 @@ class Home extends Component {
 
     this.props.getSchedule()
     this.props.getManager()
+    this.props.getBBSList()
   }
 
   renderSchedule (loading, schedule) {
@@ -92,9 +99,24 @@ class Home extends Component {
     )
   }
 
+  renderBBS (loading, BBSList) {
+    if (loading || !BBSList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    return BBSList.list.map((each, i) => {
+      if (i >= 3) return false
+      const text = each.text.replace(/(<br>|<br \/>)/gi, '\n')
+      return (
+        <div key={'bbs' + i} className='home-bbs-item'>
+          <div className='home-bbs-title'><span className='number'>{each.number}</span><span className='name'>{each.name}</span><span className='time'>{each.time}</span></div>
+          {/* <div className='bbs-text' dangerouslySetInnerHTML={{__html: each.text}}></div> */}
+          <div className='home-bbs-text'>{text.split('\n').map((m,j) => {return (<p key={'text' + i + j}>{m}</p>)})}</div>
+        </div>
+      )
+    })
+  }
+
   render () {
     // State List
-    const { socketid, mobile, loadingSchedule, schedule, loadingManager, manager } = this.props
+    const { socketid, mobile, loadingSchedule, schedule, loadingManager, manager, loadingBBS, BBSList } = this.props
     // Dispatch List
     // const { logout } = this.props
     const socketStatus = socketid ? 'OK' : 'NG'
@@ -102,6 +124,7 @@ class Home extends Component {
 
     const showScheduleNext = this.renderSchedule(loadingSchedule, schedule)
     const showManager = this.renderManager(loadingManager, manager)
+    const showBBS = this.renderBBS(loadingBBS, BBSList)
     return (
       <div className={'home' + mobileMode}>
         <div className='contents-header'>
@@ -131,6 +154,22 @@ class Home extends Component {
           <div className='link'>
             <ul>
               <li><Link to='/manager'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className='box home-bbs'>
+          <div className='title-frame'>
+            <label>団員専用掲示板</label>
+            <div className='text'>
+              <div className='home-bbs-list'>
+                {showBBS}
+              </div>
+            </div>
+          </div>
+          <div className='link'>
+            <ul>
+              <li><Link to='/bbs'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

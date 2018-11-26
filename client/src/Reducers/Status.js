@@ -40,11 +40,11 @@ export default function statusReducer (state = initialState, action) {
       }
     // react-router-redux の Action をフック
     // リンク移動先を保存
-    case '@@router/LOCATION_CHANGE':
-      window.localStorage.setItem('location', action.payload.pathname)
-      return {
-        ...state,
-      }
+    // case '@@router/LOCATION_CHANGE':
+    //   window.localStorage.setItem('location', action.payload.pathname)
+    //   return {
+    //     ...state,
+    //   }
     default:
       return state
   }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { getSchedule } from '../../../Actions/Schedule'
 
-import { goBack } from 'react-router-redux'
+// import { goBack } from 'react-router-redux'
 
 import './Schedule.css'
 
@@ -25,10 +25,9 @@ function mapDispatchToProps(dispatch) {
     getSchedule () {
       dispatch(getSchedule())
     },
-
-    goBack () {
-      dispatch(goBack())
-    }
+    // goBack () {
+    //   dispatch(goBack())
+    // }
   }
 }
 
@@ -118,7 +117,7 @@ class Schedule extends Component {
     // State List
     const { mobile, loadingSchedule, schedule} = this.props
     // Dispatch List
-    const { goBack } = this.props
+    // const { goBack } = this.props
 
     const mobileMode = mobile ? ' mobile' : ''
 
@@ -162,7 +161,8 @@ class Schedule extends Component {
             </ul>
           </div>
         </div>
-        <div onClick={() => {goBack()}}>もどる</div>
+        {/* <div onClick={() => {goBack()}}>もどる</div>
+        <div onClick={() => {window.history.back()}}>もどる</div> */}
       </div>
     )
   }

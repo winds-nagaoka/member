@@ -37,9 +37,7 @@ class Manager extends Component {
 
   renderManager (loading, manager) {
     if (loading || !manager) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    console.log(manager.manager)
     return manager.manager.map((each, i) => {
-      console.log(each.attachment)
       const attachment = each.attachment ? each.attachment.map((attach, i) => {
         const size = Math.round(attach.size * 0.01) / 10
         return <div key={'attachment' + i} className='notice-attachment'><a href={'https://winds-n.com/member/data/' + attach.filename} target='_blank' className='attachment'><span>{attach.title}</span><span className='size'>{size}KB</span></a></div>
@@ -67,11 +65,13 @@ class Manager extends Component {
         <div className='contents-header'>
           <h2>事務局からのお知らせ</h2>
         </div>
+
         <div className='box manager'>
           <div className='text'>
             {showManager}
           </div>
         </div>
+
         <div className='box back-to-home'>
           <div className='back-link'>
             <ul>
