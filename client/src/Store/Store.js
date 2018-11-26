@@ -20,7 +20,7 @@ import scheduleReducer from '../Reducers/Schedule'
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
-// historyはsrc/index.jsから渡す
+// historyはsrc/App.jsから渡す
 export default function createStore(history) {
   return reduxCreateStore(
     combineReducers({
@@ -39,9 +39,10 @@ export default function createStore(history) {
 
       // react-router-reduxのReducer
       router: routerReducer,
+      // history: historyReducer
     }),
     applyMiddleware(
-      // logger,
+      logger,
       thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)

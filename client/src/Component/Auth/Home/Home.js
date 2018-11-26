@@ -107,11 +107,12 @@ class Home extends Component {
         <div className='contents-header'>
           <h2>団員専用ページ {socketStatus}</h2>
         </div>
-
         <div className='box home-schedule'>
-          <label>次回の練習日</label>
-          <div className='text'>
-            {showScheduleNext}
+          <div className='title-frame'>
+            <label>次回の練習日</label>
+            <div className='text'>
+              {showScheduleNext}
+            </div>
           </div>
           <div className='link'>
             <ul>
@@ -121,9 +122,11 @@ class Home extends Component {
         </div>
 
         <div className='box home-manager'>
-          <label>お知らせ</label>
-          <div className='text'>
-            {showManager}
+          <div className='title-frame'>
+            <label>お知らせ</label>
+            <div className='text'>
+              {showManager}
+            </div>
           </div>
           <div className='link'>
             <ul>

@@ -51,14 +51,22 @@
   // 標準box
   .box {
     margin: 12px 0 0 0;
-    padding: 12px 0 0;
+    // padding: 12px 0 0;
     background: #fff;
+
+    // border-top: .55px solid #c8c7cc;
+    // border-bottom: .55px solid #c8c7cc;
+
+    .title-frame {
+      padding: 12px 0 0;
+    }
 
     label {
       display: block;
       // margin: 8px 0;
       padding-left: 16px;
       border-bottom: .55px solid #c8c7cc;
+      // border-bottom: .55px dotted #c8c7cc;
       background: #fff;
       color: #333;
       font-size: 1.2rem;
@@ -70,7 +78,14 @@
 
       // position: relative;
       // border-bottom: .55px solid #c8c7cc;
+
+      // &::before {
+      //   display: block;
+      //   content: '';
+      //   padding-top: 12px;
+      // }
     }
+
     .text {
       // margin: 4px 0 8px;
       padding: 13px 16px 14px;

@@ -4,6 +4,8 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { loginAuth, windowWidthChange } from '../../Actions/Status'
 
+// import { replace } from 'react-router-redux'
+
 import Home from './Home/Home'
 import Schedule from './Schedule/Schedule'
 import Manager from './Manager/Manager'
@@ -25,18 +27,30 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loginAuth () {
-      dispatch(loginAuth())
+    loginAuth (location) {
+      dispatch(loginAuth(location))
     },
     windowWidthChange () {
       dispatch(windowWidthChange())
-    }
+    },
+    // replace (path) {
+    //   dispatch(replace(path))
+    // }
   }
 }
 
 class Auth extends Component {
   componentWillMount () {
-    this.props.loginAuth()
+    this.props.loginAuth(window.localStorage.location ? window.localStorage.location : false)
+  }
+
+  componentWillReceiveProps () {
+    // this.contents.scrollTop = 0
+  }
+
+  componentDidUpdate () {
+
+    // console.warn('update')
   }
   
   componentDidMount () {
@@ -44,6 +58,8 @@ class Auth extends Component {
     window.addEventListener('resize', () => {
       this.props.windowWidthChange()
     })
+
+    // this.contents.scrollTop = 0
   }
 
   componentWillUnmount () {
@@ -58,7 +74,7 @@ class Auth extends Component {
       <div className='auth'>
         <Toast />
         <NavigationHeader />
-        <div className={'contents' + (pc ? ' pc' : ' mobile')}>
+        <div className={'contents' + (pc ? ' pc' : ' mobile')} ref={(i) => this.contents = i}>
           <div className={pc ? 'flex-frame': ''}>
             <NavigationInline />
             <div className={pc ? 'inline-contents' : ''}>

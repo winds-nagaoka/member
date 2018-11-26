@@ -1,8 +1,10 @@
+import { replace } from 'react-router-redux'
+
 import { navigationMenu } from './Navigation'
 import * as request from '../Library/Request'
 import { version } from '../Library/Library'
 
-export const loginAuth = () => {
+export const loginAuth = (location) => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return dispatch(loginUpdate(false))
     if(getState().status.loading) return false
@@ -21,6 +23,7 @@ export const loginAuth = () => {
           dispatch(windsidUpdate(window.localStorage.windsid))
           dispatch(tokenUpdate(res.body.token))
           dispatch(loginUpdate(true))
+          dispatch(replace(location))
         } else {
           console.log('Auth NG')
           dispatch(windsidUpdate(false))

@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import { getSchedule } from '../../../Actions/Schedule'
 
+import { goBack } from 'react-router-redux'
+
 import './Schedule.css'
 
 function mapStateToProps(state) {
@@ -22,6 +24,10 @@ function mapDispatchToProps(dispatch) {
   return {
     getSchedule () {
       dispatch(getSchedule())
+    },
+
+    goBack () {
+      dispatch(goBack())
     }
   }
 }
@@ -112,7 +118,8 @@ class Schedule extends Component {
     // State List
     const { mobile, loadingSchedule, schedule} = this.props
     // Dispatch List
-    // none
+    const { goBack } = this.props
+
     const mobileMode = mobile ? ' mobile' : ''
 
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
@@ -124,16 +131,20 @@ class Schedule extends Component {
         </div>
 
         <div className='box schedule-next'>
-          <label>次回の練習日</label>
-          <div className='text'>
-            {showScheduleNext}
+          <div className='title-frame'>
+            <label>次回の練習日</label>
+            <div className='text'>
+              {showScheduleNext}
+            </div>
           </div>
         </div>
 
         <div className='box schedule-next'>
-          <label>今後の練習日程</label>
-          <div className='text'>
-            {showScheduleList}
+          <div className='title-frame'>
+            <label>今後の練習日程</label>
+            <div className='text'>
+              {showScheduleList}
+            </div>
           </div>
         </div>
 
@@ -151,6 +162,7 @@ class Schedule extends Component {
             </ul>
           </div>
         </div>
+        <div onClick={() => {goBack()}}>もどる</div>
       </div>
     )
   }
