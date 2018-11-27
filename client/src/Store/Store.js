@@ -10,8 +10,8 @@ import thunk from 'redux-thunk'
 import statusReducer from '../Reducers/Status'
 import socketReducer from '../Reducers/Socket'
 
+import audioReducer from '../Reducers/Audio'
 import navigationReducer from '../Reducers/Navigation'
-
 import toastReducer from '../Reducers/Toast'
 
 import managerReducer from '../Reducers/Manager'
@@ -31,6 +31,7 @@ export default function createStore(history) {
       status: statusReducer,
       socket: socketReducer,
 
+      audio: audioReducer,
       navigation: navigationReducer,
       toast: toastReducer,
 
@@ -48,7 +49,7 @@ export default function createStore(history) {
       // history: historyReducer
     }),
     applyMiddleware(
-      // logger,
+      logger,
       thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)

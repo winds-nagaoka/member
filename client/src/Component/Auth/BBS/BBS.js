@@ -39,7 +39,7 @@ class BBS extends Component {
     if (loading || !list) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     console.warn(list)
     return list.list.map((each, i) => {
-      const text = each.text.replace(/(<br>|<br \/>)/gi, '\n')
+      const text = each.text.replace(/(<br>|<br \/>)/gi, '\n').replace(/&gt;/gi, '>').replace(/&lt;/gi, '<')
       return (
         <div key={'bbs' + i} className='bbs-item'>
           <div className='bbs-title'><span className='number'>{each.number}</span><span className='name'>{each.name}</span><span className='time'>{each.time}</span></div>

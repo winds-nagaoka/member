@@ -3,5 +3,5 @@
 # dependencies
 /node_modules
 
-/client/build/bundle.js
-/client/build/bundle.js.map
+client/build/bundle.js
+client/build/bundle.js.map

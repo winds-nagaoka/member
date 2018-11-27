@@ -142,7 +142,7 @@ class Home extends Component {
     if (loading || !BBSList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     return BBSList.list.map((each, i) => {
       if (i >= 3) return false
-      const text = each.text.replace(/(<br>|<br \/>)/gi, '\n')
+      const text = each.text.replace(/(<br>|<br \/>)/gi, '\n').replace(/&gt;/gi, '>').replace(/&lt;/gi, '<')
       return (
         <div key={'bbs' + i} className='home-bbs-item'>
           <div className='home-bbs-title'><span className='number'>{each.number}</span><span className='name'>{each.name}</span><span className='time'>{each.time}</span></div>

@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import { connectSocket, disconnectSocket } from '../../../Actions/Socket'
 
+import { requestPlayAudio, requestStopAudio } from '../../../Actions/Audio'
+
 import { getList } from '../../../Actions/Cast'
 
 // import { goBack } from 'react-router-redux'
@@ -17,6 +19,8 @@ function mapStateToProps(state) {
 
     loadingList: state.cast.loadingList,
     castList: state.cast.list,
+
+    playStatus: state.audio.playStatus
   }
 }
 
@@ -31,6 +35,13 @@ function mapDispatchToProps(dispatch) {
     getList () {
       dispatch(getList())
     },
+
+    requestPlayAudio (src, withPlay) {
+      dispatch(requestPlayAudio(src, withPlay))
+    },
+    requestStopAudio () {
+      dispatch(requestStopAudio())
+    }
   }
 }
 
@@ -64,48 +75,25 @@ class Cast extends Component {
 
   render () {
     // State List
-    const { mobile, loadingList, castList} = this.props
+    const { mobile, loadingList, castList, playStatus } = this.props
     // Dispatch List
-    // const { goBack } = this.props
+    const { requestPlayAudio, requestStopAudio } = this.props
 
     const mobileMode = mobile ? ' mobile' : ''
 
-    console.log('!',castList)
+    const showPlayStatus = playStatus ? 'PLAY' : 'STOP'
 
     const showCastList = this.renderList(loadingList, castList)
-    // const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
-    // const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
     return (
       <div className={'cast' + mobileMode}>
         <div className='contents-header'>
           <h2>キャスト</h2>
         </div>
-
+        {/* <div onClick={() => requestPlayAudio('https://audio.winds-n.com/member/no5.mp3', true)}>再生</div> */}
+        <div onClick={() => requestPlayAudio('https://audio.winds-n.com/30th/002.mp3', true)}>再生</div>
+        <div onClick={() => requestStopAudio()}>停止</div>
+        <div>{showPlayStatus}</div>
         {showCastList}
-        {/* <div className='box schedule-next'>
-          <div className='title-frame'>
-            <label>次回の練習日</label>
-            <div className='text'>
-              {showScheduleNext}
-            </div>
-          </div>
-        </div>
-
-        <div className='box schedule-next'>
-          <div className='title-frame'>
-            <label>今後の練習日程</label>
-            <div className='text'>
-              {showScheduleList}
-            </div>
-          </div>
-        </div> */}
-
-        {/* <div>
-          <div>
-            {showScheduleList}
-          </div>
-        </div> */}
-        {/* <Link to='/'>ホーム</Link> */}
 
         <div className='box back-to-home'>
           <div className='back-link'>
@@ -114,8 +102,6 @@ class Cast extends Component {
             </ul>
           </div>
         </div>
-        {/* <div onClick={() => {goBack()}}>もどる</div>
-        <div onClick={() => {window.history.back()}}>もどる</div> */}
       </div>
     )
   }

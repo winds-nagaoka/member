@@ -15,6 +15,8 @@ import Cast from './Cast/Cast'
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
 
+import Audio from './Component/Audio/Audio'
+
 import Toast from './Component/Toast/Toast'
 
 import './Auth.css'
@@ -90,6 +92,7 @@ class Auth extends Component {
                 <Route path='/cast' component={Cast} />
               </Switch>
             </div>
+            <Audio />
           </div>
         </div>
       </div>
