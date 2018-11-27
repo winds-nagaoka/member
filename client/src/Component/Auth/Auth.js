@@ -10,6 +10,7 @@ import Home from './Home/Home'
 import Schedule from './Schedule/Schedule'
 import Manager from './Manager/Manager'
 import BBS from './BBS/BBS'
+import Cast from './Cast/Cast'
 
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
@@ -86,6 +87,7 @@ class Auth extends Component {
                 <Route path='/schedule' component={Schedule} />
                 <Route path='/manager' component={Manager} />
                 <Route path='/bbs' component={BBS} />
+                <Route path='/cast' component={Cast} />
               </Switch>
             </div>
           </div>

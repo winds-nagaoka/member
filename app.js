@@ -26,6 +26,7 @@ app.use('/', express.static(client))
 app.use('/schedule', express.static(client))
 app.use('/manager', express.static(client))
 app.use('/bbs', express.static(client))
+app.use('/cast', express.static(client))
 app.use('/reg', express.static(client))
 app.use('/login', express.static(client))
 

@@ -18,6 +18,8 @@ import managerReducer from '../Reducers/Manager'
 import scheduleReducer from '../Reducers/Schedule'
 import bbsReducer from '../Reducers/BBS'
 
+import castReducer from '../Reducers/Cast'
+
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
@@ -35,6 +37,8 @@ export default function createStore(history) {
       schedule: scheduleReducer,
       manager: managerReducer,
       bbs: bbsReducer,
+
+      cast: castReducer,
 
       reg: regReducer,
       login: loginReducer,
