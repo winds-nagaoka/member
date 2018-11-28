@@ -7,11 +7,11 @@ import { loginAuth, windowWidthChange } from '../../Actions/Status'
 // import { replace } from 'react-router-redux'
 
 import Home from './Home/Home'
-import Schedule from './Schedule/Schedule'
+import Practice from './Practice/Practice'
 import Manager from './Manager/Manager'
 import BBS from './BBS/BBS'
-import Cast from './Cast/Cast'
-import Record from './Record/Record'
+import Cast from './Practice/Cast/Cast'
+import Record from './Practice/Record/Record'
 
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
@@ -50,7 +50,8 @@ class Auth extends Component {
     this.props.loginAuth(window.localStorage.location ? window.localStorage.location : false)
   }
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps (nextProps, nextContext) {
+    console.warn(nextProps, nextContext)
     // this.contents.scrollTop = 0
 
     if(this.contents) {
@@ -87,11 +88,11 @@ class Auth extends Component {
             <div className={pc ? 'inline-contents' : ''}>
               <Switch>
                 <Route exact path='/' component={Home} />
-                <Route path='/schedule' component={Schedule} />
+                <Route path='/practice' component={Practice} />
                 <Route path='/manager' component={Manager} />
                 <Route path='/bbs' component={BBS} />
-                <Route path='/cast' component={Cast} />
-                <Route path='/record' component={Record} />
+                <Route path='/practice/cast' component={Cast} />
+                <Route path='/practice/record' component={Record} />
               </Switch>
             </div>
             <Audio />

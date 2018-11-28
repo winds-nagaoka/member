@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { connectSocket, disconnectSocket } from '../../../Actions/Socket'
+import { connectSocket, disconnectSocket } from '../../../../Actions/Socket'
 
-import { getList } from '../../../Actions/Cast'
+import { getList } from '../../../../Actions/Cast'
 
-import { requestPlayAudio, requestStopAudio } from '../../../Actions/Audio'
+import { requestPlayAudio, requestStopAudio } from '../../../../Actions/Audio'
 
 import './Record.css'
 

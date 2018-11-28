@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { getSchedule } from '../../../Actions/Schedule'
+import { getSchedule } from '../../../../Actions/Schedule'
 
 // import { goBack } from 'react-router-redux'
 
@@ -72,7 +72,6 @@ class Schedule extends Component {
   renderScheduleList (loading, schedule) {
     if (loading || !schedule) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     return Object.keys(schedule.schedule).map((key, i) => {
-      console.log(key,schedule.schedule[key])
       const year = key.split('-')[0]
       const month = key.split('-')[1].match(/0[0-9]/) ? key.split('-')[1].replace(/^0/g, '') : key.split('-')[1]
       const list = schedule.schedule[key].map((each, j) => {
@@ -125,9 +124,9 @@ class Schedule extends Component {
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
     return (
       <div className={'schedule' + mobileMode}>
-        <div className='contents-header'>
+        {/* <div className='contents-header'>
           <h2>練習日程</h2>
-        </div>
+        </div> */}
 
         <div className='box schedule-next'>
           <div className='title-frame'>
@@ -154,13 +153,13 @@ class Schedule extends Component {
         </div> */}
         {/* <Link to='/'>ホーム</Link> */}
 
-        <div className='box back-to-home'>
+        {/* <div className='box back-to-home'>
           <div className='back-link'>
             <ul>
               <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
             </ul>
           </div>
-        </div>
+        </div> */}
         {/* <div onClick={() => {goBack()}}>もどる</div>
         <div onClick={() => {window.history.back()}}>もどる</div> */}
       </div>

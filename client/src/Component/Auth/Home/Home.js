@@ -182,7 +182,7 @@ class Home extends Component {
           </div>
           <div className='link'>
             <ul>
-              <li><Link to='/schedule'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/practice'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>
