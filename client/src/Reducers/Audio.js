@@ -6,8 +6,10 @@ const initialState = {
   playRequest: false,
   playStatus: false,
   playing: false,
-  duration: undefined,
   current: undefined,
+  currentText: undefined,
+  duration: undefined,
+  durationText: undefined,
   percent: undefined,
 
   loadingPlaylist: false,
@@ -50,7 +52,9 @@ export default function audioReducer (state = initialState, action) {
       return {
         ...state,
         current: action.payload.current,
+        currentText: action.payload.currentText,
         duration: action.payload.duration,
+        durationText: action.payload.durationText,
         percent: action.payload.percent
       }
     // case 'AUDIO_PLAYLIST':

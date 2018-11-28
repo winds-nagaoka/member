@@ -1,4 +1,5 @@
 import * as request from '../Library/Request'
+import { playTime } from '../Library/Library'
 
 export const getPlaylist = (url) => {
   return async (dispatch, getState) => {
@@ -87,12 +88,16 @@ export const audioStatusUpdate = (status) => ({
 
 // Call from Audio Component
 export const playUpdate = (current, duration) => {
-  const percent = Math.round((current / duration) * 1000) / 10
+  const percent = (duration && current) ? Math.round((current / duration) * 1000) / 10 : undefined
+  const currentText = current ? playTime(Math.floor(current)) : undefined
+  const durationText = duration ? playTime(Math.round(duration)) : undefined
   return ({
     type: 'AUDIO_PLAY_UPDATE',
     payload: {
       current,
+      currentText,
       duration,
+      durationText,
       percent
     }
   })

@@ -29,7 +29,8 @@
     // }
 
     div.flex-frame {
-      max-width: 960px;
+      // menu: 300px, contents: 900px, margin: 16px * 4
+      max-width: 1264px;
       margin: 0 auto;
 
       display: flex;
@@ -40,8 +41,8 @@
 
     // pcモードのとき追加
     .inline-contents {
-      width: 600px;
-      margin: 36px 16px 16px;
+      width: 900px;
+      margin: 36px 16px 36px;
     }
 
     .gap {

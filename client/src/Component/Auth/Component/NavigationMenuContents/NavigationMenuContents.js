@@ -63,12 +63,13 @@ class NavigationMenuContents extends Component {
         </div>
         <ol>
           <li><CustomLink path={path} activeOnlyWhenExact={true} to='/' label='ホーム' icon='fas fa-home' onClick={() => {navigationMenu(false)}} /></li>
-          <li><CustomLink path={path} to='/schedule' label='練習日程' icon='far fa-thumbs-up' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/cast' label='練習記録' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/manager' label='お知らせ' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/bbs' label='掲示板' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/manager' label='アーカイブ' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/manager' label='楽譜' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/schedule' label='練習日程' icon='far fa-calendar-check' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/record' label='練習の録音' icon='fas fa-microphone-alt' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/manager' label='お知らせ' icon='fas fa-bullhorn' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/bbs' label='掲示板' icon='fas fa-comments' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/archive' label='アーカイブ' icon='fas fa-archive' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/score' label='楽譜' icon='far fa-sticky-note' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/setting' label='設定' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
         </ol>
         <ol>
           <li><div className='link' onClick={() => this.logout()}><div><i className='fas fa-sign-out-alt'></i>ログアウト</div></div></li>

@@ -7,12 +7,12 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: false,
   plugins: [
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        ecma: 8,
-        compress: true
-      }
-    }),
+    // new UglifyJsPlugin({
+    //   uglifyOptions: {
+    //     ecma: 8,
+    //     compress: true
+    //   }
+    // }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
