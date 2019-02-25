@@ -82,11 +82,6 @@ class Schedule extends Component {
         const studio = each.studio.match(/第[1-9]スタジオ/) ? <span>第<span>{each.studio.replace('第', '').replace('スタジオ', '')}</span>スタジオ</span> : <span>{each.studio}</span>
         return (
           <div key={'list' + j} className='each'>
-            <div className='labels'>
-              {/* {today} */}
-              {memo}
-              {/* <span className='memo'>今井合奏</span> */}
-            </div>
             <div className='days'>
               {/* <span className='year'>{date[0]}<span>年</span></span> */}
               {/* <span className='month'>{month}<span>月</span></span> */}
@@ -99,6 +94,11 @@ class Schedule extends Component {
             <div className='places'>
               <span className='place'>{each.place}</span>
               <span className='studio'>{studio}</span>
+            </div>
+            <div className='labels'>
+              {/* {today} */}
+              {memo}
+              {/* <span className='memo'>今井合奏</span> */}
             </div>
           </div>
         )

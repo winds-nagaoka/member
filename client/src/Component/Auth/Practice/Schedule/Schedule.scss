@@ -33,10 +33,10 @@
         // .year {
         //   display: none;
         // }
-  
+
         .month {
           font-size: 2rem;
-  
+
           span {
             padding-left: .2em;
             font-size: 1.2rem;
@@ -45,13 +45,13 @@
         .day {
           padding-left: .2em;
           font-size: 2rem;
-  
+
           span {
             padding-left: .2em;
             font-size: 1.2rem;
           }
         }
-  
+
         .date {
           display: inline-block;
           width: 1.5em;
@@ -64,11 +64,11 @@
           font-weight: bold;
           background: rgba(150,150,150,1);
           color: rgba(255,255,255,1);
-  
+
           &.saturday {
             background: rgba(0,103,192,.8);
           }
-  
+
           &.sunday {
             background: rgba(237,26,61,.8);
           }
@@ -137,89 +137,100 @@
     }
 
     .list {
-      padding: 8px 0;
+      padding: 0 0 8px 0;
 
-      .memo {
-        padding: .2em .5em;
-        border-radius: 5px;
-        color: #fff;
-        background: #3396ff;
-        font-size: .9rem;
-      }
+      .each {
+        padding: 4px 0;
+        border-bottom: .55px solid #c8c7cc;
+        vertical-align: baseline;
 
-      .days {
-        display: inline;
-
-        .day {
-          // 一覧では右揃えにする
+        .labels {
           display: inline-block;
-          min-width: 45px;
-          text-align: right;
+        }
 
-          padding-left: .2em;
-          font-size: 1.2rem;
-  
-          span {
+        .memo {
+          margin: 0 .2em;
+          padding: .1em .4em;
+          border-radius: 5px;
+          color: #fff;
+          background: #3396ff;
+          font-size: 1rem;
+        }
+
+        .days {
+          display: inline;
+
+          .day {
+            // 一覧では右揃えにする
+            display: inline-block;
+            min-width: 45px;
+            text-align: right;
+
             padding-left: .2em;
+            font-size: 1.2rem;
+
+            span {
+              padding-left: .2em;
+              font-size: 1rem;
+            }
+          }
+
+          .date {
+            display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 5px;
+            margin-left: .2em;
+            text-align: center;
+            vertical-align: text-bottom;
+            font-size: 1rem;
+            font-weight: bold;
+            background: rgba(150,150,150,1);
+            color: rgba(255,255,255,1);
+
+            &.saturday {
+              background: rgba(0,103,192,.6);
+            }
+
+            &.sunday {
+              background: rgba(237,26,61,.6);
+            }
+          }
+        }
+
+        .times {
+          display: inline;
+          padding-left: 4px;
+          color: #888;
+          font-size: 1rem;
+
+          .time {
+
+          }
+
+          .while {
+            padding: 0 2px;
+            font-size: .8em;
+          }
+        }
+
+        .places {
+          display: inline-block;
+
+          .place {
+            display: none;
+            padding-left: 6px;
             font-size: 1rem;
           }
-        }
-  
-        .date {
-          display: inline-block;
-          width: 1.5em;
-          height: 1.5em;
-          border-radius: 5px;
-          margin-left: .2em;
-          text-align: center;
-          vertical-align: text-bottom;
-          font-size: 1rem;
-          font-weight: bold;
-          background: rgba(150,150,150,1);
-          color: rgba(255,255,255,1);
-  
-          &.saturday {
-            background: rgba(0,103,192,.6);
-          }
-  
-          &.sunday {
-            background: rgba(237,26,61,.6);
-          }
-        }
-      }
 
-      .times {
-        display: inline;
-        padding-left: 4px;
-        color: #888;
-        font-size: 1rem;
+          .studio {
+            padding-left: 6px;
 
-        .time {
-
-        }
-
-        .while {
-          padding: 0 2px;
-          font-size: .8em;
-        }
-      }
-
-      .places {
-        display: inline-block;
-
-        .place {
-          display: none;
-          padding-left: 6px;          
-          font-size: 1rem;
-        }
-
-        .studio {
-          padding-left: 6px;
-
-          span {
             span {
-              padding: 0 4px;
-              font-size: 1.2rem;
+              span {
+                padding: 0 4px;
+                font-size: 1.2rem;
+              }
             }
           }
         }

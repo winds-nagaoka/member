@@ -62,7 +62,7 @@ class Auth extends Component {
   componentDidUpdate () {
     // console.warn('update')
   }
-  
+
   componentDidMount () {
     this.props.windowWidthChange()
     window.addEventListener('resize', () => {
@@ -97,6 +97,9 @@ class Auth extends Component {
             </div>
             <Audio />
           </div>
+          <footer>
+            <small>&copy; The Wind Ensemble</small>
+          </footer>
         </div>
       </div>
     )

@@ -45,6 +45,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Audio extends Component {
+  constructor (props) {
+    super(props)
+    this.audio = React.createRef()
+  }
   componentDidMount () {
   }
   
@@ -181,7 +185,7 @@ class Audio extends Component {
     return (
       <div className={'audio' + mobileMode}>
         <audio
-          ref={(i) => this.audio = i}
+          ref={this.audio}
           onLoadStart={(e) => this.onLoadStart(e)}
           onLoadedMetadata={(e) => this.onLoadedMetadata(e)}
           onLoadedData={(e) => this.onLoadedData(e)}

@@ -168,7 +168,7 @@ class Home extends Component {
     return (
       <div className={'home' + mobileMode}>
         <div className='contents-header'>
-          <h2>団員専用ページ {socketStatus}</h2>
+          <h2>団員専用ページ</h2>
         </div>
 
         {showCastList}
@@ -216,10 +216,6 @@ class Home extends Component {
             </ul>
           </div>
         </div>
-
-
-
-        {/* <button onClick={() => this.props.showToast('Toast!!!')}>Toast</button> */}
       </div>
     )
   }

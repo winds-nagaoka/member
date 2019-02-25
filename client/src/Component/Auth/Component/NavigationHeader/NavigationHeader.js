@@ -75,7 +75,7 @@ const CustomLink = ({ label, icon, to, activeOnlyWhenExact, onClick }) => {
       exact={activeOnlyWhenExact}
       children={({ match }) => (
         <div className={'link ' + (match ? 'active' : '')}>
-          <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}><div><i className={icon}></i>{label}</div></Link>
+          <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}><div>{/* <i className={icon}></i> */}{label}</div></Link>
         </div>
       )}
     />
