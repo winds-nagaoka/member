@@ -4,7 +4,8 @@ const initialState = {
   // concertListLoad: false,
   displayMain: 'displayMain' in window.localStorage ? (window.localStorage.displayMain === 'true' ? true : false) : true,
   displayMini: 'displayMini' in window.localStorage ? (window.localStorage.displayMini === 'true' ? true : false) : true,
-  displayOther: 'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true
+  displayOther: 'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true,
+  overviewid: undefined,
 }
 
 console.warn('reducer', 'displayMain' in window.localStorage, window.localStorage.displayMain)
@@ -42,6 +43,11 @@ export default function archiveReducer (state = initialState, action) {
       return {
         ...state,
         displayOther: action.payload.displayOther
+      }
+    case prefix + 'SET_OVERVIEW_ID':
+      return {
+        ...state,
+        overviewid: action.payload.overviewid
       }
     default:
       return state

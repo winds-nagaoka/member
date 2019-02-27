@@ -4,6 +4,7 @@ import { Route, Switch, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Home from './Home/Home'
+import Overview from './Overview/Overview'
 
 import './Archive.css'
 
@@ -34,7 +35,7 @@ class Archive extends Component {
 
         <Switch>
           <Route exact path='/archive' component={Home} />
-          <Route path='/archive/overview/:id' component={Home} />
+          <Route path='/archive/overview/:id' component={Overview} />
         </Switch>
 
         <div className='box back-to-home'>
