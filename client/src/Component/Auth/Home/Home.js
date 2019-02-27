@@ -16,7 +16,7 @@ import './Home.css'
 function mapStateToProps(state) {
   return {
     socketid: state.socket.id,
-    mobile: state.status.mobile,
+    pc: state.status.pc,
 
     loadingCastList: state.cast.loadingList,
     castList: state.cast.list,
@@ -130,10 +130,12 @@ class Home extends Component {
 
   renderManager (loading, manager) {
     if (loading || !manager) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    const date = manager.contents[0].time[0].date === '1970/01/01' ? false : manager.contents[0].time[0].date
+    const text = manager.contents[0].text.split('<br>').slice(0,3).join('<br>') + (manager.contents[0].text.split('<br>').length > 3 ? '<br>…' : '')
     return (
       <div className='top-notice'>
-        <div className='top-notice-title'>{manager.manager[0].title}</div>
-        <div className='top-notice-text' dangerouslySetInnerHTML={{__html: manager.manager[0].text}}></div>
+        <div className='top-notice-title'><span>{manager.contents[0].title}</span><span className='date'>{date}</span></div>
+        <div className='top-notice-text' dangerouslySetInnerHTML={{__html: text}}></div>
       </div>
     )
   }
@@ -147,7 +149,7 @@ class Home extends Component {
         <div key={'bbs' + i} className='home-bbs-item'>
           <div className='home-bbs-title'><span className='number'>{each.number}</span><span className='name'>{each.name}</span><span className='time'>{each.time}</span></div>
           {/* <div className='bbs-text' dangerouslySetInnerHTML={{__html: each.text}}></div> */}
-          <div className='home-bbs-text'>{text.split('\n').map((m,j) => {return (<p key={'text' + i + j}>{m}</p>)})}</div>
+          <div className='home-bbs-text'>{text.split('\n').map((m,j) => {return j < 3 ? (<p key={'text' + i + j}>{m}</p>) : (j === 3 ? '…' : false)})}</div>
         </div>
       )
     })
@@ -155,23 +157,22 @@ class Home extends Component {
 
   render () {
     // State List
-    const { socketid, mobile, loadingCastList, castList, loadingSchedule, schedule, loadingManager, manager, loadingBBS, BBSList } = this.props
+    const { socketid, pc, loadingCastList, castList, loadingSchedule, schedule, loadingManager, manager, loadingBBS, BBSList } = this.props
     // Dispatch List
     // const { logout } = this.props
     const socketStatus = socketid ? 'OK' : 'NG'
-    const mobileMode = mobile ? ' mobile' : ''
 
     const showCastList = this.renderCast(loadingCastList, castList)
     const showScheduleNext = this.renderSchedule(loadingSchedule, schedule)
     const showManager = this.renderManager(loadingManager, manager)
     const showBBS = this.renderBBS(loadingBBS, BBSList)
     return (
-      <div className={'home' + mobileMode}>
+      <div className={'home' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
           <h2>団員専用ページ</h2>
         </div>
 
-        {showCastList}
+        {/* {showCastList} */}
 
         <div className='box home-schedule'>
           <div className='title-frame'>
@@ -216,6 +217,35 @@ class Home extends Component {
             </ul>
           </div>
         </div>
+
+        <div className='box home-archive'>
+          <div className='title-frame'>
+            <label>アーカイブ</label>
+            <div className='text'>
+              これまでの活動記録はこちらから参照できます。
+            </div>
+          </div>
+          <div className='link'>
+            <ul>
+              <li><Link to='/archive'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className='box home-bbs'>
+          <div className='title-frame'>
+            <label>楽譜</label>
+            <div className='text'>
+              ウィンズが所有する楽譜はこちらから参照できます
+            </div>
+          </div>
+          <div className='link'>
+            <ul>
+              <li><Link to='/score'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     )
   }

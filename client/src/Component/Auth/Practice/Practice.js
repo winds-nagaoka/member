@@ -11,7 +11,7 @@ import './Practice.css'
 
 function mapStateToProps(state) {
   return {
-    mobile: state.status.mobile,
+    pc: state.status.pc,
   }
 }
 
@@ -23,14 +23,12 @@ function mapDispatchToProps(dispatch) {
 class Practice extends Component {
   render () {
     // State List
-    const { mobile } = this.props
+    const { pc } = this.props
     // Dispatch List
     // const { goBack } = this.props
 
-    const mobileMode = mobile ? ' mobile' : ''
-
     return (
-      <div className={'practice' + mobileMode}>
+      <div className={'practice' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
           <h2>練習について</h2>
           <p>練習日程および過去の練習を確認できます</p>

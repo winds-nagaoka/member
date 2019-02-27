@@ -11,7 +11,7 @@ import './Manager.css'
 
 function mapStateToProps(state) {
   return {
-    mobile: state.status.mobile,
+    pc: state.status.pc,
 
     loadingManager: state.manager.loading,
     manager: state.manager.data
@@ -37,14 +37,16 @@ class Manager extends Component {
 
   renderManager (loading, manager) {
     if (loading || !manager) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    return manager.manager.map((each, i) => {
+    console.log(manager)
+    return manager.contents.map((each, i) => {
       const attachment = each.attachment ? each.attachment.map((attach, i) => {
         const size = Math.round(attach.size * 0.01) / 10
         return <div key={'attachment' + i} className='notice-attachment'><a href={'https://winds-n.com/member/data/' + attach.filename} target='_blank' className='attachment'><span>{attach.title}</span><span className='size'>{size}KB</span></a></div>
       }) : ''
+      const date = each.time[0].date === '1970/01/01' ? false : each.time[0].date
       return (
         <div key={'manager' + i} className='notice'>
-          <div className='notice-title'>{each.title}</div>
+          <div className='notice-title'><span>{each.title}</span><span className='date'>{date}</span></div>
           <div className='notice-text' dangerouslySetInnerHTML={{__html: each.text}}></div>
           {attachment}
         </div>
@@ -54,14 +56,13 @@ class Manager extends Component {
 
   render () {
     // State List
-    const { mobile, loadingManager, manager } = this.props
+    const { pc, loadingManager, manager } = this.props
     // Dispatch List
     // none
 
-    const mobileMode = mobile ? ' mobile' : ''
     const showManager = this.renderManager(loadingManager, manager)
     return (
-      <div className={'manager' + mobileMode}>
+      <div className={'manager' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
           <h2>事務局からのお知らせ</h2>
         </div>

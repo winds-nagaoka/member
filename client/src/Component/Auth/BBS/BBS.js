@@ -11,7 +11,7 @@ import './BBS.css'
 
 function mapStateToProps(state) {
   return {
-    mobile: state.status.mobile,
+    pc: state.status.pc,
 
     loading: state.bbs.loading,
     list: state.bbs.list,
@@ -71,17 +71,15 @@ class BBS extends Component {
 
   render () {
     // State List
-    const { mobile, loadingBBSList, list } = this.props
+    const { pc } = this.props
     // Dispatch List
     // none
-
-    const mobileMode = mobile ? ' mobile' : ''
 
     const showList = this.renderContents()
     const showMore = this.renderMore()
 
     return (
-      <div className={'bbs' + mobileMode}>
+      <div className={'bbs' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
           <h2>団員専用掲示板</h2>
         </div>

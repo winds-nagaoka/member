@@ -11,7 +11,7 @@ import './Schedule.css'
 
 function mapStateToProps(state) {
   return {
-    mobile: state.status.mobile,
+    pc: state.status.pc,
 
     loadingSchedule: state.schedule.loading,
     schedule: state.schedule.data,
@@ -114,16 +114,15 @@ class Schedule extends Component {
 
   render () {
     // State List
-    const { mobile, loadingSchedule, schedule} = this.props
+    const { pc, loadingSchedule, schedule} = this.props
     // Dispatch List
     // const { goBack } = this.props
-
-    const mobileMode = mobile ? ' mobile' : ''
+    console.warn(pc)
 
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
     return (
-      <div className={'schedule' + mobileMode}>
+      <div className={'schedule' + (pc ? ' pc' : ' mobile')}>
         {/* <div className='contents-header'>
           <h2>練習日程</h2>
         </div> */}

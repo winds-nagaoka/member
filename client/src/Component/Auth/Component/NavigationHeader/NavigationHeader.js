@@ -40,7 +40,7 @@ class NavigationHeader extends Component {
 
     // const menuContentClass = 
     // const menuBackgroundClass = 
-    const showTitle = title ? <div className='title-text' onClick={() => this.titleClick()}>{title}</div> : <div className='logo'><WindsLogo onClick={() => this.titleClick()} /></div>
+    const showTitle = title ? <div className='title-text'><Link to='/'>{title}</Link></div> : <div className='logo'><Link to='/'><WindsLogo /></Link></div>
 
     // const backNavAndMenuToggle = this.state.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
     const backNavAndMenuToggle = mobile ? <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div> : <div></div>
