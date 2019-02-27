@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { getBBSList } from '../../../Actions/BBS'
+import { getBBSList, loadMore } from '../../../Actions/BBS'
 
 import { showToast } from '../../../Actions/Toast'
 
@@ -13,8 +13,10 @@ function mapStateToProps(state) {
   return {
     mobile: state.status.mobile,
 
-    loadingBBSList: state.bbs.loading,
-    list: state.bbs.data
+    loading: state.bbs.loading,
+    list: state.bbs.list,
+    showList: state.bbs.showList,
+    showMore: state.bbs.showMore
   }
 }
 
@@ -26,6 +28,9 @@ function mapDispatchToProps(dispatch) {
 
     showToast (string) {
       dispatch(showToast(string))
+    },
+    loadMore () {
+      dispatch(loadMore())
     }
   }
 }
@@ -35,10 +40,19 @@ class BBS extends Component {
     this.props.getBBSList()
   }
 
-  renderBBSList (loading, list) {
-    if (loading || !list) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    console.warn(list)
-    return list.list.map((each, i) => {
+  // loadMore () {
+  //   setTimeout(() => {
+  //     const showCount = this.state.showCount + 5
+  //     const bbsList = this.state.bbsList.concat(this.props.list.list.slice(this.state.showCount, showCount))
+  //     console.log('load call', this.state.showCount, showCount, bbsList, showCount, this.props.list.list.length)
+  //     this.setState({bbsList, showCount})
+  //     if (showCount > this.props.list.list.length) this.setState({hasMore: false})    
+  //   }, 100)
+  // }
+
+  renderContents () {
+    if (this.props.loading || !this.props.list) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    return this.props.showList.map((each, i) => {
       const text = each.text.replace(/(<br>|<br \/>)/gi, '\n').replace(/&gt;/gi, '>').replace(/&lt;/gi, '<')
       return (
         <div key={'bbs' + i} className='bbs-item'>
@@ -50,6 +64,11 @@ class BBS extends Component {
     })
   }
 
+  renderMore () {
+    if (this.props.loading || !this.props.list) return false
+    return this.props.showMore ? <div onClick={() => this.props.loadMore()} className='more'><i className="fas fa-plus-circle"></i>More</div> : false
+  }
+
   render () {
     // State List
     const { mobile, loadingBBSList, list } = this.props
@@ -57,7 +76,10 @@ class BBS extends Component {
     // none
 
     const mobileMode = mobile ? ' mobile' : ''
-    const showBBS = this.renderBBSList(loadingBBSList, list)
+
+    const showList = this.renderContents()
+    const showMore = this.renderMore()
+
     return (
       <div className={'bbs' + mobileMode}>
         <div className='contents-header'>
@@ -66,7 +88,8 @@ class BBS extends Component {
         <div className='box bbs-list'>
           <div className='text'>
             <div className='bbs-list'>
-              {showBBS}
+              {showList}
+              {showMore}
             </div>
           </div>
         </div>

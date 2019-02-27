@@ -73,6 +73,30 @@
       }
       
     }
+
+    .more {
+      margin: 12px 0 0;
+      padding: 12px 0;
+      font-size: 13px;
+      color: #333;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &:hover {
+        color: #888;
+
+        i {
+          color: #888;
+        }
+      }
+
+      i {
+        display: block;
+        color: #666;
+        font-size: 18px;
+      }
+    }
   }
 
 }

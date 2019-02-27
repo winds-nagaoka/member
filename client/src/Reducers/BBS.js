@@ -1,5 +1,8 @@
 const initialState = {
-  data: undefined,
+  list: undefined,
+  showList: [],
+  showCount: 0,
+  showMore: true,
   acquired: false,
   loading: false
 }
@@ -9,7 +12,14 @@ export default function bbsReducer (state = initialState, action) {
     case 'BBS_UPDATE':
       return {
         ...state,
-        data: action.payload.data
+        list: action.payload.list
+      }
+    case 'BBS_SHOW_LIST_UPDATE':
+      return {
+        ...state,
+        showList: action.payload.showList,
+        showCount: action.payload.showCount,
+        showMore: action.payload.showMore
       }
     case 'BBS_ACQUIRED':
       return {

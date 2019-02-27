@@ -6,6 +6,7 @@ const initialState = {
   width: 0,
   pc: true,
   mobile: false,
+  contentsRef: undefined
 }
 
 export default function statusReducer (state = initialState, action) {
@@ -30,7 +31,6 @@ export default function statusReducer (state = initialState, action) {
         ...state,
         loading: action.payload.loading
       }
-    
     case 'STATUS_WINDOW_WIDTH':
       return {
         ...state,

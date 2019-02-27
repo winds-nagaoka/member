@@ -147,8 +147,10 @@
   .home-bbs-list {
 
     .home-bbs-item {
+      max-height: 130px;
       padding: 12px;
       background: #f6f6f6;
+      overflow: hidden;
 
       &:not(:first-child){
         margin-top: 12px;

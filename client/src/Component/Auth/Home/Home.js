@@ -26,7 +26,7 @@ function mapStateToProps(state) {
     loadingManager: state.manager.loading,
     manager: state.manager.data,
     loadingBBS: state.bbs.loading,
-    BBSList: state.bbs.data
+    BBSList: state.bbs.list
   }
 }
 
@@ -140,7 +140,7 @@ class Home extends Component {
 
   renderBBS (loading, BBSList) {
     if (loading || !BBSList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    return BBSList.list.map((each, i) => {
+    return BBSList.map((each, i) => {
       if (i >= 3) return false
       const text = each.text.replace(/(<br>|<br \/>)/gi, '\n').replace(/&gt;/gi, '>').replace(/&lt;/gi, '<')
       return (
