@@ -117,7 +117,6 @@ class Schedule extends Component {
     const { pc, loadingSchedule, schedule} = this.props
     // Dispatch List
     // const { goBack } = this.props
-    console.warn(pc)
 
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)

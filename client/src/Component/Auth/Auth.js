@@ -13,6 +13,8 @@ import BBS from './BBS/BBS'
 import Cast from './Practice/Cast/Cast'
 import Record from './Practice/Record/Record'
 
+import Archive from './Archive/Archive'
+
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
 
@@ -92,6 +94,7 @@ class Auth extends Component {
                 <Route path='/bbs' component={BBS} />
                 <Route path='/practice/cast' component={Cast} />
                 <Route path='/practice/record' component={Record} />
+                <Route path='/archive' component={Archive} />
               </Switch>
             </div>
             <Audio />
