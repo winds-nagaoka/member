@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import { setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, toggleDisplayMain, toggleDisplayMini, toggleDisplayOther } from '../../../../Actions/Archive'
 
 import './Home.css'
@@ -20,6 +21,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setBackNavigation (backNavigation, backNavigationPath) {
+      dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
     getConcertList () {
       dispatch(getConcertList())
     },
@@ -37,6 +41,7 @@ function mapDispatchToProps(dispatch) {
 
 class Home extends Component {
   componentDidMount () {
+    this.props.setBackNavigation(true, '/')
     this.props.getConcertList()
   }
 
@@ -93,11 +98,18 @@ class Home extends Component {
     const showNotice = this.renderNotice()
 
     return (
-      <div className='box archive-list'>
-        {showConcertSwitch}
-        {showConcertList}
-        {showNotice}
-      </div>
+      <React.Fragment>
+        <div className='contents-header'>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link></div>
+          <h2>アーカイブ</h2>
+          <p>過去のウィンズの活動履歴を確認できます</p>
+        </div>
+        <div className='box archive-list'>
+          {showConcertSwitch}
+          {showConcertList}
+          {showNotice}
+        </div>
+      </React.Fragment>
     )
 
     // return (

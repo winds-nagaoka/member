@@ -103,17 +103,14 @@ import { __esModule } from 'react-router-dom';
 //   }
 // }
 
-// function getConcertTitle (id) {
-//   if (concertStore.list) {
-//     return (getConcert(id)).detail.title
-//   }
-// }
+// 演奏会のタイトルを取得する
+export function getConcertTitle (id, concertList) {
+  return (getConcert(id, concertList)).detail.title
+}
 
-// function getConcertType (id) {
-//   if (concertStore.list) {
-//     return (getConcert(id)).type
-//   }
-// }
+export function getConcertType (id, concertList) {
+  return (getConcert(id, concertList)).type
+}
 
 // function getConcertMusicLabel (id, num) {
 //   if (concertStore.list) {
@@ -153,43 +150,38 @@ export function labeling (label, contents) {
 //   return (string && reHasRegExp.test(string)) ? string.replace(reRegExp, '\\$&') : string
 // }
 
-// function getNextConcert (id) {
-//   if (concertStore.list) {
-//     // console.log(concertStore.list)
-//     const type = getConcert(id).type
-//     const list = concertStore.list.filter((e) => {return e.type === type})
-//     // console.log(list)
-//     var next = undefined
-//     list.forEach((e, i) => {
-//       if (e.id === id) next = i + 1
-//       return
-//     })
-//     if (next > (list.length - 1)) {
-//       return false
-//     } else {
-//       // console.log('next', list[next].id)
-//       return list[next].id
-//     }
-//   }
-// }
+export function getNextConcert (id, concertList) {
+  const type = getConcert(id, concertList).type
+  const list = concertList.filter((e) => {return e.type === type})
+  // console.log(list)
+  var next = undefined
+  list.forEach((e, i) => {
+    if (e.id === id) next = i + 1
+    return
+  })
+  if (next > (list.length - 1)) {
+    return false
+  } else {
+    // console.log('next', list[next].id)
+    return list[next].id
+  }
+}
 
-// function getPrevConcert (id) {
-//   if (concertStore.list) {
-//     const type = getConcert(id).type
-//     const list = concertStore.list.filter((e) => {return e.type === type})
-//     var prev = undefined
-//     list.forEach((e, i) => {
-//       if (e.id === id) prev = i - 1
-//       return
-//     })
-//     if (prev < 0) {
-//       return false
-//     } else {
-//       // console.log('prev', list[prev].id)
-//       return list[prev].id
-//     }
-//   }
-// }
+export function getPrevConcert (id, concertList) {
+  const type = getConcert(id, concertList).type
+  const list = concertList.filter((e) => {return e.type === type})
+  var prev = undefined
+  list.forEach((e, i) => {
+    if (e.id === id) prev = i - 1
+    return
+  })
+  if (prev < 0) {
+    return false
+  } else {
+    // console.log('prev', list[prev].id)
+    return list[prev].id
+  }
+}
 
 // module.exports = {
 //   getVersion, getUserdata,

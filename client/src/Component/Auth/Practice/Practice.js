@@ -30,6 +30,7 @@ class Practice extends Component {
     return (
       <div className={'practice' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習日程</Link><span></span></div>
           <h2>練習について</h2>
           <p>練習日程および過去の練習を確認できます</p>
         </div>

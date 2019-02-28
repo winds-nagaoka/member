@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import { setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, setOverviewid } from '../../../../Actions/Archive'
 
 import * as lib from '../Library/Library'
@@ -20,12 +21,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setBackNavigation (backNavigation, backNavigationPath) {
+      dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
     getConcertList () {
       dispatch(getConcertList())
     },
     setOverviewid (id) {
       dispatch(setOverviewid(id))
-    }
+    },
   }
 }
 
@@ -34,13 +38,18 @@ class Overview extends Component {
     super(props)
     const { params } = this.props.match
     const id = params.id ? params.id : ''
-    console.log(id)
     this.props.setOverviewid(id)
   }
 
   // 直接アクセスしたときに必要
   componentDidMount () {
     this.props.getConcertList()
+    this.props.setBackNavigation(true, '/archive')
+  }
+
+  componentWillReceiveProps (nextProps, nextContext) {
+    const { params } = nextProps.match
+    params.id ? this.props.setOverviewid(params.id) : false
   }
 
   showDate (item) {
@@ -104,7 +113,7 @@ class Overview extends Component {
           </li>
         )
       })
-      return <li key={'l' + item.id + i}><label className={list.label.match(/第[0-9]部/) ? '' : 'other'}>{list.label}</label><ol>{ml}</ol></li>
+      return <li key={'l' + item.id + i}><label className={'sticky-label' + (list.label.match(/第[0-9]部/) ? '' : ' other')}>{list.label}</label><ol>{ml}</ol></li>
     })
   }
 
@@ -116,13 +125,28 @@ class Overview extends Component {
     }
   }
 
+  renderConcertNavigation (item) {
+    const concertList = this.props.concertList
+    const overviewid = this.props.overviewid
+    const prevClass = 'prev ' + lib.getPrevConcert(overviewid, concertList) + ' ' + lib.getConcertType(overviewid, concertList)
+    const prevLink = lib.getPrevConcert(overviewid, concertList) ? <Link to={'/archive/overview/' + lib.getPrevConcert(overviewid, concertList)} className={prevClass}><i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}><i className='fas fa-chevron-circle-right'></i></span>
+    const nextClass = 'next ' + lib.getNextConcert(overviewid, concertList) + ' ' + lib.getConcertType(overviewid, concertList)
+    const nextLink = lib.getNextConcert(overviewid, concertList) ? <Link to={'/archive/overview/' + lib.getNextConcert(overviewid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i></Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i></span>
+    return (
+      <div className='title'>
+        {nextLink}
+        <h2>{item.title}</h2>
+        {prevLink}
+      </div>
+    )
+  }
+
   renderOverview (loadingArchive, concertList) {
-    if (loadingArchive || !concertList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    const item = lib.getConcert(this.props.overviewid, this.props.concertList).detail
-    console.log(item)
+    if (loadingArchive || !concertList || !this.props.overviewid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    const item = lib.getConcert(this.props.overviewid, concertList).detail
     return (
       <div className='article'>
-        <div className='title'><h2>{item.title}</h2></div>
+        {this.renderConcertNavigation(item)}
         {/* <ConcertNavigation id={this.state.id} /> */}
         <div className='concert-detail'>
           <div className='poster'>
@@ -130,7 +154,7 @@ class Overview extends Component {
           </div>
           <div className='overview-detail'>
             <div>
-              <label>概要</label>
+              <label className='sticky-label'>概要</label>
               {this.showDate(item)}
               {this.showPlace(item)}
               {this.showConductor(item)}
@@ -143,16 +167,31 @@ class Overview extends Component {
     )
   }
 
+  renderBreadNavigation (loadingArchive, concertList, overviewid) {
+    if (loadingArchive || !concertList || !overviewid) return false
+    return (
+      <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><Link to={'/archive/overview/' + overviewid}>{lib.getConcertTitle(overviewid, concertList)}</Link></div>
+    )
+  }
+
   render () {
     // State List
     const { pc, loadingArchive, concertList, overviewid } = this.props
 
     const showOverview = this.renderOverview(loadingArchive, concertList)
+    const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, overviewid)
 
     return (
-      <div className='box archive-overview'>
-        {showOverview}
-      </div>
+      <React.Fragment>
+        <div className='contents-header'>
+          {showBreadNavigation}
+          <h2>アーカイブ</h2>
+          <p>過去のウィンズの活動履歴を確認できます</p>
+        </div>
+        <div className='box archive-overview'>
+          {showOverview}
+        </div>
+      </React.Fragment>
     )
   }
 }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import { setBackNavigation } from '../../../Actions/Navigation'
 import { getBBSList, loadMore } from '../../../Actions/BBS'
 
 import { showToast } from '../../../Actions/Toast'
@@ -22,6 +23,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setBackNavigation (backNavigation, backNavigationPath) {
+      dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
     getBBSList () {
       dispatch(getBBSList())
     },
@@ -37,6 +41,7 @@ function mapDispatchToProps(dispatch) {
 
 class BBS extends Component {
   componentDidMount () {
+    this.props.setBackNavigation(true, '/')
     this.props.getBBSList()
   }
 
@@ -81,6 +86,7 @@ class BBS extends Component {
     return (
       <div className={'bbs' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/bbs'>掲示板</Link></div>
           <h2>団員専用掲示板</h2>
         </div>
         <div className='box bbs-list'>

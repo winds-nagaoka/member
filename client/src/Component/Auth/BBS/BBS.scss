@@ -4,31 +4,27 @@
   margin: 0 auto;
   // font-size: 13px;
 
-  &.mobile {
-    margin: 12px 0;
-  }
-
   // background: #fff;
 
-  &.pc {
-    .contents-header {
-      h2 {
-        padding: 0 16px;
-      } 
-    }
-  }
+  // &.pc {
+  //   .contents-header {
+  //     h2 {
+  //       padding: 0 16px;
+  //     } 
+  //   }
+  // }
 
-  .contents-header {
-    margin: 0;
-    padding: 16px 0;
-    background: #fff;
+  // .contents-header {
+  //   margin: 0;
+  //   padding: 16px 0;
+  //   background: #fff;
 
-    h2 {
-      padding: 0 12px;
-      font-size: 16px;
-      font-weight: normal;
-    }
-  }
+  //   h2 {
+  //     padding: 0 12px;
+  //     font-size: 16px;
+  //     font-weight: normal;
+  //   }
+  // }
 
   .bbs-list {
 

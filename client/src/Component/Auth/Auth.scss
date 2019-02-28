@@ -99,6 +99,11 @@
       margin: 36px 16px 36px;
     }
 
+    // mobileモードのとき追加
+    .full-contents {
+      margin: 32px 0;
+    }
+
     .gap {
       height: 80px;
     }
@@ -121,8 +126,70 @@
       }
     }
 
+    .contents-header {
+      margin: 0;
+      padding: 12px 0;
+      background: #fff;
+
+      .bread-navigation {
+        padding: 0 12px;
+        font-size: 12px;
+        color: #888;
+
+        a {
+          color: #888;
+          text-decoration: none;
+
+          &:hover {
+            color: #333;
+            text-decoration: underline;
+          }
+        }
+
+        i {
+          padding: 0 .6em;
+          font-size: 10px;
+        }
+
+        span {
+          color: #666;
+        }
+      }
+
+      h2 {
+        padding: 0 12px;
+        font-size: 16px;
+        font-weight: normal;
+      }
+
+      p {
+        margin: 0;
+        padding: 0 12px;
+        font-size: .9rem;
+      }
+    }
+    
+    &.pc {
+      .contents-header {
+        padding: 16px 0;
+
+        .bread-navigation {
+          padding: 0 16px;
+          font-size: 13px;
+        }
+
+        h2 {
+          padding: 0 16px;
+        }
+
+        p {
+          padding: 0 16px;
+        }
+      }
+    }
+
     .box {
-      margin: 12px 0 0 0;
+      margin: 32px 0 0 0;
       // padding: 12px 0 0;
       background: #fff;
 
@@ -163,6 +230,11 @@
         // padding: 13px 16px 14px;
         padding: 12px;
         font-size: 1rem;
+
+        p {
+          margin: 0;
+          padding: 0;
+        }
       }
 
       .link {

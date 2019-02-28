@@ -28,10 +28,6 @@ class Archive extends Component {
 
     return (
       <div className={'archive' + (pc ? ' pc' : ' mobile')}>
-        <div className='contents-header'>
-          <h2>アーカイブ</h2>
-          <p>過去のウィンズの活動履歴を確認できます</p>
-        </div>
 
         <Switch>
           <Route exact path='/archive' component={Home} />

@@ -9,11 +9,15 @@
       position: -webkit-sticky;
       position: sticky;
       top: 0;
+      // margin: 0 12px;
       padding: 8px 0;
       border: 0;
       // background: #f7f7f7;
       background: #fff;
       z-index: 5;
+
+      display: flex;
+      justify-content: space-between;
 
       h2 {
         margin: 0 12px;
@@ -22,8 +26,32 @@
         color: #333;
         font-size: 16px;
         font-weight: normal;
-        font-family: "kan48typos-std",sans-serif;
+        // font-family: "kan48typos-std",sans-serif;
         z-index: 5;
+      }
+
+      a {
+        display: inline-block;
+        padding: 2px 12px;
+        text-decoration: none;
+        color: #888;
+
+        &:hover {
+          color: #666;
+        }
+
+        &:active {
+          color: #555;
+        }
+      }
+
+      span {
+        display: inline-block;
+        padding: 2px 12px;
+
+        i {
+          color: #eee;
+        }
       }
     }
 
@@ -107,7 +135,7 @@
           span {
             display: block;
             padding: 0 0 0 0;
-            font-family: "source-han-sans-japanese",sans-serif;
+            // font-family: "source-han-sans-japanese",sans-serif;
             font-size: 14px;
             color: #ccc;
             text-transform: uppercase;
@@ -130,18 +158,18 @@
           }
         }
 
-        label {
+        label.sticky-label {
           position: -webkit-sticky;
           position: sticky;
           // top: 37px;
           top: 30px;
           display: block;
           width: calc(100% - 12px);
-          padding: 4px 0 4px 12px;
+          padding: 8px 0 8px 12px;
           // background: #f0f0f0;
           color: #333;
-          font-size: 13px;
-          font-family: "kan48typos-std",sans-serif;
+          font-size: 16px;
+          // font-family: "kan48typos-std",sans-serif;
           // font-weight: 200;
         }
 
@@ -154,7 +182,7 @@
             margin-bottom: 4px;
             color: #888;
             font-size: 13px;
-            font-family: "source-han-sans-japanese",sans-serif;
+            // font-family: "source-han-sans-japanese",sans-serif;
             font-weight: 200;
           }
           span:last-child {
@@ -162,7 +190,7 @@
             margin-bottom: 4px;
             font-size: 15px;
             color: #333;
-            font-family: "kan48typos-std",sans-serif;
+            // font-family: "kan48typos-std",sans-serif;
           }
         }
 
@@ -176,15 +204,7 @@
         .music-list > li {
           // margin-bottom: .5em;
 
-          label {
-            // 上の方で定義
-            // display: block;
-            // padding: 4px 0 4px 12px;
-            // background: #f0f0f0;
-            // color: #333;
-            // font-size: 13px;
-            // font-family: "kan48typos-std",sans-serif;
-            // font-weight: 200;
+          label.sticky-label {
             letter-spacing: .25em;
 
             &.other {
@@ -196,7 +216,7 @@
             margin: 0;
             padding: 0;
             list-style: none;
-            font-family: "tbchibirgothicplusk-pro",sans-serif;
+            // font-family: "tbchibirgothicplusk-pro",sans-serif;
             // border-top: 1px solid #ccc;
 
             li {
@@ -222,12 +242,17 @@
               cursor: pointer;
 
               &:hover {
-                background: #f7f7f7;
+                background: #eee;
               }
+
+              &:active {
+                background: #e3e3e3;
+              }
+
 
               // no Audio icon
               i {
-                color: #eee;
+                color: #ccc;
               }
             }
 
@@ -251,7 +276,7 @@
                   margin: 2px 0;
                   color: #888;
                   font-size: 12px;
-                  font-family: "source-han-sans-japanese",sans-serif;
+                  // font-family: "source-han-sans-japanese",sans-serif;
                   font-weight: 200;
 
                   span {

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import { setBackNavigation } from '../../../Actions/Navigation'
 import { getManager } from '../../../Actions/Manager'
 
 import { showToast } from '../../../Actions/Toast'
@@ -20,6 +21,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setBackNavigation (backNavigation, backNavigationPath) {
+      dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
     getManager () {
       dispatch(getManager())
     },
@@ -32,6 +36,7 @@ function mapDispatchToProps(dispatch) {
 
 class Manager extends Component {
   componentDidMount () {
+    this.props.setBackNavigation(true, '/')
     this.props.getManager()
   }
 
@@ -64,6 +69,7 @@ class Manager extends Component {
     return (
       <div className={'manager' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link></div>
           <h2>事務局からのお知らせ</h2>
         </div>
 

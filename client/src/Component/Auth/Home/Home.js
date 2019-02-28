@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { connectSocket, disconnectSocket } from '../../../Actions/Socket'
 
+import { releaseBackNavigation } from '../../../Actions/Navigation'
 import { getSchedule } from '../../../Actions/Schedule'
 import { getManager } from '../../../Actions/Manager'
 import { getBBSList } from '../../../Actions/BBS'
@@ -32,6 +33,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    releaseBackNavigation () {
+      dispatch(releaseBackNavigation())
+    },
     connectSocket () {
       dispatch(connectSocket())
     },
@@ -59,6 +63,7 @@ function mapDispatchToProps(dispatch) {
 
 class Home extends Component {
   componentDidMount () {
+    this.props.releaseBackNavigation()
     this.props.connectSocket()
 
     this.props.getSchedule()
@@ -169,6 +174,7 @@ class Home extends Component {
     return (
       <div className={'home' + (pc ? ' pc' : ' mobile')}>
         <div className='contents-header'>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link></div>
           <h2>団員専用ページ</h2>
         </div>
 
@@ -222,7 +228,8 @@ class Home extends Component {
           <div className='title-frame'>
             <label>アーカイブ</label>
             <div className='text'>
-              これまでの活動記録はこちらから参照できます。
+              <p>これまでの活動記録はこちらから参照できます</p>
+              <p>定期演奏会とミニコンサートの記録を掲載しています</p>
             </div>
           </div>
           <div className='link'>

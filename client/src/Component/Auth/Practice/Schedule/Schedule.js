@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import { setBackNavigation } from '../../../../Actions/Navigation'
 import { getSchedule } from '../../../../Actions/Schedule'
 
 // import { goBack } from 'react-router-redux'
@@ -22,6 +23,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setBackNavigation (backNavigation, backNavigationPath) {
+      dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
     getSchedule () {
       dispatch(getSchedule())
     },
@@ -33,6 +37,7 @@ function mapDispatchToProps(dispatch) {
 
 class Schedule extends Component {
   componentDidMount () {
+    this.props.setBackNavigation(true, '/')
     this.props.getSchedule()
   }
 

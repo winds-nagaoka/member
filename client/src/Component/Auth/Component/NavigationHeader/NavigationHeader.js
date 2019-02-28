@@ -16,8 +16,10 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     mobile: state.status.mobile,
 
+    title: state.navigation.title,
+    backNavigation: state.navigation.backNavigation,
+    backNavigationPath: state.navigation.backNavigationPath,
     menuOpen: state.navigation.menuOpen,
-    title: state.navigation.title
   }
 }
 
@@ -42,8 +44,9 @@ class NavigationHeader extends Component {
     // const menuBackgroundClass = 
     const showTitle = title ? <div className='title-text'><Link to='/'>{title}</Link></div> : <div className='logo'><Link to='/'><WindsLogo /></Link></div>
 
-    // const backNavAndMenuToggle = this.state.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
-    const backNavAndMenuToggle = mobile ? <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div> : <div></div>
+    // const backNavAndMenuToggle = this.props.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
+    const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
+    // const backNavAndMenuToggle = mobile ? <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div> : <div></div>
 
     // const headerClass = ((this.state.titleBar) || (this.state.titleSearchStatus) ? 'header no-border' : 'header') + (this.state.titleFont ? ' font' : '')
     // const titleHeaderClass = 'title'

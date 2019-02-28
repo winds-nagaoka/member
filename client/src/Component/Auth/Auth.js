@@ -86,7 +86,7 @@ class Auth extends Component {
         <div className={'contents' + (pc ? ' pc' : ' mobile')} ref={(i) => this.contents = i}>
           <div className={pc ? 'flex-frame': ''}>
             <NavigationInline />
-            <div className={pc ? 'inline-contents' : ''}>
+            <div className={pc ? 'inline-contents' : 'full-contents'}>
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/practice' component={Practice} />
