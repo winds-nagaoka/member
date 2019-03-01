@@ -166,8 +166,9 @@ export function getMediaData (id, number, concertList) {
 }
 
 export function getAlbum (id, playlist) {
+  let album
   for (var i=0;i<playlist.length;i++) {
-    if (playlist[i].id === id) var album = playlist[i]
+    if (playlist[i].id === id) album = playlist[i]
   }
   return JSON.parse(JSON.stringify(album))
 }

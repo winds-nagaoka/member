@@ -38,6 +38,7 @@ const initialState = {
   concertid: undefined,
   // archiveモード時の再生中の曲
   number: undefined,
+
   album: undefined,
   track: undefined,
 
@@ -107,12 +108,22 @@ export default function audioReducer (state = initialState, action) {
       }
       
     // 曲情報
-    case prefix + 'ARCHIVE_SET_PLAY':
+    case prefix + 'ARCHIVE_SET_PLAY_BASE':
       return {
         ...state,
         playmode: action.payload.playmode,
         concertid: action.payload.concertid,
         number: action.payload.number,
+        // album: action.payload.album,
+        // track: action.payload.track,
+        // playlistLoad: action.payload.playlistLoad
+      }
+    case prefix + 'ARCHIVE_SET_PLAY':
+      return {
+        ...state,
+        // playmode: action.payload.playmode,
+        // concertid: action.payload.concertid,
+        // number: action.payload.number,
         album: action.payload.album,
         track: action.payload.track,
         playlistLoad: action.payload.playlistLoad

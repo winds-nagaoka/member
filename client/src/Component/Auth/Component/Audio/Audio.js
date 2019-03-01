@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import * as lib from '../../../../Library/Library'
 import * as libArchive from '../../Archive/Library/Library'
 
 import {
@@ -24,6 +25,7 @@ import {
 import { getConcertList } from '../../../../Actions/Archive'
 
 import './Audio.css'
+// import lib from 'react-confirm-alert';
 
 function mapStateToProps(state) {
   return {
@@ -117,11 +119,12 @@ class Audio extends Component {
     // this.props.loadArchivePlaylist()
     this.props.loadArchivePlaylist()
     // this.props.displayPlayer ? this.props.loadArchivePlaylist() : false
-    // if (window.localStorage.displayPlayer) {
-    //   if (window.localStorage.playerConcertid && window.localStorage.playerNumber) {
-    //     this.props.archivePlayRequest(window.localStorage.playerConcertid, window.localStorage.playerNumber, false)
-    //   }
-    // }
+    if (window.localStorage.displayPlayer) {
+      if (window.localStorage.playerConcertid && window.localStorage.playerNumber) {
+        console.warn('window.localStorage.playerConcertid && window.localStorage.playerNumber',window.localStorage.playerConcertid, window.localStorage.playerNumber)
+        this.props.archivePlayRequest(window.localStorage.playerConcertid, window.localStorage.playerNumber, false)
+      }
+    }
   }
 
   componentWillUnmount () {
@@ -222,7 +225,7 @@ class Audio extends Component {
   }
 
   playNext () {
-    if (this.props.album.list.length > (this.props.number + 1)) {
+    if (this.getAlbum().list.length > (this.props.number + 1)) {
       // 次のトラックへ
       this.props.archivePlayRequest(this.props.concertid, this.props.number + 1, true)
     } else {
@@ -253,7 +256,7 @@ class Audio extends Component {
     var trackCount = 0
     return concert.contents.map((item, i) => {
       const trackList = item.music.map((num, i) => {
-        const trackData = this.props.album.list.filter((e) => {return e.data === num})
+        const trackData = this.getAlbum().list.filter((e) => {return e.data === num})
         return trackData.map((each, j) => {
           const trackNumber = trackCount
           trackCount += 1
@@ -261,7 +264,7 @@ class Audio extends Component {
           const addTitle = each.addtitle ? ' ' + each.addtitle : ''
           const composer = each.data !== false ? <span className='composer'>{libArchive.getAudioComposer(this.props.concertid, each.data, this.props.archiveConcertList)}</span> : (each.composer ? <span className='composer'>{each.composer}</span> : '')
           const playing = this.props.number === trackNumber ? ' playing' : ''
-          const playTypeClass = this.props.album.type ? ' ' + this.props.album.type : ''
+          const playTypeClass = this.getAlbum().type ? ' ' + this.getAlbum().type : ''
           return (
             <div key={'track' + i + j} className={'track' + playing + playTypeClass} onClick={() => this.selectPlay(trackNumber)}>
               <div className='icon'><i className="fas fa-play-circle"></i></div>
@@ -283,25 +286,42 @@ class Audio extends Component {
   }
 
   getTitle () {
-    return this.props.track.data !== false ? libArchive.getAudioTitle(this.props.concertid, this.props.track.data, this.props.archiveConcertList) : this.props.track.title
+    return this.getTrack() && this.props.archiveConcertList ? (this.getTrack().data !== false ? libArchive.getAudioTitle(this.props.concertid, this.getTrack().data, this.props.archiveConcertList) : this.getTrack().title) : false
+  }
+
+  getAlbum () {
+    return this.props.concertid && this.props.archivePlaylist ? libArchive.getAlbum(this.props.concertid, this.props.archivePlaylist) : false
+  }
+
+  getTrack () {
+    return this.props.concertid && this.props.archivePlaylist ? this.getAlbum().list[this.props.number] : false
+  }
+
+  renderTitle (playTypeClass) {
+    return (
+      <div>
+        <span className={playTypeClass}>{isNaN(this.props.number) ? false : (this.props.archiveConcertList ? libArchive.getConcertTitle(this.props.concertid, this.props.archiveConcertList) : false)}</span>
+        <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.number) || !this.props.archivePlaylist ? '曲を選択してください' : (this.getTitle() + (this.getAlbum().list[this.props.number].addtitle ? ' ' + this.getAlbum().list[this.props.number].addtitle : ''))}</span>
+      </div>
+    )
   }
 
   renderPlaylist () {
     if (!this.props.displayPlayer) return
-    if (!this.props.playlistLoad) return
+    // if (!this.props.playlistLoad) return
+    if (!this.props.archivePlaylist) return
+    if (!this.props.archiveConcertList) return
     if (!this.props.concertid) return
+    if (!this.props.number) return
     // if (!this.props.displayPlaylist) return
     const showTrackList = this.renderTrackList()
     const playStatusClass = this.props.playStatus ? ' playing' : ''
     // const playmodeClass = this.props.playmode ? ' ' + this.props.playmode : ''
-    const playTypeClass = this.props.album.type ? ' ' + this.props.album.type : ''
+    const playTypeClass = this.getAlbum() ? ' ' + this.getAlbum().type : ''
     return (
-      <div className={'music-list' + (this.props.displayPlaylist ? ' open' : '')}>
+      <div className={'music-list' + (this.props.displayPlaylist ? ' open' : '') + lib.pcClass(this.props.pc)}>
         <div className={'header' + playTypeClass + playStatusClass} onClick={() => this.props.setDisplayPlaylist(false)}>
-          <div>
-            <span className={playTypeClass}>{libArchive.getConcertTitle(this.props.concertid, this.props.archiveConcertList)}</span>
-            <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.number) ? '曲を選択してください' : (this.getTitle() + (this.props.album.list[this.props.number].addtitle ? ' ' + this.props.album.list[this.props.number].addtitle : ''))}</span>
-          </div>
+          {this.renderTitle(playTypeClass)}
         </div>
         <div className={'label close' + playTypeClass} onClick={() => this.props.setDisplayPlaylist(false)}><i className="fas fa-chevron-down"></i></div>
         <div className='contents'>
@@ -354,29 +374,21 @@ class Audio extends Component {
       playmode,
       concertid,
       number,
-      album,
-      track
+      // album,
+      // track
      } = this.props
     // Dispatch List
     // const { logout } = this.props
 
-    // console.warn('playStatus', playStatus)
-
     const button = playStatus ? ((loadingAudio && (current && duration)) ? <i className='fas fa-pause'></i> : <i className='fas fa-spinner fa-pulse'></i>) : <i className='fas fa-play'></i>
+    const playStatusClass = this.props.playStatus ? ' playing' : ''
     const playTime = this.renderPlayTime()
     const playProgress = playPercent ? {backgroundSize: playPercent + '% 100%'} : {backgroundSize: '0% 100%'}
     const loadProgress = loadPercent ? {backgroundSize: loadPercent + '% 100%'} : {backgroundSize: '0% 100%'}
-
-    const playStatusClass = this.props.playStatus ? ' playing' : ''
-
     const playerClass = displayPlayer ? ' open' : ''
     const displayPlaylistClass = displayPlaylist ? ' list-open' : ''
-
-    // const playmodeClass = playmode ? ' ' + playmode : ''
-    const playTypeClass = album ? (album.type ? ' ' + album.type : '') : ''
-
-    const openIcon = playlistLoad ? <i className='fas fa-chevron-up'></i> : ''
-
+    const playTypeClass = this.getAlbum() ? ' ' + this.getAlbum().type : ''
+    const openIcon = archivePlaylist ? <i className='fas fa-chevron-up'></i> : ''
     const showPlaylist = this.renderPlaylist()
 
     return (
@@ -386,11 +398,8 @@ class Audio extends Component {
           <button className={'control stop' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={(e) => this.props.audioStop(e)}><i className='fas fa-stop'></i></button>
           <div className={'audio-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={playProgress} ref={(i) => this.audioProgress = i} onClick={(e) => this.seekProgress(e)}>{playTime}</div>
           <div className={'audio-load-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={loadProgress} ref={(i) => this.audioLoadProgress = i}></div>
-          <div className={'music-info' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => {this.props.playlistLoad ? this.props.setDisplayPlaylist(true) : false}}>
-            <div>
-              <span>{isNaN(this.props.number) ? '' : libArchive.getConcertTitle(this.props.concertid, this.props.archiveConcertList)}</span>
-              <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.number) || !this.props.playlistLoad ? '曲を選択してください' : (this.getTitle() + (this.props.album.list[this.props.number].addtitle ? ' ' + this.props.album.list[this.props.number].addtitle : ''))}</span>
-            </div>
+          <div className={'music-info' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => {this.props.archivePlaylist ? this.props.setDisplayPlaylist(true) : false}}>
+            {this.renderTitle(playTypeClass)}
           </div>
           <div className={'label' + displayPlaylistClass + playTypeClass}>{openIcon}</div>
         </div>
@@ -408,6 +417,7 @@ class Audio extends Component {
           controls={false}
         ></audio>
         {showPlaylist}
+        <div className={'music-list-background' + displayPlaylistClass} onClick={() => this.props.setDisplayPlaylist(false)}></div>
       </div>
     )
   }

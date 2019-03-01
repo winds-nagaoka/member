@@ -116,29 +116,30 @@ export const archivePlayRequest = (concertid, number, playRequest) => {
 // 曲を再生
 const archivePlay = (concertid, number, playRequest) => {
   return async (dispatch, getState) => {
-    if (!getState().archive.concertList) return false
-    if (!getState().audio.archivePlaylist) return false
-    console.log(libArchive.getMediaData(concertid, number, getState().archive.concertList))
-    const album = libArchive.getAlbum(concertid, getState().audio.archivePlaylist)
-    const track = album.list[number]
-    console.log('album, track', album, track)
-    // audioへ設定
-    dispatch(archiveSetPlay(concertid, number, album, track, true))
-    // タグに反映
-    getState().audio.audioRef.src = getState().audio.archiveBaseUrl + album.baseSrc + track.path
+    // 再生する曲情報
+    dispatch(archiveSetPlayBase(concertid, number))
     // getState().audio.audioRef.play()
     playRequest ? dispatch(audioPlay()) : false
   }
 }
 
 // 再生する曲情報を設定
-const archiveSetPlay = (concertid, number, album, track, playlistLoad) => {
+const archiveSetPlayBase = (concertid, number) => {
   window.localStorage.setItem('playerConcertid', concertid)
   window.localStorage.setItem('playerNumber', number)
   return ({
+    type: prefix + 'ARCHIVE_SET_PLAY_BASE',
+    payload: { 
+      playmode: 'archive', concertid, number
+    }
+  })
+}
+
+const archiveSetPlay = (album, track, playlistLoad) => {
+  return ({
     type: prefix + 'ARCHIVE_SET_PLAY',
     payload: { 
-      playmode: 'archive', concertid, number, album, track, playlistLoad
+      playmode: 'archive', album, track, playlistLoad
     }
   })
 }
@@ -149,6 +150,13 @@ const archiveSetPlay = (concertid, number, album, track, playlistLoad) => {
 export const audioPlay = (e) => {
   if (e) e.preventDefault(e)
   return async (dispatch, getState) => {
+    if (!getState().archive.concertList) return false
+    if (!getState().audio.archivePlaylist) return false
+    const album = libArchive.getAlbum(getState().audio.concertid, getState().audio.archivePlaylist)
+    const track = album.list[getState().audio.number]
+    dispatch(archiveSetPlay(album, track, true))
+    // タグに反映
+    getState().audio.audioRef.src = getState().audio.archiveBaseUrl + album.baseSrc + track.path
     // 曲が指定されていないとき
     if (isNaN(getState().audio.number)) {
       if (getState().audio.displayPlaylist) {
@@ -187,41 +195,14 @@ export const audioPause = (e) => {
 export const audioStop = (e) => {
   if (e) e.preventDefault()
   return async (dispatch, getState) => {
-    if (getState().audio.current) {
-      getState().audio.audioRef.pause()
-      getState().audio.audioRef.currentTime = 0
-      dispatch(setPlayStatus(false))
-      // this.setState({
-      //   loadAudio: true,
-      //   playStatus: false,
-      //   currentTime: 0,
-      // })
-    } else {
-      // リセット処理がここに追加されるはず
-      // if (this.state.closeCount) {
-      //   this.listClose()
-      //   this.setState({closeCount: false, playlist: [], playlistLoad: undefined})
-      //   Actions.playerDisplay(false)
-      //   // Actions.toastShow('プレイヤーを終了しました')
-      //   return
-      // }
-      // this.setState({closeCount: true})
-      // this.audio.pause()
-      // this.audio.currentTime = 0
-      // // window.localStorage.removeItem('album')
-      // window.localStorage.removeItem('track')
-      // this.setState({
-      //   loadAudio: true,
-      //   playStatus: false,
-      //   // playAlbum: undefined,
-      //   playTrack: undefined,
-      //   // playType: undefined,
-      //   playPercent: undefined,
-      //   loadPercent: undefined,
-      //   currentTime: undefined,
-      //   duration: undefined,
-      //   stopStatus: true,
-      // })
-    }  
+    if (!getState().audio.current) {
+      dispatch(setDisplayPlaylist(false))
+      dispatch(setDisplayPlayer(false))
+      // window.localStorage.removeItem('playerConcertid')
+      // window.localStorage.removeItem('playerNumber')
+    } 
+    getState().audio.audioRef.pause()
+    getState().audio.audioRef.currentTime = 0
+    dispatch(setPlayStatus(false))
   }
 }

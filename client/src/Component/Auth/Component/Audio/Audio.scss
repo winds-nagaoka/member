@@ -409,11 +409,22 @@
     transform: translateY(105%);
     -webkit-overflow-scrolling: touch;
 
+    &.pc {
+      width: 50%;
+      top: 20%;
+      left: 50%;
+    }
+
     &.open {
       transition: transform .4s linear;
       -webkit-transform: translateY(0%);
       transform: translateY(0%);
       box-shadow: 6px 0 25px rgba(0,0,0,.15);
+
+      &.pc {
+        // -webkit-transform: translateY(20%);
+        // transform: translateY(20%);
+      }
     }
 
     .header {
@@ -538,7 +549,7 @@
       right: 0;
       bottom: 0;
       display: block;
-      margin: 45px 0 45px 0;
+      margin: 44px 0 44px 0;
       // border-bottom: 1px solid #ccc;
       overflow-x: hidden;
       overflow-y: scroll;
@@ -780,6 +791,26 @@
       .gap {
         height: 80px;
       }
+    }
+  }
+
+  .music-list-background {
+    display: none;
+    position: fixed;
+    z-index: 32;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0;
+    // -webkit-transition: opacity .6s ease-in-out;
+    transition: .3s ease-in-out;
+
+    &.list-open {
+      display: block;/*カバーを表示*/
+      opacity: .35;
+      animation: menu-background-show .3s ease-in-out 0s;
     }
   }
 }
