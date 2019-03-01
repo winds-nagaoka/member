@@ -97,12 +97,12 @@ class Auth extends Component {
                 <Route path='/archive' component={Archive} />
               </Switch>
             </div>
-            <Audio />
           </div>
           <footer>
             <small>&copy; The Wind Ensemble</small>
           </footer>
         </div>
+        <Audio />
       </div>
     )
   }

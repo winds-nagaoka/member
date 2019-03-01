@@ -7,7 +7,7 @@ import { connectSocket, disconnectSocket } from '../../../../Actions/Socket'
 
 import { getList } from '../../../../Actions/Cast'
 
-import { requestPlayAudio, requestStopAudio } from '../../../../Actions/Audio'
+// import { requestPlayAudio, requestStopAudio } from '../../../../Actions/Audio'
 
 import './Record.css'
 
@@ -34,12 +34,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(getList())
     },
 
-    requestPlayAudio (src, withPlay) {
-      dispatch(requestPlayAudio(src, withPlay))
-    },
-    requestStopAudio () {
-      dispatch(requestStopAudio())
-    }
+    // requestPlayAudio (src, withPlay) {
+    //   dispatch(requestPlayAudio(src, withPlay))
+    // },
+    // requestStopAudio () {
+    //   dispatch(requestStopAudio())
+    // }
   }
 }
 
@@ -88,7 +88,7 @@ class Record extends Component {
         <div className='contents-header'>
           <h2>練習の録音</h2>
         </div>
-        <div onClick={() => requestPlayAudio('https://audio.winds-n.com/member/no5.mp3', true)}>再生</div>
+        {/* <div onClick={() => requestPlayAudio('https://audio.winds-n.com/member/no5.mp3', true)}>再生</div> */}
         {/* <div onClick={() => requestPlayAudio('https://audio.winds-n.com/30th/002.mp3', true)}>再生</div> */}
         <div onClick={() => requestStopAudio()}>停止</div>
         <div>{showPlayStatus}</div>

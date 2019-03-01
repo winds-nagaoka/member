@@ -3,43 +3,98 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { loadingAudio, loadingAudioUpdate, playUpdate, audioStatusUpdate } from '../../../../Actions/Audio'
+import * as libArchive from '../../Archive/Library/Library'
 
-import { showToast } from '../../../../Actions/Toast'
+import {
+  loadArchivePlaylist,
+  setAudioRef,
+  loadingAudio,
+  loadPercentUpdate,
+  // setPlayStatus,
+  playUpdate,
+  setDisplayPlaylist,
+
+  audioPlay,
+  audioPause,
+  audioStop
+} from '../../../../Actions/Audio'
+
+import { getConcertList } from '../../../../Actions/Archive'
 
 import './Audio.css'
 
 function mapStateToProps(state) {
   return {
-    mobile: state.status.mobile,
+    pc: state.status.pc,
 
+    // アーカイブプレイリスト
+    loadingArchivePlaylist: state.audio.loadingArchivePlaylist,
+    archivePlaylist: state.audio.archivePlaylist,
+    archiveBaseUrl: state.audio.archiveBaseUrl,
+    archiveConcertList: state.archive.concertList,
+
+    // オーディオタグ本体
+    audioRef: state.audio.audioRef,
+
+    // 要素の表示状態
+    displayPlayer: state.audio.displayPlayer,
+    displayPlaylist: state.audio.displayPlaylist,
+    playlistLoad: state.audio.playlistLoad,
+
+    // オーディオタグの情報
     loadingAudio: state.audio.loadingAudio,
-    src: state.audio.src,
-
-    playRequest: state.audio.playRequest,
+    loadPercent: state.audio.loadPercent,
     playStatus: state.audio.playStatus,
-    duration: state.audio.duration,
     current: state.audio.current,
-    percent: state.audio.percent,
+    currentTime: state.audio.currentTime,
+    duration: state.audio.duration,
+    durationTime: state.audio.durationTime,
+    playPercent: state.audio.playPercent,
 
-    loadingPlaylist: state.audio.loadingPlaylist,
-    playlist: state.audio.playlist,
+    // 曲情報
+    playmode: state.audio.playmode,
+    concertid: state.audio.concertid,
+    number: state.audio.number,
+    album: state.audio.album,
+    track: state.audio.track
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    loadArchivePlaylist () {
+      dispatch(loadArchivePlaylist())
+    },
+    getConcertList () {
+      dispatch(getConcertList())
+    },
+    setAudioRef (audioRef) {
+      dispatch(setAudioRef(audioRef))
+    },
     loadingAudio (status) {
       dispatch(loadingAudio(status))
     },
-    loadingAudioUpdate (percent) {
-      dispatch(loadingAudioUpdate(percent))
+    loadPercentUpdate (percent) {
+      dispatch(loadPercentUpdate(percent))
     },
+    // setPlayStatus (status) {
+    //   dispatch(setPlayStatus(status))
+    // },
     playUpdate (current, duration) {
       dispatch(playUpdate(current, duration))
     },
-    audioStatusUpdate (status) {
-      dispatch(audioStatusUpdate(status))
+    setDisplayPlaylist (displayPlaylist) {
+      dispatch(setDisplayPlaylist(displayPlaylist))
+    },
+
+    audioPlay (e) {
+      dispatch(audioPlay(e))
+    },
+    audioPause (e) {
+      dispatch(audioPause(e))
+    },
+    audioStop (e) {
+      dispatch(audioStop(e))
     }
   }
 }
@@ -48,41 +103,40 @@ class Audio extends Component {
   constructor (props) {
     super(props)
     this.audio = React.createRef()
+    this.audioProgress = React.createRef()
+    this.audioLoadProgress = React.createRef()
   }
+
   componentDidMount () {
-  }
-  
-  componentWillReceiveProps () {
-  }
-  
-  componentWillUnmount () {
+    this.props.loadArchivePlaylist()
+    this.props.displayPlayer ? this.props.loadArchivePlaylist() : false
   }
 
-  componentDidUpdate (prevProps) {
-    console.warn('componentDidUpdate')
-    if (this.props.playRequest && this.props.playRequest !== prevProps.playRequest) {
-      this.playAudio()
-    }
-    if (!this.props.playRequest && this.props.playRequest !== prevProps.playRequest) {
-      this.stopAudio()
-    }
-  }
+  // componentDidUpdate (prevProps) {
+  //   console.warn('componentDidUpdate')
+  //   if (this.props.playRequest && this.props.playRequest !== prevProps.playRequest) {
+  //     this.playAudio()
+  //   }
+  //   if (!this.props.playRequest && this.props.playRequest !== prevProps.playRequest) {
+  //     this.stopAudio()
+  //   }
+  // }
 
-  playAudio () {
-    console.warn('playAudio - play')
-    if (!this.audio) return
-    this.audio.play()
-  }
+  // playAudio () {
+  //   console.warn('playAudio - play')
+  //   if (!this.audio) return
+  //   this.audio.play()
+  // }
 
-  stopAudio () {
-    console.warn('playAudio - stop')
-    if (!this.audio) return
-    this.audio.pause()
-    this.audio.currentTime = 0
-  }
+  // stopAudio () {
+  //   console.warn('playAudio - stop')
+  //   if (!this.audio) return
+  //   this.audio.pause()
+  //   this.audio.currentTime = 0
+  // }
 
   onLoadStart (e) {
-    if (this.props.src) {
+    if (this.props.audioRef.src) {
       this.props.loadingAudio(true)
     }
   }
@@ -106,7 +160,7 @@ class Audio extends Component {
       this.props.playUpdate(this.props.current, undefined)
     }
   }
-  
+
   onDurationChange (e) {
     if(!isNaN(e.target.duration)){
       // console.log('この曲の再生時間は ', audio.duration)
@@ -116,23 +170,23 @@ class Audio extends Component {
       this.props.playUpdate(this.props.current, undefined)
     }
   }
-  
+
   onProgress (e) {
     if (e.target.buffered.length > 0) {
-      this.props.loadingAudioUpdate(Math.round((e.target.buffered.end(e.target.buffered.length-1)/e.target.duration)*1000)/10)
+      this.props.loadPercentUpdate(Math.round((e.target.buffered.end(e.target.buffered.length-1)/e.target.duration)*1000)/10)
     } else {
-      this.props.loadingAudioUpdate(undefined)
+      this.props.loadPercentUpdate(undefined)
     }
   }
-  
+
   onCanPlayThrough (e) {
     this.props.loadingAudio(false)
   }
-  
+
   onError (e) {
     this.props.loadingAudio(true)
   }
-  
+
   onTimeUpdate (e) {
     if(!isNaN(e.target.duration)){
       this.props.playUpdate(e.target.currentTime, e.target.duration)
@@ -146,46 +200,173 @@ class Audio extends Component {
   }
 
   onEnded (e) {
-    this.setState({loadAudio: true})
+    console.log('再生終了')
+    // this.setState({loadAudio: true})
     // this.playNext()
   }
-  
-  setSrc () {
-    if (!this.audio) return
-    if (this.props.src && this.props.src !== this.audio.src) {
-      console.warn('setSrc')
-      this.audio.src = this.props.src
+
+  seekProgress (e) {
+    if (this.props.displayPlaylist) {
+      const total = Math.round(this.props.audioRef.duration)
+      if(!isNaN(total)){
+        // console.log(e.pageX, this.audioProgress.clientWidth)
+        this.props.audioRef.currentTime = Math.round(total * (e.pageX / this.audioProgress.clientWidth))
+      }
+    } else {
+      this.props.setDisplayPlaylist(true)
+    }
+  }
+
+  renderTrackList () {
+    if (!this.props.archiveConcertList) return
+    const concert = libArchive.getConcert(this.props.concertid, this.props.archiveConcertList).detail
+    // 初期値
+    var trackCount = 0
+    return concert.contents.map((item, i) => {
+      const trackList = item.music.map((num, i) => {
+        const trackData = this.props.album.list.filter((e) => {return e.data === num})
+        return trackData.map((each, j) => {
+          const trackNumber = trackCount
+          trackCount += 1
+          const title = each.data !== false ? libArchive.getAudioTitle(this.props.concertid, each.data, this.props.archiveConcertList) : each.title
+          const addTitle = each.addtitle ? ' ' + each.addtitle : ''
+          const composer = each.data !== false ? <span className='composer'>{libArchive.getAudioComposer(this.props.concertid, each.data, this.props.archiveConcertList)}</span> : (each.composer ? <span className='composer'>{each.composer}</span> : '')
+          const playing = this.props.number === trackNumber ? ' playing' : ''
+          const playTypeClass = this.props.album.type ? ' ' + this.props.album.type : ''
+          return (
+            <div key={'track' + i + j} className={'track' + playing + playTypeClass} onClick={() => this.selectPlay(this.props.concertid, trackNumber)}>
+              <div className='icon'><i className="fas fa-play-circle"></i></div>
+              <div className='info'>
+                <span className='title'>{title + addTitle}</span>
+                {composer}
+              </div>
+            </div>
+          )
+        })
+      })
+      return (
+        <div key={'part' + i}>
+          <label>{item.label}</label>
+          {trackList}
+        </div>
+      )
+    })
+  }
+
+  getTitle () {
+    return this.props.track.data !== false ? libArchive.getAudioTitle(this.props.concertid, this.props.track.data, this.props.archiveConcertList) : this.props.track.title
+  }
+
+  renderPlaylist () {
+    if (!this.props.displayPlayer) return
+    if (!this.props.playlistLoad) return
+    if (!this.props.concertid) return
+    // if (!this.props.displayPlaylist) return
+    const showTrackList = this.renderTrackList()
+    const playStatusClass = this.props.playStatus ? ' playing' : ''
+    // const playmodeClass = this.props.playmode ? ' ' + this.props.playmode : ''
+    const playTypeClass = this.props.album.type ? ' ' + this.props.album.type : ''
+    return (
+      <div className={'music-list' + (this.props.displayPlaylist ? ' open' : '')}>
+        <div className={'header' + playTypeClass + playStatusClass} onClick={() => this.props.setDisplayPlaylist(false)}>
+          <div>
+            <span className={playTypeClass}>{libArchive.getConcertTitle(this.props.concertid, this.props.archiveConcertList)}</span>
+            <span><i className="fab fa-itunes-note"></i>{isNaN(this.props.track) ? '曲を選択してください' : (this.getTitle() + (this.props.album.list[this.props.track].addtitle ? ' ' + this.props.album.list[this.props.track].addtitle : ''))}</span>
+          </div>
+        </div>
+        <div className={'label close' + playTypeClass} onClick={() => this.props.setDisplayPlaylist(false)}><i className="fas fa-chevron-down"></i></div>
+        <div className='contents'>
+          <div className='album'>
+            {showTrackList}
+          </div>
+          <div className='gap'></div>
+        </div>
+      </div>
+    )
+  }
+
+  renderPlayTime () {
+    if (this.props.current && this.props.duration) {
+      return <div className='time'><span>{this.props.currentTime}</span><span>{this.props.durationTime}</span></div>
+    } else {
+      return <div className='time'><span>00:00</span><span>00:00</span></div>
     }
   }
 
   render () {
     // State List
     const {
-      mobile,
+      pc,
 
-      loadingAudio,
-      src,
-      playRequest,
-      playing,
-      duration,
+      // アーカイブプレイリスト
+      loadingArchivePlaylist,
+      archivePlaylist,
+      archiveBaseUrl,
+
+      // オーディオタグ本体
+      audioRef,
+
+      // 要素の表示状態
+      displayPlayer,
+      displayPlaylist,
+      playlistLoad,
+      playStatus,
       current,
-      percent,
-  
-      loadingPlaylist,
-      playlist,
+      currentTime,
+      duration,
+      durationTime,
+      playPercent,
+
+      // オーディオタグの情報
+      loadingAudio,
+      loadPercent,
+
+      // 曲情報
+      playmode,
+      concertid,
+      number,
+      album,
+      track
      } = this.props
     // Dispatch List
     // const { logout } = this.props
 
-    const mobileMode = mobile ? ' mobile' : ''
+    // console.warn('playStatus', playStatus)
 
-    this.setSrc(src)
-    // this.playAudio(playing)
+    const button = playStatus ? ((loadingAudio && (current && duration)) ? <i className='fas fa-pause'></i> : <i className='fas fa-spinner fa-pulse'></i>) : <i className='fas fa-play'></i>
+    const playTime = this.renderPlayTime()
+    const playProgress = playPercent ? {backgroundSize: playPercent + '% 100%'} : {backgroundSize: '0% 100%'}
+    const loadProgress = loadPercent ? {backgroundSize: loadPercent + '% 100%'} : {backgroundSize: '0% 100%'}
+
+    const playStatusClass = this.props.playStatus ? ' playing' : ''
+
+    const playerClass = displayPlayer ? ' open' : ''
+    const displayPlaylistClass = displayPlaylist ? ' list-open' : ''
+
+    // const playmodeClass = playmode ? ' ' + playmode : ''
+    const playTypeClass = album ? (album.type ? ' ' + album.type : '') : ''
+
+    const openIcon = playlistLoad ? <i className='fas fa-chevron-up'></i> : ''
+
+    const showPlaylist = this.renderPlaylist()
 
     return (
-      <div className={'audio' + mobileMode}>
+      <div className={'audio' + (pc ? ' pc' : ' mobile')}>
+        <div className={'player' + playerClass}>
+          <button className={'control play' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={playStatus ? (e) => this.props.audioPause(e) : (e) => this.props.audioPlay(e)}>{button}</button>
+          <button className={'control stop' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={(e) => this.props.audioStop(e)}><i className='fas fa-stop'></i></button>
+          <div className={'audio-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={playProgress} ref={(i) => this.audioProgress = i} onClick={(e) => this.seekProgress(e)}>{playTime}</div>
+          <div className={'audio-load-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={loadProgress} ref={(i) => this.audioLoadProgress = i}></div>
+          <div className={'music-info' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.setDisplayPlaylist(true)}>
+            <div>
+              {/* <span>{isNaN(this.state.playTrack) ? '' : lib.getConcertTitle(this.state.playAlbum)}</span>
+              <span><i className="fab fa-itunes-note"></i>{isNaN(this.state.playTrack) || !this.state.playlistLoad ? '曲を選択してください' : (this.getTitle(this.state.playAlbum, this.state.playTrack) + (this.state.playlist.list[this.state.playTrack].addtitle ? ' ' + this.state.playlist.list[this.state.playTrack].addtitle : ''))}</span> */}
+            </div>
+          </div>
+          <div className={'label' + displayPlaylistClass + playTypeClass}>{openIcon}</div>
+        </div>
         <audio
-          ref={this.audio}
+          ref={(i) => {!this.props.audioRef ? this.props.setAudioRef(i) : ''}}
           onLoadStart={(e) => this.onLoadStart(e)}
           onLoadedMetadata={(e) => this.onLoadedMetadata(e)}
           onLoadedData={(e) => this.onLoadedData(e)}
@@ -195,8 +376,9 @@ class Audio extends Component {
           onError={(e) => this.onError(e)}
           onTimeUpdate={(e) => this.onTimeUpdate(e)}
           onEnded={(e) => this.onEnded(e)}
-          controls='none'
+          controls={false}
         ></audio>
+        {showPlaylist}
       </div>
     )
   }

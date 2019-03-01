@@ -5,10 +5,8 @@ const initialState = {
   displayMain: 'displayMain' in window.localStorage ? (window.localStorage.displayMain === 'true' ? true : false) : true,
   displayMini: 'displayMini' in window.localStorage ? (window.localStorage.displayMini === 'true' ? true : false) : true,
   displayOther: 'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true,
-  overviewid: undefined,
+  concertid: undefined,
 }
-
-console.warn('reducer', 'displayMain' in window.localStorage, window.localStorage.displayMain)
 
 const prefix = 'ARCHIVE_'
 
@@ -47,7 +45,7 @@ export default function archiveReducer (state = initialState, action) {
     case prefix + 'SET_OVERVIEW_ID':
       return {
         ...state,
-        overviewid: action.payload.overviewid
+        concertid: action.payload.concertid
       }
     default:
       return state

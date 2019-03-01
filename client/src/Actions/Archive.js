@@ -78,7 +78,7 @@ const setDisplayOther = (displayOther) => ({
   payload: { displayOther }
 })
 
-export const setOverviewid = (overviewid) => ({
+export const setConcertid = (concertid) => ({
   type: prefix + 'SET_OVERVIEW_ID',
-  payload: { overviewid }
+  payload: { concertid }
 })

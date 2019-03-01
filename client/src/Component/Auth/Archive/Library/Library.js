@@ -64,30 +64,13 @@ import { __esModule } from 'react-router-dom';
 //   return hms
 // }
 
-// function getMediaData (id, num) {
-//   if (concertStore.list) {
-//     return (getConcertList(id)[num])
-//     // var list = getConcertList(id)[num]
-//     // return list.title
-//   }
-// }
+function getConcertList (id, concertList) {
+  const concert = getConcert(id, concertList)
+  return concert.detail.data
+}
 
-// function getAudioTitle (id, num) {
-//   if (concertStore.list) {
-//     return (getConcertList(id)[num]).title
-//     // var list = getConcertList(id)[num]
-//     // return list.title
-//   }
-// }
 
-// function getAudioComposer (id, num) {
-//   if (concertStore.list) {
-//     var list = getConcertList(id)[num]
-//     const composer = 'composer' in list ? 'arranger' in list ? <span className='composer'>{list.composer}{list.composer.match(/民謡/) ? '' : '作曲'}<span>/</span>{list.arranger}編曲</span> : <span className='composer'>{list.composer}</span> : 'arranger' in list ? <span className='composer'>{list.arranger}編曲</span> : ''
-//     return composer
-//     // 'composer' in data[ml] ? 'arranger' in data[ml] ? <span className='composer'>{data[ml].composer}{data[ml].composer.match(/民謡/) ? '' : '作曲'}/{data[ml].arranger}編曲</span> : <span className='composer'>{data[ml].composer}</span> : ''
-//   }
-// }
+
 
 // function getAudioComposerText (id, num) {
 //   if (concertStore.list) {
@@ -127,13 +110,6 @@ export function getConcertType (id, concertList) {
 export function getConcert (id, concertList) {
   return concertList.filter((e) => {return e.id === id})[0]
 }
-
-// // for Local Not exports
-// function getConcertList (id) {
-//   var concert = getConcert(id)
-//   var detail = concert.detail
-//   return detail.data
-// }
 
 // function listReverse (array, a) {
 //   var data = JSON.parse(JSON.stringify(array))
@@ -181,6 +157,31 @@ export function getPrevConcert (id, concertList) {
     // console.log('prev', list[prev].id)
     return list[prev].id
   }
+}
+
+
+// Audio.jsより
+export function getMediaData (id, number, concertList) {
+  return (getConcertList(id, concertList)[number])
+}
+
+export function getAlbum (id, playlist) {
+  for (var i=0;i<playlist.length;i++) {
+    if (playlist[i].id === id) var album = playlist[i]
+  }
+  return JSON.parse(JSON.stringify(album))
+}
+
+export function getAudioTitle (id, number, concertList) {
+  return (getConcertList(id, concertList)[number]).title
+}
+
+
+export function getAudioComposer (id, number, concertList) {
+  var list = getConcertList(id, concertList)[number]
+  const composer = 'composer' in list ? 'arranger' in list ? <span className='composer'>{list.composer}{list.composer.match(/民謡/) ? '' : '作曲'}<span>/</span>{list.arranger}編曲</span> : <span className='composer'>{list.composer}</span> : 'arranger' in list ? <span className='composer'>{list.arranger}編曲</span> : ''
+  return composer
+  // 'composer' in data[ml] ? 'arranger' in data[ml] ? <span className='composer'>{data[ml].composer}{data[ml].composer.match(/民謡/) ? '' : '作曲'}/{data[ml].arranger}編曲</span> : <span className='composer'>{data[ml].composer}</span> : ''
 }
 
 // module.exports = {

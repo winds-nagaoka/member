@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setBackNavigation } from '../../../../Actions/Navigation'
-import { getConcertList, setOverviewid } from '../../../../Actions/Archive'
+import { getConcertList, setConcertid } from '../../../../Actions/Archive'
+import { archivePlayRequest } from '../../../../Actions/Audio'
 
 import * as lib from '../Library/Library'
 
@@ -15,7 +16,7 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     loadingArchive: state.archive.loading,
     concertList: state.archive.concertList,
-    overviewid: state.archive.overviewid
+    concertid: state.archive.concertid
   }
 }
 
@@ -27,9 +28,12 @@ function mapDispatchToProps(dispatch) {
     getConcertList () {
       dispatch(getConcertList())
     },
-    setOverviewid (id) {
-      dispatch(setOverviewid(id))
+    setConcertid (id) {
+      dispatch(setConcertid(id))
     },
+    archivePlayRequest (id, number) {
+      dispatch(archivePlayRequest(id, number))
+    }
   }
 }
 
@@ -38,7 +42,7 @@ class Overview extends Component {
     super(props)
     const { params } = this.props.match
     const id = params.id ? params.id : ''
-    this.props.setOverviewid(id)
+    this.props.setConcertid(id)
   }
 
   // 直接アクセスしたときに必要
@@ -49,7 +53,7 @@ class Overview extends Component {
 
   componentWillReceiveProps (nextProps, nextContext) {
     const { params } = nextProps.match
-    params.id ? this.props.setOverviewid(params.id) : false
+    params.id ? this.props.setConcertid(params.id) : false
   }
 
   showDate (item) {
@@ -92,9 +96,8 @@ class Overview extends Component {
     }
   }
 
-  setAudio (num) {
-    Actions.setAudio(this.state.id, num)
-    if (audioPlayerStore) Actions.playerDisplay(true)
+  setAudio (number) {
+    this.props.archivePlayRequest(this.props.concertid, number)
   }
 
   showMusic (item) {
@@ -127,11 +130,11 @@ class Overview extends Component {
 
   renderConcertNavigation (item) {
     const concertList = this.props.concertList
-    const overviewid = this.props.overviewid
-    const prevClass = 'prev ' + lib.getPrevConcert(overviewid, concertList) + ' ' + lib.getConcertType(overviewid, concertList)
-    const prevLink = lib.getPrevConcert(overviewid, concertList) ? <Link to={'/archive/overview/' + lib.getPrevConcert(overviewid, concertList)} className={prevClass}><i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}><i className='fas fa-chevron-circle-right'></i></span>
-    const nextClass = 'next ' + lib.getNextConcert(overviewid, concertList) + ' ' + lib.getConcertType(overviewid, concertList)
-    const nextLink = lib.getNextConcert(overviewid, concertList) ? <Link to={'/archive/overview/' + lib.getNextConcert(overviewid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i></Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i></span>
+    const concertid = this.props.concertid
+    const prevClass = 'prev ' + lib.getPrevConcert(concertid, concertList) + ' ' + lib.getConcertType(concertid, concertList)
+    const prevLink = lib.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + lib.getPrevConcert(concertid, concertList)} className={prevClass}><i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}><i className='fas fa-chevron-circle-right'></i></span>
+    const nextClass = 'next ' + lib.getNextConcert(concertid, concertList) + ' ' + lib.getConcertType(concertid, concertList)
+    const nextLink = lib.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + lib.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i></Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i></span>
     return (
       <div className='title'>
         {nextLink}
@@ -142,8 +145,8 @@ class Overview extends Component {
   }
 
   renderOverview (loadingArchive, concertList) {
-    if (loadingArchive || !concertList || !this.props.overviewid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    const item = lib.getConcert(this.props.overviewid, concertList).detail
+    if (loadingArchive || !concertList || !this.props.concertid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    const item = lib.getConcert(this.props.concertid, concertList).detail
     return (
       <div className='article'>
         {this.renderConcertNavigation(item)}
@@ -167,19 +170,19 @@ class Overview extends Component {
     )
   }
 
-  renderBreadNavigation (loadingArchive, concertList, overviewid) {
-    if (loadingArchive || !concertList || !overviewid) return false
+  renderBreadNavigation (loadingArchive, concertList, concertid) {
+    if (loadingArchive || !concertList || !concertid) return false
     return (
-      <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><Link to={'/archive/overview/' + overviewid}>{lib.getConcertTitle(overviewid, concertList)}</Link></div>
+      <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><Link to={'/archive/overview/' + concertid}>{lib.getConcertTitle(concertid, concertList)}</Link></div>
     )
   }
 
   render () {
     // State List
-    const { pc, loadingArchive, concertList, overviewid } = this.props
+    const { pc, loadingArchive, concertList, concertid } = this.props
 
     const showOverview = this.renderOverview(loadingArchive, concertList)
-    const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, overviewid)
+    const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, concertid)
 
     return (
       <React.Fragment>
