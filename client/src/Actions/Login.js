@@ -5,7 +5,7 @@ export const login = () => {
   return async (dispatch, getState) => {
     const { login: {windsid, password} } = getState()
     if (windsid === '' || password === '') {
-      return dispatch(error('入力を確認してください'))
+      return dispatch(setErrorMessage('入力を確認してください'))
     }
     dispatch(loading(true))
     const send = {
@@ -14,7 +14,7 @@ export const login = () => {
     }
     request.post('https://auth.winds-n.com/login', send, (err, res) => {
       if (err) {
-        dispatch(error('ログインできませんでした'))
+        dispatch(setErrorMessage('ログインできませんでした'))
       } else {
         if (res.body.status) {
           console.warn('Login OK')
@@ -26,7 +26,7 @@ export const login = () => {
           dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
-          dispatch(error('ログインできませんでした'))
+          dispatch(setErrorMessage('ログインできませんでした'))
         }  
       }
       dispatch(changePassword(''))
@@ -56,9 +56,9 @@ export const changePassword = (password) => ({
   }
 })
 
-export const error = (str) => ({
+export const setErrorMessage = (str) => ({
   type: 'LOGIN_ERROR',
   payload: {
-    error: str
+    errorMessage: str
   }
 })

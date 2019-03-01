@@ -91,7 +91,7 @@ class Home extends Component {
 
   render () {
     // State List
-    const { pc, loadingArchive, concertList } = this.props
+    const { loadingArchive, concertList } = this.props
 
     const showConcertSwitch = this.renderConcertSwitch(loadingArchive, concertList)
     const showConcertList = this.renderConcertList(loadingArchive, concertList)

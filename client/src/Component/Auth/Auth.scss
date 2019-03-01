@@ -66,6 +66,9 @@
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    // Chromeだけっぽい
+    // scroll-behavior: smooth;
     will-change: scroll-position;
     contain: size style layout;
     z-index: 1;

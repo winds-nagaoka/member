@@ -8,6 +8,7 @@ body {
   line-height: 1.6;
   // -webkit-touch-callout: none;
   // -webkit-user-select: none;
+  background: #efeff4;
 }
 
 * {
@@ -19,10 +20,14 @@ a {
   -webkit-touch-callout: none;
 }
 
-input:focus,
-input[type="password"]:focus {
-  border: solid 1px $base-color!important;
-  outline: 0;
+// input:focus,
+// input[type="password"]:focus {
+//   border: solid 1px $base-color!important;
+//   outline: 0;
+// }
+
+input[type="text"], input[type="address"], input[type="password"], input[type="date"], input[type="time"], textarea {
+  -webkit-appearance: none;
 }
 
 ::selection {

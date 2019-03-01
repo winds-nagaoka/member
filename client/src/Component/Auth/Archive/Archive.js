@@ -3,6 +3,8 @@ import { Route, Switch, Redirect, Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import * as lib from '../../../Library/Library'
+
 import Home from './Home/Home'
 import Overview from './Overview/Overview'
 
@@ -21,13 +23,8 @@ function mapDispatchToProps(dispatch) {
 
 class Archive extends Component {
   render () {
-    // State List
-    const { pc } = this.props
-    // Dispatch List
-    // const { goBack } = this.props
-
     return (
-      <div className={'archive' + (pc ? ' pc' : ' mobile')}>
+      <div className={'archive' + (lib.pcClass(this.props.pc))}>
 
         <Switch>
           <Route exact path='/archive' component={Home} />

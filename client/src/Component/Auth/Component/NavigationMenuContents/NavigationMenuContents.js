@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { navigationMenu } from '../../../../Actions/Navigation'
 import { logout } from '../../../../Actions/Status'
 
+import * as lib from '../../../../Library/Library'
+
 import './NavigationMenuContents.css'
 
 function mapStateToProps(state) {
@@ -56,7 +58,7 @@ class NavigationMenuContents extends Component {
     const { pc, mobile, path } = this.props
     const { navigationMenu } = this.props
     return (
-      <div className={'navigation-menu-contents' + (pc ? ' pc' : '')}>
+      <div className={'navigation-menu-contents' + lib.pcClass(pc)}>
         <div className='app-info'>
           <img src='https://winds-n.com/img/apple-icon-archive.png' alt='logo' />
           <span>団員専用ページ</span>

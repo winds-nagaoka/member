@@ -1,6 +1,7 @@
 const initialState = {
   windsid: '',
   password: '',
+  errorMessage: false,
   loading: false
 }
 
@@ -20,6 +21,11 @@ export default function loginReducer (state = initialState, action) {
       return {
         ...state,
         token: action.payload.token
+      }
+    case 'LOGIN_ERROR': 
+      return {
+        ...state,
+        errorMessage: action.payload.errorMessage
       }
     case 'LOGIN_LOADING':
       return {

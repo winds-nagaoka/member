@@ -10,11 +10,13 @@
 
     .title {
       width: 100%;
+      height: 30px;
+      line-height: 30px;
       position: -webkit-sticky;
       position: sticky;
       top: 0;
       // margin: 0 12px;
-      padding: 8px 0;
+      // padding: 8px 0;
       border: 0;
       // background: #f7f7f7;
       background: #fff;
@@ -22,6 +24,11 @@
 
       display: flex;
       justify-content: space-between;
+
+      &.pc {
+        height: 36px;
+        line-height: 36px;
+      }
 
       h2 {
         margin: 0 12px;
@@ -151,7 +158,7 @@
       .overview-detail {
         flex: 1.5;
         order: 2;
-        margin: 1em 2em 1em 2em;
+        margin: 12px 24px;
 
         @media (max-width: 767px) {
           & {
@@ -175,6 +182,10 @@
           font-size: 16px;
           // font-family: "kan48typos-std",sans-serif;
           // font-weight: 200;
+
+          &.pc {
+            top: 36px;
+          }
         }
 
         & > div > div {

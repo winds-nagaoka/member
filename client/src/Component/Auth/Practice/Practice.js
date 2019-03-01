@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import Schedule from './Schedule/Schedule'
 
+import * as lib from '../../../Library/Library'
+
 // import { goBack } from 'react-router-redux'
 
 import './Practice.css'
@@ -28,7 +30,7 @@ class Practice extends Component {
     // const { goBack } = this.props
 
     return (
-      <div className={'practice' + (pc ? ' pc' : ' mobile')}>
+      <div className={'practice' + lib.pcClass(pc)}>
         <div className='contents-header'>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習日程</Link><span></span></div>
           <h2>練習について</h2>

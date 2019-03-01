@@ -7,7 +7,8 @@ import { setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, setConcertid } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
-import * as lib from '../Library/Library'
+import * as libArchive from '../Library/Library'
+import * as lib from '../../../../Library/Library'
 
 import './Overview.css'
 
@@ -31,8 +32,8 @@ function mapDispatchToProps(dispatch) {
     setConcertid (id) {
       dispatch(setConcertid(id))
     },
-    archivePlayRequest (id, number) {
-      dispatch(archivePlayRequest(id, number))
+    archivePlayRequest (id, number, playRequest) {
+      dispatch(archivePlayRequest(id, number, playRequest))
     }
   }
 }
@@ -59,10 +60,10 @@ class Overview extends Component {
   showDate (item) {
     if (item.time['time'] && item.time['label']) {
       const time = <div><div>{item.time.date}</div><div>{item.time.time + item.time.label}</div></div>
-      return lib.labeling('日時', time)
+      return libArchive.labeling('日時', time)
     }
     const date = <div>{item.time.date}</div>
-    return lib.labeling('開催日', date)
+    return libArchive.labeling('開催日', date)
   }
 
   showPlace (item) {
@@ -70,7 +71,7 @@ class Overview extends Component {
       const place = item.place.map((each, i) => {
         return <div key={i}>{each}</div>
       })
-      return lib.labeling('会場', place)
+      return libArchive.labeling('会場', place)
     }
   }
 
@@ -80,7 +81,7 @@ class Overview extends Component {
       for (var i in item.conductor) {
         name += item.conductor[i].name + '・'
       }
-      return lib.labeling('指揮', name.slice(0, -1))
+      return libArchive.labeling('指揮', name.slice(0, -1))
     }
   }
 
@@ -92,12 +93,12 @@ class Overview extends Component {
       for (var i in item.guest) {
         list = item.guest[i].name + '(' + item.guest[i].instrument + ')'
       }
-      return lib.labeling('客演', list)
+      return libArchive.labeling('客演', list)
     }
   }
 
   setAudio (number) {
-    this.props.archivePlayRequest(this.props.concertid, number)
+    this.props.archivePlayRequest(this.props.concertid, number, true)
   }
 
   showMusic (item) {
@@ -131,12 +132,12 @@ class Overview extends Component {
   renderConcertNavigation (item) {
     const concertList = this.props.concertList
     const concertid = this.props.concertid
-    const prevClass = 'prev ' + lib.getPrevConcert(concertid, concertList) + ' ' + lib.getConcertType(concertid, concertList)
-    const prevLink = lib.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + lib.getPrevConcert(concertid, concertList)} className={prevClass}><i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}><i className='fas fa-chevron-circle-right'></i></span>
-    const nextClass = 'next ' + lib.getNextConcert(concertid, concertList) + ' ' + lib.getConcertType(concertid, concertList)
-    const nextLink = lib.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + lib.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i></Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i></span>
+    const prevClass = 'prev ' + libArchive.getPrevConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
+    const prevLink = libArchive.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getPrevConcert(concertid, concertList)} className={prevClass}><i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}><i className='fas fa-chevron-circle-right'></i></span>
+    const nextClass = 'next ' + libArchive.getNextConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
+    const nextLink = libArchive.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i></Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i></span>
     return (
-      <div className='title'>
+      <div className={'title' + lib.pcClass(this.props.pc)}>
         {nextLink}
         <h2>{item.title}</h2>
         {prevLink}
@@ -146,7 +147,7 @@ class Overview extends Component {
 
   renderOverview (loadingArchive, concertList) {
     if (loadingArchive || !concertList || !this.props.concertid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    const item = lib.getConcert(this.props.concertid, concertList).detail
+    const item = libArchive.getConcert(this.props.concertid, concertList).detail
     return (
       <div className='article'>
         {this.renderConcertNavigation(item)}
@@ -157,7 +158,7 @@ class Overview extends Component {
           </div>
           <div className='overview-detail'>
             <div>
-              <label className='sticky-label'>概要</label>
+              <label className={'sticky-label' + lib.pcClass(this.props.pc)}>概要</label>
               {this.showDate(item)}
               {this.showPlace(item)}
               {this.showConductor(item)}
@@ -173,13 +174,13 @@ class Overview extends Component {
   renderBreadNavigation (loadingArchive, concertList, concertid) {
     if (loadingArchive || !concertList || !concertid) return false
     return (
-      <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><Link to={'/archive/overview/' + concertid}>{lib.getConcertTitle(concertid, concertList)}</Link></div>
+      <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><Link to={'/archive/overview/' + concertid}>{libArchive.getConcertTitle(concertid, concertList)}</Link></div>
     )
   }
 
   render () {
     // State List
-    const { pc, loadingArchive, concertList, concertid } = this.props
+    const { loadingArchive, concertList, concertid } = this.props
 
     const showOverview = this.renderOverview(loadingArchive, concertList)
     const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, concertid)
@@ -193,6 +194,13 @@ class Overview extends Component {
         </div>
         <div className='box archive-overview'>
           {showOverview}
+        </div>
+        <div className='box'>
+          <div className='back-link'>
+            <ul>
+              <li><Link to='/archive'><div className='inner'><i className="fas fa-angle-left"></i><span>アーカイブへ</span></div></Link></li>
+            </ul>
+          </div>
         </div>
       </React.Fragment>
     )

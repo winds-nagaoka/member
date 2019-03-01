@@ -10,7 +10,7 @@ const initialState = {
   // 要素の表示状態
 
   // プレイヤーの表示状態
-  displayPlayer: false,
+  displayPlayer: window.localStorage.displayPlayer ? true : false,
   // プレイリストの表示状態
   displayPlaylist: false,
   // プレイリストが存在するか
@@ -41,19 +41,7 @@ const initialState = {
   album: undefined,
   track: undefined,
 
-  title: undefined,
-
-
-
-  // src: false,
-  // // meta: false,
-  // playRequest: false,
-  // playing: false,
-
-
-  // loadingPlaylist: false,
-  // playlist: [],
-
+  // title: undefined,
 }
 
 const prefix = 'AUDIO_'

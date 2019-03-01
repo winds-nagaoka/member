@@ -12,6 +12,8 @@ import { getList } from '../../../Actions/Cast'
 
 import { showToast } from '../../../Actions/Toast'
 
+import * as lib from '../../../Library/Library'
+
 import './Home.css'
 
 function mapStateToProps(state) {
@@ -172,7 +174,7 @@ class Home extends Component {
     const showManager = this.renderManager(loadingManager, manager)
     const showBBS = this.renderBBS(loadingBBS, BBSList)
     return (
-      <div className={'home' + (pc ? ' pc' : ' mobile')}>
+      <div className={'home' + lib.pcClass(pc)}>
         <div className='contents-header'>
           <div className='bread-navigation'><Link to='/'>ホーム</Link></div>
           <h2>団員専用ページ</h2>

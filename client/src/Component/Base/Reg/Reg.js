@@ -2,20 +2,32 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { changeWindsid, changePassword, changeKey, register } from '../../../Actions/Reg'
+import { updateMode, resetMode, changeWindsid, changePassword, changeKey, register, setErrorMessage } from '../../../Actions/Reg'
+
+import Footer from '../Component/Footer/Footer'
+
+import * as lib from '../../../Library/Library'
 
 function mapStateToProps(state) {
   return {
+    pc: state.status.pc,
+    mode: state.reg.mode,
     windsid: state.reg.windsid,
     password: state.reg.password,
     approvalKey: state.reg.approvalKey,
-    error: state.reg.error,
+    errorMessage: state.reg.errorMessage,
     loading: state.reg.loading
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    updateMode () {
+      dispatch(updateMode())
+    },
+    resetMode () {
+      dispatch(resetMode())
+    },
     changeWindsid (windsid) {
       dispatch(changeWindsid(windsid))
     },
@@ -27,34 +39,77 @@ function mapDispatchToProps(dispatch) {
     },
     register () {
       dispatch(register())
+    },
+    setErrorMessage (string) {
+      dispatch(setErrorMessage(string))
     }
   }
 }
 
 class Reg extends Component {
+  componentWillUnmount () {
+    this.props.changeWindsid('')
+    this.props.changePassword('')
+    this.props.changeKey('')
+    this.props.resetMode()
+    this.props.setErrorMessage(false)
+  }
   keyPress (e) {
-    if (e.which === 13) this.props.register()
+    if (e.which === 13) {
+      this.props.mode ? this.props.register() : this.props.updateMode()
+    }
   }
 
   render () {
-    const { windsid, password, approvalKey, error, loading } = this.props
-    const { changeWindsid, changePassword, changeKey, register } = this.props
-    const buttonLabel = loading ? '読み込み中' : '送信'
-    const showError = error ? <div>{error}</div> : false
-    return (
-      <div>
-        <div>新規登録</div>
-        <div><Link to='/login'>ログイン</Link></div>
-        <label>ユーザー名</label>
-        <input type="text" value={windsid} onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
-        <label>パスワード</label>
-        <input type="pass" value={password} onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
-        <label>承認キー</label>
-        <input type="text" value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
-        {showError}
-        <button onClick={() => register()}>{buttonLabel}</button>
-      </div>
-    )
+    const { mode, windsid, password, approvalKey, errorMessage, loading } = this.props
+    const { updateMode, changeWindsid, changePassword, changeKey, register } = this.props
+    if (!mode) {
+      const buttonLabel = loading ? '読み込み中' : '送信'
+      const disabled = approvalKey ? (loading ? true : false) : true
+      const showError = errorMessage ? <div className='error'>{errorMessage}</div> : false
+      return (
+        <div className={'contents' + lib.pcClass(this.props.pc)}>
+          <div className={'form-base reg' + lib.pcClass(this.props.pc)}>
+            <div className={'form login' + lib.pcClass(this.props.pc)}>
+              <h2 className={lib.pcClass(this.props.pc)}>新規登録</h2>
+              <label>団員専用パスワード</label>
+              <input type='text' tabIndex='1' value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+              {showError}
+              <div className='links'>
+                <div className='link'><Link to='/login' tabIndex='-1'>ログインはこちら</Link></div>
+                <button tabIndex='2' onClick={() => updateMode()} disabled={disabled}>{buttonLabel}</button>
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      )
+    } else {
+      const buttonLabel = loading ? '読み込み中...' : '送信'
+      const disabled = (windsid && password) ? (loading ? true : false) : true
+      const showError = errorMessage ? <div className='error'>{errorMessage}</div> : false
+      return (
+        <div className={'contents' + lib.pcClass(this.props.pc)}>
+          <div className={'form-base reg' + lib.pcClass(this.props.pc)}>
+            <div className={'form login' + lib.pcClass(this.props.pc)}>
+              <h2 className={lib.pcClass(this.props.pc)}>新規登録</h2>
+              <label>ユーザー名</label>
+              <input type='text' tabIndex='1' value={windsid} onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+              <label>パスワード</label>
+              <input type='password' tabIndex='2' value={password} onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+              {/* <label>団員専用パスワード</label> */}
+              {/* <input type='text' value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)} /> */}
+              {showError}
+              <div className='links'>
+                <div className='link'><Link to='/login' tabIndex='-1'>ログインはこちら</Link></div>
+                <button tabIndex='3' onClick={() => register()} disabled={disabled}>{buttonLabel}</button>
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      )
+    }
   }
 }
 

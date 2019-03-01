@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import * as lib from '../../../Library/Library'
+
 import { setBackNavigation } from '../../../Actions/Navigation'
 import { getBBSList, loadMore } from '../../../Actions/BBS'
 
@@ -75,16 +77,11 @@ class BBS extends Component {
   }
 
   render () {
-    // State List
-    const { pc } = this.props
-    // Dispatch List
-    // none
-
     const showList = this.renderContents()
     const showMore = this.renderMore()
 
     return (
-      <div className={'bbs' + (pc ? ' pc' : ' mobile')}>
+      <div className={'bbs' + (lib.pcClass(this.props.pc))}>
         <div className='contents-header'>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/bbs'>掲示板</Link></div>
           <h2>団員専用掲示板</h2>

@@ -1,13 +1,19 @@
 const initialState = {
+  mode: false,
   windsid: '',
   password: '',
   approvalKey: '',
-  error: false,
+  errorMessage: false,
   loading: false
 }
 
 export default function regReducer (state = initialState, action) {
   switch (action.type) {
+    case 'REG_SET_MODE':
+      return {
+        ...state,
+        mode: action.payload.mode
+      }
     case 'REG_INPUT_WINDSID':
       return {
         ...state,
@@ -31,7 +37,7 @@ export default function regReducer (state = initialState, action) {
     case 'REG_ERROR':
       return {
         ...state,
-        error: action.payload.error
+        errorMessage: action.payload.errorMessage
       }
     case 'REG_LOADING':
       return {

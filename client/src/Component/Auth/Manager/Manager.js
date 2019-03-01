@@ -8,6 +8,8 @@ import { getManager } from '../../../Actions/Manager'
 
 import { showToast } from '../../../Actions/Toast'
 
+import * as lib from '../../../Library/Library'
+
 import './Manager.css'
 
 function mapStateToProps(state) {
@@ -67,7 +69,7 @@ class Manager extends Component {
 
     const showManager = this.renderManager(loadingManager, manager)
     return (
-      <div className={'manager' + (pc ? ' pc' : ' mobile')}>
+      <div className={'manager' + lib.pcClass(pc)}>
         <div className='contents-header'>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link></div>
           <h2>事務局からのお知らせ</h2>

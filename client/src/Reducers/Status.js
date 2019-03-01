@@ -38,6 +38,11 @@ export default function statusReducer (state = initialState, action) {
         pc: action.payload.pc,
         mobile: action.payload.mobile
       }
+    case 'STATUS_SET_CONTENTS_REF':
+      return {
+        ...state,
+        contentsRef: action.payload.contentsRef
+      }
     // react-router-redux の Action をフック
     // リンク移動先を保存
     // case '@@router/LOCATION_CHANGE':

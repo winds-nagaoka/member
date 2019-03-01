@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { loginAuth, windowWidthChange } from '../../Actions/Status'
+import { loginAuth, windowWidthChange, setContentsRef } from '../../Actions/Status'
 
 // import { replace } from 'react-router-redux'
 
@@ -22,13 +22,17 @@ import Audio from './Component/Audio/Audio'
 
 import Toast from './Component/Toast/Toast'
 
+import Loading from '../Loading/Loading'
+
 import './Auth.css'
 
 function mapStateToProps(state) {
   return {
     login: state.status.login,
     loading: state.status.loading,
-    pc: state.status.pc
+    pc: state.status.pc,
+    contentsRef: state.status.contentsRef,
+    displayPlayer: state.audio.displayPlayer
   }
 }
 
@@ -40,6 +44,9 @@ function mapDispatchToProps(dispatch) {
     windowWidthChange () {
       dispatch(windowWidthChange())
     },
+    setContentsRef (contentsRef) {
+      dispatch(setContentsRef(contentsRef))
+    }
     // replace (path) {
     //   dispatch(replace(path))
     // }
@@ -55,8 +62,8 @@ class Auth extends Component {
   componentWillReceiveProps (nextProps, nextContext) {
     // console.warn(nextProps, nextContext)
 
-    if(this.contents) {
-      this.contents.scrollTop = 0
+    if(this.props.contentsRef) {
+      this.props.contentsRef.scrollTop = 0
     }
   }
 
@@ -76,14 +83,15 @@ class Auth extends Component {
   }
 
   render () {
-    const { login, loading, pc } = this.props
-    if (loading) return <div className='full-loading'><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
+    const { login, loading, pc, displayPlayer } = this.props
+    if (loading) return <Loading />
     if (!login) return <Redirect to='/login' />
+    const gap = displayPlayer ? <div className='gap'></div> : false
     return (
       <div className='auth'>
         <Toast />
         <NavigationHeader />
-        <div className={'contents' + (pc ? ' pc' : ' mobile')} ref={(i) => this.contents = i}>
+        <div className={'contents' + (pc ? ' pc' : ' mobile')} ref={(i) => {!this.props.contentsRef ? this.props.setContentsRef(i) : false}}>
           <div className={pc ? 'flex-frame': ''}>
             <NavigationInline />
             <div className={pc ? 'inline-contents' : 'full-contents'}>
@@ -101,6 +109,7 @@ class Auth extends Component {
           <footer>
             <small>&copy; The Wind Ensemble</small>
           </footer>
+          {gap}
         </div>
         <Audio />
       </div>

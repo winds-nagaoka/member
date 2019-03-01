@@ -51,10 +51,13 @@ export const setAudioRef = (audioRef) => ({
 // 要素の表示状態
 
 // プレイヤーの表示設定
-const setDisplayPlayer = (displayPlayer) => ({
-  type: prefix + 'SET_DISPLAY_PLAYER',
-  payload: { displayPlayer }
-})
+const setDisplayPlayer = (displayPlayer) => {
+  window.localStorage.setItem('displayPlayer', displayPlayer)
+  return ({
+    type: prefix + 'SET_DISPLAY_PLAYER',
+    payload: { displayPlayer }
+  })  
+}
 
 // プレイリストを開く
 export const setDisplayPlaylist = (displayPlaylist) => ({
@@ -101,17 +104,17 @@ export const playUpdate = (current, duration) => {
 // 曲情報
 
 // アーカイブから曲を選択
-export const archivePlayRequest = (concertid, number) => {
+export const archivePlayRequest = (concertid, number, playRequest) => {
   return async (dispatch, getState) => {
     // プレイヤーを表示
     !getState().audio.displayPlayer ? dispatch(setDisplayPlayer(true)) : false
     // 曲を再生
-    dispatch(archivePlay(concertid, number))
+    dispatch(archivePlay(concertid, number, playRequest))
   }
 }
 
 // 曲を再生
-const archivePlay = (concertid, number) => {
+const archivePlay = (concertid, number, playRequest) => {
   return async (dispatch, getState) => {
     if (!getState().archive.concertList) return false
     console.log(libArchive.getMediaData(concertid, number, getState().archive.concertList))
@@ -123,17 +126,21 @@ const archivePlay = (concertid, number) => {
     // タグに反映
     getState().audio.audioRef.src = getState().audio.archiveBaseUrl + album.baseSrc + track.path
     // getState().audio.audioRef.play()
-    dispatch(audioPlay())
+    playRequest ? dispatch(audioPlay()) : false
   }
 }
 
 // 再生する曲情報を設定
-const archiveSetPlay = (concertid, number, album, track, playlistLoad) => ({
-  type: prefix + 'ARCHIVE_SET_PLAY',
-  payload: { 
-    playmode: 'archive', concertid, number, album, track, playlistLoad
-  }
-})
+const archiveSetPlay = (concertid, number, album, track, playlistLoad) => {
+  window.localStorage.setItem('playerConcertid', concertid)
+  window.localStorage.setItem('playerNumber', number)
+  return ({
+    type: prefix + 'ARCHIVE_SET_PLAY',
+    payload: { 
+      playmode: 'archive', concertid, number, album, track, playlistLoad
+    }
+  })
+}
 
 // オーディオタグの操作
 

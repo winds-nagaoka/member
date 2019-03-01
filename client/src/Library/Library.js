@@ -19,3 +19,7 @@ export function playTime (t) {
   }
   return hms
 }
+
+export function pcClass (status) {
+  return status ? ' pc' : ' mobile'
+}

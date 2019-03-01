@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { setBackNavigation } from '../../../../Actions/Navigation'
 import { getSchedule } from '../../../../Actions/Schedule'
 
+import * as lib from '../../../../Library/Library'
+
 // import { goBack } from 'react-router-redux'
 
 import './Schedule.css'
@@ -126,7 +128,7 @@ class Schedule extends Component {
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
     return (
-      <div className={'schedule' + (pc ? ' pc' : ' mobile')}>
+      <div className={'schedule' + lib.pcClass(pc)}>
         {/* <div className='contents-header'>
           <h2>練習日程</h2>
         </div> */}

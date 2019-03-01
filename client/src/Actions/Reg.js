@@ -5,7 +5,7 @@ export const register = () => {
   return async (dispatch, getState) => {
     const { reg: {windsid, password, approvalKey} } = getState()
     if (windsid === '' || password === '' || approvalKey === '') {
-      return dispatch(error('入力を確認してください'))
+      return dispatch(setErrorMessage('入力を確認してください'))
     }
     dispatch(loading(true))
     const send = {
@@ -15,7 +15,7 @@ export const register = () => {
     }
     request.post('https://auth.winds-n.com/adduser', send, (err, res) => {
       if (err) {
-        dispatch(error('登録できませんでした'))
+        dispatch(setErrorMessage('登録できませんでした'))
       } else {
         if (res.body.status) {
           console.log('Register OK')
@@ -27,7 +27,7 @@ export const register = () => {
           dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
-          dispatch(error('登録できませんでした'))
+          dispatch(setErrorMessage('登録できませんでした'))
         }
       }
       dispatch(changePassword(''))
@@ -41,6 +41,27 @@ export const loading = (loading) => ({
   payload: {
     loading: loading
   }
+})
+
+export const updateMode = () => {
+  return async (dispatch, getState) => {
+    dispatch(loading(true))
+    setTimeout(() => {
+      console.log('update')
+      dispatch(loading(false))
+      dispatch(setMode(true))
+    }, 200)
+  }
+}
+
+const setMode = (mode) => ({
+  type: 'REG_SET_MODE',
+  payload: { mode }
+})
+
+export const resetMode = () => ({
+  type: 'REG_SET_MODE',
+  payload: { mode: false }
 })
 
 export const changeWindsid = (windsid) => ({
@@ -64,9 +85,9 @@ export const changeKey = (approvalKey) => ({
   }
 })
 
-export const error = (str) => ({
+export const setErrorMessage = (str) => ({
   type: 'REG_ERROR',
   payload: {
-    error: str
+    errorMessage: str
   }
 })
