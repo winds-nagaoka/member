@@ -115,13 +115,17 @@ class Audio extends Component {
 
   componentDidMount () {
     // this.props.loadArchivePlaylist()
-    this.props.displayPlayer ? this.props.loadArchivePlaylist() : false
-
+    this.props.loadArchivePlaylist()
+    // this.props.displayPlayer ? this.props.loadArchivePlaylist() : false
     // if (window.localStorage.displayPlayer) {
     //   if (window.localStorage.playerConcertid && window.localStorage.playerNumber) {
     //     this.props.archivePlayRequest(window.localStorage.playerConcertid, window.localStorage.playerNumber, false)
     //   }
     // }
+  }
+
+  componentWillUnmount () {
+    this.props.audioStop()
   }
 
   // componentDidUpdate (prevProps) {
@@ -214,7 +218,16 @@ class Audio extends Component {
   onEnded (e) {
     console.log('再生終了')
     // this.setState({loadAudio: true})
-    // this.playNext()
+    this.playNext()
+  }
+
+  playNext () {
+    if (this.props.album.list.length > (this.props.number + 1)) {
+      // 次のトラックへ
+      this.props.archivePlayRequest(this.props.concertid, this.props.number + 1, true)
+    } else {
+      this.props.audioStop()
+    }
   }
 
   seekProgress (e) {
@@ -225,7 +238,7 @@ class Audio extends Component {
         this.props.audioRef.currentTime = Math.round(total * (e.pageX / this.audioProgress.clientWidth))
       }
     } else {
-      this.props.setDisplayPlaylist(true)
+      if (this.props.playlistLoad) this.props.setDisplayPlaylist(true)
     }
   }
 
@@ -373,7 +386,7 @@ class Audio extends Component {
           <button className={'control stop' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={(e) => this.props.audioStop(e)}><i className='fas fa-stop'></i></button>
           <div className={'audio-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={playProgress} ref={(i) => this.audioProgress = i} onClick={(e) => this.seekProgress(e)}>{playTime}</div>
           <div className={'audio-load-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={loadProgress} ref={(i) => this.audioLoadProgress = i}></div>
-          <div className={'music-info' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.setDisplayPlaylist(true)}>
+          <div className={'music-info' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => {this.props.playlistLoad ? this.props.setDisplayPlaylist(true) : false}}>
             <div>
               <span>{isNaN(this.props.number) ? '' : libArchive.getConcertTitle(this.props.concertid, this.props.archiveConcertList)}</span>
               <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.number) || !this.props.playlistLoad ? '曲を選択してください' : (this.getTitle() + (this.props.album.list[this.props.number].addtitle ? ' ' + this.props.album.list[this.props.number].addtitle : ''))}</span>

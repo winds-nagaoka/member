@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { loginAuth, windowWidthChange, setContentsRef } from '../../Actions/Status'
+import { loginAuth, windowWidthChange, setContentsRef, scrollToTop } from '../../Actions/Status'
 
 // import { replace } from 'react-router-redux'
 
@@ -46,6 +46,9 @@ function mapDispatchToProps(dispatch) {
     },
     setContentsRef (contentsRef) {
       dispatch(setContentsRef(contentsRef))
+    },
+    scrollToTop () {
+      dispatch(scrollToTop())
     }
     // replace (path) {
     //   dispatch(replace(path))
@@ -61,10 +64,10 @@ class Auth extends Component {
 
   componentWillReceiveProps (nextProps, nextContext) {
     // console.warn(nextProps, nextContext)
-
-    if(this.props.contentsRef) {
-      this.props.contentsRef.scrollTop = 0
-    }
+    this.props.scrollToTop()
+    // if(this.props.contentsRef) {
+    //   this.props.contentsRef.scrollTop = 0
+    // }
   }
 
   componentDidUpdate () {

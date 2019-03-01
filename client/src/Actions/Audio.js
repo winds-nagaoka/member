@@ -117,6 +117,7 @@ export const archivePlayRequest = (concertid, number, playRequest) => {
 const archivePlay = (concertid, number, playRequest) => {
   return async (dispatch, getState) => {
     if (!getState().archive.concertList) return false
+    if (!getState().audio.archivePlaylist) return false
     console.log(libArchive.getMediaData(concertid, number, getState().archive.concertList))
     const album = libArchive.getAlbum(concertid, getState().audio.archivePlaylist)
     const track = album.list[number]
@@ -148,19 +149,19 @@ const archiveSetPlay = (concertid, number, album, track, playlistLoad) => {
 export const audioPlay = (e) => {
   if (e) e.preventDefault(e)
   return async (dispatch, getState) => {
-    dispatch(audioStart())
-    if (isNaN(getState().audio.track)) {
+    // 曲が指定されていないとき
+    if (isNaN(getState().audio.number)) {
       if (getState().audio.displayPlaylist) {
         return // Actions.toastShow('曲を選択してください')
       } else {
-        // これよくわかんない、あとで確認する
-        if (!getState().audio.playlistLoad) {
-          return this.listOpen()
+        if (getState().audio.playlistLoad) {
+          return dispatch(setDisplayPlaylist(true))
         } else {
           return
         }
       }
     }
+    dispatch(audioStart())
   }
 }
 

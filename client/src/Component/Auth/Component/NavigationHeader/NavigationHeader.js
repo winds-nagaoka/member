@@ -4,7 +4,7 @@ import { Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { navigationMenuToggle } from '../../../../Actions/Navigation'
-import { scrollToTop } from '../../../../Actions/Status'
+import { scrollToTopSmooth } from '../../../../Actions/Status'
 
 import NavigationMenuContents from '../NavigationMenuContents/NavigationMenuContents'
 
@@ -31,8 +31,8 @@ function mapDispatchToProps(dispatch) {
     navigationMenuToggle () {
       dispatch(navigationMenuToggle())
     },
-    scrollToTop () {
-      dispatch(scrollToTop())
+    scrollToTopSmooth () {
+      dispatch(scrollToTopSmooth())
     }
     // navigationMenu (open) {
     //   dispatch(navigationMenu(open))
@@ -48,7 +48,7 @@ class NavigationHeader extends Component {
 
     // const menuContentClass = 
     // const menuBackgroundClass = 
-    const showTitle = title ? <div className='title-text' onClick={() => this.props.scrollToTop()}>{title}</div> : <div className='logo' onClick={() => this.props.scrollToTop()}><WindsLogo /></div>
+    const showTitle = title ? <div className='title-text' onClick={() => this.props.scrollToTopSmooth()}>{title}</div> : <div className='logo' onClick={() => this.props.scrollToTopSmooth()}><WindsLogo /></div>
 
     // const backNavAndMenuToggle = this.props.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
     const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false

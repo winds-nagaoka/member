@@ -54,10 +54,6 @@
       color: #333;
       text-decoration: none;
 
-      &:hover, &:active {
-        background: #ccc;
-      }
-
       div {
         padding: 0 0 0 1em;
 
@@ -78,11 +74,11 @@
       cursor: pointer;
 
       &:hover {
-        background: #efefef;
+        background: #eee;
       }
 
       &:active {
-        background: #eee;
+        background: #e3e3e3;
       }
 
       div {

@@ -5,6 +5,7 @@ export const register = () => {
   return async (dispatch, getState) => {
     const { reg: {windsid, password, approvalKey} } = getState()
     if (windsid === '' || password === '' || approvalKey === '') {
+      dispatch(resetMode())
       return dispatch(setErrorMessage('入力を確認してください'))
     }
     dispatch(loading(true))
@@ -16,6 +17,7 @@ export const register = () => {
     request.post('https://auth.winds-n.com/adduser', send, (err, res) => {
       if (err) {
         dispatch(setErrorMessage('登録できませんでした'))
+        dispatch(resetMode())
       } else {
         if (res.body.status) {
           console.log('Register OK')
@@ -28,9 +30,11 @@ export const register = () => {
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
           dispatch(setErrorMessage('登録できませんでした'))
+          dispatch(resetMode())
         }
       }
       dispatch(changePassword(''))
+      dispatch(changeKey(''))
       dispatch(loading(false))
     })
   }

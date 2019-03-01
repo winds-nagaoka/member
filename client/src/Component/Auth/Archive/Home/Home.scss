@@ -66,6 +66,10 @@
       background: #eee;
     }
 
+    &:active {
+      background: #e3e3e3;
+    }
+
     .info {
       padding-left: 8px;
       border-left: 4px solid #888;

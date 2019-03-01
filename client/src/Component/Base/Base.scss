@@ -1,13 +1,24 @@
 .base {
   // display: flex;
 
+  .navigation-header {
+
+    .header {
+      height: 60px;
+
+      &.pc {
+        height: 90px;
+      }
+    }
+  }
+
   .contents {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    margin: 45px 0 0 0;
+    margin: 61px 0 0 0;
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -25,7 +36,7 @@
     // background: rgb(230, 236, 240);
 
     &.pc {
-      margin: 61px 0 0 0;
+      margin: 91px 0 0 0;
     }
 
     .form-base {
