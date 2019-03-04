@@ -113,7 +113,7 @@
 
     // 標準box
     &.pc {
-      .box label {
+      .box .title-frame > label {
         padding: 8px 0 8px 16px;
         font-size: 20px;
       }
@@ -202,31 +202,32 @@
       .title-frame {
         // タイトルSticky用
         // padding: 12px 0 0;
-      }
 
-      label {
-        display: block;
-        // margin: 8px 0;
-        padding: 4px 0 4px 12px;
-        border-bottom: .55px solid #c8c7cc;
-        // border-bottom: .55px dotted #c8c7cc;
-        background: #fff;
-        color: #333;
-        font-size: 18px;
-        letter-spacing: .1rem;
-
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-
-        // position: relative;
-        // border-bottom: .55px solid #c8c7cc;
-
-        // &::before {
-        //   display: block;
-        //   content: '';
-        //   padding-top: 12px;
-        // }
+        & > label {
+          display: block;
+          // margin: 8px 0;
+          padding: 4px 0 4px 12px;
+          border-bottom: .55px solid #c8c7cc;
+          // border-bottom: .55px dotted #c8c7cc;
+          background: #fff;
+          color: #333;
+          font-size: 18px;
+          letter-spacing: .1rem;
+  
+          position: -webkit-sticky;
+          position: sticky;
+          top: 0;
+  
+          line-height: 1.6;
+          // position: relative;
+          // border-bottom: .55px solid #c8c7cc;
+  
+          // &::before {
+          //   display: block;
+          //   content: '';
+          //   padding-top: 12px;
+          // }
+        }
       }
 
       .text {
@@ -294,6 +295,7 @@
       }
       .back-link {
         font-size: 1rem;
+        line-height: 1.6;
 
         ul {
           margin: 0;

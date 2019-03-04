@@ -119,11 +119,9 @@ class Audio extends Component {
     // this.props.loadArchivePlaylist()
     this.props.loadArchivePlaylist()
     // this.props.displayPlayer ? this.props.loadArchivePlaylist() : false
-    if (window.localStorage.displayPlayer) {
-      if (window.localStorage.playerConcertid && window.localStorage.playerNumber) {
-        console.warn('window.localStorage.playerConcertid && window.localStorage.playerNumber',window.localStorage.playerConcertid, window.localStorage.playerNumber)
-        this.props.archivePlayRequest(window.localStorage.playerConcertid, window.localStorage.playerNumber, false)
-      }
+    if (window.localStorage.displayPlayer && window.localStorage.playerConcertid && window.localStorage.playerNumber) {
+      this.props.getConcertList()
+      this.props.archivePlayRequest(window.localStorage.playerConcertid, window.localStorage.playerNumber, false)
     }
   }
 

@@ -36,6 +36,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Login extends Component {
+  constructor (props) {
+    super(props)
+    this.inputRef = React.createRef()
+  }
+
+  componentDidMount () {
+    if (this.inputRef) {
+      this.inputRef.focus()
+    }
+  }
+
   componentWillUnmount () {
     this.props.changeWindsid('')
     this.props.changePassword('')
@@ -58,7 +69,7 @@ class Login extends Component {
           <div className={'form login' + lib.pcClass(this.props.pc)}>
             <h2 className={lib.pcClass(this.props.pc)}>ログイン</h2>
             <label>ユーザー名</label>
-            <input type='text' tabIndex='1' onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+            <input type='text' tabIndex='1' onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputRef = i} />
             <label>パスワード</label>
             <input type='password' tabIndex='2' onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
             {showError}

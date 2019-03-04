@@ -243,7 +243,7 @@ class Home extends Component {
 
         <div className='box home-bbs'>
           <div className='title-frame'>
-            <label>楽譜</label>
+            <label>ウィンズスコア</label>
             <div className='text'>
               ウィンズが所有する楽譜はこちらから参照できます
             </div>

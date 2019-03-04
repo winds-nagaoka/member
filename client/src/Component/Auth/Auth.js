@@ -14,6 +14,8 @@ import Cast from './Practice/Cast/Cast'
 import Record from './Practice/Record/Record'
 
 import Archive from './Archive/Archive'
+import Score from './Score/Score'
+import ScoreModal from './Score/ScoreModal/ScoreModal'
 
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
@@ -106,6 +108,7 @@ class Auth extends Component {
                 <Route path='/practice/cast' component={Cast} />
                 <Route path='/practice/record' component={Record} />
                 <Route path='/archive' component={Archive} />
+                <Route path='/score' component={Score} />
               </Switch>
             </div>
           </div>
@@ -115,6 +118,7 @@ class Auth extends Component {
           {gap}
         </div>
         <Audio />
+        <ScoreModal />
       </div>
     )
   }

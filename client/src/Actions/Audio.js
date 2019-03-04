@@ -198,8 +198,11 @@ export const audioStop = (e) => {
     if (!getState().audio.current) {
       dispatch(setDisplayPlaylist(false))
       dispatch(setDisplayPlayer(false))
-      // window.localStorage.removeItem('playerConcertid')
-      // window.localStorage.removeItem('playerNumber')
+      if (e) {
+        window.localStorage.removeItem('playerConcertid')
+        window.localStorage.removeItem('playerNumber')  
+        window.localStorage.removeItem('displayPlayer')
+      }
     } 
     getState().audio.audioRef.pause()
     getState().audio.audioRef.currentTime = 0

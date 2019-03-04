@@ -47,6 +47,27 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Reg extends Component {
+  constructor (props) {
+    super(props)
+    this.inputKeyRef = React.createRef()
+    this.inputWindsidRef = React.createRef()
+    // ちょっとトリッキー(mode: true のときのfocus()用)
+    this.inputWindsidRefFlag = true
+  }
+
+  componentDidMount () {
+    if (this.inputKeyRef) {
+      this.inputKeyRef.focus()
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.inputWindsidRef && this.inputWindsidRefFlag && this.props.mode) {
+      this.inputWindsidRef.focus()
+      this.inputWindsidRefFlag = false
+    }
+  }
+
   componentWillUnmount () {
     this.props.changeWindsid('')
     this.props.changePassword('')
@@ -54,6 +75,7 @@ class Reg extends Component {
     this.props.resetMode()
     this.props.setErrorMessage(false)
   }
+
   keyPress (e) {
     if (e.which === 13) {
       this.props.mode ? this.props.register() : this.props.updateMode()
@@ -73,7 +95,7 @@ class Reg extends Component {
             <div className={'form login' + lib.pcClass(this.props.pc)}>
               <h2 className={lib.pcClass(this.props.pc)}>新規登録</h2>
               <label>団員専用パスワード</label>
-              <input type='text' tabIndex='1' value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+              <input type='text' tabIndex='1' value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)}  ref={(i) => this.inputKeyRef = i} />
               {showError}
               <div className='links'>
                 <div className='link'><Link to='/login' tabIndex='-1'>ログインはこちら</Link></div>
@@ -94,7 +116,7 @@ class Reg extends Component {
             <div className={'form login' + lib.pcClass(this.props.pc)}>
               <h2 className={lib.pcClass(this.props.pc)}>新規登録</h2>
               <label>ユーザー名</label>
-              <input type='text' tabIndex='1' value={windsid} onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+              <input type='text' tabIndex='1' value={windsid} onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputWindsidRef = i} />
               <label>パスワード</label>
               <input type='password' tabIndex='2' value={password} onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
               {/* <label>団員専用パスワード</label> */}

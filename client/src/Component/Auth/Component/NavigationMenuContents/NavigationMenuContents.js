@@ -69,7 +69,7 @@ class NavigationMenuContents extends Component {
           <li><CustomLink path={path} to='/manager' label='お知らせ' icon='fas fa-bullhorn' onClick={() => navigationMenu(false)} /></li>
           <li><CustomLink path={path} to='/bbs' label='掲示板' icon='fas fa-comments' onClick={() => navigationMenu(false)} /></li>
           <li><CustomLink path={path} to='/archive' label='アーカイブ' icon='fas fa-archive' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/score' label='楽譜' icon='far fa-sticky-note' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/score' label='ウィンズスコア' icon='far fa-sticky-note' onClick={() => navigationMenu(false)} /></li>
           <li><CustomLink path={path} to='/setting' label='設定' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
         </ol>
         <ol>

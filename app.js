@@ -32,6 +32,8 @@ app.use('/reg', express.static(client))
 app.use('/login', express.static(client))
 app.use('/archive', express.static(client))
 app.use('/archive/overview/:id', express.static(client))
+app.use('/score', express.static(client))
+app.use('/score/detail/:id', express.static(client))
 
 // app.use('/overview', express.static(client))
 app.use('/overview/:id', express.static(client))
