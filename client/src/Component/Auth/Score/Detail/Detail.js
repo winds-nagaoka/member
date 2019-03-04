@@ -51,6 +51,7 @@ class Detail extends Component {
     // params.id ? this.props.setScoreid(params.id) : false
   }
 
+
   renderDetail () {
     if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div> 
     const score = this.props.scoreDetail
@@ -80,8 +81,57 @@ class Detail extends Component {
           <label>ジャンル</label>
           <p>{score.genre}</p>
         </li>
+        <li>
+          <label>譜種</label>
+          <p className='score-type'>{score.scoreType === '1' ? 'コピー譜' : '原譜'}</p>
+        </li>
+        {this.renderScoreLack(score)}
+        {this.renderScoreLackList(score)}
+        <li>
+          <label>原譜処理</label>
+          <p className='score-based'>{score.scoreBased === '1' ? '未処理' : '処理済'}</p>
+        </li>
       </ul>
     )
+  }
+
+  renderScoreLack (score) {
+    if (score.scoreLack) {
+      if (score.scoreLack === '1') {
+        var scoreLack = 'あり'
+      } else if (score.scoreLack === '2') {
+        var scoreLack = '未確認'
+      } else {
+        var scoreLack = 'なし'
+      }
+      // console.log(this.state.data, 'score', scoreLack,this.state.data.scoreLack)
+      return (
+        <li>
+          <label>欠譜</label>
+          <p className='score-lack'>{scoreLack}</p>
+        </li>
+      )
+    }
+  }
+
+  renderScoreLackList (score) {
+    if (score.scoreLack === '1') {
+      let list
+      // これ 0 以上じゃないとおかしいけど笑
+      if (score.lackList.length > 0) {
+        if (score.lackList[0] === '') {
+          list = <p className='no-data'>No Data</p>
+        } else {
+          list = score.lackList.map((each, i) => <p className='score-lack-list'>{each}</p>)
+        }
+      }
+      return (
+        <li>
+          <label>欠譜リスト</label>
+          {list}
+        </li>
+      )
+    }
   }
 
   renderStatus () {
