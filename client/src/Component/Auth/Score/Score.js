@@ -7,6 +7,7 @@ import * as lib from '../../../Library/Library'
 
 import Home from './Home/Home'
 import Detail from './Detail/Detail'
+import Edit from './Edit/Edit'
 
 import './Score.css'
 
@@ -29,15 +30,9 @@ class Score extends Component {
         <Switch>
           <Route exact path='/score' component={Home} />
           <Route path='/score/detail/:id' component={Detail} />
+          <Route path='/score/edit/:id' component={Edit} />
         </Switch>
-
-        <div className='box back-to-home'>
-          <div className='back-link'>
-            <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
-            </ul>
-          </div>
-        </div>
+        
       </div>
     )
   }

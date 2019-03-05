@@ -42,7 +42,6 @@ export const resetSearchQuery = () => {
   }
 }
 
-// たぶんこれexportじゃない
 export const getScoreList = (query) => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
@@ -51,7 +50,9 @@ export const getScoreList = (query) => {
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
     
     console.log('query', query)
-    const path = 'https://score.winds-n.com/api/score'
+    // URL
+    // const path = 'https://score.winds-n.com/api/member/score'
+    const path = 'http://192.168.1.22:3011/api/member/score'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -115,6 +116,7 @@ export const setDisplayScoreModal = (displayScoreModal, modalContent) => ({
   payload: { displayScoreModal, modalContent }
 })
 
+// detail, edit 共用
 const detailLoading = (detailLoading) => ({
   type: prefix + 'DETAIL_LOADING',
   payload: { detailLoading }
@@ -124,7 +126,9 @@ export const getScoreDetail = (scoreid) => {
   return async (dispatch, getState) => {
     dispatch(detailLoading(true))
     if (!window.localStorage.token) return false 
-    const path = 'https://score.winds-n.com/api/detail'
+    // URL
+    // const path = 'https://score.winds-n.com/api/member/detail'
+    const path = 'http://192.168.1.22:3011/api/member/detail'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -136,13 +140,13 @@ export const getScoreDetail = (scoreid) => {
       if (err) {
         return false
       } else if (res.body.status) {
-        let boxList = [], box
+        let boxList = [], boxUse
         for (let i=0;i<res.body.boxList.length;i++) {
           let each = res.body.boxList[i]
           if (each.status) boxList.push(each)
-          if (res.body.data.boxLabel === each.label) box = each
+          if (res.body.data.boxLabel === each.label) boxUse = each
         }
-        dispatch(setScoreDetail(scoreid, res.body.data, box, boxList))
+        dispatch(setScoreDetail(scoreid, res.body.data, boxUse, boxList))
       }
       dispatch(detailLoading(false))
     })
@@ -152,4 +156,56 @@ export const getScoreDetail = (scoreid) => {
 const setScoreDetail = (scoreid, scoreDetail, boxUse, boxList) => ({
   type: prefix + 'SET_SCORE_DETAIL',
   payload: { scoreid, scoreDetail, boxUse, boxList }
+})
+
+// score edit
+export const setEditMode = (editMode) => ({
+  type: prefix + 'SET_EDIT_MODE',
+  payload: { editMode }
+})
+
+export const updateScoreDetail = (scoreDetail) => ({
+  type: prefix + 'UPDATE_SOCRE_DETAIL',
+  payload: { scoreDetail }
+})
+
+export const updateScoreSend = () => {
+  return async (dispatch, getState) => {
+    dispatch(editLoading(true))
+    if (!window.localStorage.token) return false 
+    // URL
+    // const path = 'https://score.winds-n.com/api/member/detail'
+    const path = 'http://192.168.1.22:3011/api/member/edit'
+    const send = {
+      userid: window.localStorage.windsid,
+      token: window.localStorage.token,
+      mode: getState().score.mode,
+      id: getState().score.scoreid,
+      data: getState().score.scoreDetail,
+      version,
+      member: true
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else if (res.body.status) {
+        if (getState().score.mode === 'new') {
+          dispatch(editRedirect('/score'))
+        } else {
+          dispatch(editRedirect('/score/detail/' + getState().score.scoreid))
+        }
+      }
+      dispatch(editLoading(false))
+    })
+  }
+}
+
+const editLoading = (editLoading) => ({
+  type: prefix + 'EDIT_LOADING',
+  payload: { editLoading }
+})
+
+export const editRedirect = (editRedirect) => ({
+  type: prefix + 'EDIT_REDIRECT',
+  payload: { editRedirect }
 })

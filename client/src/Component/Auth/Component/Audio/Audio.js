@@ -310,7 +310,7 @@ class Audio extends Component {
     if (!this.props.archivePlaylist) return
     if (!this.props.archiveConcertList) return
     if (!this.props.concertid) return
-    if (!this.props.number) return
+    if (this.props.number === undefined) return
     // if (!this.props.displayPlaylist) return
     const showTrackList = this.renderTrackList()
     const playStatusClass = this.props.playStatus ? ' playing' : ''

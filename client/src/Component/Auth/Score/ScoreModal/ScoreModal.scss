@@ -104,15 +104,16 @@
             margin-top: 2px;
             margin-right: 8px;
             color: #888;
-            font-size: 16px;
+            font-size: 13px;
             white-space: nowrap;
           }
     
           .score-status {
+            padding: 0;
             font-size: 16px;
     
             .status {
-              margin: 2px 2px 2px 0;
+              margin: 0;
               padding: 2px 8px;
               border-radius: 4px;
               background: #eee;
@@ -133,11 +134,11 @@
           }
     
           .locate {
-            padding: 2px 0;
+            padding: 0;
             font-size: 16px;
     
             .box-label {
-              margin: 2px 2px 2px 0;
+              margin: 0;
               padding: 2px 8px;
               border-radius: 4px;
               background: #eee;
@@ -145,7 +146,7 @@
             }
     
             .score-number {
-              margin: 2px;
+              margin: 0;
               padding: 2px 8px;
               border-radius: 4px;
               background: #eee;
@@ -182,7 +183,7 @@
             margin-top: 2px;
             margin-right: 8px;
             color: #888;
-            font-size: .8em;
+            font-size: 13px;
             white-space: nowrap;
           }
     
@@ -224,13 +225,15 @@
             transition: all ease-in-out .1s;
     
             &:hover {
-              background: hsl(218,100%,64%);
-              color: #fff;
+              // background: hsl(218,100%,64%);
+              background: #d3d3d3;
+              // color: #fff;
               transition: all ease-in-out 0s;
             }
             &:active {
-              background: hsl(218,100%,64%);
-              color: #fff;
+              // background: hsl(218,100%,64%);
+              background: #ccc;
+              // color: #fff;
               transition: all ease-in-out .1s;
             }
     
@@ -249,7 +252,7 @@
             }
     
             &:hover i {
-              color: #fff;
+              // color: #fff;
               transition: all ease-in-out 0s;
             }
           }

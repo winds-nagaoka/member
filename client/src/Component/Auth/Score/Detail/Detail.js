@@ -51,12 +51,11 @@ class Detail extends Component {
     // params.id ? this.props.setScoreid(params.id) : false
   }
 
-
   renderDetail () {
     if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div> 
     const score = this.props.scoreDetail
     return (
-      <ul>
+      <ul className='score-detail-list'>
         <li>
           <label>タイトル(日本語)</label>
           <p>{score.titleJa ? <span className='title-ja'>{score.titleJa}</span> : <span className='no-data'>No Data</span>}</p>
@@ -104,7 +103,6 @@ class Detail extends Component {
       } else {
         var scoreLack = 'なし'
       }
-      // console.log(this.state.data, 'score', scoreLack,this.state.data.scoreLack)
       return (
         <li>
           <label>欠譜</label>
@@ -117,12 +115,11 @@ class Detail extends Component {
   renderScoreLackList (score) {
     if (score.scoreLack === '1') {
       let list
-      // これ 0 以上じゃないとおかしいけど笑
       if (score.lackList.length > 0) {
         if (score.lackList[0] === '') {
           list = <p className='no-data'>No Data</p>
         } else {
-          list = score.lackList.map((each, i) => <p className='score-lack-list'>{each}</p>)
+          list = score.lackList.map((each, i) => <p className='score-lack-list' key={'score-lack-' + i}>{each}</p>)
         }
       }
       return (
@@ -197,10 +194,15 @@ class Detail extends Component {
           </div>
         </div>
 
+        <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
+          <Link to={'/score/edit/' + this.props.scoreid}><div className='inner'><span><i className='far fa-edit'></i>修正</span></div></Link>
+        </div>
+
         <div className='box'>
           <div className='back-link'>
             <ul>
-              <li><Link to='/score'><div className='inner'><i className="fas fa-angle-left"></i><span>一覧へ</span></div></Link></li>
+              <li><Link to='/score'><div className='inner'><i className="fas fa-angle-left"></i><span>楽譜一覧へ</span></div></Link></li>
+              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

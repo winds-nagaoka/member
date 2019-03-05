@@ -153,6 +153,13 @@ class Home extends Component {
           {showLoadMore}
           {endLabel}
         </div>
+        <div className='box back-to-home'>
+          <div className='back-link'>
+            <ul>
+              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+            </ul>
+          </div>
+        </div>
       </React.Fragment>
     )
   }
