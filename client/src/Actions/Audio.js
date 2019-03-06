@@ -11,7 +11,7 @@ export const loadArchivePlaylist = () => {
     if (!window.localStorage.token) return false
     if (getState().audio.archivePlaylist) return false
     dispatch(loadingArchivePlaylist(true))
-    const path = 'https://archive.winds-n.com/api/audio'
+    const path = 'https://archive.winds-n.com/api/member/audio'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,

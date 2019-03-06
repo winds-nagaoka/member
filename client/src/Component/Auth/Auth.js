@@ -14,6 +14,7 @@ import Cast from './Practice/Cast/Cast'
 import Record from './Practice/Record/Record'
 
 import Archive from './Archive/Archive'
+import ArchivePhotoSlide from './Archive/PhotoSlide/PhotoSlide'
 import Score from './Score/Score'
 import ScoreModal from './Score/ScoreModal/ScoreModal'
 import ScoreEditModal from './Score/EditModal/EditModal'
@@ -119,6 +120,7 @@ class Auth extends Component {
           {gap}
         </div>
         <Audio />
+        <ArchivePhotoSlide />
         <ScoreModal />
         <ScoreEditModal />
       </div>

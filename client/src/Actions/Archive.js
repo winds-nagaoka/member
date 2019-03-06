@@ -13,7 +13,7 @@ export const getConcertList = () => {
     if (!window.localStorage.token) return false
     if (getState().archive.concertList) return false
     dispatch(loading(true))
-    const path = 'https://archive.winds-n.com/api/concert'
+    const path = 'https://archive.winds-n.com/api/member/concert'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -81,4 +81,51 @@ const setDisplayOther = (displayOther) => ({
 export const setConcertid = (concertid) => ({
   type: prefix + 'SET_OVERVIEW_ID',
   payload: { concertid }
+})
+
+// Photo Component
+const loadingPhoto = (loadingPhoto) => ({
+  type: prefix + 'LOADING_PHOTO',
+  payload: { loadingPhoto }
+})
+
+export const getPhotoList = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    if (!getState().archive.concertid) return false
+    dispatch(loadingPhoto(true))
+    const path = 'https://archive.winds-n.com/api/member/photo'
+    const send = {
+      userid: window.localStorage.windsid,
+      token: window.localStorage.token,
+      version,
+      id: getState().archive.concertid,
+      member: true
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else {
+        dispatch(setPhotoList(res.body.list, res.body.baseSrcThumbnail, res.body.baseSrcOriginal, res.body.url))
+        // dispatch(setConcertListLoad(true))
+      }
+      dispatch(loadingPhoto(false))
+    })
+  }
+}
+
+export const resetPhotoList = () => {
+  return async (dispatch, getState) => {
+    dispatch(setPhotoList(undefined, undefined, undefined, undefined))
+  }
+}
+
+const setPhotoList = (photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl) => ({
+  type: prefix + 'SET_PHOTO_LIST',
+  payload: { photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl }
+})
+
+export const setDisplayPhotoSlideModal = (displayPhotoSlideModal, photoNumber) => ({
+  type: prefix + 'SET_DISPLAY_PHOTO_SLIDE_MODAL',
+  payload: { displayPhotoSlideModal, photoNumber }
 })

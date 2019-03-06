@@ -6,6 +6,14 @@ const initialState = {
   displayMini: 'displayMini' in window.localStorage ? (window.localStorage.displayMini === 'true' ? true : false) : true,
   displayOther: 'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true,
   concertid: undefined,
+
+  loadingPhoto: false,
+  photoList: undefined,
+  photoBaseSrcThumbnail: undefined,
+  photoBaseSrcOriginal: undefined,
+  photoUrl: undefined,
+  displayPhotoSlideModal: false,
+  photoNumber: undefined,
 }
 
 const prefix = 'ARCHIVE_'
@@ -46,6 +54,27 @@ export default function archiveReducer (state = initialState, action) {
       return {
         ...state,
         concertid: action.payload.concertid
+      }
+
+    // Photo and PhotoSlide Component
+    case prefix + 'LOADING_PHOTO':
+      return {
+        ...state,
+        loading: action.payload.loading
+      }
+    case prefix + 'SET_PHOTO_LIST':
+      return {
+        ...state,
+        photoList: action.payload.photoList,
+        photoBaseSrcThumbnail: action.payload.photoBaseSrcThumbnail,
+        photoBaseSrcOriginal: action.payload.photoBaseSrcOriginal,
+        photoUrl: action.payload.photoUrl
+      }
+    case prefix + 'SET_DISPLAY_PHOTO_SLIDE_MODAL':
+      return {
+        ...state,
+        displayPhotoSlideModal: action.payload.displayPhotoSlideModal,
+        photoNumber: action.payload.photoNumber
       }
     default:
       return state

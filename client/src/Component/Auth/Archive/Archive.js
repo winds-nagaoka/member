@@ -7,6 +7,7 @@ import * as lib from '../../../Library/Library'
 
 import Home from './Home/Home'
 import Overview from './Overview/Overview'
+import Photo from './Photo/Photo'
 
 import './Archive.css'
 
@@ -29,6 +30,7 @@ class Archive extends Component {
         <Switch>
           <Route exact path='/archive' component={Home} />
           <Route path='/archive/overview/:id' component={Overview} />
+          <Route path='/archive/photo/:id' component={Photo} />
         </Switch>
 
         <div className='box back-to-home'>

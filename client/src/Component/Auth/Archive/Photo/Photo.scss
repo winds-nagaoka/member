@@ -1,0 +1,20 @@
+.archive-photo {
+  .thumbnail-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .each-thumbnail {
+      width: 25%;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+
+      img {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}

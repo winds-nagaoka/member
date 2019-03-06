@@ -194,7 +194,13 @@ class Overview extends Component {
         </div>
         <div className='box archive-overview'>
           {showOverview}
+          <div className='link'>
+            <ul>
+              <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
+            </ul>
+          </div>
         </div>
+
         <div className='box'>
           <div className='back-link'>
             <ul>

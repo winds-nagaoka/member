@@ -10,7 +10,7 @@ const initialState = {
   // 要素の表示状態
 
   // プレイヤーの表示状態
-  displayPlayer: window.localStorage.displayPlayer ? true : false,
+  displayPlayer: window.localStorage.displayPlayer === 'true' ? true : false,
   // プレイリストの表示状態
   displayPlaylist: false,
   // プレイリストが存在するか
