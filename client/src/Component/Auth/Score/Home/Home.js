@@ -4,7 +4,17 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setBackNavigation } from '../../../../Actions/Navigation'
-import { getScoreListAll, getScoreList, loadMore, resetShowList, changeSearchText, resetSearchQuery, setSearchBoxRef, setDisplayScoreModal } from '../../../../Actions/Score'
+import {
+  getScoreListAll,
+  getScoreList,
+  loadMore,
+  resetShowList,
+  changeSearchText,
+  resetSearchQuery,
+  setSearchBoxRef,
+  setDisplayScoreModal,
+  setDisplayEditScoreModal
+ } from '../../../../Actions/Score'
 
 import * as libScore from '../Library/Library'
 
@@ -19,7 +29,9 @@ function mapStateToProps(state) {
     loadMoreLoading: state.score.loadMoreLoading,
     searchQuery: state.score.searchQuery,
     searchLoading: state.score.searchLoading,
-    searchBoxRef: state.score.searchBoxRef
+    searchBoxRef: state.score.searchBoxRef,
+
+    editPreLoading: state.score.editPreLoading
   }
 }
 
@@ -51,6 +63,9 @@ function mapDispatchToProps(dispatch) {
     },
     setDisplayScoreModal (displayScoreModal, modalContent) {
       dispatch(setDisplayScoreModal(displayScoreModal, modalContent))
+    },
+    setDisplayEditScoreModal (displayEditScoreModal, editMode, scoreEdit) {
+      dispatch(setDisplayEditScoreModal(displayEditScoreModal, editMode, scoreEdit))
     }
   }
 }
@@ -153,6 +168,11 @@ class Home extends Component {
           {showLoadMore}
           {endLabel}
         </div>
+
+        <div className='box score-add-link'>
+          <div onClick={() => this.props.setDisplayEditScoreModal(true, 'new', undefined)}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>新しい楽譜を追加</span>}</div>
+        </div>
+
         <div className='box back-to-home'>
           <div className='back-link'>
             <ul>

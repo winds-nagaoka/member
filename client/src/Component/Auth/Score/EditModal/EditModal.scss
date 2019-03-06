@@ -1,4 +1,114 @@
-.score-edit {
+.score-edit-modal {
+
+  .header {
+    position: fixed;
+    height: 44px;
+    width: 100%;
+    border-bottom: .5px solid #d3d3d3;
+    background: #fff;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.pc {
+      border-radius: 4px 4px 0 0;
+    }
+
+    .title {
+      width: 100%;
+      margin: 0 auto;
+      font-weight: bold;
+    }
+
+    .cancel, .save {
+      position: fixed;
+      top: 0;
+      width: auto;
+      height: 44px;
+      color: #B60005;
+      font-size: 16px;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        color: rgba(182,0,5,.8);
+      }
+      &:active {
+        color: rgba(182,0,5,.6);
+      }
+    }
+
+    .cancel {
+      left: 12px;
+    }
+
+    .save {
+      right: 12px;
+    }
+  }
+
+  .score-edit-modal-contents {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 32;
+
+    // transition: transform .3s ease-in-out;
+    transition: transform .2s ease-in-out;
+    -webkit-transform: translateY(105%);
+    transform: translateY(105%);
+    -webkit-overflow-scrolling: touch;
+
+    &.pc {
+      width: 900px;
+      top: 20%;
+      left: calc(50% - 450px);
+      border-radius: 4px 4px 0 0;
+    }
+
+    &.open {
+      transition: transform .4s ease;
+      -webkit-transform: translateY(0%);
+      transform: translateY(0%);
+      box-shadow: 6px 0 25px rgba(0,0,0,.15);
+
+      &.pc {
+        // -webkit-transform: translateY(20%);
+        // transform: translateY(20%);
+      }
+    }
+
+    .gap {
+      height: 55px;
+    }
+  }
+
+  .score-edit-modal-background {
+    display: none;
+    position: fixed;
+    z-index: 31;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+
+    &.open {
+      display: block;/*カバーを表示*/
+      opacity: .35;
+      // transition: all 3s ease-in-out;
+      animation: menu-background-show .3s ease-in-out 0s;
+    }
+  }
+
   .list {
     margin: 12px 0 0 0;
     padding: 0 12px 12px;
@@ -8,7 +118,7 @@
 
       &.multi {
         margin: 4px 0 0;
-      }  
+      }
 
       label {
         display: block;
@@ -31,7 +141,7 @@
         &:focus {
           border: solid 1px rgba(182,0,5,.6);
           outline: 0;
-        }  
+        }
       }
     }
 
@@ -117,14 +227,14 @@
       -webkit-appearance: button;
       -moz-appearance: button;
       appearance: button;
-  
+
       width: 100%;
       margin: 0;
       padding: 6px 4px;
       border-radius: 0;
       border: 1px solid #ccc;
       font-size: 13px;
-  
+
       option{
         background-color: #fff;
         color: #333;
@@ -144,7 +254,7 @@
     width: 100%;
     height: 44px;
     line-height: 44px;
-    margin: 0 auto;
+    margin: 0 auto 32px;
     padding: 0;
     border: none;
     background: #fff;

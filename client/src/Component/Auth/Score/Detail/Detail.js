@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setBackNavigation } from '../../../../Actions/Navigation'
-import { getScoreDetail } from '../../../../Actions/Score'
+import { getScoreDetail, setDisplayEditScoreModal } from '../../../../Actions/Score'
 
 import * as libScore from '../Library/Library'
 import * as lib from '../../../../Library/Library'
@@ -18,7 +18,9 @@ function mapStateToProps(state) {
     scoreid: state.score.scoreid,
     scoreDetail: state.score.scoreDetail,
     boxUse: state.score.boxUse,
-    boxList: state.score.boxList
+    boxList: state.score.boxList,
+
+    editPreLoading: state.score.editPreLoading
   }
 }
 
@@ -29,6 +31,9 @@ function mapDispatchToProps(dispatch) {
     },
     getScoreDetail (id) {
       dispatch(getScoreDetail(id))
+    },
+    setDisplayEditScoreModal (displayEditScoreModal, editMode, scoreEdit) {
+      dispatch(setDisplayEditScoreModal(displayEditScoreModal, editMode, scoreEdit))
     }
   }
 }
@@ -52,7 +57,7 @@ class Detail extends Component {
   }
 
   renderDetail () {
-    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div> 
+    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     const score = this.props.scoreDetail
     return (
       <ul className='score-detail-list'>
@@ -132,7 +137,7 @@ class Detail extends Component {
   }
 
   renderStatus () {
-    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div> 
+    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     const scoreStatus = () => {
       if (this.props.scoreDetail.scoreStatus === '0') {
         return <label className='highlight-normal'>保管</label>
@@ -165,12 +170,23 @@ class Detail extends Component {
     )
   }
 
+  renderEditLink () {
+    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return false
+    return (
+      <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
+        <div onClick={() => this.props.setDisplayEditScoreModal(true, 'edit', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>修正</span>}</div>
+      </div>
+    )
+  }
+
   render () {
+
+    const showBreadNavigation = this.renderBreadNavigation()
 
     const showStatus = this.renderStatus()
     const showDetail = this.renderDetail()
 
-    const showBreadNavigation = this.renderBreadNavigation()
+    const showEditLink = this.renderEditLink()
 
     return (
       <React.Fragment>
@@ -194,9 +210,7 @@ class Detail extends Component {
           </div>
         </div>
 
-        <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
-          <Link to={'/score/edit/' + this.props.scoreid}><div className='inner'><span><i className='far fa-edit'></i>修正</span></div></Link>
-        </div>
+        {showEditLink}
 
         <div className='box'>
           <div className='back-link'>

@@ -16,6 +16,7 @@ import Record from './Practice/Record/Record'
 import Archive from './Archive/Archive'
 import Score from './Score/Score'
 import ScoreModal from './Score/ScoreModal/ScoreModal'
+import ScoreEditModal from './Score/EditModal/EditModal'
 
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
@@ -119,6 +120,7 @@ class Auth extends Component {
         </div>
         <Audio />
         <ScoreModal />
+        <ScoreEditModal />
       </div>
     )
   }
