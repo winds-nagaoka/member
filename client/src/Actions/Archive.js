@@ -25,7 +25,7 @@ export const getConcertList = () => {
         return false
       } else {
         dispatch(setConcertList(res.body.list.reverse()))
-        // dispatch(setConcertListLoad(true))
+        console.warn(res.body.list)
       }
       dispatch(loading(false))
     })
@@ -83,7 +83,7 @@ export const setConcertid = (concertid) => ({
   payload: { concertid }
 })
 
-// Photo Component
+// Photo
 const loadingPhoto = (loadingPhoto) => ({
   type: prefix + 'LOADING_PHOTO',
   payload: { loadingPhoto }
@@ -93,6 +93,7 @@ export const getPhotoList = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     if (!getState().archive.concertid) return false
+    if (getState().archive.photoConcertid === getState().archive.concertid) return false
     dispatch(loadingPhoto(true))
     const path = 'https://archive.winds-n.com/api/member/photo'
     const send = {
@@ -106,8 +107,8 @@ export const getPhotoList = () => {
       if (err) {
         return false
       } else {
-        dispatch(setPhotoList(res.body.list, res.body.baseSrcThumbnail, res.body.baseSrcOriginal, res.body.url))
-        // dispatch(setConcertListLoad(true))
+        console.warn('Photo', res.body)
+        dispatch(setPhotoList(getState().archive.concertid, res.body.list, res.body.baseSrcThumbnail, res.body.baseSrcOriginal, res.body.url))
       }
       dispatch(loadingPhoto(false))
     })
@@ -116,13 +117,13 @@ export const getPhotoList = () => {
 
 export const resetPhotoList = () => {
   return async (dispatch, getState) => {
-    dispatch(setPhotoList(undefined, undefined, undefined, undefined))
+    dispatch(setPhotoList(undefined, undefined, undefined, undefined, undefined))
   }
 }
 
-const setPhotoList = (photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl) => ({
+const setPhotoList = (photoConcertid, photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl) => ({
   type: prefix + 'SET_PHOTO_LIST',
-  payload: { photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl }
+  payload: { photoConcertid, photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl }
 })
 
 export const setDisplayPhotoSlideModal = (displayPhotoSlideModal, photoNumber) => ({

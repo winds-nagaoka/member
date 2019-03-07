@@ -286,6 +286,31 @@
                 }
               }
             }
+
+            .disabled-link {
+              display: block;
+              margin: 0;
+              padding-left: 12px;
+
+              text-decoration: none;
+              color: #ccc;
+
+              .inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                span {
+                  margin: 11px 8px 11px 0;
+                }
+
+                i {
+                  padding-right: 12px;
+                  color: #eee;
+                  font-size: 1.2rem;
+                }
+              }
+            }
           }
         }
       }

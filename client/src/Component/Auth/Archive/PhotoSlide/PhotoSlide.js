@@ -42,12 +42,15 @@ class PhotoSlide extends Component {
 
   renderPhotoSlide () {
     if (this.props.loadingPhoto || !this.props.photoList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    console.log(this.props.photoList)
     const photoList = this.props.photoList.map((each, i) => {
       return (
         <div key={i}>
           <div className='each-original' onClick={() => this.props.setDisplayPhotoSlideModal(false, undefined)}>
-            <img src={this.props.photoUrl + this.props.photoBaseSrcOriginal + each} className='thumbnail-photo' lazyload="on" onClick={(e) => e.stopPropagation()} />
+            {/* <img src={this.props.photoUrl + this.props.photoBaseSrcOriginal + each} onClick={(e) => e.stopPropagation()} /> */}
+            <img data-src={this.props.photoUrl + this.props.photoBaseSrcOriginal + each} onClick={(e) => e.stopPropagation()} className='swiper-lazy' />
+            {/* <div className='swiper-lazy-preloader'></div> */}
+            <div className="swiper-lazy-preloader"><i className='fas fa-spinner fa-pulse'></i></div>
+            {/* <div className="swiper-lazy-preloader"><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div> */}
           </div>
         </div>
       )
@@ -55,6 +58,13 @@ class PhotoSlide extends Component {
     const params = {
       spaceBetween: 45,
       grabCursor: true,
+      navigation: {
+        nextEl: '.swiper-custom-button-next',
+        prevEl: '.swiper-custom-button-prev'
+      },
+      renderPrevButton: () => <CustomButton className="swiper-custom-button-prev" pc={this.props.pc}><i className="fas fa-chevron-left"></i></CustomButton>,
+      renderNextButton: () => <CustomButton className="swiper-custom-button-next" pc={this.props.pc}><i className="fas fa-chevron-right"></i></CustomButton>,
+      
       // カーソルキーでの操作
       keyboard: true,
       // スライドごとにwrapperのサイズを変更
@@ -64,6 +74,16 @@ class PhotoSlide extends Component {
       initialSlide: this.props.photoNumber,
       // 次のスライドがどれくらい見えていたら次へ行くか
       longSwipesRatio: 0.4,
+      preloadImages: false,
+      // preloadImages: false,
+      lazy: true,
+      // lazy: {
+      //   loadPrevNext: true,
+      //   loadPrevNextAmount: 10,
+      //   // スライド開始時にロードする
+      //   // loadOnTransitionStart: false,
+      // },
+      // preloaderClass: 'swiper-lazy-preloader-loading'
     }
     console.log('num',this.props.photoNumber)
     return (
@@ -84,12 +104,21 @@ class PhotoSlide extends Component {
     return (
       <div className='photo-slide-modal'>
         <div className={'photo-slide-modal-contents' + displayPhotoSlideModalClass + lib.pcClass(this.props.pc)}>
+          <div className='photo-slide-modal-close' onClick={() => this.props.setDisplayPhotoSlideModal(false, undefined)}>&times;</div>
           {showPhotoSlide}
         </div>
         <div className={'photo-slide-modal-background' + displayPhotoSlideModalClass} onClick={() => this.props.setDisplayPhotoSlideModal(false, undefined)}></div>
       </div>
     )
   }
+}
+
+const CustomButton = ({className, children, pc}) => {
+  return (
+    <div className={className + lib.pcClass(pc)}>
+      {children}
+    </div>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoSlide)

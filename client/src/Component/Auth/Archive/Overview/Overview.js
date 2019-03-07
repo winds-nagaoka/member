@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setBackNavigation } from '../../../../Actions/Navigation'
-import { getConcertList, setConcertid } from '../../../../Actions/Archive'
+import { getConcertList, setConcertid, getPhotoList } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
 import * as libArchive from '../Library/Library'
@@ -17,7 +17,8 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     loadingArchive: state.archive.loading,
     concertList: state.archive.concertList,
-    concertid: state.archive.concertid
+    concertid: state.archive.concertid,
+    photoList: state.archive.photoList
   }
 }
 
@@ -31,6 +32,9 @@ function mapDispatchToProps(dispatch) {
     },
     setConcertid (id) {
       dispatch(setConcertid(id))
+    },
+    getPhotoList () {
+      dispatch(getPhotoList())
     },
     archivePlayRequest (id, number, playRequest) {
       dispatch(archivePlayRequest(id, number, playRequest))
@@ -49,6 +53,7 @@ class Overview extends Component {
   // 直接アクセスしたときに必要
   componentDidMount () {
     this.props.getConcertList()
+    this.props.getPhotoList()
     this.props.setBackNavigation(true, '/archive')
   }
 
@@ -178,12 +183,34 @@ class Overview extends Component {
     )
   }
 
+  renderPhotoLink () {
+    if (!this.props.photoList) return false
+    if (this.props.photoList.length === 0) {
+      return (
+        <div className='link'>
+          <ul>
+            <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li>
+          </ul>
+        </div>
+      )
+    } else {
+      return (
+        <div className='link'>
+          <ul>
+            <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
+          </ul>
+        </div>
+      )
+    }
+  }
+
   render () {
     // State List
     const { loadingArchive, concertList, concertid } = this.props
 
-    const showOverview = this.renderOverview(loadingArchive, concertList)
     const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, concertid)
+    const showOverview = this.renderOverview(loadingArchive, concertList)
+    const showPhotoLink = this.renderPhotoLink()
 
     return (
       <React.Fragment>
@@ -194,11 +221,7 @@ class Overview extends Component {
         </div>
         <div className='box archive-overview'>
           {showOverview}
-          <div className='link'>
-            <ul>
-              <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
-            </ul>
-          </div>
+          {showPhotoLink}
         </div>
 
         <div className='box'>

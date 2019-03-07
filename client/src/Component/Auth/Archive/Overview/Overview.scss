@@ -323,5 +323,9 @@
 
   .link {
     line-height: 1.6;
+
+    .no-link {
+      color: #ccc;
+    }
   }
 }

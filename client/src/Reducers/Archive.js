@@ -8,6 +8,7 @@ const initialState = {
   concertid: undefined,
 
   loadingPhoto: false,
+  photoConcertid: undefined,
   photoList: undefined,
   photoBaseSrcThumbnail: undefined,
   photoBaseSrcOriginal: undefined,
@@ -65,6 +66,7 @@ export default function archiveReducer (state = initialState, action) {
     case prefix + 'SET_PHOTO_LIST':
       return {
         ...state,
+        photoConcertid: action.payload.photoConcertid,
         photoList: action.payload.photoList,
         photoBaseSrcThumbnail: action.payload.photoBaseSrcThumbnail,
         photoBaseSrcOriginal: action.payload.photoBaseSrcOriginal,
