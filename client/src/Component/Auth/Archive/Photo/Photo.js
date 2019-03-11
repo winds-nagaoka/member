@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import Swiper from 'react-id-swiper';
-
 import { setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, setConcertid, getPhotoList, resetPhotoList, setDisplayPhotoSlideModal } from '../../../../Actions/Archive'
 
@@ -19,6 +17,7 @@ function mapStateToProps(state) {
 
     concertList: state.archive.concertList,
     concertid: state.archive.concertid,
+    
     loadingPhoto: state.archive.loadingPhoto,
 
     photoList: state.archive.photoList,
@@ -56,6 +55,7 @@ class Photo extends Component {
     const { params } = this.props.match
     const id = params.id ? params.id : ''
     this.props.setConcertid(id)
+    id !== '' ? this.props.setBackNavigation(true, ('/archive/overview/' + id)) : this.props.setBackNavigation(true, ('/archive'))
   }
 
   componentWillMount () {
@@ -64,9 +64,6 @@ class Photo extends Component {
 
   // 直接アクセスしたときに必要
   componentDidMount () {
-    // this.props.getPhotoList()
-    this.props.setBackNavigation(true, ('/archive/overview/' + this.props.concertid))
-
     // パンくずリスト用
     this.props.getConcertList()
   }
@@ -113,7 +110,6 @@ class Photo extends Component {
   }
 
   render () {
-    console.warn(this.props.loadingPhoto, this.props.photoList ? this.props.photoList.length : false)
     const showBreadNavigation = this.renderBreadNavigation()
     const showPhoto = this.renderPhoto()
 

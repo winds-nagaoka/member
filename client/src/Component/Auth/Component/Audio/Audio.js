@@ -9,7 +9,7 @@ import * as libArchive from '../../Archive/Library/Library'
 import {
   loadArchivePlaylist,
   setAudioRef,
-  loadingAudio,
+  setLoadingAudio,
   loadPercentUpdate,
   // setPlayStatus,
   playUpdate,
@@ -75,8 +75,8 @@ function mapDispatchToProps(dispatch) {
     setAudioRef (audioRef) {
       dispatch(setAudioRef(audioRef))
     },
-    loadingAudio (status) {
-      dispatch(loadingAudio(status))
+    setLoadingAudio (status) {
+      dispatch(setLoadingAudio(status))
     },
     loadPercentUpdate (percent) {
       dispatch(loadPercentUpdate(percent))
@@ -129,32 +129,9 @@ class Audio extends Component {
     this.props.audioStop()
   }
 
-  // componentDidUpdate (prevProps) {
-  //   console.warn('componentDidUpdate')
-  //   if (this.props.playRequest && this.props.playRequest !== prevProps.playRequest) {
-  //     this.playAudio()
-  //   }
-  //   if (!this.props.playRequest && this.props.playRequest !== prevProps.playRequest) {
-  //     this.stopAudio()
-  //   }
-  // }
-
-  // playAudio () {
-  //   console.warn('playAudio - play')
-  //   if (!this.audio) return
-  //   this.audio.play()
-  // }
-
-  // stopAudio () {
-  //   console.warn('playAudio - stop')
-  //   if (!this.audio) return
-  //   this.audio.pause()
-  //   this.audio.currentTime = 0
-  // }
-
   onLoadStart (e) {
     if (this.props.audioRef.src) {
-      this.props.loadingAudio(true)
+      this.props.setLoadingAudio(true)
     }
   }
 
@@ -197,11 +174,11 @@ class Audio extends Component {
   }
 
   onCanPlayThrough (e) {
-    this.props.loadingAudio(false)
+    this.props.setLoadingAudio(false)
   }
 
   onError (e) {
-    this.props.loadingAudio(true)
+    this.props.setLoadingAudio(true)
   }
 
   onTimeUpdate (e) {
@@ -217,8 +194,6 @@ class Audio extends Component {
   }
 
   onEnded (e) {
-    console.log('再生終了')
-    // this.setState({loadAudio: true})
     this.playNext()
   }
 
@@ -378,7 +353,7 @@ class Audio extends Component {
     // Dispatch List
     // const { logout } = this.props
 
-    const button = playStatus ? ((loadingAudio && (current && duration)) ? <i className='fas fa-pause'></i> : <i className='fas fa-spinner fa-pulse'></i>) : <i className='fas fa-play'></i>
+    const button = playStatus ? ((!loadingAudio || current || duration) ? <i className='fas fa-pause'></i> : <i className='fas fa-spinner fa-pulse'></i>) : <i className='fas fa-play'></i>
     const playStatusClass = this.props.playStatus ? ' playing' : ''
     const playTime = this.renderPlayTime()
     const playProgress = playPercent ? {backgroundSize: playPercent + '% 100%'} : {backgroundSize: '0% 100%'}

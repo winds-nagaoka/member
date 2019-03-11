@@ -12,6 +12,7 @@ const lib = require('./server/lib')
 // HTTPを使用する(公開用)
 const http = require('http')
 app.listen(3001)
+// app.listen(3006)
 
 const compression = require('compression')
 app.use(compression({
@@ -33,6 +34,7 @@ app.use('/login', express.static(client))
 app.use('/archive', express.static(client))
 app.use('/archive/overview/:id', express.static(client))
 app.use('/archive/photo/:id', express.static(client))
+app.use('/archive/video/:id', express.static(client))
 app.use('/score', express.static(client))
 app.use('/score/detail/:id', express.static(client))
 
@@ -52,10 +54,3 @@ app.use('/setting/history', express.static(client))
 app.use('/tutorial', express.static(client))
 app.use('/reg', express.static(client))
 app.use('/login', express.static(client))
-
-// api設定
-app.post('/api/test', (req, res) => {
-  const text = req.body.text
-  console.log('[' + lib.showTime() + '] api/test: ' + text)
-  res.json({status: true})
-})

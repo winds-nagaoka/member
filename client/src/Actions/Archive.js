@@ -1,5 +1,7 @@
 import * as request from '../Library/Request'
-import { version } from '../Library/Library'
+import { playTime, version } from '../Library/Library'
+
+import { setDisplayPlayer, audioPause } from './Audio'
 
 const prefix = 'ARCHIVE_'
 
@@ -12,6 +14,7 @@ export const getConcertList = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     if (getState().archive.concertList) return false
+    if (getState().archive.loading) return false
     dispatch(loading(true))
     const path = 'https://archive.winds-n.com/api/member/concert'
     const send = {
@@ -25,7 +28,6 @@ export const getConcertList = () => {
         return false
       } else {
         dispatch(setConcertList(res.body.list.reverse()))
-        console.warn(res.body.list)
       }
       dispatch(loading(false))
     })
@@ -130,3 +132,137 @@ export const setDisplayPhotoSlideModal = (displayPhotoSlideModal, photoNumber) =
   type: prefix + 'SET_DISPLAY_PHOTO_SLIDE_MODAL',
   payload: { displayPhotoSlideModal, photoNumber }
 })
+
+// Video
+const loadingVideo = (loadingVideo) => ({
+  type: prefix + 'LOADING_VIDEO',
+  payload: { loadingVideo }
+})
+
+export const getVideoList = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    if (!getState().archive.concertid) return false
+    if (getState().archive.videoConcertid === getState().archive.concertid) return false
+    dispatch(loadingVideo(true))
+    const path = 'https://archive.winds-n.com/api/member/video'
+    const send = {
+      userid: window.localStorage.windsid,
+      token: window.localStorage.token,
+      version,
+      id: getState().archive.concertid,
+      member: true
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else {
+        dispatch(setVideoList(getState().archive.concertid, res.body.list, res.body.baseSrc, res.body.url, res.body.poster))
+      }
+      dispatch(loadingVideo(false))
+    })
+  }
+}
+
+export const resetVideo = () => {
+  return async (dispatch, getState) => {
+    dispatch(setVideoList(undefined, undefined, undefined, undefined, undefined))
+    getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
+    dispatch(setDisplayVideoController(false, undefined))
+  }
+}
+
+const setVideoList = (videoConcertid, videoList, videoBaseSrc, videoUrl, videoPoster) => ({
+  type: prefix + 'SET_VIDEO_LIST',
+  payload: { videoConcertid, videoList, videoBaseSrc, videoUrl, videoPoster }
+})
+
+// プレイヤー操作
+export const setVideoRef = (videoRef) => ({
+  type: prefix + 'SET_VIDEO_REF',
+  payload: { videoRef }
+})
+
+export const setDisplayVideoController = (displayVideoController, audioPlayerDisplay) => ({
+  type: prefix + 'SET_DISPLAY_VIDEO_CONTROLLER',
+  payload: { displayVideoController, audioPlayerDisplay }
+})
+
+export const setLoadingVideoSource = (status) => ({
+  type: prefix + 'SET_LOADING_VIDEO_SOURCE',
+  payload: { loadingVideoSource: status }
+})
+
+export const videoLoadPercentUpdate = (percent) => ({
+  type: prefix + 'VIDEO_LOAD_PERCENT_UPDATE',
+  payload: { videoLoadPercent: percent }
+})
+
+export const videoPlayUpdate = (videoCurrent, videoDuration) => {
+  const videoPlayPercent = (videoDuration && videoCurrent) ? Math.round((videoCurrent / videoDuration) * 1000) / 10 : undefined
+  const videoCurrentTime = videoCurrent ? playTime(Math.floor(videoCurrent)) : undefined
+  const videoDurationTime = videoDuration ? playTime(Math.round(videoDuration)) : undefined
+  return ({
+    type: prefix + 'VIDEO_PLAY_UPDATE',
+    payload: {
+      videoCurrent,
+      videoCurrentTime,
+      videoDuration,
+      videoDurationTime,
+      videoPlayPercent
+    }
+  })
+}
+
+
+const setVideoPlayStatus = (videoPlayStatus, videoPlayTrack) => ({
+  type: prefix + 'SET_VIDEO_PLAY_STATUS',
+  payload: { videoPlayStatus, videoPlayTrack }
+})
+export const videoPlayRequest = (number) => {
+  return async (dispatch, getState) => {
+    // オーディオが再生中なら止める
+    dispatch(audioPause())
+    // プレイヤーを表示
+    const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
+    dispatch(setDisplayVideoController(true, audioPlayerDisplay))
+    // オーディオプレイヤーが表示されていたら隠す
+    getState().audio.displayPlayer ? dispatch(setDisplayPlayer(false)) : false
+    // 曲を再生
+    const track = getState().archive.videoList[number]
+    if (getState().archive.videoRef) {
+      getState().archive.videoRef.src = getState().archive.videoUrl + getState().archive.videoBaseSrc + track.path
+      dispatch(videoPlay())
+    }
+  }
+}
+
+export const videoPlay = (number) => {
+  return async (dispatch, getState) => {
+    getState().archive.videoRef.play()
+    dispatch(setVideoPlayStatus(true, number))
+  }
+}
+
+export const videoPause = (e) => {
+  if (e) e.preventDefault()
+  return async (dispatch, getState) => {
+    if (!getState().archive.videoRef.paused) {
+      getState().archive.videoRef.pause()
+      dispatch(setVideoPlayStatus(false, getState().archive.videoPlayTrack))
+    }  
+  }
+}
+
+export const videoStop = (e) => {
+  if (e) e.preventDefault()
+  return async (dispatch, getState) => {
+    if (!getState().archive.current) {
+      getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
+      dispatch(setDisplayVideoController(false, undefined))
+    } 
+    getState().archive.videoRef.pause()
+    getState().archive.videoRef.currentTime = 0
+    dispatch(setVideoPlayStatus(false, getState().archive.videoPlayTrack))
+  }
+}

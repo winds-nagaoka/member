@@ -311,7 +311,7 @@ export const updateScoreEdit = () => {
     dispatch(editLoading(true))
     if (!window.localStorage.token) return false 
     // URL
-    // const path = 'https://score.winds-n.com/api/member/detail'
+    // const path = 'https://score.winds-n.com/api/member/edit'
     const path = 'http://192.168.1.22:3011/api/member/edit'
     const send = {
       userid: window.localStorage.windsid,

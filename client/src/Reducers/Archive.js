@@ -7,6 +7,7 @@ const initialState = {
   displayOther: 'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true,
   concertid: undefined,
 
+  // Photo
   loadingPhoto: false,
   photoConcertid: undefined,
   photoList: undefined,
@@ -15,6 +16,31 @@ const initialState = {
   photoUrl: undefined,
   displayPhotoSlideModal: false,
   photoNumber: undefined,
+
+  // Video
+  loadingVideo: false,
+  videoConcertid: undefined,
+  videoList: undefined,
+  videoBaseSrc: undefined,
+  videoUrl: undefined,
+  videoPoster: undefined,
+
+  // プレイヤー操作
+  videoRef: undefined,
+  displayVideoController: false,
+  // オーディオプレイヤーが開いていたか記録
+  audioPlayerDisplay: undefined,
+  loadingVideoSource: false,
+  videoLoadPercent: undefined,
+
+  videoCurrent: undefined,
+  videoCurrentTime: undefined,
+  videoDuration: undefined,
+  videoDurationTime: undefined,
+  videoPlayPercent: undefined,
+
+  videoPlayStatus: undefined,
+  videoPlayTrack: undefined
 }
 
 const prefix = 'ARCHIVE_'
@@ -61,7 +87,7 @@ export default function archiveReducer (state = initialState, action) {
     case prefix + 'LOADING_PHOTO':
       return {
         ...state,
-        loading: action.payload.loading
+        loadingPhoto: action.payload.loadingPhoto
       }
     case prefix + 'SET_PHOTO_LIST':
       return {
@@ -78,6 +104,61 @@ export default function archiveReducer (state = initialState, action) {
         displayPhotoSlideModal: action.payload.displayPhotoSlideModal,
         photoNumber: action.payload.photoNumber
       }
+    
+    // Video and VideoController Component
+    case prefix + 'LOADING_VIDEO':
+      return {
+        ...state,
+        loadingVideo: action.payload.loadingVideo
+      }
+    case prefix + 'SET_VIDEO_LIST':
+      return {
+        ...state,
+        videoConcertid: action.payload.videoConcertid,
+        videoList: action.payload.videoList,
+        videoBaseSrc: action.payload.videoBaseSrc,
+        videoUrl: action.payload.videoUrl,
+        videoPoster: action.payload.videoPoster
+      }
+
+      // プレイヤー操作
+    case prefix + 'SET_VIDEO_REF':
+      return {
+        ...state,
+        videoRef: action.payload.videoRef
+      }
+    case prefix + 'SET_DISPLAY_VIDEO_CONTROLLER':
+      return {
+        ...state,
+        displayVideoController: action.payload.displayVideoController,
+        audioPlayerDisplay: action.payload.audioPlayerDisplay
+      }
+    case prefix + 'SET_LOADING_VIDEO_SOURCE':
+      return {
+        ...state,
+        loadingVideoSource: action.payload.loadingVideoSource
+      }
+    case prefix + 'VIDEO_LOAD_PERCENT_UPDATE':
+      return {
+        ...state,
+        videoLoadPercent: action.payload.videoLoadPercent
+      }
+    case prefix + 'VIDEO_PLAY_UPDATE':
+      return {
+        ...state,
+        videoCurrent: action.payload.videoCurrent,
+        videoCurrentTime: action.payload.videoCurrentTime,
+        videoDuration: action.payload.videoDuration,
+        videoDurationTime: action.payload.videoDurationTime,
+        videoPlayPercent: action.payload.videoPlayPercent
+      }
+    case prefix + 'SET_VIDEO_PLAY_STATUS':
+      return {
+        ...state,
+        videoPlayStatus: action.payload.videoPlayStatus,
+        videoPlayTrack: action.payload.videoPlayTrack
+      }
+
     default:
       return state
   }

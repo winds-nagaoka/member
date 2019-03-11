@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setBackNavigation } from '../../../../Actions/Navigation'
-import { getConcertList, setConcertid, getPhotoList } from '../../../../Actions/Archive'
+import { getConcertList, setConcertid, getPhotoList, getVideoList } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
 import * as libArchive from '../Library/Library'
@@ -18,7 +18,10 @@ function mapStateToProps(state) {
     loadingArchive: state.archive.loading,
     concertList: state.archive.concertList,
     concertid: state.archive.concertid,
-    photoList: state.archive.photoList
+    loadingPhoto: state.archive.loadingPhoto,
+    photoList: state.archive.photoList,
+    loadingVideo: state.archive.loadingVideo,
+    videoList: state.archive.videoList
   }
 }
 
@@ -36,6 +39,9 @@ function mapDispatchToProps(dispatch) {
     getPhotoList () {
       dispatch(getPhotoList())
     },
+    getVideoList () {
+      dispatch(getVideoList())
+    },
     archivePlayRequest (id, number, playRequest) {
       dispatch(archivePlayRequest(id, number, playRequest))
     }
@@ -52,8 +58,10 @@ class Overview extends Component {
 
   // 直接アクセスしたときに必要
   componentDidMount () {
+    console.warn('componentDidMount', this.props.concertid)
     this.props.getConcertList()
     this.props.getPhotoList()
+    this.props.getVideoList()
     this.props.setBackNavigation(true, '/archive')
   }
 
@@ -183,25 +191,18 @@ class Overview extends Component {
     )
   }
 
-  renderPhotoLink () {
-    if (!this.props.photoList) return false
-    if (this.props.photoList.length === 0) {
-      return (
-        <div className='link'>
-          <ul>
-            <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li>
-          </ul>
-        </div>
-      )
-    } else {
-      return (
-        <div className='link'>
-          <ul>
-            <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
-          </ul>
-        </div>
-      )
-    }
+  renderPhotoVideoLink () {
+    if (!this.props.photoList || !this.props.videoList) return false
+    const photoLink = this.props.photoList.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
+    const videoLink = this.props.videoList.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/video/' + this.props.concertid}><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></Link></li>
+    return (
+      <div className='link'>
+        <ul>
+          {photoLink}
+          {videoLink}
+        </ul>
+      </div>
+    )
   }
 
   render () {
@@ -210,7 +211,7 @@ class Overview extends Component {
 
     const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, concertid)
     const showOverview = this.renderOverview(loadingArchive, concertList)
-    const showPhotoLink = this.renderPhotoLink()
+    const showPhotoVideoLink = this.renderPhotoVideoLink()
 
     return (
       <React.Fragment>
@@ -221,7 +222,7 @@ class Overview extends Component {
         </div>
         <div className='box archive-overview'>
           {showOverview}
-          {showPhotoLink}
+          {showPhotoVideoLink}
         </div>
 
         <div className='box'>

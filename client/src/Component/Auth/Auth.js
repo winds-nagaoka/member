@@ -15,6 +15,7 @@ import Record from './Practice/Record/Record'
 
 import Archive from './Archive/Archive'
 import ArchivePhotoSlide from './Archive/PhotoSlide/PhotoSlide'
+import ArchiveVideoController from './Archive/VideoController/VideoController'
 import Score from './Score/Score'
 import ScoreModal from './Score/ScoreModal/ScoreModal'
 import ScoreEditModal from './Score/EditModal/EditModal'
@@ -121,6 +122,7 @@ class Auth extends Component {
         </div>
         <Audio />
         <ArchivePhotoSlide />
+        <ArchiveVideoController />
         <ScoreModal />
         <ScoreEditModal />
       </div>

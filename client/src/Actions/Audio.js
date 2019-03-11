@@ -51,7 +51,7 @@ export const setAudioRef = (audioRef) => ({
 // 要素の表示状態
 
 // プレイヤーの表示設定
-const setDisplayPlayer = (displayPlayer) => {
+export const setDisplayPlayer = (displayPlayer) => {
   window.localStorage.setItem('displayPlayer', displayPlayer)
   return ({
     type: prefix + 'SET_DISPLAY_PLAYER',
@@ -68,7 +68,7 @@ export const setDisplayPlaylist = (displayPlaylist) => ({
 // オーディオタグの情報
 
 // ファイルの読み込みフラグ
-export const loadingAudio = (status) => ({
+export const setLoadingAudio = (status) => ({
   type: prefix + 'LOADING_AUDIO',
   payload: { loadingAudio: status }
 })
@@ -129,18 +129,14 @@ const archiveSetPlayBase = (concertid, number) => {
   window.localStorage.setItem('playerNumber', number)
   return ({
     type: prefix + 'ARCHIVE_SET_PLAY_BASE',
-    payload: { 
-      playmode: 'archive', concertid, number
-    }
+    payload: { playmode: 'archive', concertid, number }
   })
 }
 
 const archiveSetPlay = (album, track, playlistLoad) => {
   return ({
     type: prefix + 'ARCHIVE_SET_PLAY',
-    payload: { 
-      playmode: 'archive', album, track, playlistLoad
-    }
+    payload: { playmode: 'archive', album, track, playlistLoad }
   })
 }
 
