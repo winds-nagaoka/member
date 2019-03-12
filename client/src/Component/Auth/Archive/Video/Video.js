@@ -15,6 +15,8 @@ import {
   videoPlayUpdate,
 
   videoPlayRequest,
+
+  videoStop
   // setDisplayVideoController,
 } from '../../../../Actions/Archive'
 
@@ -38,9 +40,12 @@ function mapStateToProps(state) {
     videoUrl: state.archive.videoUrl,
     videoPoster: state.archive.videoPoster,
 
+    videoRef: state.archive.videoRef,
+
     displayPhotoController: state.archive.displayPhotoController,
     
-    videoRef: state.archive.videoRef
+    videoPlayStatus: state.archive.videoPlayStatus,
+    videoPlayTrack: state.archive.videoPlayTrack
   }
 }
 
@@ -73,9 +78,12 @@ function mapDispatchToProps(dispatch) {
     videoPlayUpdate (videoCurrent, videoDuration) {
       dispatch(videoPlayUpdate(videoCurrent, videoDuration))
     },
-    videoPlayRequest (number) {
-      dispatch(videoPlayRequest(number))
+    videoPlayRequest (number, request) {
+      dispatch(videoPlayRequest(number, request))
     },
+    videoStop (e) {
+      dispatch(videoStop(e))
+    }
     // setDisplayVideoController (displayVideoSlideModal, videoNumber) {
     //   dispatch(setDisplayVideoController(displayVideoSlideModal, videoNumber))
     // },
@@ -87,8 +95,10 @@ class Video extends Component {
     super(props)
     const { params } = this.props.match
     const id = params.id ? params.id : ''
+    const track = !isNaN(params.track) ? parseInt(params.track) : undefined
     this.props.setConcertid(id)
     id !== '' ? this.props.setBackNavigation(true, ('/archive/overview/' + id)) : this.props.setBackNavigation(true, ('/archive'))
+    track ? this.props.videoPlayRequest(track, false) : false
   }
 
   componentWillMount () {
@@ -172,11 +182,11 @@ class Video extends Component {
 
   playNext () {
     // 確認
-    if (this.getAlbum().list.length > (this.props.number + 1)) {
+    if (this.getAlbum().list.length > (this.props.videoPlayTrack + 1)) {
       // 次のトラックへ
-      this.props.archivePlayRequest(this.props.concertid, this.props.number + 1, true)
+      this.props.videoPlayRequest(this.props.videoPlayTrack + 1, true)
     } else {
-      this.props.audioStop()
+      this.props.videoStop()
     }
   }
 
@@ -199,7 +209,7 @@ class Video extends Component {
           const composer = each.data !== false ? <span className='composer'>{libArchive.getAudioComposer(this.props.concertid, each.data, this.props.concertList)}</span> : (each.composer ? <span className='composer'>{each.composer}</span> : '')
           const type = libArchive.getConcertType(this.props.concertid, this.props.concertList)
           return (
-            <div key={'track' + i + j} className={'track' + ' ' + type} onClick={() => this.props.videoPlayRequest(trackNumber)}>
+            <div key={'track' + i + j} className={'track' + (this.props.videoPlayTrack === trackNumber ? ' playing ' : ' ') + type} onClick={() => this.props.videoPlayRequest(trackNumber, true)}>
             {/* <div key={'track' + i + j} className={'track' + (this.state.playVideo === trackNumber ? ' playing' : '') + ' ' + type} onClick={() => this.selectPlay(trackNumber)}> */}
               <div className='icon'><i className="fas fa-video"></i></div>
               <div className='info'>
@@ -235,6 +245,8 @@ class Video extends Component {
     const showBreadNavigation = this.renderBreadNavigation()
     const showVideoList = this.renderVideoList()
     const poster = this.props.videoPoster ? this.props.videoPoster : 'https://video.winds-n.com/poster.jpg'
+
+    const aspectClass = this.props.videoPoster === 'https://video.winds-n.com/poster_800_586.png' ? ' aspect-4-3' : ' aspect-16-9'
     // const poster = 'https://video.winds-n.com/poster.jpg'
     return (
       <React.Fragment>
@@ -245,7 +257,7 @@ class Video extends Component {
 
         <div className='box archive-video-list'>
           <div className='video-player'>
-            <div className='video-frame aspect-16-9'>
+            <div className={'video-frame' + aspectClass}>
               <video
                 ref={(i) => {!this.props.videoRef ? this.props.setVideoRef(i) : false}}
                 onLoadStart={(e) => this.onLoadStart(e)}

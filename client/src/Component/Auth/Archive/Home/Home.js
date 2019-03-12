@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, toggleDisplayMain, toggleDisplayMini, toggleDisplayOther, setSearchRef, search, resetSearch } from '../../../../Actions/Archive'
+import { archivePlayRequest } from '../../../../Actions/Audio'
 
 import './Home.css'
 
@@ -49,6 +50,9 @@ function mapDispatchToProps(dispatch) {
     },
     resetSearch () {
       dispatch(resetSearch())
+    },
+    archivePlayRequest (id, number, playRequest) {
+      dispatch(archivePlayRequest(id, number, playRequest))
     }
   }
 }
@@ -91,10 +95,11 @@ class Home extends Component {
         // const concertType = ' ' + each.concert.type
         // const composer = each.track.composer ? each.track.composer : ''
         const composer = each.track.composer ? each.track.arranger ? <span className='composer'>{each.track.composer}{each.track.composer.match(/民謡/) ? '' : '作曲'}<span>/</span>{each.track.arranger}編曲</span> : <span className='composer'>{each.track.composer}</span> : each.track.arranger ? <span className='composer'>{each.track.arranger}編曲</span> : ''
-        const audioHandler = !isNaN(each.track.audio) ? () => {this.setAudio(each.concert.id, each.track.audio)} : () => {}
-        const videoHandler = !isNaN(each.track.video) ? () => {this.openVideo(each.concert.id, each.track.video)} : () => {}
+        const audioHandler = !isNaN(each.track.audio) ? () => {this.props.archivePlayRequest(each.concert.id, each.track.audio, true)} : () => {}
+        // const videoHandler = !isNaN(each.track.video) ? () => {this.openVideo(each.concert.id, each.track.video)} : () => {}
+        const videoLinkTo = !isNaN(each.track.video) ? '/archive/video/' + each.concert.id + '/' + each.track.video : false
         const audioIcon = !isNaN(each.track.audio) ? <i className="fas fa-play-circle fa-lg"></i> : <i className="far fa-times-circle fa-lg"></i>
-        const videoIcon = !isNaN(each.track.video) ? <i className="fas fa-video fa-lg"></i> : <i className="fas fa-video-slash fa-lg"></i>
+        const videoIcon = !isNaN(each.track.video) ? <Link to={videoLinkTo}><i className="fas fa-video fa-lg"></i></Link> : <i className="fas fa-video-slash fa-lg"></i>
         return (
           <div key={i + j} className='search-result-item'>
             <div className={each.concert.type}>
@@ -104,7 +109,7 @@ class Home extends Component {
             </div>
             <div>
               <span onClick={audioHandler} className={'audio' + (!isNaN(each.track.audio) ? ' on' : '') + ' ' + each.concert.type}>{audioIcon}</span>
-              <span onClick={videoHandler} className={'video' + (!isNaN(each.track.video) ? ' on' : '') + ' ' + each.concert.type}>{videoIcon}</span>
+              <span className={'video' + (!isNaN(each.track.video) ? ' on' : '') + ' ' + each.concert.type}>{videoIcon}</span>
             </div>
           </div>
         )

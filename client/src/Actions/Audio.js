@@ -171,9 +171,11 @@ export const audioPlay = (e) => {
 
 const audioStart = () => {
   return async (dispatch, getState) => {
-    if (getState().audio.audioRef.paused) {
-      getState().audio.audioRef.play()
-      dispatch(setPlayStatus(true))
+    if (getState().audio.audioRef) {
+      if (getState().audio.audioRef.paused) {
+        getState().audio.audioRef.play()
+        dispatch(setPlayStatus(true))
+      }  
     }
   }
 }
@@ -181,10 +183,12 @@ const audioStart = () => {
 export const audioPause = (e) => {
   if (e) e.preventDefault()
   return async (dispatch, getState) => {
-    if (!getState().audio.audioRef.paused) {
-      getState().audio.audioRef.pause()
-      dispatch(setPlayStatus(false))
-    }  
+    if (getState().audio.audioRef) {
+      if (!getState().audio.audioRef.paused) {
+        getState().audio.audioRef.pause()
+        dispatch(setPlayStatus(false))
+      }  
+    }
   }
 }
 

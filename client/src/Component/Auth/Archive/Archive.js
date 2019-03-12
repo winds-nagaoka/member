@@ -32,6 +32,7 @@ class Archive extends Component {
           <Route exact path='/archive' component={Home} />
           <Route path='/archive/overview/:id' component={Overview} />
           <Route path='/archive/photo/:id' component={Photo} />
+          <Route path='/archive/video/:id/:track' component={Video} />
           <Route path='/archive/video/:id' component={Video} />
         </Switch>
 

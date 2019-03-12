@@ -214,6 +214,7 @@ export const getVideoList = () => {
         return false
       } else {
         dispatch(setVideoList(getState().archive.concertid, res.body.list, res.body.baseSrc, res.body.url, res.body.poster))
+        getState().archive.videoPlayTrack ? dispatch(videoPlayRequest(getState().archive.videoPlayTrack, true)) : false
       }
       dispatch(loadingVideo(false))
     })
@@ -270,25 +271,27 @@ export const videoPlayUpdate = (videoCurrent, videoDuration) => {
   })
 }
 
-
 const setVideoPlayStatus = (videoPlayStatus, videoPlayTrack) => ({
   type: prefix + 'SET_VIDEO_PLAY_STATUS',
   payload: { videoPlayStatus, videoPlayTrack }
 })
-export const videoPlayRequest = (number) => {
+
+export const videoPlayRequest = (number, request) => {
   return async (dispatch, getState) => {
     // オーディオが再生中なら止める
     dispatch(audioPause())
+    // トラック番号のみ先に反映(先に)
+    dispatch(setVideoPlayStatus(false, number))
     // プレイヤーを表示
     const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
     dispatch(setDisplayVideoController(true, audioPlayerDisplay))
     // オーディオプレイヤーが表示されていたら隠す
     getState().audio.displayPlayer ? dispatch(setDisplayPlayer(false)) : false
-    // 曲を再生
-    const track = getState().archive.videoList[number]
-    if (getState().archive.videoRef) {
+    // ビデオを再生
+    if (request && getState().archive.videoList && getState().archive.videoRef) {
+      const track = getState().archive.videoList[number]
       getState().archive.videoRef.src = getState().archive.videoUrl + getState().archive.videoBaseSrc + track.path
-      dispatch(videoPlay())
+      dispatch(videoPlay(number))
     }
   }
 }

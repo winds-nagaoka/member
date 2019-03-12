@@ -86,8 +86,6 @@ export const getScoreList = (query) => {
     const requestTime = String((new Date()).getTime())
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
-    
-    console.log('query', query)
     // URL
     // const path = 'https://score.winds-n.com/api/member/score'
     const path = 'http://192.168.1.22:3011/api/member/score'
@@ -103,7 +101,6 @@ export const getScoreList = (query) => {
         return false
       } else {
         if (res.body.status && window.localStorage.scoreLoadList === requestTime) {
-          console.log(res.body)
           dispatch(setScoreList(res.body.list))  
           dispatch(showListUpdate(res.body.list.slice(0, 10)))
         }

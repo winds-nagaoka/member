@@ -117,7 +117,6 @@ class Home extends Component {
   renderSearch () {
     const searchIcon = this.props.searchLoading ? <i className='fas fa-spinner fa-pulse'></i> : <i className='fas fa-search'></i>
     const searchBarButtonClass = this.props.searchQuery ? 'search-bar-button' : 'search-bar-button hidden'
-    console.warn(this.props.searchQuery, searchBarButtonClass)
     return (
       <div className='search-bar'>
         <div className='search-frame'>

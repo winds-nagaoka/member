@@ -18,6 +18,12 @@
         padding-top: 56.25%; /* 高さを幅の16:9に固定 */
       }
 
+      &.aspect-4-3:before {
+        content:"";
+        display: block;
+        padding-top: 75%; /* 高さを幅の4:3に固定 */
+      }
+
       video {
         position: absolute;
         top: 0;
