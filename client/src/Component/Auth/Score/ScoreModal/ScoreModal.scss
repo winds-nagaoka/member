@@ -14,8 +14,8 @@
 
     // transition: transform .3s ease-in-out;
     transition: transform .2s ease-in-out;
-    -webkit-transform: translateY(105%);
-    transform: translateY(105%);
+    -webkit-transform: translate3d(0,105%,0);
+    transform: translate3d(0,105%,0);
     -webkit-overflow-scrolling: touch;
 
     &.pc {
@@ -25,8 +25,8 @@
 
     &.open {
       transition: transform .2s ease;
-      -webkit-transform: translateY(0%);
-      transform: translateY(0%);
+      -webkit-transform: translate3d(0,0%,0);
+      transform: translate3d(0,0%,0);
       box-shadow: 6px 0 25px rgba(0,0,0,.15);
 
       &.pc {

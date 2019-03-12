@@ -11,7 +11,7 @@ export const getList = () => {
       if (err) {
         return false
       } else {
-        console.log(res.body)
+        // console.log(res.body)
         dispatch(listUpdate(res.body.doc))
       }
       dispatch(listLoading(false))

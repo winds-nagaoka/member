@@ -23,7 +23,6 @@ export const loadArchivePlaylist = () => {
         return false
       } else {
         if (res.body.status) {
-          console.log('archive', res.body)
           dispatch(setArchivePlaylist(res.body.list, res.body.url))  
         }
       }
