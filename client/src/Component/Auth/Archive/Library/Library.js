@@ -1,5 +1,11 @@
 import React from 'react'
-import { __esModule } from 'react-router-dom';
+import { __esModule } from 'react-router-dom'
+
+export function escapeReg (string) {
+  const reRegExp = /[\\^$.*+?()[\]{}|]/g
+  const reHasRegExp = new RegExp(reRegExp.source)
+  return (string && reHasRegExp.test(string)) ? string.replace(reRegExp, '\\$&') : string
+}
 
 // function unixTimeFull (intTime) {
 //   var d = new Date(intTime)
@@ -69,9 +75,6 @@ function getConcertList (id, concertList) {
   return concert.detail.data
 }
 
-
-
-
 // function getAudioComposerText (id, num) {
 //   if (concertStore.list) {
 //     var list = getConcertList(id)[num]
@@ -119,12 +122,6 @@ export function getConcert (id, concertList) {
 export function labeling (label, contents) {
   return (<div><span>{label}</span><span>{contents}</span></div>)
 }
-
-// function escapeReg (string) {
-//   const reRegExp = /[\\^$.*+?()[\]{}|]/g
-//   const reHasRegExp = new RegExp(reRegExp.source)
-//   return (string && reHasRegExp.test(string)) ? string.replace(reRegExp, '\\$&') : string
-// }
 
 export function getNextConcert (id, concertList) {
   const type = getConcert(id, concertList).type

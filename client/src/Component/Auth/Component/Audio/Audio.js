@@ -274,7 +274,7 @@ class Audio extends Component {
     return (
       <div>
         <span className={playTypeClass}>{isNaN(this.props.number) ? false : (this.props.archiveConcertList ? libArchive.getConcertTitle(this.props.concertid, this.props.archiveConcertList) : false)}</span>
-        <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.number) || !this.props.archivePlaylist ? '曲を選択してください' : (this.getTitle() + (this.getAlbum().list[this.props.number].addtitle ? ' ' + this.getAlbum().list[this.props.number].addtitle : ''))}</span>
+        <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.number) || !this.props.archivePlaylist ? '読み込み中' : (this.getTitle() + (this.getAlbum().list[this.props.number].addtitle ? ' ' + this.getAlbum().list[this.props.number].addtitle : ''))}</span>
       </div>
     )
   }

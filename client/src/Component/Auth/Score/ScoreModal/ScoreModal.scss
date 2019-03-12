@@ -9,6 +9,9 @@
     background: #fff;
     z-index: 32;
 
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+
     // transition: transform .3s ease-in-out;
     transition: transform .2s ease-in-out;
     -webkit-transform: translateY(105%);

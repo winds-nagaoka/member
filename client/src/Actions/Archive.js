@@ -1,5 +1,6 @@
 import * as request from '../Library/Request'
 import { playTime, version } from '../Library/Library'
+import { escapeReg } from '../Component/Auth/Archive/Library/Library'
 
 import { setDisplayPlayer, audioPause } from './Audio'
 
@@ -84,6 +85,61 @@ export const setConcertid = (concertid) => ({
   type: prefix + 'SET_OVERVIEW_ID',
   payload: { concertid }
 })
+
+// Search
+const loadingSearch = (loadingSearch) => ({
+  type: prefix + 'LOADING_SEARCH',
+  payload: { loadingSearch }
+})
+
+export const setSearchRef = (searchRef) => ({
+  type: prefix + 'SET_SEARCH_REF',
+  payload: { searchRef }
+})
+
+export const search = (value) => {
+  return async (dispatch, getState) => {
+    dispatch(setSearchQuery(value))
+    if (value === '' || !value) return dispatch(resetSearch())
+    dispatch(loadingSearch(true))
+    const searchResult = getState().archive.concertList.map((item) => {
+      const concert = item.detail
+      return concert.data.map((track) => {
+        const s = new RegExp(escapeReg(value), 'i')
+        // 演奏会名で一致
+        if (concert.title.search(s) >= 0) return {concert, track}
+        // タイトルで一致
+        if (track.title.search(s) >= 0) return {concert, track}
+        // サブタイトルで一致
+        // if (track.addtitle.search(s) >= 0) return {concert: concert, track}
+        // 作曲者名で一致
+        if ((track.composer ? track.composer : '').search(s) >= 0) return {concert, track}
+        // 編曲者名で一致
+        if ((track.arranger ? track.arranger : '').search(s) >= 0) return {concert, track}
+      })
+    })
+    dispatch(loadingSearch(false))
+    dispatch(setSearchResult(searchResult))
+  }
+}
+
+const setSearchQuery = (searchQuery) => ({
+  type: prefix + 'SET_SEARCH_QUERY',
+  payload: { searchQuery }
+})
+
+const setSearchResult = (searchResult) => ({
+  type: prefix + 'SET_SEARCH_RESULT',
+  payload: { searchResult }
+})
+
+export const resetSearch = () => {
+  return async (dispatch, getState) => {
+    dispatch(setSearchQuery(''))
+    dispatch(setSearchResult(undefined))
+    getState().archive.searchRef.focus()
+  }
+}
 
 // Photo
 const loadingPhoto = (loadingPhoto) => ({

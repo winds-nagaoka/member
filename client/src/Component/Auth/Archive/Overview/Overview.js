@@ -67,7 +67,11 @@ class Overview extends Component {
 
   componentWillReceiveProps (nextProps, nextContext) {
     const { params } = nextProps.match
-    params.id ? this.props.setConcertid(params.id) : false
+    if (params.id !== this.props.concertid) {
+      this.props.setConcertid(params.id)
+      this.props.getPhotoList()
+      this.props.getVideoList()
+    }
   }
 
   showDate (item) {
@@ -158,13 +162,27 @@ class Overview extends Component {
     )
   }
 
+  renderNavigationLink () {
+    if (!this.props.photoList || !this.props.videoList) return false
+    const photoLink = this.props.photoList.length === 0 || this.props.loadingPhoto ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
+    const videoLink = this.props.videoList.length === 0 || this.props.loadingVideo ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/video/' + this.props.concertid}><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></Link></li>
+    return (
+      <div className='link'>
+        <ul className='navigation-link'>
+          {photoLink}
+          {videoLink}
+        </ul>
+      </div>
+    )
+  }
+  
   renderOverview (loadingArchive, concertList) {
     if (loadingArchive || !concertList || !this.props.concertid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     const item = libArchive.getConcert(this.props.concertid, concertList).detail
     return (
       <div className='article'>
         {this.renderConcertNavigation(item)}
-        {/* <ConcertNavigation id={this.state.id} /> */}
+        {this.renderNavigationLink()}
         <div className='concert-detail'>
           <div className='poster'>
             {this.showPoster(item)}
@@ -191,27 +209,12 @@ class Overview extends Component {
     )
   }
 
-  renderPhotoVideoLink () {
-    if (!this.props.photoList || !this.props.videoList) return false
-    const photoLink = this.props.photoList.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
-    const videoLink = this.props.videoList.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/video/' + this.props.concertid}><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></Link></li>
-    return (
-      <div className='link'>
-        <ul>
-          {photoLink}
-          {videoLink}
-        </ul>
-      </div>
-    )
-  }
-
   render () {
     // State List
     const { loadingArchive, concertList, concertid } = this.props
 
     const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, concertid)
     const showOverview = this.renderOverview(loadingArchive, concertList)
-    const showPhotoVideoLink = this.renderPhotoVideoLink()
 
     return (
       <React.Fragment>
@@ -222,7 +225,6 @@ class Overview extends Component {
         </div>
         <div className='box archive-overview'>
           {showOverview}
-          {showPhotoVideoLink}
         </div>
 
         <div className='box'>

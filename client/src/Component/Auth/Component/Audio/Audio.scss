@@ -16,6 +16,9 @@
     border-top: .55px solid #ccc;
     background: #fff;
 
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+
     transition: transform .2s linear;
     -webkit-transform: translateY(150%);
     transform: translateY(150%);
@@ -359,6 +362,9 @@
       color: #B60005;
       z-index: 37;
       cursor: pointer;
+
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
 
       display: flex;
       justify-content: center;

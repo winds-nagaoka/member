@@ -7,6 +7,12 @@ const initialState = {
   displayOther: 'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true,
   concertid: undefined,
 
+  // Search
+  loadingSearch: false,
+  searchRef: undefined,
+  searchQuery: '',
+  searchResult: undefined,
+
   // Photo
   loadingPhoto: false,
   photoConcertid: undefined,
@@ -81,6 +87,28 @@ export default function archiveReducer (state = initialState, action) {
       return {
         ...state,
         concertid: action.payload.concertid
+      }
+    
+    // Search
+    case prefix + 'LOADING_SEARCH':
+      return {
+        ...state,
+        loadingSearch: action.payload.loadingSearch
+      }
+    case prefix + 'SET_SEARCH_REF':
+      return {
+        ...state,
+        searchRef: action.payload.searchRef
+      }
+    case prefix + 'SET_SEARCH_QUERY':
+      return {
+        ...state,
+        searchQuery: action.payload.searchQuery
+      }
+    case prefix + 'SET_SEARCH_RESULT':
+      return {
+        ...state,
+        searchResult: action.payload.searchResult
       }
 
     // Photo and PhotoSlide Component

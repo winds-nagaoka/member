@@ -68,6 +68,19 @@
       }
     }
 
+
+    .link {
+      line-height: 1.6;
+
+      & > ul.navigation-link {
+        border-top: 0!important;
+      }
+
+      .no-link {
+        color: #ccc;
+      }
+    }
+
     .concert-detail {
       display: flex;
       flex-direction: row;
@@ -319,14 +332,6 @@
           }
         }
       }
-    }
-  }
-
-  .link {
-    line-height: 1.6;
-
-    .no-link {
-      color: #ccc;
     }
   }
 }

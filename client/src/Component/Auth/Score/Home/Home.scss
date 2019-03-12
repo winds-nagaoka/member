@@ -186,7 +186,7 @@
       }
 
       .title-ja {
-        width: calc(100vw - 19px);
+        width: 100%;
         color: #333;
         font-size: 14px;
         line-height: 16px;
@@ -202,7 +202,8 @@
       }
 
       .title-en {
-        width: calc(100vw - 19px);
+        width: 100%;
+        min-height: 14px;
         color: #888;
         font-size: 10px;
         overflow: hidden;
@@ -217,7 +218,7 @@
       }
 
       .composer-arranger {
-        width: calc(100vw - 19px);
+        width: calc(100% - 19px);
         color: #888;
         font-size: 12px;
         overflow: hidden;

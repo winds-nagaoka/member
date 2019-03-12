@@ -73,6 +73,16 @@
     contain: size style layout;
     z-index: 1;
 
+    padding-top: constant(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-left: constant(safe-area-inset-left);
+    padding-right: constant(safe-area-inset-right);
+  
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+
     // background: rgba(220,220,220,.2);
     background: #efeff4;
     // background: rgb(230, 236, 240);
