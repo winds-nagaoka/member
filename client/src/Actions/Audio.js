@@ -51,7 +51,7 @@ export const setAudioRef = (audioRef) => ({
 
 // プレイヤーの表示設定
 export const setDisplayPlayer = (displayPlayer) => {
-  window.localStorage.setItem('displayPlayer', displayPlayer)
+  displayPlayer ? window.localStorage.setItem('displayPlayer', displayPlayer) : window.localStorage.removeItem('displayPlayer')
   return ({
     type: prefix + 'SET_DISPLAY_PLAYER',
     payload: { displayPlayer }
@@ -206,5 +206,14 @@ export const audioStop = (e) => {
     getState().audio.audioRef.pause()
     getState().audio.audioRef.currentTime = 0
     dispatch(setPlayStatus(false))
+  }
+}
+
+export const closePlayer = () => {
+  return async (dispatch, getState) => {
+    dispatch(audioStop())
+    dispatch(setDisplayPlayer(false))
+    window.localStorage.removeItem('playerConcertid')
+    window.localStorage.removeItem('playerNumber')  
   }
 }

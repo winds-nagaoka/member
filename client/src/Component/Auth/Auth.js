@@ -20,6 +20,8 @@ import Score from './Score/Score'
 import ScoreModal from './Score/ScoreModal/ScoreModal'
 import ScoreEditModal from './Score/EditModal/EditModal'
 
+import Setting from './Setting/Setting'
+
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
 
@@ -112,6 +114,7 @@ class Auth extends Component {
                 <Route path='/practice/record' component={Record} />
                 <Route path='/archive' component={Archive} />
                 <Route path='/score' component={Score} />
+                <Route path='/setting' component={Setting} />
               </Switch>
             </div>
           </div>

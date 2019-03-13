@@ -118,7 +118,7 @@
     }
 
     .gap {
-      height: 80px;
+      height: 65px;
     }
 
     // 標準box
@@ -225,9 +225,9 @@
           font-size: 18px;
           letter-spacing: .1rem;
   
-          position: -webkit-sticky;
-          position: sticky;
-          top: 0;
+          // position: -webkit-sticky;
+          // position: sticky;
+          // top: 0;
   
           line-height: 44px;
           // position: relative;
@@ -252,13 +252,17 @@
         }
       }
 
+      .border-bottom {
+        border-bottom: .55px solid #c8c7cc;
+      }
+
       .link {
         font-size: 1rem;
 
         ul {
           margin: 0;
           padding: 0;
-          border-top: .55px solid #c8c7cc;
+          // border-top: .55px solid #c8c7cc;
 
           li {
             list-style: none;
@@ -267,7 +271,6 @@
             a {
               display: block;
               margin: 0;
-              padding-left: 12px;
 
               text-decoration: none;
               color: #333;
@@ -279,21 +282,22 @@
               &:active {
                 background: #e3e3e3;
               }
+            }
 
-              .inner {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+            .inner {
+              padding-left: 12px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
 
-                span {
-                  margin: 11px 8px 11px 0;
-                }
+              span {
+                margin: 11px 8px 11px 0;
+              }
 
-                i {
-                  padding-right: 12px;
-                  color: #666;
-                  font-size: 1.2rem;
-                }
+              i {
+                padding-right: 12px;
+                color: #666;
+                font-size: 1.2rem;
               }
             }
 

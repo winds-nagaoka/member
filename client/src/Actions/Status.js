@@ -5,6 +5,7 @@ import * as request from '../Library/Request'
 import { version } from '../Library/Library'
 
 // import { listen } from 'react-router-redux'
+const prefix = 'STATUS_'
 
 export const loginAuth = (location) => {
   return async (dispatch, getState) => {
@@ -21,10 +22,11 @@ export const loginAuth = (location) => {
         return false
       } else {
         if (res.body.status) {
-          console.log('Auth OK')
+          console.log('Auth OK', res.body)
           dispatch(windsidUpdate(window.localStorage.windsid))
           dispatch(tokenUpdate(res.body.token))
           dispatch(loginUpdate(true))
+          dispatch(setUser(res.body.user))
           dispatch(replace(location))
         } else {
           console.log('Auth NG')
@@ -47,40 +49,35 @@ export const logout = () => {
   }
 }
 
-export const loginUpdate = (login) => {
-  return({
-    type: 'STATUS_LOGIN',
-    payload: {
-      login
-    }
-  })
-}
+export const loginUpdate = (login) => ({
+  type: prefix + 'LOGIN',
+  payload: { login }
+})
+
+export const setUser = (user) => ({
+  type: prefix + 'SET_USER',
+  payload: { user }
+})
 
 export const windsidUpdate = (windsid) => {
   windsid ? window.localStorage.setItem('windsid', windsid) : false
   return({
-    type: 'STATUS_WINDSID',
-    payload: {
-      windsid
-    }
+    type: prefix + 'WINDSID',
+    payload: { windsid }
   })
 }
 
 export const tokenUpdate = (token) => {
   token ? window.localStorage.setItem('token', token) : false
   return({
-    type: 'STATUS_TOKEN',
-    payload: {
-      token
-    }
+    type: prefix + 'TOKEN',
+    payload: { token }
   })
 }
 
 export const loading = (loading) => ({
-  type: 'STATUS_LOADING',
-  payload: {
-    loading: loading
-  }
+  type: prefix + 'LOADING',
+  payload: { loading }
 })
 
 // export const windowWidthChange = () => {
@@ -88,7 +85,7 @@ export const loading = (loading) => ({
 //   const pc = width > 960 ? true : false
 //   const mobile = !pc
 //   return {
-//     type: 'STATUS_WINDOW_WIDTH',
+//     type: prefix + 'WINDOW_WIDTH',
 //     payload: {
 //       width,
 //       pc,
@@ -105,7 +102,7 @@ export const windowWidthChange = () => {
     dispatch(setWidth(width, pc, mobile))
     if (pc) dispatch(navigationMenu(false))
     // return {
-    //   type: 'STATUS_WINDOW_WIDTH',
+    //   type: prefix + 'WINDOW_WIDTH',
     //   payload: {
     //     width,
     //     pc,
@@ -116,16 +113,12 @@ export const windowWidthChange = () => {
 }
 
 export const setWidth = (width, pc, mobile) => ({
-  type: 'STATUS_WINDOW_WIDTH',
-  payload: {
-    width,
-    pc,
-    mobile
-  }
+  type: prefix + 'WINDOW_WIDTH',
+  payload: { width, pc, mobile }
 })
 
 export const setContentsRef = (contentsRef) => ({
-  type: 'STATUS_SET_CONTENTS_REF',
+  type: prefix + 'SET_CONTENTS_REF',
   payload: { contentsRef }
 })
 

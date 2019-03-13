@@ -1,5 +1,6 @@
 const initialState = {
   login: false,
+  user: undefined,
   windsid: '',
   token: '',
   loading: false,
@@ -9,36 +10,43 @@ const initialState = {
   contentsRef: undefined
 }
 
+const prefix = 'STATUS_'
+
 export default function statusReducer (state = initialState, action) {
   switch (action.type) {
-    case 'STATUS_LOGIN':
+    case prefix + 'LOGIN':
       return {
         ...state,
         login: action.payload.login
       }
-    case 'STATUS_WINDSID':
+    case prefix + 'SET_USER':
+      return {
+        ...state,
+        user: action.payload.user
+      }
+    case prefix + 'WINDSID':
       return {
         ...state,
         windsid: action.payload.windsid
       }
-    case 'STATUS_TOKEN':
+    case prefix + 'TOKEN':
       return {
         ...state,
         token: action.payload.token
       }
-    case 'STATUS_LOADING':
+    case prefix + 'LOADING':
       return {
         ...state,
         loading: action.payload.loading
       }
-    case 'STATUS_WINDOW_WIDTH':
+    case prefix + 'WINDOW_WIDTH':
       return {
         ...state,
         width: action.payload.width,
         pc: action.payload.pc,
         mobile: action.payload.mobile
       }
-    case 'STATUS_SET_CONTENTS_REF':
+    case prefix + 'SET_CONTENTS_REF':
       return {
         ...state,
         contentsRef: action.payload.contentsRef

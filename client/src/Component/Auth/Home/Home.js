@@ -185,7 +185,7 @@ class Home extends Component {
         <div className='box home-schedule'>
           <div className='title-frame'>
             <label>次回の練習日</label>
-            <div className='text'>
+            <div className='text border-bottom'>
               {showScheduleNext}
             </div>
           </div>
@@ -199,7 +199,7 @@ class Home extends Component {
         <div className='box home-manager'>
           <div className='title-frame'>
             <label>お知らせ</label>
-            <div className='text'>
+            <div className='text border-bottom'>
               {showManager}
             </div>
           </div>
@@ -213,7 +213,7 @@ class Home extends Component {
         <div className='box home-bbs'>
           <div className='title-frame'>
             <label>団員専用掲示板</label>
-            <div className='text'>
+            <div className='text border-bottom'>
               <div className='home-bbs-list'>
                 {showBBS}
               </div>
@@ -229,7 +229,7 @@ class Home extends Component {
         <div className='box home-archive'>
           <div className='title-frame'>
             <label>アーカイブ</label>
-            <div className='text'>
+            <div className='text border-bottom'>
               <p>これまでの活動記録はこちらから参照できます</p>
               <p>定期演奏会とミニコンサートの記録を掲載しています</p>
             </div>
@@ -241,16 +241,30 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className='box home-bbs'>
+        <div className='box home-score'>
           <div className='title-frame'>
             <label>ウィンズスコア</label>
-            <div className='text'>
+            <div className='text border-bottom'>
               ウィンズが所有する楽譜はこちらから参照できます
             </div>
           </div>
           <div className='link'>
             <ul>
               <li><Link to='/score'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className='box home-setting'>
+          <div className='title-frame'>
+            <label>設定</label>
+            <div className='text border-bottom'>
+              アプリの設定はこちら
+            </div>
+          </div>
+          <div className='link'>
+            <ul>
+              <li><Link to='/setting'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

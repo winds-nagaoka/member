@@ -24,6 +24,7 @@ export const register = () => {
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
+          dispatch(Status.setUser(res.body.user))
         } else {
           console.log('Register NG')
           dispatch(Status.windsidUpdate(false))
