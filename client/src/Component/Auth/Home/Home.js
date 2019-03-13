@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { connectSocket, disconnectSocket } from '../../../Actions/Socket'
 
-import { releaseBackNavigation } from '../../../Actions/Navigation'
+import { setNavigationTitle, releaseBackNavigation } from '../../../Actions/Navigation'
 import { getSchedule } from '../../../Actions/Schedule'
 import { getManager } from '../../../Actions/Manager'
 import { getBBSList } from '../../../Actions/BBS'
@@ -35,6 +35,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     releaseBackNavigation () {
       dispatch(releaseBackNavigation())
     },
@@ -65,6 +68,7 @@ function mapDispatchToProps(dispatch) {
 
 class Home extends Component {
   componentDidMount () {
+    this.props.setNavigationTitle(undefined)
     this.props.releaseBackNavigation()
     this.props.connectSocket()
 

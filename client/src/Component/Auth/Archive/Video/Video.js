@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setBackNavigation } from '../../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import {
   getConcertList,
   setConcertid,
@@ -51,6 +51,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -107,6 +110,7 @@ class Video extends Component {
 
   // 直接アクセスしたときに必要
   componentDidMount () {
+    this.props.setNavigationTitle('映像')
     // パンくずリスト用
     this.props.getConcertList()
   }

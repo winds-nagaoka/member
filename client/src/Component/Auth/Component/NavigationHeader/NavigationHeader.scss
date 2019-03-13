@@ -34,6 +34,11 @@
       margin: 0 auto;
     }
 
+    .title-text {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
     .logo {
       width: calc(100% - 44px);
       // width: 100%;
@@ -95,13 +100,13 @@
       }
     }
 
-    &.search {
+    &.home-navigation {
       top: 0;
       left: auto;
       right: 0;
 
-      &.close {
-        color: #ccc;
+      a {
+        color: inherit;
       }
     }
   }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setBackNavigation } from '../../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getSchedule } from '../../../../Actions/Schedule'
 
 import * as lib from '../../../../Library/Library'
@@ -25,6 +25,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -39,6 +42,7 @@ function mapDispatchToProps(dispatch) {
 
 class Schedule extends Component {
   componentDidMount () {
+    this.props.setNavigationTitle('練習日程')
     this.props.setBackNavigation(true, '/')
     this.props.getSchedule()
   }

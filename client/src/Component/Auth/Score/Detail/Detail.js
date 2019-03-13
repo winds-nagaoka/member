@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setBackNavigation } from '../../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getScoreDetail, setDisplayEditScoreModal } from '../../../../Actions/Score'
 
 import * as libScore from '../Library/Library'
@@ -26,6 +26,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -48,6 +51,7 @@ class Detail extends Component {
 
   // 直接アクセスしたときに必要
   componentDidMount () {
+    this.props.setNavigationTitle('詳細情報')
     this.props.setBackNavigation(true, '/score')
   }
 

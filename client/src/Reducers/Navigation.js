@@ -14,7 +14,7 @@ export default function navigationReducer (state = initialState, action) {
         ...state,
         menuOpen: action.payload.menuOpen
       }
-    case prefix + 'TITLE_UPDATE':
+    case prefix + 'SET_NAVIGATION_TITLE':
       return {
         ...state,
         title: action.payload.title

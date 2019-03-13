@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setBackNavigation } from '../../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import {
   getScoreListAll,
   getScoreList,
@@ -37,6 +37,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -72,6 +75,7 @@ function mapDispatchToProps(dispatch) {
 
 class Home extends Component {
   componentDidMount () {
+    this.props.setNavigationTitle('ウィンズスコア')
     this.props.setBackNavigation(true, '/')
     this.props.searchQuery ? this.props.changeSearchText(this.props.searchQuery) : this.props.getScoreListAll()
   }

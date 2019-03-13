@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import * as lib from '../../../Library/Library'
 
-import { setBackNavigation } from '../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../Actions/Navigation'
 import { getBBSList, loadMore } from '../../../Actions/BBS'
 
 import { showToast } from '../../../Actions/Toast'
@@ -25,6 +25,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -43,6 +46,7 @@ function mapDispatchToProps(dispatch) {
 
 class BBS extends Component {
   componentDidMount () {
+    this.props.setNavigationTitle('団員専用掲示板')
     this.props.setBackNavigation(true, '/')
     this.props.getBBSList()
   }

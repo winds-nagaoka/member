@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setBackNavigation } from '../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../Actions/Navigation'
 import { getManager } from '../../../Actions/Manager'
 
 import { showToast } from '../../../Actions/Toast'
@@ -23,6 +23,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -38,6 +41,7 @@ function mapDispatchToProps(dispatch) {
 
 class Manager extends Component {
   componentDidMount () {
+    this.props.setNavigationTitle('お知らせ')
     this.props.setBackNavigation(true, '/')
     this.props.getManager()
   }

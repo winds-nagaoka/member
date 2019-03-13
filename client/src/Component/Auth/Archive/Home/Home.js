@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setBackNavigation } from '../../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, toggleDisplayMain, toggleDisplayMini, toggleDisplayOther, setSearchRef, search, resetSearch } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
@@ -27,6 +27,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -59,6 +62,7 @@ function mapDispatchToProps(dispatch) {
 
 class Home extends Component {
   componentDidMount () {
+    this.props.setNavigationTitle('アーカイブ')
     this.props.setBackNavigation(true, '/')
     this.props.getConcertList()
   }

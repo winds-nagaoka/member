@@ -48,16 +48,16 @@ class NavigationHeader extends Component {
 
     // const menuContentClass = 
     // const menuBackgroundClass = 
-    const showTitle = title ? <div className='title-text' onClick={() => this.props.scrollToTopSmooth()}>{title}</div> : <div className='logo' onClick={() => this.props.scrollToTopSmooth()}><WindsLogo /></div>
+    const showTitle = title && !pc ? <div className='title-text' onClick={() => this.props.scrollToTopSmooth()}>{title}</div> : <div className='logo' onClick={() => this.props.scrollToTopSmooth()}><WindsLogo /></div>
 
     // const backNavAndMenuToggle = this.props.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
-    const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
+    const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i><span>戻る</span></Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
     // const backNavAndMenuToggle = mobile ? <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div> : <div></div>
 
     // const headerClass = ((this.state.titleBar) || (this.state.titleSearchStatus) ? 'header no-border' : 'header') + (this.state.titleFont ? ' font' : '')
     // const titleHeaderClass = 'title'
-    // const searchIcon = this.state.titleSearch ? <div className={'label search' + (this.state.titleSearchStatus ? '' : ' close')} onClick={() => this.toggleSearch()}><i className="fas fa-search"></i></div> : ''
-    const searchIcon = ''
+    const homeIcon = title ? <div className='label home-navigation'><Link to={'/'}><i className='fas fa-home'></i></Link></div> : false
+    
     return (
       <div className='navigation-header'>
         <div className={'header' + lib.pcClass(pc)}>
@@ -65,7 +65,7 @@ class NavigationHeader extends Component {
             {showTitle}
           {/* </div> */}
           {backNavAndMenuToggle}
-          {searchIcon}
+          {homeIcon}
         </div>
         <div className={'menu-background' + (menuOpen ? ' open' : '')} onClick={() => navigationMenuToggle()}></div>
         <div className={'menu-content' + (menuOpen ? ' open' : '')}>

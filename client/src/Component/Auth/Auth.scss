@@ -77,7 +77,7 @@
     padding-bottom: constant(safe-area-inset-bottom);
     padding-left: constant(safe-area-inset-left);
     padding-right: constant(safe-area-inset-right);
-  
+
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
@@ -181,7 +181,7 @@
         font-size: .9rem;
       }
     }
-    
+
     &.pc {
       .contents-header {
         padding: 16px 0;
@@ -224,15 +224,15 @@
           color: #333;
           font-size: 18px;
           letter-spacing: .1rem;
-  
+
           // position: -webkit-sticky;
           // position: sticky;
           // top: 0;
-  
+
           line-height: 44px;
           // position: relative;
           // border-bottom: .55px solid #c8c7cc;
-  
+
           // &::before {
           //   display: block;
           //   content: '';
@@ -304,7 +304,6 @@
             .disabled-link {
               display: block;
               margin: 0;
-              padding-left: 12px;
 
               text-decoration: none;
               color: #ccc;

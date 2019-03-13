@@ -10,8 +10,8 @@ export const navigationMenu = (menuOpen) => ({
   payload: { menuOpen }
 })
 
-export const navigationTitleUpdate = (title) => ({
-  type: prefix + 'TITLE_UPDATE',
+export const setNavigationTitle = (title) => ({
+  type: prefix + 'SET_NAVIGATION_TITLE',
   payload: { title }
 })
 

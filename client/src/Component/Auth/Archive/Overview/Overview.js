@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setBackNavigation } from '../../../../Actions/Navigation'
+import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, setConcertid, getPhotoList, getVideoList } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
@@ -27,6 +27,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    setNavigationTitle (title) {
+      dispatch(setNavigationTitle(title))
+    },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
@@ -58,11 +61,11 @@ class Overview extends Component {
 
   // 直接アクセスしたときに必要
   componentDidMount () {
-    console.warn('componentDidMount', this.props.concertid)
+    this.props.setNavigationTitle('詳細情報')
+    this.props.setBackNavigation(true, '/archive')
     this.props.getConcertList()
     this.props.getPhotoList()
     this.props.getVideoList()
-    this.props.setBackNavigation(true, '/archive')
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
