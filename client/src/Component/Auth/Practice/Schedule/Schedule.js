@@ -137,7 +137,7 @@ class Schedule extends Component {
           <h2>練習日程</h2>
         </div> */}
 
-        <div className='box schedule-next'>
+        <div className={'box schedule-next' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>次回の練習日</label>
             <div className='text'>
@@ -146,7 +146,7 @@ class Schedule extends Component {
           </div>
         </div>
 
-        <div className='box schedule-next'>
+        <div className={'box schedule-next' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>今後の練習日程</label>
             <div className='text'>

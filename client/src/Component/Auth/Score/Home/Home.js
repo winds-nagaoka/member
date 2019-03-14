@@ -16,6 +16,7 @@ import {
   setDisplayEditScoreModal
  } from '../../../../Actions/Score'
 
+import * as lib from '../../../../Library/Library'
 import * as libScore from '../Library/Library'
 
 import './Home.css'
@@ -158,12 +159,13 @@ class Home extends Component {
 
     return (
       <React.Fragment>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/score'>ウィンズスコア</Link></div>
           <h2>ウィンズスコア</h2>
           <p>ウィンズが所有している楽譜です</p>
         </div>
-        <div className='box score-home'>
+
+        <div className={'box score-home' + lib.pcClass(this.props.pc)}>
           {showSearch}
           {showCount}
           {showScoreList}
@@ -171,17 +173,10 @@ class Home extends Component {
           {endLabel}
         </div>
 
-        <div className='box score-add-link'>
+        <div className={'box score-add-link' + lib.pcClass(this.props.pc)}>
           <div onClick={() => this.props.setDisplayEditScoreModal(true, 'new', undefined)}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>新しい楽譜を追加</span>}</div>
         </div>
 
-        <div className='box back-to-home'>
-          <div className='back-link'>
-            <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
-            </ul>
-          </div>
-        </div>
       </React.Fragment>
     )
   }

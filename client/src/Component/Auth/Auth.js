@@ -101,27 +101,29 @@ class Auth extends Component {
       <div className='auth'>
         <Toast />
         <NavigationHeader />
-        <div className={'contents' + (pc ? ' pc' : ' mobile')} ref={(i) => {!this.props.contentsRef ? this.props.setContentsRef(i) : false}}>
-          <div className={pc ? 'flex-frame': ''}>
-            <NavigationInline />
-            <div className={pc ? 'inline-contents' : 'full-contents'}>
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route path='/practice' component={Practice} />
-                <Route path='/manager' component={Manager} />
-                <Route path='/bbs' component={BBS} />
-                <Route path='/practice/cast' component={Cast} />
-                <Route path='/practice/record' component={Record} />
-                <Route path='/archive' component={Archive} />
-                <Route path='/score' component={Score} />
-                <Route path='/setting' component={Setting} />
-              </Switch>
+        <div className={'contents' + (pc ? ' pc' : ' mobile')}>
+          <div className={'contents-inner' + (pc ? ' pc' : ' mobile')} ref={(i) => {!this.props.contentsRef ? this.props.setContentsRef(i) : false}}>
+            <div className={pc ? 'flex-frame': ''}>
+              <NavigationInline />
+              <div className={pc ? 'inline-contents' : 'full-contents'}>
+                <Switch>
+                  <Route exact path='/' component={Home} />
+                  <Route path='/practice' component={Practice} />
+                  <Route path='/manager' component={Manager} />
+                  <Route path='/bbs' component={BBS} />
+                  <Route path='/practice/cast' component={Cast} />
+                  <Route path='/practice/record' component={Record} />
+                  <Route path='/archive' component={Archive} />
+                  <Route path='/score' component={Score} />
+                  <Route path='/setting' component={Setting} />
+                </Switch>
+              </div>
             </div>
+            <footer>
+              <small>&copy; The Wind Ensemble</small>
+            </footer>
+            {gap}
           </div>
-          <footer>
-            <small>&copy; The Wind Ensemble</small>
-          </footer>
-          {gap}
         </div>
         <Audio />
         <ArchivePhotoSlide />

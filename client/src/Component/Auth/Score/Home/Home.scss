@@ -161,7 +161,8 @@
     }
 
     .content {
-      margin: 11px 8px 11px 11px;
+      width: calc(100% - 12px - 8px);
+      margin: 12px 8px 12px 12px;
 
       display: flex;
       flex-direction: column;
@@ -197,7 +198,7 @@
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          font-family: "source-han-sans-japanese", sans-serif;
+          // font-family: "source-han-sans-japanese", sans-serif;
         }
       }
 
@@ -213,7 +214,7 @@
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          font-family: "source-han-sans-japanese", sans-serif;
+          // font-family: "source-han-sans-japanese", sans-serif;
         }
       }
 
@@ -223,7 +224,7 @@
         font-size: 12px;
         overflow: hidden;
         font-weight: 200;
-        font-family: "source-han-sans-japanese", sans-serif;
+        // font-family: "source-han-sans-japanese", sans-serif;
 
         & > span {
           display: block;

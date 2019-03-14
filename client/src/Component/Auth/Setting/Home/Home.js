@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import * as lib from '../../../../Library/Library'
+
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { closePlayer } from '../../../../Actions/Audio'
 
@@ -11,6 +13,8 @@ import './Home.css'
 function mapStateToProps(state) {
   return {
     pc: state.status.pc,
+    loading: state.status.loading,
+    user: state.status.user,
     displayPlayer: state.audio.displayPlayer
   }
 }
@@ -40,29 +44,57 @@ class Home extends Component {
 
   renderPlayerClose () {
     if (!this.props.displayPlayer) return false
+    return (    
+      <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul>
+            <li><div className='inner' onClick={(e) => this.props.closePlayer(e)}><span>プレイヤーを閉じる</span><i className="fas fa-angle-right"></i></div></li>          
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
+  renderUserStatus () {
+    if (this.props.loading || !this.props.user) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    console.warn(this.props.user)
+    const secure = this.props.user.hash && this.props.user.token ? <span className='secure'><i className='fas fa-lock'></i></span> : <span className='non-secure'><i class="fas fa-ban"></i></span>
+    const email = this.props.user.email ? this.props.user.email : '未設定'
     return (
-      <li><div className='inner' onClick={(e) => this.props.closePlayer(e)}><span>プレイヤーを閉じる</span><i className="fas fa-angle-right"></i></div></li>
+      <div>
+        <div><label>WindsID&nbsp;{secure}</label><span>{this.props.user.userid}</span></div>
+        <div><label>名前</label><span>{this.props.user.name}</span></div>
+        <div><label>メール</label><span>{email}</span></div>
+      </div>
     )
   }
 
   render () {
-
+    const showUserStatus = this.renderUserStatus()
     const showPlayerClose = this.renderPlayerClose()
 
     return (
       <React.Fragment>
 
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link></div>
           <h2>設定</h2>
           <p>各種設定はこちらから</p>
         </div>
 
-        <div className='box setting-list'>
+        <div className={'box setting-status' + lib.pcClass(this.props.pc)}>
+          <div className='text'>
+            {showUserStatus} 
+          </div>
+        </div>
+
+        {showPlayerClose}
+
+        <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              {showPlayerClose}
               <li><Link to='/setting/username'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メール</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

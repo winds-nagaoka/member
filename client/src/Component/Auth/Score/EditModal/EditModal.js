@@ -291,35 +291,37 @@ class EditModal extends Component {
           </div>
 
           <div className='contents' ref={(i) => {!this.props.editModalRef ? this.props.setEditModalRef(i) : false}}>
+            <div className='contents-inner'>
 
-            <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
-              <div className='title-frame'>
-                <label>基本情報</label>
-                {showBase}
+              <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
+                <div className='title-frame'>
+                  <label>基本情報</label>
+                  {showBase}
+                </div>
               </div>
-            </div>
 
-            <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
-              <div className='title-frame'>
-                <label>楽譜の状態</label>
-                {showStatus}
+              <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
+                <div className='title-frame'>
+                  <label>楽譜の状態</label>
+                  {showStatus}
+                </div>
               </div>
-            </div>
 
-            <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
-              <div className='title-frame'>
-                <label>保管情報</label>
-                {showInfo}
+              <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
+                <div className='title-frame'>
+                  <label>保管情報</label>
+                  {showInfo}
+                </div>
               </div>
-            </div>
 
-            <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
-              <div onClick={() => this.props.updateScoreEdit()} className='send-button'>
-                {this.props.editLoading ? '読み込み中' : (this.props.editMode === 'new' ? <span><i className='far fa-edit'></i>追加</span> : <span><i className='far fa-edit'></i>修正</span>) }
+              <div className={'box score-edit-send' + lib.pcClass(this.props.pc)}>
+                <div onClick={() => this.props.updateScoreEdit()} className='send-button'>
+                  {this.props.editLoading ? '読み込み中' : (this.props.editMode === 'new' ? <span><i className='far fa-edit'></i>追加</span> : <span><i className='far fa-edit'></i>修正</span>) }
+                </div>
               </div>
-            </div>
 
-            {gap}
+              {gap}
+            </div>
           </div>
         </div>
 

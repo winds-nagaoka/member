@@ -86,11 +86,11 @@ class BBS extends Component {
 
     return (
       <div className={'bbs' + (lib.pcClass(this.props.pc))}>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/bbs'>掲示板</Link></div>
           <h2>団員専用掲示板</h2>
         </div>
-        <div className='box bbs-list'>
+        <div className={'box bbs-list' + lib.pcClass(this.props.pc)}>
           <div className='text'>
             <div className='bbs-list'>
               {showList}
@@ -98,7 +98,7 @@ class BBS extends Component {
             </div>
           </div>
         </div>
-        <div className='box back-to-home'>
+        <div className={'box back-to-home' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
               <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>

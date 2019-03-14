@@ -31,6 +31,13 @@ class Score extends Component {
           <Route path='/score/detail/:id' component={Detail} />
         </Switch>
 
+        <div className={'box back-to-home' + lib.pcClass(this.props.pc)}>
+          <div className='back-link'>
+            <ul>
+              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }

@@ -32,7 +32,7 @@ class Setting extends Component {
         <div className='box back-to-home'>
           <div className='back-link'>
             <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+              <li className={'border-top-mobile border-bottom-mobile' + lib.pcClass(this.props.pc)}><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

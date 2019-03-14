@@ -194,7 +194,7 @@ class Detail extends Component {
 
     return (
       <React.Fragment>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           {showBreadNavigation}
           <h2>ウィンズスコア</h2>
           <p>楽譜詳細情報</p>
@@ -207,7 +207,7 @@ class Detail extends Component {
           </div>
         </div>
 
-        <div className='box score-detail-detail'>
+        <div className={'box score-detail-detail' + lib.pcClass(this.props.pc)}>
           <div className='title-frame'>
             <label>楽譜詳細情報</label>
             {showDetail}
@@ -216,11 +216,10 @@ class Detail extends Component {
 
         {showEditLink}
 
-        <div className='box'>
+        <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
               <li><Link to='/score'><div className='inner'><i className="fas fa-angle-left"></i><span>楽譜一覧へ</span></div></Link></li>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

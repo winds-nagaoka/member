@@ -179,14 +179,14 @@ class Home extends Component {
     const showBBS = this.renderBBS(loadingBBS, BBSList)
     return (
       <div className={'home' + lib.pcClass(pc)}>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link></div>
           <h2>団員専用ページ</h2>
         </div>
 
         {/* {showCastList} */}
 
-        <div className='box home-schedule'>
+        <div className={'box home-schedule' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>次回の練習日</label>
             <div className='text border-bottom'>
@@ -200,7 +200,7 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className='box home-manager'>
+        <div className={'box home-manager' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>お知らせ</label>
             <div className='text border-bottom'>
@@ -214,7 +214,7 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className='box home-bbs'>
+        <div className={'box home-bbs' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>団員専用掲示板</label>
             <div className='text border-bottom'>
@@ -230,7 +230,7 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className='box home-archive'>
+        <div className={'box home-archive' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>アーカイブ</label>
             <div className='text border-bottom'>
@@ -245,7 +245,7 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className='box home-score'>
+        <div className={'box home-score' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>ウィンズスコア</label>
             <div className='text border-bottom'>
@@ -259,7 +259,7 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className='box home-setting'>
+        <div className={'box home-setting' + lib.pcClass(pc)}>
           <div className='title-frame'>
             <label>設定</label>
             <div className='text border-bottom'>

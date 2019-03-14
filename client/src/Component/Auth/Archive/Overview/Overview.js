@@ -149,13 +149,16 @@ class Overview extends Component {
     }
   }
 
-  renderConcertNavigation (item) {
+  renderConcertNavigation () {
+    if (this.props.loadingArchive || !this.props.concertList || !this.props.concertid) return
+    const item = libArchive.getConcert(this.props.concertid, this.props.concertList).detail
     const concertList = this.props.concertList
     const concertid = this.props.concertid
+    // reverse()していないので逆になってる
     const prevClass = 'prev ' + libArchive.getPrevConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
-    const prevLink = libArchive.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getPrevConcert(concertid, concertList)} className={prevClass}><i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}><i className='fas fa-chevron-circle-right'></i></span>
+    const prevLink = libArchive.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getPrevConcert(concertid, concertList)} className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></span>
     const nextClass = 'next ' + libArchive.getNextConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
-    const nextLink = libArchive.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i></Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i></span>
+    const nextLink = libArchive.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</span>
     return (
       <div className={'title' + lib.pcClass(this.props.pc)}>
         {nextLink}
@@ -166,50 +169,46 @@ class Overview extends Component {
   }
 
   renderNavigationLink () {
-    if (!this.props.photoList || !this.props.videoList) return false
-    const photoLink = this.props.photoList.length === 0 || this.props.loadingPhoto ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>
-    const videoLink = this.props.videoList.length === 0 || this.props.loadingVideo ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/video/' + this.props.concertid}><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></Link></li>
+    if (this.props.loadingArchive || !this.props.concertList || !this.props.concertid) return
+    const photoLink = !this.props.photoList ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : (this.props.photoList.length === 0 || this.props.loadingPhoto ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>)
+    const videoLink = !this.props.videoList ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : (this.props.videoList.length === 0 || this.props.loadingVideo ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/video/' + this.props.concertid}><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></Link></li>)
     return (
-      <div className='link'>
-        <ul className='navigation-link'>
-          {photoLink}
-          {videoLink}
-        </ul>
+      <div className={'box' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul className='navigation-link'>
+            {photoLink}
+            {videoLink}
+          </ul>
+        </div>
       </div>
     )
   }
-  
-  renderOverview (loadingArchive, concertList) {
-    if (loadingArchive || !concertList || !this.props.concertid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    const item = libArchive.getConcert(this.props.concertid, concertList).detail
+
+  renderConcertDetail () {
+    if (this.props.loadingArchive || !this.props.concertList || !this.props.concertid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    const item = libArchive.getConcert(this.props.concertid, this.props.concertList).detail
     return (
-      <div className='article'>
-        {this.renderConcertNavigation(item)}
-        {this.renderNavigationLink()}
-        <div className='concert-detail'>
-          <div className='poster'>
-            {this.showPoster(item)}
+      <div className='concert-detail'>
+        <div className='poster'>
+          {this.showPoster(item)}
+        </div>
+        <div className='overview-detail'>
+          <div>
+            <label className={'sticky-label' + lib.pcClass(this.props.pc)}>概要</label>
+            {this.showDate(item)}
+            {this.showPlace(item)}
+            {this.showConductor(item)}
+            {this.showGuest(item)}
           </div>
-          <div className='overview-detail'>
-            <div>
-              <label className={'sticky-label' + lib.pcClass(this.props.pc)}>概要</label>
-              {this.showDate(item)}
-              {this.showPlace(item)}
-              {this.showConductor(item)}
-              {this.showGuest(item)}
-            </div>
-            <ol className='music-list'>{this.showMusic(item)}</ol>
-          </div>
+          <ol className='music-list'>{this.showMusic(item)}</ol>
         </div>
       </div>
     )
   }
 
   renderBreadNavigation (loadingArchive, concertList, concertid) {
-    if (loadingArchive || !concertList || !concertid) return false
-    return (
-      <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><Link to={'/archive/overview/' + concertid}>{libArchive.getConcertTitle(concertid, concertList)}</Link></div>
-    )
+    if (loadingArchive || !concertList || !concertid) return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><i className='fas fa-spinner fa-pulse'></i></div>
+    return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i><Link to={'/archive/overview/' + concertid}>{libArchive.getConcertTitle(concertid, concertList)}</Link></div>
   }
 
   render () {
@@ -217,20 +216,26 @@ class Overview extends Component {
     const { loadingArchive, concertList, concertid } = this.props
 
     const showBreadNavigation = this.renderBreadNavigation(loadingArchive, concertList, concertid)
-    const showOverview = this.renderOverview(loadingArchive, concertList)
 
     return (
       <React.Fragment>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           {showBreadNavigation}
           <h2>アーカイブ</h2>
           <p>過去のウィンズの活動履歴を確認できます</p>
         </div>
-        <div className='box archive-overview'>
-          {showOverview}
+
+        <div className={'archive-overview' + lib.pcClass(this.props.pc)}>
+          <div className='article'>
+            {this.renderConcertNavigation()}
+            {this.renderNavigationLink()}
+            <div className={'box' + lib.pcClass(this.props.pc)}>
+              {this.renderConcertDetail()}
+            </div>
+          </div>
         </div>
 
-        <div className='box'>
+        <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
               <li><Link to='/archive'><div className='inner'><i className="fas fa-angle-left"></i><span>一覧へ</span></div></Link></li>

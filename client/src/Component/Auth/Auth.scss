@@ -1,60 +1,6 @@
 .auth {
   color: #333;
 
-  // .fade-enter {
-  //   opacity: 0;
-  //   -webkit-animation: fade 20s ease-in-out 10s 1 normal;
-  //   animation: fade 20s ease-in-out 10s 1 normal;
-  // }
-
-  // .fade-enter.fade-enter-active {
-  //   opacity: 1;
-  //   // transition: opacity 5000ms ease-out;
-  // }
-
-  // .fade-exit {
-  //   opacity: 1;
-  //   -webkit-animation: fade 10s ease-in-out 0 1 reverse;
-  //   animation: fade 10s ease-in-out 0 1 reverse;
-  // }
-
-  // .fade-exit.fade-exit-active {
-  //   opacity: 0;
-  //   // transition: opacity 2500ms ease-in;
-  // }
-
-  // @-webkit-keyframes fade {
-  //   0% { opacity: 0; }
-  //   100% { opacity: 1; }
-  // }
-
-  // @keyframes fade {
-  //   0% { opacity: 0; }
-  //   100% { opacity: 1; }
-  // }
-
-  // // .fade-enter {
-  // //   opacity: 0;
-  // //   overflow: hidden;
-  // //   z-index: 1;
-  // //   transform: translateY(50px);
-  // //   // transition: all 250ms;
-  // // }
-
-  // // .fade-enter.fade-enter-active {
-  // //   opacity: 1;
-  // //   overflow: hidden;
-  // //   transform: translateY(0);
-  // //   transition: all ease 1s;
-  // //   // transition: opacity 250ms ease-in;
-  // // }
-
-  // // .fade-exit {
-  // //   display: none;
-  // //   // opacity: 0;
-  // //   overflow: hidden;
-  // // }
-
   .contents {
     position: absolute;
     top: 0;
@@ -63,15 +9,23 @@
     bottom: 0;
     display: block;
     margin: 45px 0 0 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
-    // Chromeだけっぽい
-    // scroll-behavior: smooth;
-    will-change: scroll-position;
-    contain: size style layout;
+
+    .contents-inner {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      overflow-scrolling: touch;
+      // Chromeだけっぽい
+      // scroll-behavior: smooth;
+      will-change: scroll-position;
+      contain: size style layout;
+      transform: translateZ(0); // Retinaスクロール対策
+    }
+
     z-index: 1;
+
+    transform: translateZ(0); // Retinaスクロール対策
 
     padding-top: constant(safe-area-inset-top);
     padding-bottom: constant(safe-area-inset-bottom);
@@ -121,28 +75,32 @@
       height: 65px;
     }
 
-    // 標準box
-    &.pc {
-      .box .title-frame > label {
-        padding: 8px 0 8px 16px;
-        font-size: 20px;
-      }
-
-      .box .text {
-        // padding: 13px 16px 14px;
-        padding: 16px;
-        font-size: 1rem;
-      }
-
-      .box .link ul li a {
-        padding-left: 16px;
-      }
-    }
-
     .contents-header {
       margin: 0;
       padding: 12px 0;
       background: #fff;
+
+      &.pc {
+        padding: 16px 0;
+
+        .bread-navigation {
+          padding: 0 16px;
+          font-size: 13px;
+        }
+
+        h2 {
+          padding: 0 16px;
+        }
+
+        p {
+          padding: 0 16px;
+        }
+      }
+
+      &.mobile {
+        border-top: .55px solid #c8c7cc;
+        border-bottom: .55px solid #c8c7cc;
+      }
 
       .bread-navigation {
         padding: 0 12px;
@@ -181,30 +139,46 @@
         font-size: .9rem;
       }
     }
-
-    &.pc {
-      .contents-header {
-        padding: 16px 0;
-
-        .bread-navigation {
-          padding: 0 16px;
-          font-size: 13px;
-        }
-
-        h2 {
-          padding: 0 16px;
-        }
-
-        p {
-          padding: 0 16px;
-        }
-      }
-    }
-
+      
+    // 標準box
     .box {
-      margin: 32px 0 0 0;
+      margin: 32px 0 32px 0;
       // padding: 12px 0 0;
       background: #fff;
+      
+      // &.box-no-background {
+      //   background: inherit;
+      // }
+
+      &.pc {
+        .title-frame > label {
+          padding: 8px 0 8px 16px;
+          font-size: 20px;
+        }
+
+        .text {
+          // padding: 13px 16px 14px;
+          padding: 16px;
+          font-size: 1rem;
+        }
+        
+        .link ul li a .inner {
+          padding-left: 16px;
+        }
+
+        .link ul li .disabled-link .inner {
+          padding-left: 16px;
+        }
+
+        .back-link ul li a .inner {
+          padding-left: 16px;
+        }
+      }
+
+      &.mobile {
+        border-top: .55px solid #c8c7cc;
+        border-bottom: .55px solid #c8c7cc;
+      }
 
       // border-top: .55px solid #c8c7cc;
       // border-bottom: .55px solid #c8c7cc;
@@ -250,10 +224,6 @@
           margin: 0;
           padding: 0;
         }
-      }
-
-      .border-bottom {
-        border-bottom: .55px solid #c8c7cc;
       }
 
       .link {
@@ -332,6 +302,7 @@
         padding: 0;
         // border: 0;
       }
+
       .back-link {
         font-size: 1rem;
         line-height: 1.6;
@@ -348,7 +319,6 @@
             a {
               display: block;
               margin: 0;
-              padding-left: 16px;
 
               text-decoration: none;
               color: #333;
@@ -362,6 +332,7 @@
               }
 
               .inner {
+                padding-left: 12px;
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
@@ -388,5 +359,31 @@
     margin: 48px 0;
     text-align: center;
     color: #888;
+  }
+}
+
+.border-top {
+  border-top: .55px solid #c8c7cc;
+}
+
+.border-bottom {
+  border-bottom: .55px solid #c8c7cc;
+}
+
+.mobile {
+  &.border-top-mobile {
+    border-top: .55px solid #c8c7cc;
+  }
+
+  &.border-bottom-mobile {
+    border-bottom: .55px solid #c8c7cc;
+  }
+
+  &.no-border-top-mobile {
+    border-top: 0!important;
+  }
+
+  &.no-border-bottom-mobile {
+    border-bottom: 0!important;
   }
 }

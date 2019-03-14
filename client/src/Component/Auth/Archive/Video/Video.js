@@ -234,7 +234,16 @@ class Video extends Component {
   }
 
   renderBreadNavigation () {
-    if (!this.props.concertList || !this.props.concertid) return false
+    if (!this.props.concertList || !this.props.concertid) {
+      return (
+        <div className='bread-navigation'>
+          <Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i>
+          <Link to='/archive'>アーカイブ</Link><i className="fas fa-chevron-right"></i>
+          <i className='fas fa-spinner fa-pulse'></i><i className="fas fa-chevron-right"></i>
+          <i className='fas fa-spinner fa-pulse'></i>
+        </div>
+      )
+    }
     return (
       <div className='bread-navigation'>
         <Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i>

@@ -298,10 +298,12 @@ class Audio extends Component {
         </div>
         <div className={'label close' + playTypeClass} onClick={() => this.props.setDisplayPlaylist(false)}><i className="fas fa-chevron-down"></i></div>
         <div className='contents'>
-          <div className='album'>
-            {showTrackList}
+          <div className='contents-inner'>
+            <div className='album'>
+              {showTrackList}
+            </div>
+            <div className='gap'></div>
           </div>
-          <div className='gap'></div>
         </div>
       </div>
     )

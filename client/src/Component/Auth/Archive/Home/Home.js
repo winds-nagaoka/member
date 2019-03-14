@@ -7,6 +7,8 @@ import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navig
 import { getConcertList, toggleDisplayMain, toggleDisplayMini, toggleDisplayOther, setSearchRef, search, resetSearch } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
+import * as lib from '../../../../Library/Library'
+
 import './Home.css'
 
 function mapStateToProps(state) {
@@ -210,12 +212,12 @@ class Home extends Component {
 
     return (
       <React.Fragment>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/archive'>アーカイブ</Link></div>
           <h2>アーカイブ</h2>
           <p>過去のウィンズの活動履歴を確認できます</p>
         </div>
-        <div className='box archive-list'>
+        <div className={'box archive-list no-border-bottom-mobile' + lib.pcClass(this.props.pc)}>
           {showSearch}
           {showSearchResult}
           {showConcertSwitch}

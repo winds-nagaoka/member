@@ -31,7 +31,7 @@ class Practice extends Component {
 
     return (
       <div className={'practice' + lib.pcClass(pc)}>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習日程</Link><span></span></div>
           <h2>練習について</h2>
           <p>練習日程および過去の練習を確認できます</p>
@@ -39,7 +39,7 @@ class Practice extends Component {
 
         <Schedule />
 
-        <div className='box back-to-home'>
+        <div className={'box back-to-home' + lib.pcClass(pc)}>
           <div className='back-link'>
             <ul>
               <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
