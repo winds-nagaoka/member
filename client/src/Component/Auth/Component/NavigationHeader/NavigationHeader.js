@@ -9,6 +9,7 @@ import { scrollToTopSmooth } from '../../../../Actions/Status'
 import NavigationMenuContents from '../NavigationMenuContents/NavigationMenuContents'
 
 import * as lib from '../../../../Library/Library'
+import * as libArchive from '../../Archive/Library/Library'
 
 import WindsLogo from './logo.svg'
 
@@ -20,9 +21,12 @@ function mapStateToProps(state) {
     mobile: state.status.mobile,
 
     title: state.navigation.title,
+    titleConcertid: state.navigation.titleConcertid,
     backNavigation: state.navigation.backNavigation,
     backNavigationPath: state.navigation.backNavigationPath,
     menuOpen: state.navigation.menuOpen,
+
+    archiveConcertList: state.archive.concertList
   }
 }
 
@@ -43,12 +47,13 @@ function mapDispatchToProps(dispatch) {
 class NavigationHeader extends Component {
 
   render () {
-    const { pc, mobile, menuOpen, title } = this.props
+    const { pc, mobile, menuOpen, title, titleConcertid } = this.props
     const { navigationMenuToggle } = this.props
 
-    // const menuContentClass = 
-    // const menuBackgroundClass = 
-    const showTitle = title && !pc ? <div className='title-text' onClick={() => this.props.scrollToTopSmooth()}>{title}</div> : <div className='logo' onClick={() => this.props.scrollToTopSmooth()}><WindsLogo /></div>
+    const titleText = titleConcertid && this.props.archiveConcertList ? libArchive.getConcertTitle(titleConcertid, this.props.archiveConcertList) : (title ? title : false)
+    const showTitle = title && !pc ? <div className='title-text' onClick={() => this.props.scrollToTopSmooth()}>{titleText}</div> : <div className='logo' onClick={() => this.props.scrollToTopSmooth()}><WindsLogo /></div>
+
+
 
     // const backNavAndMenuToggle = this.props.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
     const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i><span>戻る</span></Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false

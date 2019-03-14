@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import * as lib from '../../../../Library/Library'
 
+import { getUser } from '../../../../Actions/Setting'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { closePlayer } from '../../../../Actions/Audio'
 
@@ -21,6 +22,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    getUser () {
+      dispatch(getUser())
+    },
     setNavigationTitle (title) {
       dispatch(setNavigationTitle(title))
     },
@@ -34,6 +38,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Home extends Component {
+  componentWillMount () {
+    this.props.getUser()
+  }
+
   componentDidMount () {
     this.props.setNavigationTitle('設定')
     this.props.setBackNavigation(true, '/')
@@ -93,7 +101,7 @@ class Home extends Component {
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/setting/username'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting/name'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
               <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メール</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>

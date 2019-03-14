@@ -23,6 +23,8 @@ import castReducer from '../Reducers/Cast'
 import archiveReducer from '../Reducers/Archive'
 import scoreReducer from '../Reducers/Score'
 
+import settingReducer from '../Reducers/Setting'
+
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
@@ -46,6 +48,8 @@ export default function createStore(history) {
 
       archive: archiveReducer,
       score: scoreReducer,
+
+      setting: settingReducer,
 
       reg: regReducer,
       login: loginReducer,

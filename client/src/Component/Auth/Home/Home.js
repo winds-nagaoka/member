@@ -231,44 +231,44 @@ class Home extends Component {
         </div>
 
         <div className={'box home-archive' + lib.pcClass(pc)}>
-          <div className='title-frame'>
+          {/* <div className='title-frame'>
             <label>アーカイブ</label>
             <div className='text border-bottom'>
               <p>これまでの活動記録はこちらから参照できます</p>
               <p>定期演奏会とミニコンサートの記録を掲載しています</p>
             </div>
-          </div>
+          </div> */}
           <div className='link'>
             <ul>
-              <li><Link to='/archive'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/archive'><div className='inner'><span>アーカイブ</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>
 
         <div className={'box home-score' + lib.pcClass(pc)}>
-          <div className='title-frame'>
+          {/* <div className='title-frame'>
             <label>ウィンズスコア</label>
             <div className='text border-bottom'>
               ウィンズが所有する楽譜はこちらから参照できます
             </div>
-          </div>
+          </div> */}
           <div className='link'>
             <ul>
-              <li><Link to='/score'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/score'><div className='inner'><span>ウィンズスコア</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>
 
         <div className={'box home-setting' + lib.pcClass(pc)}>
-          <div className='title-frame'>
+          {/* <div className='title-frame'>
             <label>設定</label>
             <div className='text border-bottom'>
               アプリの設定はこちら
             </div>
-          </div>
+          </div> */}
           <div className='link'>
             <ul>
-              <li><Link to='/setting'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting'><div className='inner'><span>設定</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

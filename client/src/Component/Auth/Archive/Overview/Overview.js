@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
+import { setNavigationTitle, setNavigationTitleArchiveConcertid, setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, setConcertid, getPhotoList, getVideoList } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
@@ -29,6 +29,9 @@ function mapDispatchToProps(dispatch) {
   return {
     setNavigationTitle (title) {
       dispatch(setNavigationTitle(title))
+    },
+    setNavigationTitleArchiveConcertid (titleConcertid) {
+      dispatch(setNavigationTitleArchiveConcertid(titleConcertid))
     },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
@@ -57,6 +60,7 @@ class Overview extends Component {
     const { params } = this.props.match
     const id = params.id ? params.id : ''
     this.props.setConcertid(id)
+    this.props.setNavigationTitleArchiveConcertid(id)
   }
 
   // 直接アクセスしたときに必要
@@ -72,9 +76,14 @@ class Overview extends Component {
     const { params } = nextProps.match
     if (params.id !== this.props.concertid) {
       this.props.setConcertid(params.id)
+      this.props.setNavigationTitleArchiveConcertid(params.id)
       this.props.getPhotoList()
       this.props.getVideoList()
     }
+  }
+
+  componentWillUnmount () {
+    this.props.setNavigationTitleArchiveConcertid(false)
   }
 
   showDate (item) {

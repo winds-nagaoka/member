@@ -1,5 +1,6 @@
 const initialState = {
   title: false,
+  titleConcertid: false,
   backNavigation: false,
   backNavigationPath: undefined,
   menuOpen: false
@@ -18,6 +19,11 @@ export default function navigationReducer (state = initialState, action) {
       return {
         ...state,
         title: action.payload.title
+      }
+    case prefix + 'SET_NAVIGATION_TITLE_ARCHIVE_CONCERT_ID':
+      return {
+        ...state,
+        titleConcertid: action.payload.titleConcertid
       }
     case prefix + 'SET_BACKLINK':
       return {
