@@ -16,6 +16,8 @@ import {
 
   videoPlayRequest,
 
+  videoPlay,
+  videoPause,
   videoStop
   // setDisplayVideoController,
 } from '../../../../Actions/Archive'
@@ -84,6 +86,12 @@ function mapDispatchToProps(dispatch) {
     videoPlayRequest (number, request) {
       dispatch(videoPlayRequest(number, request))
     },
+    videoPlay (e) {
+      dispatch(videoPlay(e))
+    },
+    videoPause (e) {
+      dispatch(videoPause(e))
+    },
     videoStop (e) {
       dispatch(videoStop(e))
     }
@@ -121,6 +129,8 @@ class Video extends Component {
   }
 
   componentWillUnmount () {
+    console.warn('Video閉じます')
+    // this.props.videoStop()
     this.props.resetVideo()
     this.props.setVideoRef(undefined)
   }
@@ -186,12 +196,17 @@ class Video extends Component {
 
   playNext () {
     // 確認
-    if (this.getAlbum().list.length > (this.props.videoPlayTrack + 1)) {
+    if (this.props.videoList.length > (this.props.videoPlayTrack + 1)) {
       // 次のトラックへ
       this.props.videoPlayRequest(this.props.videoPlayTrack + 1, true)
     } else {
-      this.props.videoStop()
+      this.props.videoPause()
     }
+  }
+
+  onClick (e) {
+    e.preventDefault()
+    this.props.videoPlayStatus ? this.props.videoPause() : this.props.videoPlay()
   }
 
   renderVideoList () {
@@ -257,10 +272,8 @@ class Video extends Component {
   render () {
     const showBreadNavigation = this.renderBreadNavigation()
     const showVideoList = this.renderVideoList()
-    const poster = this.props.videoPoster ? this.props.videoPoster : 'https://video.winds-n.com/poster.jpg'
-
+    const poster = this.props.videoPoster ? this.props.videoPoster : false
     const aspectClass = this.props.videoPoster === 'https://video.winds-n.com/poster_800_586.png' ? ' aspect-4-3' : ' aspect-16-9'
-    // const poster = 'https://video.winds-n.com/poster.jpg'
     return (
       <React.Fragment>
         <div className='contents-header'>
@@ -282,13 +295,14 @@ class Video extends Component {
                 onError={(e) => this.onError(e)}
                 onTimeUpdate={(e) => this.onTimeUpdate(e)}
                 onEnded={(e) => this.onEnded(e)}
-                // onClick={(e) => this.onClick(e)}
+                onClick={(e) => this.onClick(e)}
                 poster={poster}
                 playsInline
                 // playsInline={!this.state.fullScreen}
                 // これは再生中のときtrueにする
                 controls={true}
                 // controls={this.getFullScreenElment()}
+                controlsList='nodownload'
               ></video>
             </div>
           </div>

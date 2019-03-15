@@ -549,20 +549,24 @@
     }
 
     .contents {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: block;
+      // このへんはAuth.scssに記載
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      // right: 0;
+      // bottom: 0;
+      // display: block;
+
+      // これはAudio用設定
       margin: 44px 0 44px 0;
-      // border-bottom: 1px solid #ccc;
       overflow-x: hidden;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
-      will-change: scroll-position;
-      contain: size style layout;
-      background: #fff;
+
+      // これはinnerへ移動した(Auth.scssに記載)
+      // overflow-y: scroll;
+      // -webkit-overflow-scrolling: touch;
+      // will-change: scroll-position;
+      // contain: size style layout;
+      // background: #fff;
       z-index: 33;
 
       // .controller {

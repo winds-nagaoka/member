@@ -18,6 +18,12 @@ import './VideoController.css'
 function mapStateToProps(state) {
   return {
     pc: state.status.pc,
+
+    concertList: state.archive.concertList,
+
+    videoConcertid: state.archive.videoConcertid,
+
+    videoRef: state.archive.videoRef,
     displayVideoController: state.archive.displayVideoController,
     loadingVideoSource: state.archive.loadingVideoSource,
     videoLoadPercent: state.archive.videoLoadPercent,
@@ -54,10 +60,10 @@ class VideoController extends Component {
   }
 
   seekProgress (e) {
-    const total = Math.round(this.props.audioRef.duration)
+    const total = Math.round(this.props.videoRef.duration)
     if(!isNaN(total)){
       // console.log(e.pageX, this.audioProgress.clientWidth)
-      this.props.audioRef.currentTime = Math.round(total * (e.pageX / this.audioProgress.clientWidth))
+      this.props.videoRef.currentTime = Math.round(total * (e.pageX / this.videoProgress.clientWidth))
     }
   }
 
@@ -76,8 +82,7 @@ class VideoController extends Component {
     const playTime = this.renderPlayTime()
     const playProgress = this.props.videoPlayPercent ? {backgroundSize: this.props.videoPlayPercent + '% 100%'} : {backgroundSize: '0% 100%'}
     const loadProgress = this.props.videoLoadPercent ? {backgroundSize: this.props.videoLoadPercent + '% 100%'} : {backgroundSize: '0% 100%'}
-    const playTypeClass = ' other' //this.getAlbum() ? ' ' + this.getAlbum().type : ''
-
+    const playTypeClass = this.props.videoConcertid && this.props.concertList ? ' ' + libArchive.getConcertType(this.props.videoConcertid, this.props.concertList) : false
     return (
       <div className={'video-controller' + lib.pcClass(this.props.pc)}>
         <div className={'player' + displayVideoControllerClass}>

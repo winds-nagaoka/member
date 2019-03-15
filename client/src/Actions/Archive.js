@@ -221,13 +221,16 @@ export const getVideoList = () => {
   }
 }
 
-export const resetVideo = () => {
-  return async (dispatch, getState) => {
-    dispatch(setVideoList(undefined, undefined, undefined, undefined, undefined))
-    getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
-    dispatch(setDisplayVideoController(false, undefined))
-  }
-}
+// export const resetVideo = () => {
+//   return async (dispatch, getState) => {
+//     dispatch(videoStop())
+//     dispatch(setVideoPlayStatus(undefined, undefined))
+//     dispatch(setVideoList(undefined, undefined, undefined, undefined, undefined))
+//     console.warn('audioは', getState().archive.audioPlayerDisplay)
+//     getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
+//     dispatch(setDisplayVideoController(false, undefined))
+//   }
+// }
 
 const setVideoList = (videoConcertid, videoList, videoBaseSrc, videoUrl, videoPoster) => ({
   type: prefix + 'SET_VIDEO_LIST',
@@ -256,20 +259,29 @@ export const videoLoadPercentUpdate = (percent) => ({
 })
 
 export const videoPlayUpdate = (videoCurrent, videoDuration) => {
-  const videoPlayPercent = (videoDuration && videoCurrent) ? Math.round((videoCurrent / videoDuration) * 1000) / 10 : undefined
-  const videoCurrentTime = videoCurrent ? playTime(Math.floor(videoCurrent)) : undefined
-  const videoDurationTime = videoDuration ? playTime(Math.round(videoDuration)) : undefined
-  return ({
-    type: prefix + 'VIDEO_PLAY_UPDATE',
-    payload: {
-      videoCurrent,
-      videoCurrentTime,
-      videoDuration,
-      videoDurationTime,
-      videoPlayPercent
+  return async (dispatch, getState) => {
+    if (!getState().archive.displayVideoController && !getState().archive.videoRef.paused) {
+      const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
+      console.warn('videoPlayUpdate, audioPlayerDisplay',audioPlayerDisplay)
+      dispatch(setDisplayVideoController(true, audioPlayerDisplay))  
     }
-  })
+    const videoPlayPercent = (videoDuration && videoCurrent) ? Math.round((videoCurrent / videoDuration) * 1000) / 10 : undefined
+    const videoCurrentTime = videoCurrent ? playTime(Math.floor(videoCurrent)) : undefined
+    const videoDurationTime = videoDuration ? playTime(Math.round(videoDuration)) : undefined
+    dispatch(setVideoPlayUpdate(videoCurrent, videoCurrentTime, videoDuration, videoDurationTime, videoPlayPercent))
+  }
 }
+
+const setVideoPlayUpdate = (videoCurrent, videoCurrentTime, videoDuration, videoDurationTime, videoPlayPercent) => ({
+  type: prefix + 'VIDEO_PLAY_UPDATE',
+  payload: {
+    videoCurrent,
+    videoCurrentTime,
+    videoDuration,
+    videoDurationTime,
+    videoPlayPercent
+  }
+})
 
 const setVideoPlayStatus = (videoPlayStatus, videoPlayTrack) => ({
   type: prefix + 'SET_VIDEO_PLAY_STATUS',
@@ -282,8 +294,9 @@ export const videoPlayRequest = (number, request) => {
     dispatch(audioPause())
     // トラック番号のみ先に反映(先に)
     dispatch(setVideoPlayStatus(false, number))
-    // プレイヤーを表示
+    // プレイヤーを表示(オーディオプレイヤーの状態を記録)
     const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
+    console.warn('audioPlayerDisplay',audioPlayerDisplay)
     dispatch(setDisplayVideoController(true, audioPlayerDisplay))
     // オーディオプレイヤーが表示されていたら隠す
     getState().audio.displayPlayer ? dispatch(setDisplayPlayer(false)) : false
@@ -316,12 +329,25 @@ export const videoPause = (e) => {
 export const videoStop = (e) => {
   if (e) e.preventDefault()
   return async (dispatch, getState) => {
-    if (!getState().archive.current) {
-      getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
-      dispatch(setDisplayVideoController(false, undefined))
-    } 
     getState().archive.videoRef.pause()
     getState().archive.videoRef.currentTime = 0
     dispatch(setVideoPlayStatus(false, getState().archive.videoPlayTrack))
+    if (!getState().archive.videoCurrent) {
+      // コントローラを隠す
+      dispatch(setVideoPlayStatus(undefined, undefined))
+      getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
+      dispatch(setDisplayVideoController(false, undefined))
+      getState().archive.videoRef.src = false
+    }
+  }
+}
+
+export const resetVideo = () => {
+  return async (dispatch, getState) => {
+    getState().archive.videoRef.pause()
+    dispatch(setVideoPlayStatus(undefined, undefined))
+    dispatch(setVideoList(undefined, undefined, undefined, undefined, undefined))
+    getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
+    dispatch(setDisplayVideoController(false, undefined))
   }
 }
