@@ -209,15 +209,23 @@ if(isNaN(getState().audio.number)){if(getState().audio.displayPlaylist){return;/
 /*!***********************************!*\
   !*** ./client/src/Actions/BBS.js ***!
   \***********************************/
-/*! exports provided: getBBSList, loadMore */
+/*! exports provided: getBBSList, loadMore, setPostName, setPostText, setPostPass, sendPost, resetPost */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBBSList", function() { return getBBSList; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadMore", function() { return loadMore; });
-/* harmony import */ var _Library_Request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Library/Request */ "./client/src/Library/Request.js");
-const getBBSList=()=>{return async(dispatch,getState)=>{if(!window.localStorage.token)return false;if(getState().bbs.acquired)return false;dispatch(loading(true));_Library_Request__WEBPACK_IMPORTED_MODULE_0__["post"]('https://api.winds-n.com/bbs/',{},(err,res)=>{if(err){return false;}else{dispatch(update(res.body.list));dispatch(loadMore());dispatch(acquired(true));}dispatch(loading(false));});};};const update=list=>({type:'BBS_UPDATE',payload:{list}});const loadMore=()=>{return async(dispatch,getState)=>{const prevCount=getState().bbs.showCount;const showCount=prevCount+5;const list=getState().bbs.list;const showList=getState().bbs.showList.concat(list.slice(prevCount,showCount));const showMore=showCount>list.length?false:true;dispatch(showListUpdate(showList,showCount,showMore));};};const showListUpdate=(showList,showCount,showMore)=>({type:'BBS_SHOW_LIST_UPDATE',payload:{showList,showCount,showMore}});const acquired=acquired=>({type:'BBS_ACQUIRED',payload:{acquired}});const loading=loading=>({type:'BBS_LOADING',payload:{loading:loading}});
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPostName", function() { return setPostName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPostText", function() { return setPostText; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPostPass", function() { return setPostPass; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendPost", function() { return sendPost; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetPost", function() { return resetPost; });
+/* harmony import */ var react_router_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-router-redux */ "./node_modules/react-router-redux/es/index.js");
+/* harmony import */ var _Library_Request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Library/Request */ "./client/src/Library/Request.js");
+const prefix='BBS_';const api='Wct5RRmoRwL8mysm4yChUcfkXGcm0fwPJSTrJPqbLGJnFDe9kSQuvPMNKa0rgky9pKukd7mMmZVds3RtimrXZ48UcfiVlvKq699OK662f2uOjP1B99jqJjMCIRrE9QdF';const getBBSList=()=>{return async(dispatch,getState)=>{if(!window.localStorage.token)return false;if(getState().bbs.acquired)return false;dispatch(loading(true));// 既に読み込んでるデータをリセット
+dispatch(updateList(undefined));dispatch(showListUpdate([],0,true));const send={api};_Library_Request__WEBPACK_IMPORTED_MODULE_1__["post"]('https://api.winds-n.com/bbs/',send,(err,res)=>{if(err){return false;}else if(res.body.status==='true'){console.log(res.body);dispatch(updateList(res.body.list));dispatch(loadMore());dispatch(acquired(true));}dispatch(loading(false));});};};const updateList=list=>({type:prefix+'UPDATE',payload:{list}});const loadMore=()=>{return async(dispatch,getState)=>{const prevCount=getState().bbs.showCount;const showCount=prevCount+5;const list=getState().bbs.list;const showList=getState().bbs.showList.concat(list.slice(prevCount,showCount));const showMore=showCount>list.length?false:true;dispatch(showListUpdate(showList,showCount,showMore));};};const showListUpdate=(showList,showCount,showMore)=>({type:prefix+'SHOW_LIST_UPDATE',payload:{showList,showCount,showMore}});const acquired=acquired=>({type:prefix+'ACQUIRED',payload:{acquired}});const loading=loading=>({type:prefix+'LOADING',payload:{loading}});// Post
+const loadingPost=loadingPost=>({type:prefix+'LOADING_POST',payload:{loadingPost}});const setPostName=postName=>({type:prefix+'SET_POST_NAME',payload:{postName}});const setPostText=postText=>({type:prefix+'SET_POST_TEXT',payload:{postText}});const setPostPass=postPass=>({type:prefix+'SET_POST_PASS',payload:{postPass}});const sendPost=()=>{return async(dispatch,getState)=>{if(!window.localStorage.token)return false;if(getState().bbs.postName===''||getState().bbs.postText===''){console.log('入力されていません');return false;}dispatch(loadingPost(true));const send={api,write:true,name:getState().bbs.postName,text:getState().bbs.postText,delpass:getState().bbs.postPass};_Library_Request__WEBPACK_IMPORTED_MODULE_1__["post"]('https://api.winds-n.com/bbs/',send,(err,res)=>{if(err){return false;}else if(res.body.status==='true'){console.log(res.body);dispatch(resetPost());dispatch(acquired(false));dispatch(Object(react_router_redux__WEBPACK_IMPORTED_MODULE_0__["replace"])('/bbs'));}dispatch(loadingPost(false));});};};const resetPost=()=>{return async dispatch=>{dispatch(setPostName(''));dispatch(setPostText(''));dispatch(setPostPass(''));};};
 
 /***/ }),
 
@@ -1253,12 +1261,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Library_Library__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Library/Library */ "./client/src/Library/Library.js");
-/* harmony import */ var _Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Actions/Navigation */ "./client/src/Actions/Navigation.js");
-/* harmony import */ var _Actions_BBS__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Actions/BBS */ "./client/src/Actions/BBS.js");
-/* harmony import */ var _Actions_Toast__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../Actions/Toast */ "./client/src/Actions/Toast.js");
-/* harmony import */ var _BBS_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./BBS.css */ "./client/src/Component/Auth/BBS/BBS.css");
-/* harmony import */ var _BBS_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_BBS_css__WEBPACK_IMPORTED_MODULE_7__);
-function mapStateToProps(state){return{pc:state.status.pc,loading:state.bbs.loading,list:state.bbs.list,showList:state.bbs.showList,showMore:state.bbs.showMore};}function mapDispatchToProps(dispatch){return{setNavigationTitle(title){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setNavigationTitle"])(title));},setBackNavigation(backNavigation,backNavigationPath){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setBackNavigation"])(backNavigation,backNavigationPath));},getBBSList(){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["getBBSList"])());},showToast(string){dispatch(Object(_Actions_Toast__WEBPACK_IMPORTED_MODULE_6__["showToast"])(string));},loadMore(){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["loadMore"])());}};}class BBS extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.setNavigationTitle('団員専用掲示板');this.props.setBackNavigation(true,'/');this.props.getBBSList();}// loadMore () {
+/* harmony import */ var _Home_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home/Home */ "./client/src/Component/Auth/BBS/Home/Home.js");
+/* harmony import */ var _Post_Post__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Post/Post */ "./client/src/Component/Auth/BBS/Post/Post.js");
+/* harmony import */ var _BBS_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BBS.css */ "./client/src/Component/Auth/BBS/BBS.css");
+/* harmony import */ var _BBS_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_BBS_css__WEBPACK_IMPORTED_MODULE_6__);
+function mapStateToProps(state){return{pc:state.status.pc};}function mapDispatchToProps(dispatch){return{};}class Archive extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'bbs'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/bbs",component:_Home_Home__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{path:"/bbs/post",component:_Post_Post__WEBPACK_IMPORTED_MODULE_5__["default"]})),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box back-to-home'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u30DB\u30FC\u30E0"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Archive));
+
+/***/ }),
+
+/***/ "./client/src/Component/Auth/BBS/Home/Home.css":
+/*!*****************************************************!*\
+  !*** ./client/src/Component/Auth/BBS/Home/Home.css ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!./Home.css */ "./node_modules/css-loader/index.js?!./client/src/Component/Auth/BBS/Home/Home.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./client/src/Component/Auth/BBS/Home/Home.js":
+/*!****************************************************!*\
+  !*** ./client/src/Component/Auth/BBS/Home/Home.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Library_Library__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../Library/Library */ "./client/src/Library/Library.js");
+/* harmony import */ var _Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../Actions/Navigation */ "./client/src/Actions/Navigation.js");
+/* harmony import */ var _Actions_BBS__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../Actions/BBS */ "./client/src/Actions/BBS.js");
+/* harmony import */ var _Actions_Toast__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../Actions/Toast */ "./client/src/Actions/Toast.js");
+/* harmony import */ var _Home_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Home.css */ "./client/src/Component/Auth/BBS/Home/Home.css");
+/* harmony import */ var _Home_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Home_css__WEBPACK_IMPORTED_MODULE_7__);
+function mapStateToProps(state){return{pc:state.status.pc,loading:state.bbs.loading,list:state.bbs.list,showList:state.bbs.showList,showMore:state.bbs.showMore};}function mapDispatchToProps(dispatch){return{setNavigationTitle(title){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setNavigationTitle"])(title));},setBackNavigation(backNavigation,backNavigationPath){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setBackNavigation"])(backNavigation,backNavigationPath));},getBBSList(){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["getBBSList"])());},showToast(string){dispatch(Object(_Actions_Toast__WEBPACK_IMPORTED_MODULE_6__["showToast"])(string));},loadMore(){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["loadMore"])());}};}class Home extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.setNavigationTitle('団員専用掲示板');this.props.setBackNavigation(true,'/');this.props.getBBSList();}// loadMore () {
 //   setTimeout(() => {
 //     const showCount = this.state.showCount + 5
 //     const bbsList = this.state.bbsList.concat(this.props.list.list.slice(this.state.showCount, showCount))
@@ -1267,7 +1327,69 @@ function mapStateToProps(state){return{pc:state.status.pc,loading:state.bbs.load
 //     if (showCount > this.props.list.list.length) this.setState({hasMore: false})    
 //   }, 100)
 // }
-renderContents(){if(this.props.loading||!this.props.list)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return this.props.showList.map((each,i)=>{const text=each.text.replace(/(<br>|<br \/>)/gi,'\n').replace(/&gt;/gi,'>').replace(/&lt;/gi,'<');return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{key:'bbs'+i,className:"bbs-item"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bbs-title"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",{className:"number"},each.number),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",{className:"name"},each.name),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",{className:"time"},each.time)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bbs-text"},text.split('\n').map((m,j)=>{return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p",{key:'text'+i+j},m);})));});}renderMore(){if(this.props.loading||!this.props.list)return false;return this.props.showMore?react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{onClick:()=>this.props.loadMore(),className:"more"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-plus-circle"}),"More"):false;}render(){const showList=this.renderContents();const showMore=this.renderMore();return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'bbs'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'contents-header'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bread-navigation"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},"\u30DB\u30FC\u30E0"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-chevron-right"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/bbs"},"\u63B2\u793A\u677F")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2",null,"\u56E3\u54E1\u5C02\u7528\u63B2\u793A\u677F")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box bbs-list'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"text"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bbs-list"},showList,showMore))),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box back-to-home'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u30DB\u30FC\u30E0"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(BBS));
+renderContents(){if(this.props.loading||!this.props.list)return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading1"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading2"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"loading3"}));return this.props.showList.map((each,i)=>{const text=each.text.replace(/(<br>|<br \/>)/gi,'\n').replace(/&gt;/gi,'>').replace(/&lt;/gi,'<');return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{key:'bbs'+i,className:"bbs-item"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bbs-title"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",{className:"number"},each.number),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",{className:"name"},each.name),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",{className:"time"},each.time)),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bbs-text"},text.split('\n').map((m,j)=>{return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p",{key:'text'+i+j},m);})));});}renderMore(){if(this.props.loading||!this.props.list)return false;return this.props.showMore?react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{onClick:()=>this.props.loadMore(),className:"more"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-plus-circle"}),"More"):false;}render(){const showList=this.renderContents();const showMore=this.renderMore();return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'contents-header'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bread-navigation"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},"\u30DB\u30FC\u30E0"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-chevron-right"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/bbs"},"\u63B2\u793A\u677F")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2",null,"\u56E3\u54E1\u5C02\u7528\u63B2\u793A\u677F")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box bbs-post'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/bbs/post"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u66F8\u304D\u8FBC\u3080"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-right"}))))))),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box bbs-list'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"text"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bbs-list"},showList,showMore))),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box bbs-post'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/bbs/post"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u66F8\u304D\u8FBC\u3080"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-right"}))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Home));
+
+/***/ }),
+
+/***/ "./client/src/Component/Auth/BBS/Post/Post.css":
+/*!*****************************************************!*\
+  !*** ./client/src/Component/Auth/BBS/Post/Post.css ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!./Post.css */ "./node_modules/css-loader/index.js?!./client/src/Component/Auth/BBS/Post/Post.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./client/src/Component/Auth/BBS/Post/Post.js":
+/*!****************************************************!*\
+  !*** ./client/src/Component/Auth/BBS/Post/Post.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Library_Library__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../Library/Library */ "./client/src/Library/Library.js");
+/* harmony import */ var _Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../Actions/Navigation */ "./client/src/Actions/Navigation.js");
+/* harmony import */ var _Actions_BBS__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../Actions/BBS */ "./client/src/Actions/BBS.js");
+/* harmony import */ var _Actions_Toast__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../Actions/Toast */ "./client/src/Actions/Toast.js");
+/* harmony import */ var _Post_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Post.css */ "./client/src/Component/Auth/BBS/Post/Post.css");
+/* harmony import */ var _Post_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Post_css__WEBPACK_IMPORTED_MODULE_7__);
+function mapStateToProps(state){return{pc:state.status.pc,postName:state.bbs.postName,postText:state.bbs.postText,postPass:state.bbs.postPass,loadingPost:state.bbs.loadingPost};}function mapDispatchToProps(dispatch){return{setNavigationTitle(title){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setNavigationTitle"])(title));},setBackNavigation(backNavigation,backNavigationPath){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setBackNavigation"])(backNavigation,backNavigationPath));},setPostName(postName){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["setPostName"])(postName));},setPostText(postText){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["setPostText"])(postText));},setPostPass(postPass){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["setPostPass"])(postPass));},sendPost(){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["sendPost"])());},resetPost(){dispatch(Object(_Actions_BBS__WEBPACK_IMPORTED_MODULE_5__["resetPost"])());}};}class Post extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.setNavigationTitle('書き込む');this.props.setBackNavigation(true,'/bbs');}// loadMore () {
+//   setTimeout(() => {
+//     const showCount = this.state.showCount + 5
+//     const bbsList = this.state.bbsList.concat(this.props.list.list.slice(this.state.showCount, showCount))
+//     console.log('load call', this.state.showCount, showCount, bbsList, showCount, this.props.list.list.length)
+//     this.setState({bbsList, showCount})
+//     if (showCount > this.props.list.list.length) this.setState({hasMore: false})    
+//   }, 100)
+// }
+render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'contents-header'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"bread-navigation"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},"\u30DB\u30FC\u30E0"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-chevron-right"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/bbs"},"\u63B2\u793A\u677F"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-chevron-right"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/bbs/post"},"\u66F8\u304D\u8FBC\u3080")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2",null,"\u66F8\u304D\u8FBC\u3080")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box post-form'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"form"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label",null,"\u540D\u524D"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"text",tabIndex:"1",value:this.props.postName,onChange:e=>this.props.setPostName(e.target.value)})),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label",null,"\u30B3\u30E1\u30F3\u30C8"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea",{id:"posttext",tabIndex:"2",value:this.props.postText,onChange:e=>this.props.setPostText(e.target.value)})),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label",null,"\u7DE8\u96C6\u30D1\u30B9"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input",{type:"password",tabIndex:"3",value:this.props.postPass,onChange:e=>this.props.setPostPass(e.target.value)})))),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box post-button'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{onClick:()=>this.props.sendPost(),className:"send-button"},this.props.loadingPost?'読み込み中':react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"far fa-edit"}),"\u66F8\u304D\u8FBC\u3080"))),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/bbs"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u623B\u308B"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Post));
 
 /***/ }),
 
@@ -2836,7 +2958,7 @@ album:action.payload.album,track:action.payload.track,playlistLoad:action.payloa
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return bbsReducer; });
-const initialState={list:undefined,showList:[],showCount:0,showMore:true,acquired:false,loading:false};function bbsReducer(state=initialState,action){switch(action.type){case'BBS_UPDATE':return{...state,list:action.payload.list};case'BBS_SHOW_LIST_UPDATE':return{...state,showList:action.payload.showList,showCount:action.payload.showCount,showMore:action.payload.showMore};case'BBS_ACQUIRED':return{...state,acquired:action.payload.acquired};case'BBS_LOADING':return{...state,loading:action.payload.loading};default:return state;}}
+const initialState={list:undefined,showList:[],showCount:0,showMore:true,acquired:false,loading:false,loadingPost:false,postName:'',postText:'',postPass:''};const prefix='BBS_';function bbsReducer(state=initialState,action){switch(action.type){case prefix+'UPDATE':return{...state,list:action.payload.list};case prefix+'SHOW_LIST_UPDATE':return{...state,showList:action.payload.showList,showCount:action.payload.showCount,showMore:action.payload.showMore};case prefix+'ACQUIRED':return{...state,acquired:action.payload.acquired};case prefix+'LOADING':return{...state,loading:action.payload.loading};case prefix+'LOADING_POST':return{...state,loadingPost:action.payload.loadingPost};case prefix+'SET_POST_NAME':return{...state,postName:action.payload.postName};case prefix+'SET_POST_TEXT':return{...state,postText:action.payload.postText};case prefix+'SET_POST_PASS':return{...state,postPass:action.payload.postPass};default:return state;}}
 
 /***/ }),
 
@@ -3044,7 +3166,8 @@ __webpack_require__.r(__webpack_exports__);
 function createStore(history){return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({// authenticate: authenticateReducer,
 status:_Reducers_Status__WEBPACK_IMPORTED_MODULE_4__["default"],socket:_Reducers_Socket__WEBPACK_IMPORTED_MODULE_5__["default"],audio:_Reducers_Audio__WEBPACK_IMPORTED_MODULE_6__["default"],navigation:_Reducers_Navigation__WEBPACK_IMPORTED_MODULE_7__["default"],toast:_Reducers_Toast__WEBPACK_IMPORTED_MODULE_8__["default"],schedule:_Reducers_Schedule__WEBPACK_IMPORTED_MODULE_10__["default"],manager:_Reducers_Manager__WEBPACK_IMPORTED_MODULE_9__["default"],bbs:_Reducers_BBS__WEBPACK_IMPORTED_MODULE_11__["default"],cast:_Reducers_Cast__WEBPACK_IMPORTED_MODULE_12__["default"],archive:_Reducers_Archive__WEBPACK_IMPORTED_MODULE_13__["default"],score:_Reducers_Score__WEBPACK_IMPORTED_MODULE_14__["default"],setting:_Reducers_Setting__WEBPACK_IMPORTED_MODULE_15__["default"],reg:_Reducers_Reg__WEBPACK_IMPORTED_MODULE_17__["default"],login:_Reducers_Login__WEBPACK_IMPORTED_MODULE_16__["default"],// react-router-reduxのReducer
 router:react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerReducer"]// history: historyReducer
-}),Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a,redux_thunk__WEBPACK_IMPORTED_MODULE_3__["default"],// react-router-reduxのRedux Middleware
+}),Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(// logger,
+redux_thunk__WEBPACK_IMPORTED_MODULE_3__["default"],// react-router-reduxのRedux Middleware
 Object(react_router_redux__WEBPACK_IMPORTED_MODULE_1__["routerMiddleware"])(history)));}
 
 /***/ }),
@@ -5928,7 +6051,45 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./client/src/Component/Auth/BBS/Home/Home.css":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./client/src/Component/Auth/BBS/Home/Home.css ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
 exports.push([module.i, ".bbs{width:100%;margin:0 auto}.bbs .bbs-list .bbs-item{padding:12px;background:#f6f6f6}.bbs .bbs-list .bbs-item:not(:first-child){margin-top:12px}.bbs .bbs-list .bbs-item .bbs-title{display:flex;align-items:center}.bbs .bbs-list .bbs-item .bbs-title .number{min-width:20px;min-height:20px;border-radius:5px;padding:4px 6px;text-align:center;line-height:20px;font-size:1em;font-weight:bold;background:#969696;color:#fff}.bbs .bbs-list .bbs-item .bbs-title .name{padding-left:8px;font-size:.8rem;color:#333}.bbs .bbs-list .bbs-item .bbs-title .time{margin-left:auto;font-size:.8rem;color:#aaa}.bbs .bbs-list .bbs-item .bbs-text{margin-top:8px;font-size:.9rem}.bbs .bbs-list .bbs-item .bbs-text p{margin:0;padding:0}.bbs .bbs-list .more{margin:12px 0 0;padding:12px 0;font-size:13px;color:#333;text-align:center;text-transform:uppercase;cursor:pointer}.bbs .bbs-list .more:hover{color:#888}.bbs .bbs-list .more:hover i{color:#888}.bbs .bbs-list .more i{display:block;color:#666;font-size:18px}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./client/src/Component/Auth/BBS/Post/Post.css":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./client/src/Component/Auth/BBS/Post/Post.css ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".post-form{margin:12px 0 0 0;padding:4px 12px 12px}.post-form.pc{padding:8px 16px 16px}.post-form label{display:block;margin:8px 0 2px;font-size:14px;color:#666}.post-form input[type=\"text\"],.post-form input[type=\"password\"]{-webkit-appearance:none;display:block;width:calc(100% - 20px - 2px);margin:0;padding:8px 10px;border:1px solid #cccccc;border-radius:0;color:#333;font-size:17px}.post-form input[type=\"text\"]:focus,.post-form input[type=\"password\"]:focus{border:solid 1px rgba(182,0,5,0.6);outline:0}.post-form textarea{-webkit-appearance:none;display:block;width:calc(100% - 20px - 2px);height:6em;margin:0 auto;padding:8px 10px;border-radius:0;border:1px solid #ccc;font-size:17px;color:#333;font-family:-apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '\\6E38\\30B4\\30B7\\30C3\\30AF      Medium', meiryo, sans-serif}.post-form textarea:focus{border:solid 1px rgba(182,0,5,0.6);outline:0}.post-button{margin-bottom:32px}.post-button .send-button{display:block;width:100%;height:44px;line-height:44px;margin:0 auto;padding:0;border:none;background:#fff;color:#b60005;font-size:16px;text-align:center;cursor:pointer;transition:all ease-in-out .2s}.post-button .send-button:hover,.post-button .send-button:focus{background:#eee}.post-button .send-button:active{background:#e3e3e3}.post-button .send-button i{margin-right:.2em}\n", ""]);
 
 // exports
 

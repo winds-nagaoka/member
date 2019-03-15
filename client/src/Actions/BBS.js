@@ -1,15 +1,26 @@
+import { replace } from 'react-router-redux'
 import * as request from '../Library/Request'
+
+const prefix = 'BBS_'
+const api = 'Wct5RRmoRwL8mysm4yChUcfkXGcm0fwPJSTrJPqbLGJnFDe9kSQuvPMNKa0rgky9pKukd7mMmZVds3RtimrXZ48UcfiVlvKq699OK662f2uOjP1B99jqJjMCIRrE9QdF'
 
 export const getBBSList = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     if (getState().bbs.acquired) return false
     dispatch(loading(true))
-    request.post('https://api.winds-n.com/bbs/', {}, (err, res) => {
+    // 既に読み込んでるデータをリセット
+    dispatch(updateList(undefined))
+    dispatch(showListUpdate([], 0, true))
+    const send = {
+      api
+    }
+    request.post('https://api.winds-n.com/bbs/', send, (err, res) => {
       if (err) {
         return false
-      } else {
-        dispatch(update(res.body.list))
+      } else if (res.body.status === 'true') {
+        console.log(res.body)
+        dispatch(updateList(res.body.list))
         dispatch(loadMore())
         dispatch(acquired(true))
       }
@@ -18,11 +29,9 @@ export const getBBSList = () => {
   }
 }
 
-const update = (list) => ({
-  type: 'BBS_UPDATE',
-  payload: {
-    list
-  }
+const updateList = (list) => ({
+  type: prefix + 'UPDATE',
+  payload: { list }
 })
 
 export const loadMore = () => {
@@ -37,22 +46,74 @@ export const loadMore = () => {
 }
 
 const showListUpdate = (showList, showCount, showMore) => ({
-  type: 'BBS_SHOW_LIST_UPDATE',
-  payload: {
-    showList, showCount, showMore
-  }
+  type: prefix + 'SHOW_LIST_UPDATE',
+  payload: { showList, showCount, showMore }
 })
 
 const acquired = (acquired) => ({
-  type: 'BBS_ACQUIRED',
-  payload: {
-    acquired
-  }
+  type: prefix + 'ACQUIRED',
+  payload: { acquired }
 })
 
 const loading = (loading) => ({
-  type: 'BBS_LOADING',
-  payload: {
-    loading: loading
-  }
+  type: prefix + 'LOADING',
+  payload: { loading }
 })
+
+// Post
+const loadingPost = (loadingPost) => ({
+  type: prefix + 'LOADING_POST',
+  payload: { loadingPost }
+})
+
+export const setPostName = (postName) => ({
+  type: prefix + 'SET_POST_NAME',
+  payload: { postName }
+})
+
+export const setPostText = (postText) => ({
+  type: prefix + 'SET_POST_TEXT',
+  payload: { postText }
+})
+
+export const setPostPass = (postPass) => ({
+  type: prefix + 'SET_POST_PASS',
+  payload: { postPass }
+})
+
+export const sendPost = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    if (getState().bbs.postName === '' || getState().bbs.postText === '') {
+      console.log('入力されていません')
+      return false
+    }
+    dispatch(loadingPost(true))
+    const send = {
+      api,
+      write: true,
+      name: getState().bbs.postName,
+      text: getState().bbs.postText,
+      delpass: getState().bbs.postPass
+    }
+    request.post('https://api.winds-n.com/bbs/', send, (err, res) => {
+      if (err) {
+        return false
+      } else if (res.body.status === 'true') {
+        console.log(res.body)
+        dispatch(resetPost())
+        dispatch(acquired(false))
+        dispatch(replace('/bbs'))
+      }
+      dispatch(loadingPost(false))
+    })
+  }
+}
+
+export const resetPost = () => {
+  return async (dispatch) => {
+    dispatch(setPostName(''))
+    dispatch(setPostText(''))
+    dispatch(setPostPass(''))
+  }
+}
