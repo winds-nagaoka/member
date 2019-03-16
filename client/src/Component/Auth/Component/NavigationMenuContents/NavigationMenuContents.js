@@ -65,7 +65,7 @@ class NavigationMenuContents extends Component {
         </div>
         <ol>
           <li><CustomLink path={path} activeOnlyWhenExact={true} to='/' label='ホーム' icon='fas fa-home' onClick={() => {navigationMenu(false)}} /></li>
-          <li><CustomLink path={path} to='/practice' label='練習日程' icon='far fa-calendar-check' onClick={() => navigationMenu(false)} /></li>
+          <li><CustomLink path={path} to='/practice' label='練習について' icon='far fa-calendar-check' onClick={() => navigationMenu(false)} /></li>
           <li><CustomLink path={path} to='/manager' label='お知らせ' icon='fas fa-bullhorn' onClick={() => navigationMenu(false)} /></li>
           <li><CustomLink path={path} to='/bbs' label='掲示板' icon='fas fa-comments' onClick={() => navigationMenu(false)} /></li>
           <li><CustomLink path={path} to='/archive' label='アーカイブ' icon='fas fa-archive' onClick={() => navigationMenu(false)} /></li>

@@ -195,7 +195,8 @@ class Home extends Component {
           </div>
           <div className='link'>
             <ul>
-              <li><Link to='/practice'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/schedule'><div className='inner'><span>練習日程</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/history'><div className='inner'><span>過去の記録</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

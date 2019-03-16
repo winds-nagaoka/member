@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Route, Switch, Redirect, Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
 import Schedule from './Schedule/Schedule'
+import History from './History/History'
 
 import * as lib from '../../../Library/Library'
 
@@ -31,13 +32,11 @@ class Practice extends Component {
 
     return (
       <div className={'practice' + lib.pcClass(pc)}>
-        <div className={'contents-header' + lib.pcClass(pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習日程</Link><span></span></div>
-          <h2>練習について</h2>
-          <p>練習日程および過去の練習を確認できます</p>
-        </div>
 
-        <Schedule />
+        <Switch>
+          <Route exact path='/schedule' component={Schedule} />
+          <Route exact path='/history' component={History} />
+        </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(pc)}>
           <div className='back-link'>
@@ -46,8 +45,7 @@ class Practice extends Component {
             </ul>
           </div>
         </div>
-        {/* <div onClick={() => {goBack()}}>もどる</div>
-        <div onClick={() => {window.history.back()}}>もどる</div> */}
+
       </div>
     )
   }

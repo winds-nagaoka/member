@@ -10,8 +10,6 @@ import Home from './Home/Home'
 import Practice from './Practice/Practice'
 import Manager from './Manager/Manager'
 import BBS from './BBS/BBS'
-import Cast from './Practice/Cast/Cast'
-import Record from './Practice/Record/Record'
 
 import Archive from './Archive/Archive'
 import ArchivePhotoSlide from './Archive/PhotoSlide/PhotoSlide'
@@ -108,11 +106,12 @@ class Auth extends Component {
               <div className={pc ? 'inline-contents' : 'full-contents'}>
                 <Switch>
                   <Route exact path='/' component={Home} />
-                  <Route path='/practice' component={Practice} />
+                  <Route path='/schedule' component={Practice} />
+                  <Route path='/history' component={Practice} />
                   <Route path='/manager' component={Manager} />
                   <Route path='/bbs' component={BBS} />
-                  <Route path='/practice/cast' component={Cast} />
-                  <Route path='/practice/record' component={Record} />
+                  {/* <Route path='/practice/cast' component={Cast} /> */}
+                  {/* <Route path='/practice/record' component={Record} /> */}
                   <Route path='/archive' component={Archive} />
                   <Route path='/score' component={Score} />
                   <Route path='/setting' component={Setting} />

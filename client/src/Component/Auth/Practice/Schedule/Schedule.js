@@ -132,46 +132,37 @@ class Schedule extends Component {
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
     return (
-      <div className={'schedule' + lib.pcClass(pc)}>
-        {/* <div className='contents-header'>
+      <React.Fragment>
+
+        <div className={'contents-header' + lib.pcClass(pc)}>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/schedule'>練習日程</Link><span></span></div>
           <h2>練習日程</h2>
-        </div> */}
-
-        <div className={'box schedule-next' + lib.pcClass(pc)}>
-          <div className='title-frame'>
-            <label>次回の練習日</label>
-            <div className='text'>
-              {showScheduleNext}
-            </div>
-          </div>
+          <p>今後の練習予定です</p>
         </div>
 
-        <div className={'box schedule-next' + lib.pcClass(pc)}>
-          <div className='title-frame'>
-            <label>今後の練習日程</label>
-            <div className='text'>
-              {showScheduleList}
+        <div className={'schedule' + lib.pcClass(pc)}>
+
+          <div className={'box schedule-next' + lib.pcClass(pc)}>
+            <div className='title-frame'>
+              <label>次回の練習日</label>
+              <div className='text'>
+                {showScheduleNext}
+              </div>
             </div>
           </div>
+
+          <div className={'box schedule-next' + lib.pcClass(pc)}>
+            <div className='title-frame'>
+              <label>今後の練習日程</label>
+              <div className='text'>
+                {showScheduleList}
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        {/* <div>
-          <div>
-            {showScheduleList}
-          </div>
-        </div> */}
-        {/* <Link to='/'>ホーム</Link> */}
-
-        {/* <div className='box back-to-home'>
-          <div className='back-link'>
-            <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
-            </ul>
-          </div>
-        </div> */}
-        {/* <div onClick={() => {goBack()}}>もどる</div>
-        <div onClick={() => {window.history.back()}}>もどる</div> */}
-      </div>
+      </React.Fragment>
     )
   }
 }
