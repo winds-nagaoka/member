@@ -7,6 +7,7 @@ import * as lib from '../../../Library/Library'
 
 import Home from './Home/Home'
 import Name from './Name/Name'
+import Email from './Email/Email'
 
 import './Setting.css'
 
@@ -29,6 +30,7 @@ class Setting extends Component {
         <Switch>
           <Route exact path='/setting' component={Home} />
           <Route exact path='/setting/name' component={Name} />
+          <Route exact path='/setting/email' component={Email} />
         </Switch>
 
         <div className='box back-to-home'>

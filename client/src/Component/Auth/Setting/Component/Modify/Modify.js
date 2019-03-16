@@ -59,7 +59,6 @@ class Modify extends Component {
         </div>
         <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
           <div onClick={() => this.sendText()} className='button save' disabled={disabled}>保存</div>
-          {/* <div onClick={() => this.cancel()} className='button cancel'>キャンセル</div> */}
         </div>
       </React.Fragment>
     )

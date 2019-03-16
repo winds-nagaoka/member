@@ -2471,6 +2471,60 @@ function mapStateToProps(state){return{pc:state.status.pc,loadingModify:state.se
 
 /***/ }),
 
+/***/ "./client/src/Component/Auth/Setting/Email/Email.css":
+/*!***********************************************************!*\
+  !*** ./client/src/Component/Auth/Setting/Email/Email.css ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--5-1!./Email.css */ "./node_modules/css-loader/index.js?!./client/src/Component/Auth/Setting/Email/Email.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./client/src/Component/Auth/Setting/Email/Email.js":
+/*!**********************************************************!*\
+  !*** ./client/src/Component/Auth/Setting/Email/Email.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Library_Library__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../Library/Library */ "./client/src/Library/Library.js");
+/* harmony import */ var _Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../Actions/Navigation */ "./client/src/Actions/Navigation.js");
+/* harmony import */ var _Actions_Audio__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../Actions/Audio */ "./client/src/Actions/Audio.js");
+/* harmony import */ var _Component_Modify_Modify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Component/Modify/Modify */ "./client/src/Component/Auth/Setting/Component/Modify/Modify.js");
+/* harmony import */ var _Email_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Email.css */ "./client/src/Component/Auth/Setting/Email/Email.css");
+/* harmony import */ var _Email_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Email_css__WEBPACK_IMPORTED_MODULE_7__);
+function mapStateToProps(state){return{pc:state.status.pc,loading:state.status.loading,user:state.status.user,displayPlayer:state.audio.displayPlayer};}function mapDispatchToProps(dispatch){return{redirect(location){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["redirect"])(location));},setNavigationTitle(title){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setNavigationTitle"])(title));},setBackNavigation(backNavigation,backNavigationPath){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setBackNavigation"])(backNavigation,backNavigationPath));}};}class Email extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.setNavigationTitle('メールの設定');this.props.setBackNavigation(true,'/setting');}componentWillUnmount(){}emailChanged(){console.log('onComplete');this.props.redirect('/setting');}canceled(){console.log('onCancel');this.props.redirect('/setting');}render(){const email=this.props.user.email?this.props.user.email:'';return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'contents-header'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2",null,"\u30E1\u30FC\u30EB\u306E\u8A2D\u5B9A"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p",null,"\u30A6\u30A3\u30F3\u30BA\u30B9\u30B3\u30A2\u304B\u3089\u30C7\u30FC\u30BF\u3092\u53D7\u3051\u53D6\u308B\u305F\u3081\u306B\u4F7F\u7528\u3057\u307E\u3059")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Component_Modify_Modify__WEBPACK_IMPORTED_MODULE_6__["default"],{api:"https://auth.winds-n.com/api/setting/email",text:email// title='名前'
+,onComplete:()=>this.emailChanged(),onCancel:()=>this.canceled()}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/setting"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u623B\u308B"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Email));
+
+/***/ }),
+
 /***/ "./client/src/Component/Auth/Setting/Home/Home.css":
 /*!*********************************************************!*\
   !*** ./client/src/Component/Auth/Setting/Home/Home.css ***!
@@ -2573,8 +2627,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Component_Modify_Modify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Component/Modify/Modify */ "./client/src/Component/Auth/Setting/Component/Modify/Modify.js");
 /* harmony import */ var _Name_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Name.css */ "./client/src/Component/Auth/Setting/Name/Name.css");
 /* harmony import */ var _Name_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Name_css__WEBPACK_IMPORTED_MODULE_7__);
-function mapStateToProps(state){return{pc:state.status.pc,loading:state.status.loading,user:state.status.user,displayPlayer:state.audio.displayPlayer};}function mapDispatchToProps(dispatch){return{redirect(location){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["redirect"])(location));},setNavigationTitle(title){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setNavigationTitle"])(title));},setBackNavigation(backNavigation,backNavigationPath){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setBackNavigation"])(backNavigation,backNavigationPath));}};}class Name extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.setNavigationTitle('名前の変更');this.props.setBackNavigation(true,'/setting');}componentWillUnmount(){}nameChanged(){console.log('onComplete');this.props.redirect('/setting');}canceled(){console.log('onCancel');this.props.redirect('/setting');}render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'contents-header'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2",null,"\u540D\u524D\u5909\u66F4"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p",null,"\u540D\u524D\u3092\u5909\u3048\u308B\u610F\u5473\u306F\u307E\u3060\u3042\u3093\u307E\u308A\u306A\u3044\u3067\u3059")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Component_Modify_Modify__WEBPACK_IMPORTED_MODULE_6__["default"],{api:"https://auth.winds-n.com/api/setting/username",text:this.props.user.name// title='名前'
-,onComplete:()=>this.nameChanged(),onCancel:()=>this.canceled()}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/setting"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u8A2D\u5B9A\u3078"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Name));
+function mapStateToProps(state){return{pc:state.status.pc,loading:state.status.loading,user:state.status.user,displayPlayer:state.audio.displayPlayer};}function mapDispatchToProps(dispatch){return{redirect(location){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["redirect"])(location));},setNavigationTitle(title){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setNavigationTitle"])(title));},setBackNavigation(backNavigation,backNavigationPath){dispatch(Object(_Actions_Navigation__WEBPACK_IMPORTED_MODULE_4__["setBackNavigation"])(backNavigation,backNavigationPath));}};}class Name extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{componentDidMount(){this.props.setNavigationTitle('名前の変更');this.props.setBackNavigation(true,'/setting');}componentWillUnmount(){}nameChanged(){console.log('onComplete');this.props.redirect('/setting');}canceled(){console.log('onCancel');this.props.redirect('/setting');}render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment,null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'contents-header'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2",null,"\u540D\u524D\u306E\u5909\u66F4"),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p",null,"\u540D\u524D\u3092\u5909\u3048\u308B\u610F\u5473\u306F\u307E\u3060\u3042\u3093\u307E\u308A\u306A\u3044\u3067\u3059")),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Component_Modify_Modify__WEBPACK_IMPORTED_MODULE_6__["default"],{api:"https://auth.winds-n.com/api/setting/username",text:this.props.user.name// title='名前'
+,onComplete:()=>this.nameChanged(),onCancel:()=>this.canceled()}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'box'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/setting"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u623B\u308B"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Name));
 
 /***/ }),
 
@@ -2624,9 +2678,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Library_Library__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Library/Library */ "./client/src/Library/Library.js");
 /* harmony import */ var _Home_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home/Home */ "./client/src/Component/Auth/Setting/Home/Home.js");
 /* harmony import */ var _Name_Name__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Name/Name */ "./client/src/Component/Auth/Setting/Name/Name.js");
-/* harmony import */ var _Setting_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Setting.css */ "./client/src/Component/Auth/Setting/Setting.css");
-/* harmony import */ var _Setting_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_Setting_css__WEBPACK_IMPORTED_MODULE_6__);
-function mapStateToProps(state){return{pc:state.status.pc};}function mapDispatchToProps(dispatch){return{};}class Setting extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'setting'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/setting",component:_Home_Home__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/setting/name",component:_Name_Name__WEBPACK_IMPORTED_MODULE_5__["default"]})),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"box back-to-home"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",{className:'border-top-mobile border-bottom-mobile'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u30DB\u30FC\u30E0"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Setting));
+/* harmony import */ var _Email_Email__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Email/Email */ "./client/src/Component/Auth/Setting/Email/Email.js");
+/* harmony import */ var _Setting_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Setting.css */ "./client/src/Component/Auth/Setting/Setting.css");
+/* harmony import */ var _Setting_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_Setting_css__WEBPACK_IMPORTED_MODULE_7__);
+function mapStateToProps(state){return{pc:state.status.pc};}function mapDispatchToProps(dispatch){return{};}class Setting extends react__WEBPACK_IMPORTED_MODULE_0__["Component"]{render(){return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:'setting'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/setting",component:_Home_Home__WEBPACK_IMPORTED_MODULE_4__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/setting/name",component:_Name_Name__WEBPACK_IMPORTED_MODULE_5__["default"]}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"],{exact:true,path:"/setting/email",component:_Email_Email__WEBPACK_IMPORTED_MODULE_6__["default"]})),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"box back-to-home"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"back-link"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul",null,react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li",{className:'border-top-mobile border-bottom-mobile'+_Library_Library__WEBPACK_IMPORTED_MODULE_3__["pcClass"](this.props.pc)},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],{to:"/"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div",{className:"inner"},react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i",{className:"fas fa-angle-left"}),react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span",null,"\u30DB\u30FC\u30E0"))))))));}}/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps,mapDispatchToProps)(Setting));
 
 /***/ }),
 
@@ -6432,6 +6487,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 // module
 exports.push([module.i, ".setting-text input{width:calc(100% - 24px);margin:12px;padding:0;border:0;font-size:17px}.setting-button .button{display:block;width:100%;height:44px;line-height:44px;margin:0 auto;padding:0;border:none;background:#fff;color:#b60005;font-size:16px;text-align:center;cursor:pointer;transition:all ease-in-out .2s}.setting-button .button:hover,.setting-button .button:focus{background:#eee}.setting-button .button:active{background:#e3e3e3}.setting-button .button i{margin-right:.2em}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./client/src/Component/Auth/Setting/Email/Email.css":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./client/src/Component/Auth/Setting/Email/Email.css ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
 
 // exports
 
