@@ -55,7 +55,10 @@ class Modify extends Component {
     return (
       <React.Fragment>
         <div className={'box setting-text' + lib.pcClass(this.props.pc)}>
-          <input value={this.props.modifyText} onChange={(e) => this.props.setModifyText(e.target.value)} placeholder={this.props.text} onKeyPress={(e) => this.keyPress(e)} />
+          <div>
+            <label>{this.props.title}</label>
+            <input type='text' value={this.props.modifyText} onChange={(e) => this.props.setModifyText(e.target.value)} placeholder={this.props.text} onKeyPress={(e) => this.keyPress(e)} />
+          </div>
         </div>
         <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
           <div onClick={() => this.sendText()} className='button save' disabled={disabled}>保存</div>

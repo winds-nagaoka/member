@@ -71,6 +71,7 @@ class Home extends Component {
     return (
       <div>
         <div><label>WindsID&nbsp;{secure}</label><span>{this.props.user.userid}</span></div>
+        {/* <div><label>登録日</label><span>{this.props.user.createdAt}</span></div> */}
         <div><label>名前</label><span>{this.props.user.name}</span></div>
         <div><label>メール</label><span>{email}</span></div>
       </div>

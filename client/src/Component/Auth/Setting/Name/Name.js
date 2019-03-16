@@ -67,7 +67,7 @@ class Name extends Component {
         <Modify
           api='https://auth.winds-n.com/api/setting/username'
           text={this.props.user.name}
-          // title='名前'
+          title='名前'
           onComplete={() => this.nameChanged()}
           onCancel={() => this.canceled()}
         />

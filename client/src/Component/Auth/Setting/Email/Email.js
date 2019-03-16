@@ -68,7 +68,7 @@ class Email extends Component {
         <Modify
           api='https://auth.winds-n.com/api/setting/email'
           text={email}
-          // title='名前'
+          title='メール'
           onComplete={() => this.emailChanged()}
           onCancel={() => this.canceled()}
         />
