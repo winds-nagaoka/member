@@ -16,6 +16,7 @@ import toastReducer from '../Reducers/Toast'
 
 import managerReducer from '../Reducers/Manager'
 import scheduleReducer from '../Reducers/Schedule'
+import historyReducer from '../Reducers/History'
 import bbsReducer from '../Reducers/BBS'
 
 import castReducer from '../Reducers/Cast'
@@ -41,6 +42,7 @@ export default function createStore(history) {
       toast: toastReducer,
 
       schedule: scheduleReducer,
+      history: historyReducer,
       manager: managerReducer,
       bbs: bbsReducer,
 
@@ -59,7 +61,7 @@ export default function createStore(history) {
       // history: historyReducer
     }),
     applyMiddleware(
-      // logger,
+      logger,
       thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)

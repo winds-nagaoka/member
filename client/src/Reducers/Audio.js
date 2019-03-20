@@ -4,6 +4,11 @@ const initialState = {
   archivePlaylist: undefined,
   archiveBaseUrl: undefined,
 
+  // 練習記録プレイリスト
+  loadingPracticePlaylist: false,
+  practicePlaylist: undefined,
+  practiceBaseUrl: undefined,
+
   // オーディオタグ本体
   audioRef: undefined,
 
@@ -32,17 +37,21 @@ const initialState = {
 
   // 曲情報
 
-  // 再生モード => archive
+  // 再生モード => archive, practice
   playmode: undefined,
-  // archiveモード時のid
-  concertid: undefined,
-  // archiveモード時の再生中の曲
-  number: undefined,
 
+  // アーカイブモード
+  concertid: undefined,
+  number: undefined,
   album: undefined,
   track: undefined,
 
-  // title: undefined,
+  // 練習記録モード
+  practiceid: undefined,
+  fileNumber: undefined,
+  requestTime: undefined,
+  practiceAlbum: undefined,
+  file: undefined
 }
 
 const prefix = 'AUDIO_'
@@ -60,6 +69,19 @@ export default function audioReducer (state = initialState, action) {
         ...state,
         archivePlaylist: action.payload.archivePlaylist,
         archiveBaseUrl: action.payload.archiveBaseUrl,
+      }
+
+    // 練習記録プレイリスト
+    case prefix + 'LOADING_PRACTICE_PLAYLIST':
+      return {
+        ...state,
+        loadingPracticePlaylist: action.payload.loadingPracticePlaylist
+      }
+    case prefix + 'SET_PRACTICE_PLAYLIST':
+      return {
+        ...state,
+        practicePlaylist: action.payload.practicePlaylist,
+        practiceBaseUrl: action.payload.practiceBaseUrl,
       }
 
     // オーディオタグ本体
@@ -126,6 +148,26 @@ export default function audioReducer (state = initialState, action) {
         // number: action.payload.number,
         album: action.payload.album,
         track: action.payload.track,
+        playlistLoad: action.payload.playlistLoad
+      }
+            
+    // 曲情報
+    case prefix + 'PRACTICE_SET_PLAY_BASE':
+      return {
+        ...state,
+        playmode: action.payload.playmode,
+        practiceid: action.payload.practiceid,
+        fileNumber: action.payload.fileNumber,
+        requestTime: action.payload.requestTime
+      }
+    case prefix + 'PRACTICE_SET_PLAY':
+      return {
+        ...state,
+        // playmode: action.payload.playmode,
+        // concertid: action.payload.concertid,
+        // number: action.payload.number,
+        practiceAlbum: action.payload.practiceAlbum,
+        file: action.payload.file,
         playlistLoad: action.payload.playlistLoad
       }
 

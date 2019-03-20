@@ -17,7 +17,7 @@ export const getConcertList = () => {
     if (getState().archive.concertList) return false
     if (getState().archive.loading) return false
     dispatch(loading(true))
-    const path = 'https://archive.winds-n.com/api/member/concert'
+    const path = 'https://app.winds-n.com/api/concert'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -153,7 +153,7 @@ export const getPhotoList = () => {
     if (!getState().archive.concertid) return false
     if (getState().archive.photoConcertid === getState().archive.concertid) return false
     dispatch(loadingPhoto(true))
-    const path = 'https://archive.winds-n.com/api/member/photo'
+    const path = 'https://app.winds-n.com/api/photo'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -201,7 +201,7 @@ export const getVideoList = () => {
     if (!getState().archive.concertid) return false
     if (getState().archive.videoConcertid === getState().archive.concertid) return false
     dispatch(loadingVideo(true))
-    const path = 'https://archive.winds-n.com/api/member/video'
+    const path = 'https://app.winds-n.com/api/video'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
