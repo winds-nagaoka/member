@@ -168,12 +168,12 @@ const archiveSetPlayBase = (concertid, number) => {
   })
 }
 
-const archiveSetPlay = (album, track, playlistLoad) => {
-  return ({
-    type: prefix + 'ARCHIVE_SET_PLAY',
-    payload: { playmode: 'archive', album, track, playlistLoad }
-  })
-}
+// const archiveSetPlay = (album, track, playlistLoad) => {
+//   return ({
+//     type: prefix + 'ARCHIVE_SET_PLAY',
+//     payload: { playmode: 'archive', album, track, playlistLoad }
+//   })
+// }
 
 // 練習記録から曲を選択
 export const practicePlayRequest = (practiceid, fileNumber, requestTimeString, playRequest) => {
@@ -203,12 +203,12 @@ const practiceSetPlayBase = (practiceid, fileNumber, requestTime) => {
   })
 }
 
-const practiceSetPlay = (practiceAlbum, file, playlistLoad) => {
-  return ({
-    type: prefix + 'PRACTICE_SET_PLAY',
-    payload: { playmode: 'practice', practiceAlbum, file, playlistLoad }
-  })
-}
+// const practiceSetPlay = (practiceAlbum, file, playlistLoad) => {
+//   return ({
+//     type: prefix + 'PRACTICE_SET_PLAY',
+//     payload: { playmode: 'practice', practiceAlbum, file, playlistLoad }
+//   })
+// }
 
 // オーディオタグの操作
 
@@ -220,7 +220,7 @@ export const audioPlay = (requestTime) => {
       if (!getState().audio.archivePlaylist) return false
       const album = libArchive.getAlbum(getState().audio.concertid, getState().audio.archivePlaylist)
       const track = album.list[getState().audio.number]
-      dispatch(archiveSetPlay(album, track, true))
+      // dispatch(archiveSetPlay(album, track, true))
       // タグに反映
       if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.archiveBaseUrl + album.baseSrc + track.path) {
         getState().audio.audioRef.src = getState().audio.archiveBaseUrl + album.baseSrc + track.path
@@ -243,7 +243,7 @@ export const audioPlay = (requestTime) => {
       const practiceAlbum = libPractice.getPracticeAlbum(getState().audio.practiceid, getState().audio.practicePlaylist)
       // console.warn(practiceAlbum, getState().audio.fileNumber, requestTime)
       const file = practiceAlbum.file[getState().audio.fileNumber]
-      dispatch(practiceSetPlay(practiceAlbum, file, true))
+      // dispatch(practiceSetPlay(practiceAlbum, file, true))
       // タグに反映
       if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path) {
         getState().audio.audioRef.src = getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path
@@ -292,6 +292,18 @@ export const audioStop = (button) => {
     getState().audio.audioRef.pause()
     getState().audio.audioRef.currentTime = 0
     dispatch(setPlayStatus(false))
+  }
+}
+
+export const audioBackward = () => {
+  return async (dispatch, getState) => {
+    getState().audio.audioRef.currentTime = getState().audio.audioRef.currentTime - 10
+  }
+}
+
+export const audioForward = () => {
+  return async (dispatch, getState) => {
+    getState().audio.audioRef.currentTime = getState().audio.audioRef.currentTime + 10
   }
 }
 

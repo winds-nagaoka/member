@@ -23,7 +23,9 @@ import {
 
   audioPlay,
   audioPause,
-  audioStop
+  audioStop,
+  audioBackward,
+  audioForward
 } from '../../../../Actions/Audio'
 
 import { getConcertList } from '../../../../Actions/Archive'
@@ -125,6 +127,12 @@ function mapDispatchToProps(dispatch) {
     },
     audioStop (button) {
       dispatch(audioStop(button))
+    },
+    audioBackward () {
+      dispatch(audioBackward())
+    },
+    audioForward () {
+      dispatch(audioForward())
     },
 
     getConcertList () {
@@ -258,7 +266,8 @@ class Audio extends Component {
         this.props.audioRef.currentTime = Math.round(total * (e.pageX / this.audioProgress.clientWidth))
       }
     } else {
-      if (this.props.playlistLoad) this.props.setDisplayPlaylist(true)
+      // if (this.props.playlistLoad) this.props.setDisplayPlaylist(true)
+      this.props.setDisplayPlaylist(true)
     }
   }
 
@@ -311,9 +320,9 @@ class Audio extends Component {
     return practiceAlbum.contents.map((item, i) => {
 
       let headPlayClass = ''
-      if (this.props.fileNumber === i) {
+      if (this.props.fileNumber === i && this.props.current) {
         if (item.list.length > 0) {
-          if (this.props.current < libPractice.timeSecond(item.list[0].time)) {
+          if (Math.ceil(this.props.current) < libPractice.timeSecond(item.list[0].time) - 1) {
             headPlayClass = ' playing'
           }  
         } else {
@@ -324,10 +333,10 @@ class Audio extends Component {
       const trackList = item.list.map((each, j) => {
 
         let playClass = ''
-        if (this.props.fileNumber === i) {
-          if (this.props.current >= libPractice.timeSecond(each.time)) {
+        if (this.props.fileNumber === i && this.props.current) {
+          if (Math.ceil(this.props.current) >= libPractice.timeSecond(each.time) - 1) {
             if (item.list.length !== j + 1) {
-              if (this.props.current < libPractice.timeSecond(item.list[j+1].time)) {
+              if (Math.ceil(this.props.current) < libPractice.timeSecond(item.list[j+1].time) - 1) {
                 playClass = ' playing'
               }
             } else {
@@ -342,10 +351,10 @@ class Audio extends Component {
         // const addTrackList = 'contents' in each ? each.contents.map((addEach, k) => {
 
           let addPlayClass = ''
-          if (this.props.fileNumber === i && playClass !== '') {
-            if (this.props.current >= libPractice.timeSecond(addEach.time)) {
+          if (this.props.fileNumber === i && this.props.current && playClass !== '') {
+            if (Math.ceil(this.props.current) >= libPractice.timeSecond(addEach.time) - 1) {
               if (each.contents.length !== k + 1) {
-                if (this.props.current < libPractice.timeSecond(each.contents[k+1].time)) {
+                if (Math.ceil(this.props.current) < libPractice.timeSecond(each.contents[k+1].time) - 1) {
                   addPlayClass = ' playing'
                 }
               } else {
@@ -420,8 +429,8 @@ class Audio extends Component {
       if (!this.props.practiceList) return false
       return (
         <div>
-          <span className='practice'>{isNaN(this.props.fileNumber) ? false : (this.props.practiceList ? libPractice.getPracticeTitle(this.props.practiceid, this.props.practiceList) : false)}</span>
-          <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.fileNumber) || !this.props.practicePlaylist ? '読み込み中' : '練習の録音'}</span>
+          <span className='practice'>{isNaN(this.props.fileNumber) || !this.props.practicePlaylist ? '読み込み中' : '練習の録音'}</span>
+          <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.fileNumber) || !this.props.practicePlaylist || !this.props.practiceList ? '読み込み中' : libPractice.getPracticeTitle(this.props.practiceid, this.props.practiceList)}</span>
         </div>
       )
     }
@@ -544,11 +553,16 @@ class Audio extends Component {
     const openIcon = archivePlaylist ? <i className='fas fa-chevron-up'></i> : ''
     const showPlaylist = playmode === 'archive' ? this.renderArchivePlaylist() : this.renderPracticePlaylist()
 
+    const prevButton = this.props.playmode === 'practice' ? <div className={'control prev' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.audioBackward()}><i className='fas fa-backward'></i></div> : false
+    const nextButton = this.props.playmode === 'practice' ? <div className={'control next' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.audioForward()}><i className='fas fa-forward'></i></div> : false
+
     return (
       <div className={'audio' + (pc ? ' pc' : ' mobile')}>
         <div className={'player' + playerClass}>
-          <button className={'control play' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={playStatus ? () => this.props.audioPause() : () => this.props.audioPlay()}>{button}</button>
-          <button className={'control stop' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.audioStop(true)}><i className='fas fa-stop'></i></button>
+          {prevButton}
+          <div className={'control play' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={playStatus ? () => this.props.audioPause() : () => this.props.audioPlay()}>{button}</div>
+          <div className={'control stop' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.audioStop(true)}><i className='fas fa-stop'></i></div>
+          {nextButton}
           <div className={'audio-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={playProgress} ref={(i) => this.audioProgress = i} onClick={(e) => this.seekProgress(e)}>{playTime}</div>
           <div className={'audio-load-progress' + playStatusClass + playTypeClass + displayPlaylistClass} style={loadProgress} ref={(i) => this.audioLoadProgress = i}></div>
           <div className={'music-info' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => {this.props.archivePlaylist ? this.props.setDisplayPlaylist(true) : false}}>
