@@ -82,7 +82,7 @@ export const loading = (loading) => ({
 
 // export const windowWidthChange = () => {
 //   const width = window.innerWidth
-//   const pc = width > 960 ? true : false
+//   const pc = width > 920 ? true : false
 //   const mobile = !pc
 //   return {
 //     type: prefix + 'WINDOW_WIDTH',
@@ -97,7 +97,7 @@ export const loading = (loading) => ({
 export const windowWidthChange = () => {
   return (dispatch) => {
     const width = window.innerWidth
-    const pc = width > 960 ? true : false
+    const pc = width > 920 ? true : false
     const mobile = !pc
     dispatch(setWidth(width, pc, mobile))
     if (pc) dispatch(navigationMenu(false))

@@ -63,6 +63,7 @@
     // pcモードのとき追加
     .inline-contents {
       width: 900px;
+      min-width: 0; // 長いテキストを表示したときに要素を可変にするため
       margin: 36px 16px 36px;
     }
 
