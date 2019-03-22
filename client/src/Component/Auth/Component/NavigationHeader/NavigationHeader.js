@@ -12,6 +12,7 @@ import * as lib from '../../../../Library/Library'
 import * as libArchive from '../../Archive/Library/Library'
 
 import WindsLogo from './logo.svg'
+import Back from './back.svg'
 
 import './NavigationHeader.css'
 
@@ -53,10 +54,9 @@ class NavigationHeader extends Component {
     const titleText = titleConcertid && this.props.archiveConcertList ? libArchive.getConcertTitle(titleConcertid, this.props.archiveConcertList) : (title ? title : false)
     const showTitle = title && !pc ? <div className='title-text' onClick={() => this.props.scrollToTopSmooth()}>{titleText}</div> : <div className='logo' onClick={() => this.props.scrollToTopSmooth()}><WindsLogo /></div>
 
-
-
     // const backNavAndMenuToggle = this.props.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
-    const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i><span>戻る</span></Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
+    // const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i><span>戻る</span></Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
+    const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><div className='back-icon'><Back /></div><span>戻る</span></Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
     // const backNavAndMenuToggle = mobile ? <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div> : <div></div>
 
     // const headerClass = ((this.state.titleBar) || (this.state.titleSearchStatus) ? 'header no-border' : 'header') + (this.state.titleFont ? ' font' : '')
