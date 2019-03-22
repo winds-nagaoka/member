@@ -23,6 +23,7 @@ import castReducer from '../Reducers/Cast'
 
 import archiveReducer from '../Reducers/Archive'
 import scoreReducer from '../Reducers/Score'
+import scoreBoxReducer from '../Reducers/ScoreBox'
 
 import settingReducer from '../Reducers/Setting'
 
@@ -50,6 +51,7 @@ export default function createStore(history) {
 
       archive: archiveReducer,
       score: scoreReducer,
+      scoreBox: scoreBoxReducer,
 
       setting: settingReducer,
 
@@ -61,7 +63,7 @@ export default function createStore(history) {
       // history: historyReducer
     }),
     applyMiddleware(
-      // logger,
+      logger,
       thunk,
       // react-router-reduxのRedux Middleware
       routerMiddleware(history)

@@ -177,6 +177,14 @@ class Home extends Component {
           <div onClick={() => this.props.setDisplayEditScoreModal(true, 'new', undefined)}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>新しい楽譜を追加</span>}</div>
         </div>
 
+        <div className={'box score-box-link' + lib.pcClass(this.props.pc)}>
+          <div className='link'>
+            <ul>
+              <li><Link to='/score/box'><div className='inner'><span>楽譜管理箱の管理</span><i className="fas fa-angle-right"></i></div></Link></li>
+            </ul>
+          </div>
+        </div>
+
       </React.Fragment>
     )
   }

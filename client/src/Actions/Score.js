@@ -4,6 +4,7 @@ import { scrollToTop } from './Status'
 
 const prefix = 'SCORE_'
 
+// 新しい楽譜を追加するときはこれをコピーする
 const newScoreObject = Object.freeze({
 // const newScoreObject = {
     // 楽譜番号(初期値)

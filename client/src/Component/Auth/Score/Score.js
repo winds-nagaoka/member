@@ -7,6 +7,7 @@ import * as lib from '../../../Library/Library'
 
 import Home from './Home/Home'
 import Detail from './Detail/Detail'
+import Box from './Box/Box'
 
 import './Score.css'
 
@@ -29,6 +30,7 @@ class Score extends Component {
         <Switch>
           <Route exact path='/score' component={Home} />
           <Route path='/score/detail/:id' component={Detail} />
+          <Route exact path='/score/box' component={Box} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(this.props.pc)}>
