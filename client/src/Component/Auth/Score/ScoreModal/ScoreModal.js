@@ -44,7 +44,7 @@ class ScoreModal extends Component {
         return <span className='status storage'>保管</span>
       }
     }
-    const displayScoreModalClass = this.props.displayScoreModal ? ' open' : ''
+    // const displayScoreModalClass = this.props.displayScoreModal ? ' open' : ''
     const gap = this.props.displayPlayer ? <div className='gap'></div> : false
     return (
       <React.Fragment>
@@ -60,9 +60,10 @@ class ScoreModal extends Component {
                 <div className='score-status'>{storageStatus()}</div>
               </div>
               <div>
-                <label>楽譜管理番号</label>
+                {/* <label>楽譜管理番号</label> */}
+                <label>保管場所</label>
                 <div className='locate'>
-                  {/* {lib.getUserAdmin(this.state.user) ? <span className='box-label'>{this.props.modalContent.boxLabel}</span> : ''} */}
+                  <span className='box-label'>{this.props.modalContent.boxLabel}</span>
                   <span className='score-number'>{this.props.modalContent.label}</span>
                 </div>
               </div>

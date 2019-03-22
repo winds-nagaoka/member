@@ -1,6 +1,6 @@
-.score-modal {
+.score-box-modal {
 
-  .score-info {
+  .score-box-info {
     position: fixed;
     top: auto;
     left: 0;
@@ -95,6 +95,15 @@
 
       .modal-frame {
         margin: 0 12px 12px;
+   
+        label {
+          // display: block;
+          margin-top: 2px;
+          margin-right: 8px;
+          color: #888;
+          font-size: 13px;
+          white-space: nowrap;
+        }
       
         .modal-frame-flex {
           display: flex;
@@ -102,117 +111,53 @@
           & > div {
             width: 50%;
           }
-    
-          label {
-            margin-top: 2px;
-            margin-right: 8px;
-            color: #888;
-            font-size: 13px;
-            white-space: nowrap;
-          }
-    
-          .score-status {
-            padding: 0;
-            font-size: 16px;
-    
-            .status {
-              margin: 0;
+
+          .score-box-label {
+
+            span {
+              display: inline-block;
               padding: 2px 8px;
-              border-radius: 4px;
               background: #eee;
-              color: #fff;
+              border-radius: 4px;
+              font-size: 16px;  
               font-weight: bold;
-              // font-family: "source-han-sans-japanese", sans-serif;
-    
-              &.lend {
-                background: #B60005;
-              }
-              &.use {
-                background: #B60005;
-              }
-              &.storage {
-                background: #488aff;
-              }
             }
           }
     
           .locate {
             padding: 0;
             font-size: 16px;
-    
-            .box-label {
-              margin: 0 4px 0 0;
-              padding: 2px 8px;
-              border-radius: 4px;
-              background: #eee;
-              font-weight: bold;
-            }
-    
-            .score-number {
-              margin: 0;
-              padding: 2px 8px;
-              border-radius: 4px;
-              background: #eee;
-              font-weight: bold;
+
+            &.disabled {
+              color: #ccc;
             }
           }
-    
-    
-          .composer {
-            display: block;
-            font-weight: 200;
-          }
-    
-          .arranger {
-            display: block;
-            font-weight: 200;
-          }
-    
-          .no-data {
-            color: #ccc;
-            // font-size: .8em;
-          }
-    
         }
-    
-        .modal-text {
-          min-height: 20px;
-    
-          display: flex;
-          // align-items: center;
-          flex-direction: column;
-    
-          label {
-            margin-top: 2px;
-            margin-right: 8px;
-            color: #888;
-            font-size: 13px;
-            white-space: nowrap;
-          }
-    
-          & > span {
+
+        .input-box-locate {
+          input[type="text"] {
+            -webkit-appearance: none;
             display: block;
-          }
+            width: calc(100% - 20px - 2px);
+            margin: 0;
+            padding: 8px 10px;
+            border: 1px solid #cccccc;
+            border-radius: 0;
+            color: #333;
+            font-size: 16px;
     
-          .title-ja {
-            // font-weight: bold;
+            &:focus {
+              border: solid 1px rgba(182,0,5,.6);
+              outline: 0;
+            }
           }
-    
-          .title-en {
-          }
-    
-          .no-data {
-            color: #ccc;
-            // font-size: .8em;
-          }
-    
         }
-    
+
         .links {
           display: flex;
           flex-direction: row;
-    
-          a {
+          
+          div {
             display: block;
             width: 100%;
             border: 0;
@@ -239,32 +184,13 @@
               // color: #fff;
               transition: all ease-in-out .1s;
             }
-    
-            // &:first-child {
-            //   margin-right: 4px;
-            // }
-    
-            // &:last-child {
-            //   margin-left: 4px;
-            // }
-    
-            i {
-              margin-right: .2em;
-              color: #555;
-              transition: all ease-in-out .1s;
-            }
-    
-            &:hover i {
-              // color: #fff;
-              transition: all ease-in-out 0s;
-            }
           }
         }
       }
     }
   }
 
-  .score-modal-background {
+  .score-box-modal-background {
     display: none;
     position: fixed;
     z-index: 31;

@@ -17,6 +17,7 @@ import ArchiveVideoController from './Archive/VideoController/VideoController'
 import Score from './Score/Score'
 import ScoreModal from './Score/ScoreModal/ScoreModal'
 import ScoreEditModal from './Score/EditModal/EditModal'
+import ScoreBoxModal from './Score/BoxModal/BoxModal'
 
 import Setting from './Setting/Setting'
 
@@ -129,6 +130,7 @@ class Auth extends Component {
         <ArchiveVideoController />
         <ScoreModal />
         <ScoreEditModal />
+        <ScoreBoxModal />
       </div>
     )
   }

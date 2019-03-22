@@ -61,7 +61,7 @@ class NavigationHeader extends Component {
 
     // const headerClass = ((this.state.titleBar) || (this.state.titleSearchStatus) ? 'header no-border' : 'header') + (this.state.titleFont ? ' font' : '')
     // const titleHeaderClass = 'title'
-    const homeIcon = title ? <div className='label home-navigation'><Link to={'/'}><i className='fas fa-home'></i></Link></div> : false
+    const homeIcon = title && !pc ? <div className='label home-navigation'><Link to={'/'}><i className='fas fa-home'></i></Link></div> : false
     
     return (
       <div className='navigation-header'>
