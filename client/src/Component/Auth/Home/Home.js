@@ -70,16 +70,16 @@ class Home extends Component {
   componentDidMount () {
     this.props.setNavigationTitle(undefined)
     this.props.releaseBackNavigation()
-    this.props.connectSocket()
+    // this.props.connectSocket()
 
     this.props.getSchedule()
     this.props.getManager()
     this.props.getBBSList()
-    this.props.getCastList()
+    // this.props.getCastList()
   }
 
   componentWillUnmount () {
-    this.props.disconnectSocket()
+    // this.props.disconnectSocket()
   }
 
   renderCast (loading, cast) {
@@ -173,7 +173,7 @@ class Home extends Component {
     // const { logout } = this.props
     const socketStatus = socketid ? 'OK' : 'NG'
 
-    const showCastList = this.renderCast(loadingCastList, castList)
+    // const showCastList = this.renderCast(loadingCastList, castList)
     const showScheduleNext = this.renderSchedule(loadingSchedule, schedule)
     const showManager = this.renderManager(loadingManager, manager)
     const showBBS = this.renderBBS(loadingBBS, BBSList)

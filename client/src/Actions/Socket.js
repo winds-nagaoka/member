@@ -3,7 +3,7 @@ import socketio from 'socket.io-client'
 
 import * as Cast from './Cast'
 
-const socket = socketio.connect('https://cast.winds-n.com/', {secure: true})
+// const socket = socketio.connect('https://cast.winds-n.com/', {secure: true})
 
 export const connectSocket = () => {
   return async (dispatch, getState) => {

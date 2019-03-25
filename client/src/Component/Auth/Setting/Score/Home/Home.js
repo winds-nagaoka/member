@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import * as lib from '../../../../Library/Library'
+import * as lib from '../../../../../Library/Library'
 
-import { getUser } from '../../../../Actions/Setting'
-import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { closePlayer } from '../../../../Actions/Audio'
+import { getUser } from '../../../../../Actions/Setting'
+import { setNavigationTitle, setBackNavigation } from '../../../../../Actions/Navigation'
 
 import './Home.css'
 
@@ -30,9 +29,6 @@ function mapDispatchToProps(dispatch) {
     },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
-    },
-    closePlayer (e) {
-      dispatch(closePlayer(e))
     }
   }
 }
@@ -43,24 +39,11 @@ class Home extends Component {
   }
 
   componentDidMount () {
-    this.props.setNavigationTitle('設定')
-    this.props.setBackNavigation(true, '/')
+    this.props.setNavigationTitle('ウィンズスコア設定')
+    this.props.setBackNavigation(true, '/setting')
   }
 
   componentWillUnmount () {
-  }
-
-  renderPlayerClose () {
-    if (!this.props.displayPlayer) return false
-    return (    
-      <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
-        <div className='link'>
-          <ul>
-            <li><div className='inner' onClick={(e) => this.props.closePlayer(e)}><span>プレイヤーを閉じる</span><i className="fas fa-angle-right"></i></div></li>          
-          </ul>
-        </div>
-      </div>
-    )
   }
 
   renderUserStatus () {
@@ -80,38 +63,27 @@ class Home extends Component {
 
   render () {
     const showUserStatus = this.renderUserStatus()
-    const showPlayerClose = this.renderPlayerClose()
 
     return (
       <React.Fragment>
 
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link></div>
-          <h2>設定</h2>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/score'>ウィンズスコア設定</Link></div>
+          <h2>ウィンズスコア設定</h2>
           <p>各種設定はこちらから</p>
         </div>
 
-        <div className={'box setting-status' + lib.pcClass(this.props.pc)}>
+        {/* <div className={'box setting-status' + lib.pcClass(this.props.pc)}>
           <div className='text'>
             {showUserStatus} 
           </div>
-        </div>
-
-        {showPlayerClose}
+        </div> */}
 
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/setting/name'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メール</span><i className="fas fa-angle-right"></i></div></Link></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
-          <div className='link'>
-            <ul>
-              <li><Link to='/setting/score'><div className='inner'><span>ウィンズスコア設定</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting/score/admin'><div className='inner'><span>管理者設定</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/score/mail'><div className='inner'><span>CSV出力</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

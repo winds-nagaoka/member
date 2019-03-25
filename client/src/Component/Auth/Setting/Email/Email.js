@@ -60,7 +60,7 @@ class Email extends Component {
       <React.Fragment>
 
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          {/* <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link></div> */}
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/email'>メールの設定</Link></div>
           <h2>メールの設定</h2>
           <p>ウィンズスコアからデータを受け取るために使用します</p>
         </div>

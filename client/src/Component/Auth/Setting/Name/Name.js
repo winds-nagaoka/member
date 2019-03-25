@@ -59,7 +59,7 @@ class Name extends Component {
       <React.Fragment>
 
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          {/* <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link></div> */}
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/name'>名前の変更</Link></div>
           <h2>名前の変更</h2>
           <p>名前を変える意味はまだあんまりないです</p>
         </div>
