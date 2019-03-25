@@ -147,26 +147,36 @@ class EditModal extends Component {
     )
   }
 
+  reloadNumberLabel () {
+    
+  }
+
   renderInfo () {
     if (this.props.editPreLoading || !this.props.scoreEdit) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    if (this.props.editMode !== 'editStatus') return
     const score = this.props.scoreEdit
     const scoreStatusSelect = this.renderScoreStatus()
     const lendInput = this.renderLendInput()
     const boxSelect = this.renderBoxSelect()
     return (
-      <div className='list'>
-        <div className='input'>
-          <label>保管状況</label>
-          {scoreStatusSelect}
-        </div>
-        {lendInput}
-        <div className='input' onClick={() => this.reloadNumberLabel()}>
-          <label>楽譜管理番号</label>
-          <span className='score-number'>{score.label}</span>
-        </div>
-        <div className='input'>
-          <label>楽譜保管箱</label>
-          {boxSelect}
+      <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
+        <div className='title-frame'>
+          <label>保管情報</label>
+          <div className='list'>
+            <div className='input'>
+              <label>保管状況</label>
+              {scoreStatusSelect}
+            </div>
+            {lendInput}
+            <div className='input' onClick={() => this.reloadNumberLabel()}>
+              <label>楽譜管理番号</label>
+              <span className='score-number'>{score.label}</span>
+            </div>
+            <div className='input'>
+              <label>楽譜保管箱</label>
+              {boxSelect}
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -222,28 +232,32 @@ class EditModal extends Component {
 
   renderStatus () {
     if (this.props.editPreLoading || !this.props.scoreEdit) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    // const score = this.props.scoreEdit
-
+    if (this.props.editMode !== 'editDetail') return
     const scoreTypeSelect = this.renderScoreType()
     const copyMemoInput = this.renderCopiedFromInput()
     const scoreLackSelect = this.renderScoreLack()
     const scoreLackInputs = this.renderScoreLackInput()
     const scoreBasedSelect = this.renderScoreBased()
     return (
-      <div className='list'>
-        <div className='input'>
-          <label>種類</label>
-          {scoreTypeSelect}
-        </div>
-        {copyMemoInput}
-        <div className='input'>
-          <label>欠譜</label>
-          {scoreLackSelect}
-        </div>
-        {scoreLackInputs}
-        <div className='input'>
-          <label>原譜処理</label>
-          {scoreBasedSelect}
+      <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
+        <div className='title-frame'>
+          <label>楽譜の状態</label>
+          <div className='list'>
+            <div className='input'>
+              <label>種類</label>
+              {scoreTypeSelect}
+            </div>
+            {copyMemoInput}
+            <div className='input'>
+              <label>欠譜</label>
+              {scoreLackSelect}
+            </div>
+            {scoreLackInputs}
+            <div className='input'>
+              <label>原譜処理</label>
+              {scoreBasedSelect}
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -251,6 +265,7 @@ class EditModal extends Component {
 
   renderBase () {
     if (this.props.editPreLoading || !this.props.scoreEdit) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    if (this.props.editMode !== 'editDetail') return
     const score = this.props.scoreEdit
     const composerInput = score.composer.map((each, i) => {
       return <Input key={i} label={'作曲者' + (i + 1)} value={each} target='composer' className='multi' inputClass='composer' onChange={(e) => this.changeValueArray(i, e)} />
@@ -259,18 +274,25 @@ class EditModal extends Component {
       return <Input key={i} label={'編曲者' + (i + 1)} value={each} target='arranger' className='multi' inputClass='arranger' onChange={(e) => this.changeValueArray(i, e)} />
     })
     return (
-      <div className='list'>
-        <Input label='タイトル(日本語)' value={score.titleJa} target='titleJa' inputClass='title-ja' onChange={(e) => this.changeValue(e)} />
-        <Input label='タイトル(英語)' value={score.titleEn} target='titleEn' inputClass='title-en' onChange={(e) => this.changeValue(e)} />
-        {composerInput}
-        <div className='add-data' onClick={() => this.addBlank('composer')}><i className="fas fa-plus-circle"></i>作曲者を追加</div>
-        {arrangerInput}
-        <div className='add-data' onClick={() => this.addBlank('arranger')}><i className="fas fa-plus-circle"></i>編曲者を追加</div>
-        <Input label='出版社' value={score.publisher} target='publisher' inputClass='publisher' onChange={(e) => this.changeValue(e)} />
-        <Input label='ジャンル' value={score.genre} target='genre' inputClass='genre' onChange={(e) => this.changeValue(e)} />
+      <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
+        <div className='title-frame'>
+          <label>基本情報</label>
+          <div className='list'>
+            <Input label='タイトル(日本語)' value={score.titleJa} target='titleJa' inputClass='title-ja' onChange={(e) => this.changeValue(e)} />
+            <Input label='タイトル(英語)' value={score.titleEn} target='titleEn' inputClass='title-en' onChange={(e) => this.changeValue(e)} />
+            {composerInput}
+            <div className='add-data' onClick={() => this.addBlank('composer')}><i className="fas fa-plus-circle"></i>作曲者を追加</div>
+            {arrangerInput}
+            <div className='add-data' onClick={() => this.addBlank('arranger')}><i className="fas fa-plus-circle"></i>編曲者を追加</div>
+            <Input label='出版社' value={score.publisher} target='publisher' inputClass='publisher' onChange={(e) => this.changeValue(e)} />
+            <Input label='ジャンル' value={score.genre} target='genre' inputClass='genre' onChange={(e) => this.changeValue(e)} />
+          </div>
+        </div>
       </div>
     )
   }
+
+  // this.props.editMode === 'new' || this.props.editMode === 'editStatus' 
 
   render () {
     const displayEditScoreModalClass = this.props.displayEditScoreModal ? ' open' : ''
@@ -293,26 +315,11 @@ class EditModal extends Component {
           <div className='contents' ref={(i) => {!this.props.editModalRef ? this.props.setEditModalRef(i) : false}}>
             <div className='contents-inner'>
 
-              <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
-                <div className='title-frame'>
-                  <label>基本情報</label>
-                  {showBase}
-                </div>
-              </div>
+              {showBase}
 
-              <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
-                <div className='title-frame'>
-                  <label>楽譜の状態</label>
-                  {showStatus}
-                </div>
-              </div>
+              {showStatus}
 
-              <div className={'box score-edit' + lib.pcClass(this.props.pc)}>
-                <div className='title-frame'>
-                  <label>保管情報</label>
-                  {showInfo}
-                </div>
-              </div>
+              {showInfo}
 
               <div className={'box score-edit-send' + lib.pcClass(this.props.pc)}>
                 <div onClick={() => this.props.updateScoreEdit()} className='send-button'>

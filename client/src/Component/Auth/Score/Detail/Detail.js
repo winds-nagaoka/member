@@ -174,11 +174,20 @@ class Detail extends Component {
     )
   }
 
-  renderEditLink () {
+  renderEditStatusLink () {
     if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return false
     return (
       <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
-        <div onClick={() => this.props.setDisplayEditScoreModal(true, 'edit', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>修正</span>}</div>
+        <div onClick={() => this.props.setDisplayEditScoreModal(true, 'editStatus', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>状態を変更</span>}</div>
+      </div>
+    )
+  }
+
+  renderEditDetailLink () {
+    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return false
+    return (
+      <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
+        <div onClick={() => this.props.setDisplayEditScoreModal(true, 'editDetail', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>詳細情報を修正</span>}</div>
       </div>
     )
   }
@@ -190,7 +199,8 @@ class Detail extends Component {
     const showStatus = this.renderStatus()
     const showDetail = this.renderDetail()
 
-    const showEditLink = this.renderEditLink()
+    const showEditStatusLink = this.renderEditStatusLink()
+    const showEditDetailLink = this.renderEditDetailLink()
 
     return (
       <React.Fragment>
@@ -207,14 +217,16 @@ class Detail extends Component {
           </div>
         </div>
 
+        {showEditStatusLink}
+
         <div className={'box score-detail-detail' + lib.pcClass(this.props.pc)}>
           <div className='title-frame'>
-            <label>楽譜詳細情報</label>
+            <label>詳細情報</label>
             {showDetail}
           </div>
         </div>
 
-        {showEditLink}
+        {showEditDetailLink}
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>

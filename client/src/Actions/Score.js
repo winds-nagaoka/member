@@ -57,6 +57,8 @@ export const getScoreListAll = () => {
   return async (dispatch, getState) => {
     dispatch(loading(true))
     dispatch(getScoreList(''))
+    // 新規追加前に検索文字列指定してたときは解除
+    dispatch(changeSearchText(''))
   }
 }
 
@@ -320,11 +322,16 @@ export const updateScoreEdit = () => {
       version,
       member: true
     }
+    console.log('updateScoreEdit',send)
     request.post(path, send, (err, res) => {
       if (err) {
         return false
       } else if (res.body.status) {
-        if (getState().score.mode !== 'new') dispatch(getScoreDetail(getState().score.scoreid))
+        if (getState().score.editMode !== 'new') {
+          dispatch(getScoreDetail(getState().score.scoreid))
+        } else {
+          dispatch(getScoreListAll())
+        }
         dispatch(setDisplayEditScoreModal(false, undefined, undefined))
         // mobileの場合はスクロールする
         if(getState().status.mobile) dispatch(scrollToTop())

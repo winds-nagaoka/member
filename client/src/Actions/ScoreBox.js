@@ -27,7 +27,7 @@ export const getBoxList = () => {
         return false
       } else {
         if (res.body.status) {
-          dispatch(setBoxList(res.body.list))  
+          dispatch(setBoxList(res.body.list))
           dispatch(acquired(true))
         }
       }
@@ -84,9 +84,12 @@ export const updateBoxLocate = () => {
         return false
       } else {
         if (res.body.status) {
+          const boxList = JSON.parse(JSON.stringify(getState().scoreBox.boxList))
+          boxList[getState().scoreBox.boxList.findIndex(item => item === getState().scoreBox.modalContent)].locate = '読み込み中'
+          dispatch(setBoxList(boxList))
           dispatch(acquired(false))
-          dispatch(setDisplayBoxModal(false, getState().scoreBox.modalContent))  
-          dispatch(getBoxList())  
+          dispatch(setDisplayBoxModal(false, getState().scoreBox.modalContent))
+          dispatch(getBoxList())
         }
       }
       dispatch(loadingUpdateBoxLocate(false))
@@ -118,7 +121,7 @@ export const addBox = () => {
       } else {
         if (res.body.status) {
           dispatch(acquired(false))
-          dispatch(getBoxList())  
+          dispatch(getBoxList())
         }
       }
       dispatch(loadingAddBox(false))
