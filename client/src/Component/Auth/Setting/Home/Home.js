@@ -65,15 +65,16 @@ class Home extends Component {
 
   renderUserStatus () {
     if (this.props.loading || !this.props.user) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    console.warn(this.props.user)
     const secure = this.props.user.hash && this.props.user.token ? <span className='secure'><i className='fas fa-lock'></i></span> : <span className='non-secure'><i class="fas fa-ban"></i></span>
-    const email = this.props.user.email ? this.props.user.email : '未設定'
+    const email = this.props.user.email ? <span>{this.props.user.email}</span> : <span className='light'>未設定</span>
+    const scoreAdmin = 'scoreAdmin' in this.props.user ? this.props.user.scoreAdmin : false
+    const showScoreAdmin = scoreAdmin ? <div className='label'><span>楽譜管理者</span></div> : false
     return (
       <div>
-        <div><label>WindsID&nbsp;{secure}</label><span>{this.props.user.userid}</span></div>
+        <div><label>WindsID&nbsp;{secure}</label><span className='light'>{this.props.user.userid}</span></div>
         {/* <div><label>登録日</label><span>{this.props.user.createdAt}</span></div> */}
-        <div><label>名前</label><span>{this.props.user.name}</span></div>
-        <div><label>メール</label><span>{email}</span></div>
+        <div><label>名前</label><span>{this.props.user.name}</span>{showScoreAdmin}</div>
+        <div><label>メール</label>{email}</div>
       </div>
     )
   }
@@ -99,6 +100,7 @@ class Home extends Component {
 
         {showPlayerClose}
 
+        <div className={'box-label' + lib.pcClass(this.props.pc)}>一般</div>
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
@@ -108,10 +110,12 @@ class Home extends Component {
           </div>
         </div>
 
+        <div className={'box-label' + lib.pcClass(this.props.pc)}>ウィンズスコア</div>
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/setting/score'><div className='inner'><span>ウィンズスコア設定</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting/score/mail'><div className='inner'><span>CSV出力</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/score/admin'><div className='inner'><span>管理者設定</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

@@ -51,7 +51,9 @@ class Modify extends Component {
   }
 
   render () {
-    const disabled = (this.props.modifyText === this.props.text || !this.props.modifyText) ? true : false;
+    const buttonText = this.props.loadingModify ? '読み込み中...' : '保存'
+    const disabledClass = this.props.modifyText === this.props.text || !this.props.modifyText || this.props.loadingModify ? ' disabled' : '';
+    const buttonHandler = this.props.modifyText === this.props.text || !this.props.modifyText || this.props.loadingModify ? () => {} : () => this.sendText()
     return (
       <React.Fragment>
         <div className={'box setting-text' + lib.pcClass(this.props.pc)}>
@@ -61,7 +63,7 @@ class Modify extends Component {
           </div>
         </div>
         <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
-          <div onClick={() => this.sendText()} className='button save' disabled={disabled}>保存</div>
+          <div onClick={buttonHandler} className={'button save' + disabledClass}>{buttonText}</div>
         </div>
       </React.Fragment>
     )

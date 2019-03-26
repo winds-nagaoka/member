@@ -140,6 +140,21 @@
         font-size: .9rem;
       }
     }
+
+    .box-label {
+      margin: 32px 0 11px;
+      padding: 0 0 0 12px;
+      font-size: 12px;
+      color: #333;
+      
+      & + .box {
+        margin: 0 0 32px 0;
+      }
+
+      &.pc {
+        padding: 0 0 0 16px;
+      }
+    }
       
     // 標準box
     .box {

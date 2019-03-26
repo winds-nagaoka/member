@@ -24,6 +24,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Setting extends Component {
+  componentWillMount () {
+  }
+
   render () {
     return (
       <div className={'setting' + (lib.pcClass(this.props.pc))}>

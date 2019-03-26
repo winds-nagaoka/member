@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import * as lib from '../../../../Library/Library'
 
-import Home from './Home/Home'
+// import Home from './Home/Home'
 import Admin from './Admin/Admin'
 import Mail from './Mail/Mail'
 
@@ -28,7 +28,7 @@ class Score extends Component {
       <div className={'setting-score' + (lib.pcClass(this.props.pc))}>
 
         <Switch>
-          <Route exact path='/setting/score' component={Home} />
+          {/* <Route exact path='/setting/score' component={Home} /> */}
           <Route exact path='/setting/score/admin' component={Admin} />
           <Route exact path='/setting/score/mail' component={Mail} />
         </Switch>
@@ -36,7 +36,7 @@ class Score extends Component {
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/setting'><div className='inner'><i className="fas fa-angle-left"></i><span>設定へ戻る</span></div></Link></li>
+              <li><Link to='/setting'><div className='inner'><i className="fas fa-angle-left"></i><span>戻る</span></div></Link></li>
             </ul>
           </div>
         </div>
