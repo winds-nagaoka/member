@@ -4,6 +4,8 @@ const initialState = {
   modifyText: '',
   loadingModify: false,
 
+  loadingDeleteEmailRequest: false,
+
   loadingScoreAdminRequest: false,
   scoreAdminRequestPass: '',
 
@@ -33,6 +35,14 @@ export default function settingReducer (state = initialState, action) {
         loadingModify: action.payload.loadingModify
       }
 
+    
+    case prefix + 'LOADING_DELETE_EMAIL_REQUEST':
+      return {
+        ...state,
+        loadingDeleteEmailRequest: action.payload.loadingDeleteEmailRequest
+      }
+    
+    // Score Setting
     case prefix + 'LOADING_SCORE_ADMIN_REQUEST':
       return {
         ...state,

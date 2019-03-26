@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import * as lib from '../../../../Library/Library'
 
 import { redirect, setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { closePlayer } from '../../../../Actions/Audio'
+import { deleteEmailRequest } from '../../../../Actions/Setting'
 
 import Modify from '../Component/Modify/Modify'
 
@@ -17,7 +17,8 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     loading: state.status.loading,
     user: state.status.user,
-    displayPlayer: state.audio.displayPlayer
+
+    loadingDeleteEmailRequest: state.setting.loadingDeleteEmailRequest
   }
 }
 
@@ -31,6 +32,9 @@ function mapDispatchToProps(dispatch) {
     },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
+    deleteEmailRequest () {
+      dispatch(deleteEmailRequest())
     }
   }
 }
@@ -54,8 +58,22 @@ class Email extends Component {
     this.props.redirect('/setting')
   }
 
+  renderDeleteEmail () {
+    if (!this.props.user.email) return false
+    const buttonHandler = this.props.loadingDeleteEmailRequest ? () => {} : () => this.props.deleteEmailRequest()
+    const disabledClass = this.props.loadingDeleteEmailRequest ? ' disable' : ''
+    const buttonText = this.props.loadingDeleteEmailRequest ? '読み込み中...' : 'メールを削除'
+    return (
+      <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
+        <div onClick={buttonHandler} className={'button save' + disabledClass}>{buttonText}</div>
+      </div>
+    )
+  }
+
   render () {
     const email = this.props.user.email ? this.props.user.email : ''
+    const showDeleteEmail = this.renderDeleteEmail()
+
     return (
       <React.Fragment>
 
@@ -72,6 +90,8 @@ class Email extends Component {
           onComplete={() => this.emailChanged()}
           onCancel={() => this.canceled()}
         />
+
+        {showDeleteEmail}
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>

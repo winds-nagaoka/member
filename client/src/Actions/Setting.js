@@ -74,6 +74,38 @@ export const updateModifyText = (apiPath, replacePath) => {
   }
 }
 
+const loadingDeleteEmailRequest = (loadingDeleteEmailRequest) => ({
+  type: prefix + 'LOADING_DELETE_EMAIL_REQUEST',
+  payload: { loadingDeleteEmailRequest }
+})
+
+export const deleteEmailRequest = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingDeleteEmailRequest(true))
+    const path = 'https://auth.winds-n.com/api/setting/email'
+    const send = {
+      // ここで空にする
+      text: '',
+      userid: window.localStorage.windsid,
+      token: window.localStorage.token,
+      delMail: true,
+      version
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else {
+        if (res.body.status) {
+          dispatch(replace('/setting'))
+        }
+      }
+      dispatch(loadingDeleteEmailRequest(false))
+    })
+  }
+}
+
+// Score Setting
 export const setScoreAdminRequestPass = (scoreAdminRequestPass) => ({
   type: prefix + 'SET_SCORE_ADMIN_REQUEST_PASS',
   payload: { scoreAdminRequestPass }
@@ -86,7 +118,6 @@ const loadingScoreAdminRequest = (loadingScoreAdminRequest) => ({
 
 export const sendScoreAdminRequest = () => {
   return async (dispatch, getState) => {
-    console.warn('sendScoreAdminRequest')
     if (!window.localStorage.token) return false
     dispatch(loadingScoreAdminRequest(true))
     const adminRequest = 'scoreAdmin' in getState().status.user ? !getState().status.user.scoreAdmin : false
@@ -103,8 +134,6 @@ export const sendScoreAdminRequest = () => {
       if (err) {
         return false
       } else {
-        console.warn('send', send)
-        console.warn('response', res.body)
         if (res.body.status) {
           dispatch(setScoreAdminRequestPass(''))
           if (!res.body.error) dispatch(replace('/setting'))
@@ -133,8 +162,12 @@ export const getScoreCount = () => {
       version
     }
     request.post(path, send, (err, res) => {
-      if (res.body.status) {
-        dispatch(setScoreCount(res.body.count))
+      if (err) {
+        return false
+      } else {
+        if (res.body.status) {
+          dispatch(setScoreCount(res.body.count))
+        }  
       }
       dispatch(loadingScoreCount(false))
     })
