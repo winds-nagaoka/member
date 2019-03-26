@@ -1,12 +1,12 @@
 .navigation-menu-contents {
   overflow: auto;
   z-index: 52;
-  max-width: 300px;
+  max-width: 240px;
   height: 100%;
   background: #fff;
 
   &.pc {
-    width: 300px;
+    width: 240px;
   }
 
   // &.open {
@@ -39,7 +39,7 @@
       display: block;
       margin-left: 8px;
       color: #333;
-      font-size: 24px;
+      font-size: 20px;
       // font-family: "ten-mincho",serif;
     }
   }
