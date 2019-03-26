@@ -6,10 +6,16 @@ const initialState = {
 
   loadingDeleteEmailRequest: false,
 
+  // Password
   oldPassword: '',
   newPassword: '',
   loadingUpdatePassword: false,
 
+  // Delete Account
+  deletePassword: '',
+  loadingDeleteAccount: false,
+
+  // Score Setting
   loadingScoreAdminRequest: false,
   scoreAdminRequestPass: '',
 
@@ -46,6 +52,7 @@ export default function settingReducer (state = initialState, action) {
         loadingDeleteEmailRequest: action.payload.loadingDeleteEmailRequest
       }
 
+    // Password
     case prefix + 'SET_OLD_PASSWORD':
       return {
         ...state,
@@ -60,6 +67,17 @@ export default function settingReducer (state = initialState, action) {
       return {
         ...state,
         loadingUpdatePassword: action.payload.loadingUpdatePassword
+      }
+
+    case prefix + 'SET_DELETE_PASSWORD':
+      return {
+        ...state,
+        deletePassword: action.payload.deletePassword
+      }
+    case prefix + 'LOADING_DELETE_ACCOUNT':
+      return {
+        ...state,
+        loadingDeleteAccount: action.payload.loadingDeleteAccount
       }
 
     

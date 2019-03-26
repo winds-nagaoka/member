@@ -2,7 +2,7 @@ import * as request from '../Library/Request'
 import { replace } from 'react-router-redux'
 import { version } from '../Library/Library'
 
-import { setUser } from './Status'
+import { setUser, logout } from './Status'
 
 // import { listen } from 'react-router-redux'
 const prefix = 'SETTING_'
@@ -144,6 +144,45 @@ export const updatePassword = () => {
         dispatch(setNewPassword(''))
       }
       dispatch(loadingUpdatePassword(false))
+    })
+  }
+}
+
+// Delete Account
+export const setDeletePassword = (deletePassword) => ({
+  type: prefix + 'SET_DELETE_PASSWORD',
+  payload: { deletePassword }
+})
+
+const loadingDeleteAccount = (loadingDeleteAccount) => ({
+  type: prefix + 'LOADING_DELETE_ACCOUNT',
+  payload: { loadingDeleteAccount }
+})
+
+export const sendDeleteRequest = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingDeleteAccount(true))
+    const path = 'https://auth.winds-n.com/api/setting/delete'
+    const send = {
+      userid: window.localStorage.windsid,
+      token: window.localStorage.token,
+      pass: getState().setting.deletePassword,
+      version
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else {
+        if (res.body.status) {
+          // dispatch(replace('/setting'))
+          // ここでログアウト処理
+          dispatch(logout())
+        }
+        dispatch(setDeletePassword(''))
+
+      }
+      dispatch(loadingDeleteAccount(false))
     })
   }
 }

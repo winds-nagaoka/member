@@ -9,6 +9,7 @@ import Home from './Home/Home'
 import Name from './Name/Name'
 import Email from './Email/Email'
 import Password from './Password/Password'
+import AccountDelete from './AccountDelete/AccountDelete'
 import Score from './Score/Score'
 
 import './Setting.css'
@@ -37,6 +38,7 @@ class Setting extends Component {
           <Route exact path='/setting/name' component={Name} />
           <Route exact path='/setting/email' component={Email} />
           <Route exact path='/setting/password' component={Password} />
+          <Route exact path='/setting/delete' component={AccountDelete} />
           <Route path='/setting/score' component={Score} />
         </Switch>
 

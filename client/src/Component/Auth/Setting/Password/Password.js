@@ -71,9 +71,9 @@ class Password extends Component {
         <div className={'box setting-text' + lib.pcClass(this.props.pc)}>
           <div>
             <label>古いパスワード</label>
-            <input type='password' value={this.props.oldPassword} onChange={(e) => this.props.setOldPassword(e.target.value)} placeholder={this.props.text} />
+            <input type='password' value={this.props.oldPassword} onChange={(e) => this.props.setOldPassword(e.target.value)} />
             <label>新しいパスワード</label>
-            <input type='password' value={this.props.newPassword} onChange={(e) => this.props.setNewPassword(e.target.value)} placeholder={this.props.text} />
+            <input type='password' value={this.props.newPassword} onChange={(e) => this.props.setNewPassword(e.target.value)} />
           </div>
         </div>
 
