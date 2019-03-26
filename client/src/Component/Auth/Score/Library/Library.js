@@ -9,3 +9,7 @@ export function makeLine (array) {
   // }
   return s
 }
+
+export function admin (user) {
+  return user.scoreAdmin ? true : false
+}

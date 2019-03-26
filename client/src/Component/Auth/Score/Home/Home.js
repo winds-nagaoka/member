@@ -24,6 +24,7 @@ import './Home.css'
 function mapStateToProps(state) {
   return {
     pc: state.status.pc,
+    user: state.status.user,
     loadingScore: state.score.loading,
     scoreList: state.score.scoreList,
     showList: state.score.showList,
@@ -148,6 +149,28 @@ class Home extends Component {
     )
   }
 
+  renderAddNewScore () {
+    if (!libScore.admin(this.props.user)) return false
+    return (
+      <div className={'box score-add-link' + lib.pcClass(this.props.pc)}>
+        <div onClick={() => this.props.setDisplayEditScoreModal(true, 'new', undefined)}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>新しい楽譜を追加</span>}</div>
+      </div>
+    )
+  }
+
+  renderBoxManagement () {
+    if (!libScore.admin(this.props.user)) return false
+    return (
+      <div className={'box score-box-link' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul>
+            <li><Link to='/score/box'><div className='inner'><span>楽譜管理箱</span><i className="fas fa-angle-right"></i></div></Link></li>
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
   render () {
 
     const showSearch = this.renderSearch()
@@ -156,6 +179,9 @@ class Home extends Component {
     const showLoadMore = this.renderLoadMore()
 
     const endLabel = this.props.scoreList ? !(this.props.scoreList.length > 10 && this.props.scoreList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loading && !this.props.searchLoading ? this.props.scoreList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
+
+    const showAddNewScore = this.renderAddNewScore()
+    const showBoxManagement = this.renderBoxManagement()
 
     return (
       <React.Fragment>
@@ -173,17 +199,9 @@ class Home extends Component {
           {endLabel}
         </div>
 
-        <div className={'box score-add-link' + lib.pcClass(this.props.pc)}>
-          <div onClick={() => this.props.setDisplayEditScoreModal(true, 'new', undefined)}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>新しい楽譜を追加</span>}</div>
-        </div>
+        {showAddNewScore}
 
-        <div className={'box score-box-link' + lib.pcClass(this.props.pc)}>
-          <div className='link'>
-            <ul>
-              <li><Link to='/score/box'><div className='inner'><span>楽譜管理箱</span><i className="fas fa-angle-right"></i></div></Link></li>
-            </ul>
-          </div>
-        </div>
+        {showBoxManagement}
 
       </React.Fragment>
     )

@@ -6,14 +6,15 @@ import { connect } from 'react-redux'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getScoreDetail, setDisplayEditScoreModal } from '../../../../Actions/Score'
 
-import * as libScore from '../Library/Library'
 import * as lib from '../../../../Library/Library'
+import * as libScore from '../Library/Library'
 
 import './Detail.css'
 
 function mapStateToProps(state) {
   return {
     pc: state.status.pc,
+    user: state.status.user,
     detailLoading: state.score.detailLoading,
     scoreid: state.score.scoreid,
     scoreDetail: state.score.scoreDetail,
@@ -176,6 +177,7 @@ class Detail extends Component {
 
   renderEditStatusLink () {
     if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return false
+    if (!libScore.admin(this.props.user)) return false
     return (
       <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
         <div onClick={() => this.props.setDisplayEditScoreModal(true, 'editStatus', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>状態を変更</span>}</div>
@@ -185,6 +187,7 @@ class Detail extends Component {
 
   renderEditDetailLink () {
     if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return false
+    if (!libScore.admin(this.props.user)) return false
     return (
       <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
         <div onClick={() => this.props.setDisplayEditScoreModal(true, 'editDetail', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>詳細情報を修正</span>}</div>
