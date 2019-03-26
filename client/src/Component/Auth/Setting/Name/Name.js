@@ -16,8 +16,7 @@ function mapStateToProps(state) {
   return {
     pc: state.status.pc,
     loading: state.status.loading,
-    user: state.status.user,
-    displayPlayer: state.audio.displayPlayer
+    user: state.status.user
   }
 }
 

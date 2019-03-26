@@ -85,7 +85,7 @@ export const deleteEmailRequest = () => {
     dispatch(loadingDeleteEmailRequest(true))
     const path = 'https://auth.winds-n.com/api/setting/email'
     const send = {
-      // ここで空にする
+      // ここで空にする(この値が保存される)
       text: '',
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -101,6 +101,49 @@ export const deleteEmailRequest = () => {
         }
       }
       dispatch(loadingDeleteEmailRequest(false))
+    })
+  }
+}
+
+// Password
+export const setOldPassword = (oldPassword) => ({
+  type: prefix + 'SET_OLD_PASSWORD',
+  payload: { oldPassword }
+})
+
+export const setNewPassword = (newPassword) => ({
+  type: prefix + 'SET_NEW_PASSWORD',
+  payload: { newPassword }
+})
+
+const loadingUpdatePassword = (loadingUpdatePassword) => ({
+  type: prefix + 'LOADING_UPDATE_PASSWORD',
+  payload: { loadingUpdatePassword }
+})
+
+export const updatePassword = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingUpdatePassword(true))
+    const path = 'https://auth.winds-n.com/api/setting/password'
+    const send = {
+      userid: window.localStorage.windsid,
+      token: window.localStorage.token,
+      old: getState().setting.oldPassword,
+      new: getState().setting.newPassword,
+      version
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else {
+        if (res.body.status) {
+          dispatch(replace('/setting'))
+        }
+        dispatch(setOldPassword(''))
+        dispatch(setNewPassword(''))
+      }
+      dispatch(loadingUpdatePassword(false))
     })
   }
 }

@@ -100,12 +100,13 @@ class Home extends Component {
 
         {showPlayerClose}
 
-        <div className={'box-label' + lib.pcClass(this.props.pc)}>一般</div>
+        <div className={'box-label' + lib.pcClass(this.props.pc)}>登録情報の変更</div>
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
               <li><Link to='/setting/name'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
               <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メール</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/password'><div className='inner'><span>パスワード</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
         </div>

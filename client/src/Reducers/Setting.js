@@ -6,6 +6,10 @@ const initialState = {
 
   loadingDeleteEmailRequest: false,
 
+  oldPassword: '',
+  newPassword: '',
+  loadingUpdatePassword: false,
+
   loadingScoreAdminRequest: false,
   scoreAdminRequestPass: '',
 
@@ -41,6 +45,23 @@ export default function settingReducer (state = initialState, action) {
         ...state,
         loadingDeleteEmailRequest: action.payload.loadingDeleteEmailRequest
       }
+
+    case prefix + 'SET_OLD_PASSWORD':
+      return {
+        ...state,
+        oldPassword: action.payload.oldPassword
+      }
+    case prefix + 'SET_NEW_PASSWORD':
+      return {
+        ...state,
+        newPassword: action.payload.newPassword
+      }
+    case prefix + 'LOADING_UPDATE_PASSWORD':
+      return {
+        ...state,
+        loadingUpdatePassword: action.payload.loadingUpdatePassword
+      }
+
     
     // Score Setting
     case prefix + 'LOADING_SCORE_ADMIN_REQUEST':
