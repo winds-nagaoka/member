@@ -451,6 +451,7 @@
       width: 50%;
       top: 20%;
       left: 50%;
+      border-radius: 4px 0 0 0;
     }
 
     &.open {
@@ -484,6 +485,10 @@
       justify-content: center;
       align-items: flex-start;
       flex-direction: column;
+
+      &.pc {
+        border-radius: 4px 0 0 0;
+      }
 
       // &.playing.main {
       //   background: $main-play-color-light

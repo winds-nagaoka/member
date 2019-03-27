@@ -450,7 +450,7 @@ class Audio extends Component {
     const playTypeClass = this.getAlbum() ? ' ' + this.getAlbum().type : ''
     return (
       <div className={'music-list' + (this.props.displayPlaylist ? ' open' : '') + lib.pcClass(this.props.pc)}>
-        <div className={'header' + playTypeClass + playStatusClass} onClick={() => this.props.setDisplayPlaylist(false)}>
+        <div className={'header' + playTypeClass + playStatusClass + lib.pcClass(this.props.pc)} onClick={() => this.props.setDisplayPlaylist(false)}>
           {this.renderTitle(playTypeClass)}
         </div>
         <div className={'label close' + playTypeClass} onClick={() => this.props.setDisplayPlaylist(false)}><i className='fas fa-chevron-down'></i></div>
@@ -480,7 +480,7 @@ class Audio extends Component {
     const playTypeClass = ''
     return (
       <div className={'music-list' + (this.props.displayPlaylist ? ' open' : '') + lib.pcClass(this.props.pc)}>
-        <div className={'header' + playTypeClass + playStatusClass} onClick={() => this.props.setDisplayPlaylist(false)}>
+        <div className={'header' + playTypeClass + playStatusClass + lib.pcClass(this.props.pc)} onClick={() => this.props.setDisplayPlaylist(false)}>
           {this.renderTitle(playTypeClass)}
         </div>
         <div className={'label close' + playTypeClass} onClick={() => this.props.setDisplayPlaylist(false)}><i className='fas fa-chevron-down'></i></div>

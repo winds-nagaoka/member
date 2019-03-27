@@ -270,6 +270,10 @@
               }
             }
 
+            &.link {
+              cursor: pointer;
+            }
+
             .inner {
               padding-left: 12px;
               display: flex;
