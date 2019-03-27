@@ -72,7 +72,7 @@ class AccountDelete extends Component {
   }
 
   render () {
-    const buttonText = this.props.loadingDeleteAccount ? '読み込み中...' : '送信'
+    const buttonText = this.props.loadingDeleteAccount ? '読み込み中...' : '削除'
     const disabledClass = !this.props.deletePassword || this.props.loadingDeleteAccount ? ' disabled' : ''
     const buttonHandler = !this.props.deletePassword || this.props.loadingDeleteAccount ? () => {} : () => this.deleteRequest()
 

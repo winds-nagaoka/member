@@ -27,10 +27,8 @@ export const getUser = () => {
         return false
       } else {
         if (res.body.status) {
-          console.log('updateName OK', res.body)
+          console.log('getUser OK', res.body)
           dispatch(setUser(res.body.user))
-        } else {
-          console.log('updateName NG')
         }
       }
       dispatch(loading(false))
@@ -63,10 +61,8 @@ export const updateModifyText = (apiPath, replacePath) => {
         return false
       } else {
         if (res.body.status) {
-          console.log('updateName OK', res.body)
+          console.log('updateModifyText OK', res.body)
           dispatch(replace(replacePath))
-        } else {
-          console.log('updateName NG')
         }
       }
       dispatch(loadingModify(false))
@@ -202,8 +198,9 @@ export const sendScoreAdminRequest = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingScoreAdminRequest(true))
-    const adminRequest = 'scoreAdmin' in getState().status.user ? !getState().status.user.scoreAdmin : false
+    const adminRequest = 'scoreAdmin' in getState().status.user ? !getState().status.user.scoreAdmin : true
     // if (!adminRequest && getState().setting.scoreAdminRequestPass === '') return false
+    console.log('管理者Request', adminRequest)
     const path = 'https://auth.winds-n.com/api/setting/score/admin'
     const send = {
       userid: window.localStorage.windsid,
@@ -217,11 +214,11 @@ export const sendScoreAdminRequest = () => {
         return false
       } else {
         if (res.body.status) {
-          dispatch(setScoreAdminRequestPass(''))
           if (!res.body.error) dispatch(replace('/setting'))
         } else {
         }
       }
+      dispatch(setScoreAdminRequestPass(''))
       dispatch(loadingScoreAdminRequest(false))
     })
   }
@@ -269,7 +266,6 @@ const loadingScoreMailRequest = (loadingScoreMailRequest) => ({
 export const scoreMailRequest = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
-    console.log('メール送信')
     dispatch(loadingScoreMailRequest(true))
     const name = 'name' in getState().status.user ? getState().status.user.name : 'ウィンズユーザー'
     const email = 'email' in getState().status.user ? getState().status.user.email : false

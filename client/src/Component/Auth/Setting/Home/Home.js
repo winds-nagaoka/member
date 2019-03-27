@@ -53,12 +53,8 @@ class Home extends Component {
   renderPlayerClose () {
     if (!this.props.displayPlayer) return false
     return (    
-      <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
-        <div className='link'>
-          <ul>
-            <li><div className='inner' onClick={(e) => this.props.closePlayer(e)}><span>プレイヤーを閉じる</span><i className="fas fa-angle-right"></i></div></li>          
-          </ul>
-        </div>
+      <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
+        <div  onClick={(e) => this.props.closePlayer(e)} className='button'>プレイヤーを閉じる</div>
       </div>
     )
   }

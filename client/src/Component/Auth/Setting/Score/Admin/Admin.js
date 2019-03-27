@@ -95,7 +95,7 @@ class Admin extends Component {
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/score/admin'>楽譜管理者</Link></div>
           <h2>楽譜管理者</h2>
-          <p>楽譜係は管理者登録をお願いします。</p>
+          <p>楽譜登録情報の追加/編集ができるようになります</p>
         </div>
 
         {showPasswordInput}
