@@ -108,8 +108,8 @@ class Auth extends Component {
               <div className={pc ? 'inline-contents' : 'full-contents'}>
                 <Switch>
                   <Route exact path='/' component={Home} />
-                  <Route path='/schedule' component={Practice} />
-                  <Route path='/history' component={Practice} />
+                  <Route path='/practice' component={Practice} />
+                  {/* <Route path='/history' component={Practice} /> */}
                   <Route path='/source' component={Source} />
                   <Route path='/manager' component={Manager} />
                   <Route path='/bbs' component={BBS} />

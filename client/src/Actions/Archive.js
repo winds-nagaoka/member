@@ -165,7 +165,6 @@ export const getPhotoList = () => {
       if (err) {
         return false
       } else {
-        console.warn('Photo', res.body)
         dispatch(setPhotoList(getState().archive.concertid, res.body.list, res.body.baseSrcThumbnail, res.body.baseSrcOriginal, res.body.url))
       }
       dispatch(loadingPhoto(false))
@@ -226,7 +225,6 @@ export const getVideoList = () => {
 //     dispatch(videoStop())
 //     dispatch(setVideoPlayStatus(undefined, undefined))
 //     dispatch(setVideoList(undefined, undefined, undefined, undefined, undefined))
-//     console.warn('audioは', getState().archive.audioPlayerDisplay)
 //     getState().archive.audioPlayerDisplay ? dispatch(setDisplayPlayer(true)) : false
 //     dispatch(setDisplayVideoController(false, undefined))
 //   }
@@ -262,7 +260,6 @@ export const videoPlayUpdate = (videoCurrent, videoDuration) => {
   return async (dispatch, getState) => {
     if (!getState().archive.displayVideoController && !getState().archive.videoRef.paused) {
       const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
-      console.warn('videoPlayUpdate, audioPlayerDisplay',audioPlayerDisplay)
       dispatch(setDisplayVideoController(true, audioPlayerDisplay))  
     }
     const videoPlayPercent = (videoDuration && videoCurrent) ? Math.round((videoCurrent / videoDuration) * 1000) / 10 : undefined
@@ -296,7 +293,6 @@ export const videoPlayRequest = (number, request) => {
     dispatch(setVideoPlayStatus(false, number))
     // プレイヤーを表示(オーディオプレイヤーの状態を記録)
     const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
-    console.warn('audioPlayerDisplay',audioPlayerDisplay)
     dispatch(setDisplayVideoController(true, audioPlayerDisplay))
     // オーディオプレイヤーが表示されていたら隠す
     getState().audio.displayPlayer ? dispatch(setDisplayPlayer(false)) : false

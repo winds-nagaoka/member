@@ -40,7 +40,7 @@ function mapDispatchToProps(dispatch) {
 class History extends Component {
   componentDidMount () {
     this.props.setNavigationTitle('練習の記録')
-    this.props.setBackNavigation(true, '/')
+    this.props.setBackNavigation(true, '/practice')
     this.props.getHistory()
   }
 
@@ -53,13 +53,21 @@ class History extends Component {
     return this.props.list.map((each, i) => {
       const practice = each.detail
       console.log(each, practice.id)
-      const date = practice.time.date ? practice.time.date : false
-      const place = practice.place ? practice.place : false
+      const audio = practice.recordStatus ? ' has-audio' : ' no-audio'
+      const playRequest = practice.recordStatus ? () => this.props.practicePlayRequest(practice.id, 0, 0, true) : () => {}
+      const icon = practice.recordStatus ? <i className='fas fa-play-circle'></i> : <i className='far fa-times-circle'></i>
+      const date = 'date' in practice.time ? <div className='date'>{practice.time.date}</div> : false
+      const place = 'place' in practice ? <div className='place'>{practice.place}</div> : false
+      const label = 'label' in practice ? <label>{practice.label}</label> : false
       return (
-        <div key={'history' + i} className='each-history' onClick={() => this.props.practicePlayRequest(practice.id, 0, 0, true)}>
-          {date}
-          {place}
-        </div>
+        <li key={'history' + i} className={'each-history' + audio + lib.pcClass(this.props.pc)} onClick={playRequest}>
+          <div className='icon'>{icon}</div>
+          <div className='info'>
+            {place}
+            {date}
+          </div>
+          <div className='label'>{label}</div>
+        </li>
       )
     })
   }
@@ -69,19 +77,28 @@ class History extends Component {
     const { pc } = this.props
 
     const showHistoryList = this.renderHistoryList()
+    const historyClass = this.props.loading || !this.props.list ? '' : ' no-border-bottom'
 
     return (
       <React.Fragment>
 
         <div className={'contents-header' + lib.pcClass(pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/history'>過去の記録</Link><span></span></div>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習について</Link><i className="fas fa-chevron-right"></i><Link to='/practice/history'>過去の記録</Link></div>
           <h2>過去の記録</h2>
           <p>練習の録音を掲載しています</p>
         </div>
 
-        <div className={'box history' + lib.pcClass(pc)}>
-          <div className='text'>
+        <div className={'box history' + historyClass + lib.pcClass(pc)}>
+          <ul>
             {showHistoryList}
+          </ul>
+        </div>
+
+        <div className={'box' + lib.pcClass(this.props.pc)}>
+          <div className='back-link'>
+            <ul>
+              <li><Link to='/practice'><div className='inner'><i className="fas fa-angle-left"></i><span>戻る</span></div></Link></li>
+            </ul>
           </div>
         </div>
 

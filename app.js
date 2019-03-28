@@ -24,8 +24,8 @@ app.use(compression({
 // クライアントアプリを返す
 const client = './client/build'
 app.use('/', express.static(client))
-app.use('/schedule', express.static(client))
-app.use('/history', express.static(client))
+app.use('/practice', express.static(client))
+app.use('/practice/history', express.static(client))
 app.use('/manager', express.static(client))
 app.use('/source', express.static(client))
 app.use('/bbs', express.static(client))

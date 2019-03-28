@@ -397,6 +397,14 @@
   border-bottom: .55px solid #c8c7cc;
 }
 
+.no-border-top {
+  border-top: 0!important;
+}
+
+.no-border-bottom {
+  border-bottom: 0!important;
+}
+
 .mobile {
   &.border-top-mobile {
     border-top: .55px solid #c8c7cc;

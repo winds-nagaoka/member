@@ -61,10 +61,8 @@ class Schedule extends Component {
         <div className='next-labels'>
           {today}
           {memo}
-          {/* <span className='memo'>今井合奏</span> */}
         </div>
         <div className='next-day'>
-          {/* <span className='year'>{date[0]}<span>年</span></span> */}
           <span className='month'>{month}<span>月</span></span>
           <span className='day'>{day}<span>日</span></span>
           <span className={'date ' + next.weeken}>{next.weekjp}</span>
@@ -109,7 +107,6 @@ class Schedule extends Component {
             <div className='labels'>
               {/* {today} */}
               {memo}
-              {/* <span className='memo'>今井合奏</span> */}
             </div>
           </div>
         )
@@ -135,8 +132,8 @@ class Schedule extends Component {
       <React.Fragment>
 
         <div className={'contents-header' + lib.pcClass(pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/schedule'>練習日程</Link><span></span></div>
-          <h2>練習日程</h2>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習について</Link><span></span></div>
+          <h2>練習について</h2>
           <p>今後の練習予定です</p>
         </div>
 
@@ -157,6 +154,14 @@ class Schedule extends Component {
               <div className='text'>
                 {showScheduleList}
               </div>
+            </div>
+          </div>
+
+          <div className={'box' + lib.pcClass(pc)}>
+            <div className='link'>
+              <ul>
+                <li><Link to='/practice/history'><div className='inner'><span>過去の記録</span><i className="fas fa-angle-right"></i></div></Link></li>
+              </ul>
             </div>
           </div>
 

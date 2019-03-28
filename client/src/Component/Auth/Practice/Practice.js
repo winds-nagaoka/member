@@ -34,8 +34,8 @@ class Practice extends Component {
       <div className={'practice' + lib.pcClass(pc)}>
 
         <Switch>
-          <Route exact path='/schedule' component={Schedule} />
-          <Route exact path='/history' component={History} />
+          <Route exact path='/practice' component={Schedule} />
+          <Route exact path='/practice/history' component={History} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(pc)}>

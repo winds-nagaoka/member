@@ -24,7 +24,7 @@ export const getHistory = () => {
       if (err) {
         return false
       } else {
-        dispatch(setList(res.body.list))
+        dispatch(setList(res.body.list.reverse()))
         dispatch(acquired(true))
       }
       dispatch(loading(false))

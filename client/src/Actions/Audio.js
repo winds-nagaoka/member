@@ -25,7 +25,6 @@ export const loadArchivePlaylist = () => {
         return false
       } else {
         if (res.body.status) {
-          console.warn('[audio] archive load')
           dispatch(setArchivePlaylist(res.body.list, res.body.url))
         }
       }
@@ -62,7 +61,6 @@ export const loadPracticePlaylist = () => {
         return false
       } else {
         if (res.body.status) {
-          console.warn('[audio] practice load', res.body.list)
           dispatch(setPracticePlaylist(res.body.list, res.body.url))
         }
       }
@@ -99,7 +97,6 @@ export const loadSourcePlaylist = () => {
         return false
       } else {
         if (res.body.status) {
-          console.warn('[audio] source load', res.body.list)
           dispatch(setSourcePlaylist(res.body.list, res.body.url))
         }
       }
@@ -285,7 +282,6 @@ const removeSourceStorage = () => {
 // 再生・一時停止ボタン
 export const audioPlay = (requestTime) => {
   return async (dispatch, getState) => {
-    console.log('!!!!!!', getState().audio.playmode)
     if (getState().audio.playmode === 'archive') {
       if (!getState().archive.concertList) return false
       if (!getState().audio.archivePlaylist) return false
@@ -312,7 +308,6 @@ export const audioPlay = (requestTime) => {
       if (!getState().history.list) return false
       if (!getState().audio.practicePlaylist) return false
       const practiceAlbum = libPractice.getPracticeAlbum(getState().audio.practiceid, getState().audio.practicePlaylist)
-      // console.warn(practiceAlbum, getState().audio.fileNumber, requestTime)
       const file = practiceAlbum.file[getState().audio.fileNumber]
       // dispatch(practiceSetPlay(practiceAlbum, file, true))
       // タグに反映
@@ -326,7 +321,6 @@ export const audioPlay = (requestTime) => {
       const album = libSource.getAlbum(getState().audio.sourceid, getState().audio.sourcePlaylist)
       const track = album.list[getState().audio.sourceNumber]
       // タグに反映
-      console.log('!!!', getState().audio.sourceBaseUrl, album.baseSrc, track.path)
       if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.sourceBaseUrl + album.baseSrc + track.path) {
         getState().audio.audioRef.src = getState().audio.sourceBaseUrl + album.baseSrc + track.path
       }
