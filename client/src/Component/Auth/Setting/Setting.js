@@ -11,6 +11,8 @@ import Email from './Email/Email'
 import Password from './Password/Password'
 import AccountDelete from './AccountDelete/AccountDelete'
 import Score from './Score/Score'
+import License from './License/License'
+import About from './About/About'
 
 import './Setting.css'
 
@@ -39,6 +41,8 @@ class Setting extends Component {
           <Route exact path='/setting/email' component={Email} />
           <Route exact path='/setting/password' component={Password} />
           <Route exact path='/setting/delete' component={AccountDelete} />
+          <Route exact path='/setting/about' component={About} />
+          <Route exact path='/setting/license' component={License} />
           <Route path='/setting/score' component={Score} />
         </Switch>
 

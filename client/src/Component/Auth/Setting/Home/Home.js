@@ -118,6 +118,16 @@ class Home extends Component {
           </div>
         </div>
 
+        <div className={'box-label' + lib.pcClass(this.props.pc)}>情報</div>
+        <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
+          <div className='link'>
+            <ul>
+              <li><Link to='/setting/about'><div className='inner'><span>このアプリについて</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/license'><div className='inner'><span>ライセンス情報</span><i className="fas fa-angle-right"></i></div></Link></li>
+            </ul>
+          </div>
+        </div>
+
       </React.Fragment>
     )
   }
