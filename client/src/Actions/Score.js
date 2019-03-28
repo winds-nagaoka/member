@@ -47,9 +47,9 @@ const loading = (loading) => ({
   payload: { loading }
 })
 
-const searchLoading = (searchLoading) => ({
-  type: prefix + 'SEARCH_LOADING',
-  payload: { searchLoading }
+const loadingSearch = (loadingSearch) => ({
+  type: prefix + 'LOADING_SEARCH',
+  payload: { loadingSearch }
 })
 
 // 検索と全体読み込みのエントリーは別
@@ -57,14 +57,13 @@ export const getScoreListAll = () => {
   return async (dispatch, getState) => {
     dispatch(loading(true))
     dispatch(getScoreList(''))
-    // 新規追加前に検索文字列指定してたときは解除
-    dispatch(changeSearchText(''))
   }
 }
 
 export const changeSearchText = (searchQuery) => {
   return async (dispatch, getState) => {
-    dispatch(searchLoading(true))
+    console.warn('changeSearchText')
+    dispatch(loadingSearch(true))
     dispatch(getScoreList(searchQuery))
     dispatch(loadMoreLoading(false))
     dispatch(setSearchQuery(searchQuery))
@@ -109,7 +108,7 @@ export const getScoreList = (query) => {
         }
       }
       dispatch(loading(false))
-      dispatch(searchLoading(false))
+      dispatch(loadingSearch(false))
     })
   }
 }
@@ -328,9 +327,11 @@ export const updateScoreEdit = () => {
         return false
       } else if (res.body.status) {
         if (getState().score.editMode !== 'new') {
-          dispatch(getScoreDetail(getState().score.scoreid))
+          dispatch(getScoreDetail(getState().score.scoreid))          
         } else {
           dispatch(getScoreListAll())
+          // 新規追加前に検索文字列指定してたときは解除
+          dispatch(setSearchQuery(''))
         }
         dispatch(setDisplayEditScoreModal(false, undefined, undefined))
         // mobileの場合はスクロールする

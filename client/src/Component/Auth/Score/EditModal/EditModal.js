@@ -153,7 +153,7 @@ class EditModal extends Component {
 
   renderInfo () {
     if (this.props.editPreLoading || !this.props.scoreEdit) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    if (this.props.editMode !== 'editStatus') return
+    if (this.props.editMode !== 'new' && this.props.editMode !== 'editStatus') return
     const score = this.props.scoreEdit
     const scoreStatusSelect = this.renderScoreStatus()
     const lendInput = this.renderLendInput()
@@ -232,7 +232,7 @@ class EditModal extends Component {
 
   renderStatus () {
     if (this.props.editPreLoading || !this.props.scoreEdit) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    if (this.props.editMode !== 'editDetail') return
+    if (this.props.editMode !== 'new' && this.props.editMode !== 'editDetail') return
     const scoreTypeSelect = this.renderScoreType()
     const copyMemoInput = this.renderCopiedFromInput()
     const scoreLackSelect = this.renderScoreLack()
@@ -265,7 +265,7 @@ class EditModal extends Component {
 
   renderBase () {
     if (this.props.editPreLoading || !this.props.scoreEdit) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    if (this.props.editMode !== 'editDetail') return
+    if (this.props.editMode !== 'new' && this.props.editMode !== 'editDetail') return
     const score = this.props.scoreEdit
     const composerInput = score.composer.map((each, i) => {
       return <Input key={i} label={'作曲者' + (i + 1)} value={each} target='composer' className='multi' inputClass='composer' onChange={(e) => this.changeValueArray(i, e)} />

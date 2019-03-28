@@ -30,7 +30,7 @@ function mapStateToProps(state) {
     showList: state.score.showList,
     loadMoreLoading: state.score.loadMoreLoading,
     searchQuery: state.score.searchQuery,
-    searchLoading: state.score.searchLoading,
+    loadingSearch: state.score.loadingSearch,
     searchBoxRef: state.score.searchBoxRef,
 
     editPreLoading: state.score.editPreLoading
@@ -121,7 +121,7 @@ class Home extends Component {
   }
 
   renderSearch () {
-    const searchIcon = this.props.searchLoading ? <i className='fas fa-spinner fa-pulse'></i> : <i className='fas fa-search'></i>
+    const searchIcon = this.props.loadingSearch ? <i className='fas fa-spinner fa-pulse'></i> : <i className='fas fa-search'></i>
     const searchBarButtonClass = this.props.searchQuery ? 'search-bar-button' : 'search-bar-button hidden'
     return (
       <div className='search-bar'>
@@ -150,6 +150,7 @@ class Home extends Component {
   }
 
   renderAddNewScore () {
+    if (this.props.loadingScore || !this.props.scoreList) return false
     if (!libScore.admin(this.props.user)) return false
     return (
       <div className={'box score-add-link' + lib.pcClass(this.props.pc)}>
@@ -159,6 +160,7 @@ class Home extends Component {
   }
 
   renderBoxManagement () {
+    if (this.props.loadingScore || !this.props.scoreList) return false
     if (!libScore.admin(this.props.user)) return false
     return (
       <div className={'box score-box-link' + lib.pcClass(this.props.pc)}>
@@ -178,10 +180,11 @@ class Home extends Component {
     const showScoreList = this.renderScoreList()
     const showLoadMore = this.renderLoadMore()
 
-    const endLabel = this.props.scoreList ? !(this.props.scoreList.length > 10 && this.props.scoreList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loading && !this.props.searchLoading ? this.props.scoreList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
+    const endLabel = this.props.scoreList ? !(this.props.scoreList.length > 10 && this.props.scoreList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loading && !this.props.loadingSearch ? this.props.scoreList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
 
     const showAddNewScore = this.renderAddNewScore()
     const showBoxManagement = this.renderBoxManagement()
+    console.warn(this.props.loadingScore, this.props.loadingSearch)
 
     return (
       <React.Fragment>

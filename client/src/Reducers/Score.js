@@ -4,7 +4,7 @@ const initialState = {
   showList: [],
   loadMoreLoading: false,
   searchQuery: '',
-  searchLoading: false,
+  loadingSearch: false,
   searchBoxRef: undefined,
   displayScoreModal: false,
   modalContent: undefined,
@@ -58,10 +58,10 @@ export default function scoreReducer (state = initialState, action) {
         ...state,
         searchQuery: action.payload.searchQuery
       }
-    case prefix + 'SEARCH_LOADING':
+    case prefix + 'LOADING_SEARCH':
       return {
         ...state,
-        searchLoading: action.payload.searchLoading
+        loadingSearch: action.payload.loadingSearch
       }
     case prefix + 'SET_SEARCH_BOX_REF':
       return {
