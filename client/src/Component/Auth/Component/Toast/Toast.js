@@ -6,6 +6,7 @@ import './Toast.css'
 
 function mapStateToProps(state) {
   return {
+    pc: state.status.pc,
     string: state.toast.string,
     status: state.toast.status,
     hide: state.toast.hide,

@@ -1,6 +1,7 @@
 import * as request from '../Library/Request'
 import { version } from '../Library/Library'
 import { scrollToTop } from './Status'
+import { showToast } from './Toast'
 
 const prefix = 'SCORE_'
 
@@ -328,10 +329,12 @@ export const updateScoreEdit = () => {
       } else if (res.body.status) {
         if (getState().score.editMode !== 'new') {
           dispatch(getScoreDetail(getState().score.scoreid))          
+          dispatch(showToast('楽譜情報を修正しました'))
         } else {
           dispatch(getScoreListAll())
           // 新規追加前に検索文字列指定してたときは解除
           dispatch(setSearchQuery(''))
+          dispatch(showToast('新しい楽譜を追加しました'))
         }
         dispatch(setDisplayEditScoreModal(false, undefined, undefined))
         // mobileの場合はスクロールする

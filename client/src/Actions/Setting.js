@@ -1,6 +1,7 @@
 import * as request from '../Library/Request'
 import { replace } from 'react-router-redux'
 import { version } from '../Library/Library'
+import { showToast } from './Toast'
 
 import { setUser, logout } from './Status'
 
@@ -63,6 +64,9 @@ export const updateModifyText = (apiPath, replacePath) => {
         if (res.body.status) {
           console.log('updateModifyText OK', res.body)
           dispatch(replace(replacePath))
+          dispatch(showToast('変更しました'))
+        } else {
+          dispatch(showToast('入力した内容を確認してください'))
         }
       }
       dispatch(loadingModify(false))
@@ -94,6 +98,7 @@ export const deleteEmailRequest = () => {
       } else {
         if (res.body.status) {
           dispatch(replace('/setting'))
+          dispatch(showToast('メールアドレスを削除しました'))
         }
       }
       dispatch(loadingDeleteEmailRequest(false))
@@ -135,6 +140,9 @@ export const updatePassword = () => {
       } else {
         if (res.body.status) {
           dispatch(replace('/setting'))
+          dispatch(showToast('パスワードを変更しました'))
+        } else {
+          dispatch(showToast('古いパスワードを確認してください'))
         }
         dispatch(setOldPassword(''))
         dispatch(setNewPassword(''))
@@ -174,9 +182,10 @@ export const sendDeleteRequest = () => {
           // dispatch(replace('/setting'))
           // ここでログアウト処理
           dispatch(logout())
+        } else {
+          dispatch(showToast('パスワードを確認してください'))
         }
         dispatch(setDeletePassword(''))
-
       }
       dispatch(loadingDeleteAccount(false))
     })
@@ -214,8 +223,12 @@ export const sendScoreAdminRequest = () => {
         return false
       } else {
         if (res.body.status) {
-          if (!res.body.error) dispatch(replace('/setting'))
-        } else {
+          if (!res.body.error) {
+            dispatch(replace('/setting'))
+            res.body.admin ? dispatch(showToast('楽譜管理者になりました')) : dispatch(showToast('楽譜管理者を辞めました'))
+          } else {
+            dispatch(showToast('管理者パスワードが違います'))
+          }
         }
       }
       dispatch(setScoreAdminRequestPass(''))
@@ -291,6 +304,7 @@ export const scoreMailRequest = () => {
       } else {
         if (res.body.status) {
           // if (!res.body.error) dispatch(replace('/setting'))
+          dispatch(showToast('メールを送信しました'))
         }
       }
       dispatch(loadingScoreMailRequest(false))
