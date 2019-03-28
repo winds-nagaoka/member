@@ -9,6 +9,11 @@ const initialState = {
   practicePlaylist: undefined,
   practiceBaseUrl: undefined,
 
+  // 参考音源プレイリスト
+  loadingSourcePlaylist: false,
+  sourcePlaylist: undefined,
+  sourceBaseUrl: undefined,
+
   // オーディオタグ本体
   audioRef: undefined,
 
@@ -43,15 +48,19 @@ const initialState = {
   // アーカイブモード
   concertid: undefined,
   number: undefined,
-  album: undefined,
-  track: undefined,
+  // album: undefined,
+  // track: undefined,
 
   // 練習記録モード
   practiceid: undefined,
   fileNumber: undefined,
   requestTime: undefined,
-  practiceAlbum: undefined,
-  file: undefined
+  // practiceAlbum: undefined,
+  // file: undefined,
+
+  // 参考音源モード
+  sourceid: undefined,
+  sourceNumber: undefined
 }
 
 const prefix = 'AUDIO_'
@@ -82,6 +91,19 @@ export default function audioReducer (state = initialState, action) {
         ...state,
         practicePlaylist: action.payload.practicePlaylist,
         practiceBaseUrl: action.payload.practiceBaseUrl,
+      }
+
+    // 参考音源プレイリスト
+    case prefix + 'LOADING_SOURCE_PLAYLIST':
+      return {
+        ...state,
+        loadingSourcePlaylist: action.payload.loadingSourcePlaylist
+      }
+    case prefix + 'SET_SOURCE_PLAYLIST':
+      return {
+        ...state,
+        sourcePlaylist: action.payload.sourcePlaylist,
+        sourceBaseUrl: action.payload.sourceBaseUrl,
       }
 
     // オーディオタグ本体
@@ -140,16 +162,16 @@ export default function audioReducer (state = initialState, action) {
         // track: action.payload.track,
         // playlistLoad: action.payload.playlistLoad
       }
-    case prefix + 'ARCHIVE_SET_PLAY':
-      return {
-        ...state,
-        // playmode: action.payload.playmode,
-        // concertid: action.payload.concertid,
-        // number: action.payload.number,
-        album: action.payload.album,
-        track: action.payload.track,
-        playlistLoad: action.payload.playlistLoad
-      }
+    // case prefix + 'ARCHIVE_SET_PLAY':
+    //   return {
+    //     ...state,
+    //     // playmode: action.payload.playmode,
+    //     // concertid: action.payload.concertid,
+    //     // number: action.payload.number,
+    //     album: action.payload.album,
+    //     track: action.payload.track,
+    //     playlistLoad: action.payload.playlistLoad
+    //   }
             
     // 曲情報
     case prefix + 'PRACTICE_SET_PLAY_BASE':
@@ -160,16 +182,26 @@ export default function audioReducer (state = initialState, action) {
         fileNumber: action.payload.fileNumber,
         requestTime: action.payload.requestTime
       }
-    case prefix + 'PRACTICE_SET_PLAY':
+    // case prefix + 'PRACTICE_SET_PLAY':
+    //   return {
+    //     ...state,
+    //     // playmode: action.payload.playmode,
+    //     // concertid: action.payload.concertid,
+    //     // number: action.payload.number,
+    //     practiceAlbum: action.payload.practiceAlbum,
+    //     file: action.payload.file,
+    //     playlistLoad: action.payload.playlistLoad
+    //   }
+
+    // 曲情報
+    case prefix + 'SOURCE_SET_PLAY_BASE':
       return {
         ...state,
-        // playmode: action.payload.playmode,
-        // concertid: action.payload.concertid,
-        // number: action.payload.number,
-        practiceAlbum: action.payload.practiceAlbum,
-        file: action.payload.file,
-        playlistLoad: action.payload.playlistLoad
+        playmode: action.payload.playmode,
+        sourceid: action.payload.sourceid,
+        sourceNumber: action.payload.sourceNumber
       }
+    
 
     default:
       return state

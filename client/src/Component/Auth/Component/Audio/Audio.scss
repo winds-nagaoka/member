@@ -241,6 +241,7 @@
         color: #fff;
         font-size: 13px;
         // font-family: "source-han-sans-japanese",sans-serif;
+        cursor: default;
 
         display: flex;
         justify-content: space-between;
@@ -662,12 +663,16 @@
           border-top: .55px solid #d3d3d3;
         }
 
+        &.source {
+          border-top: .55px solid #d3d3d3;
+        }
+
         // animation 設定は index.scss
         // -webkit-animation: fadein .2s 1 ease-out;
         // animation: fadein .2s 1 ease-out;
 
         label {
-          width: calc(100% - 16px);
+          width: calc(100% - 12px);
           position: -webkit-sticky;
           position: sticky;
           top: 0;

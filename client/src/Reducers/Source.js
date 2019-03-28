@@ -4,9 +4,9 @@ const initialState = {
   loading: false
 }
 
-const prefix = 'HISTORY_'
+const prefix = 'SOURCE_'
 
-export default function historyReducer (state = initialState, action) {
+export default function sourceReducer (state = initialState, action) {
   switch (action.type) {
     case prefix + 'LOADING':
       return {

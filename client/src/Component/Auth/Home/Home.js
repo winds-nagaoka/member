@@ -6,6 +6,7 @@ import { connectSocket, disconnectSocket } from '../../../Actions/Socket'
 
 import { setNavigationTitle, releaseBackNavigation } from '../../../Actions/Navigation'
 import { getSchedule } from '../../../Actions/Schedule'
+import { getSource } from '../../../Actions/Source'
 import { getManager } from '../../../Actions/Manager'
 import { getBBSList } from '../../../Actions/BBS'
 import { getList } from '../../../Actions/Cast'
@@ -26,6 +27,8 @@ function mapStateToProps(state) {
 
     loadingSchedule: state.schedule.loading,
     schedule: state.schedule.data,
+    loadingSource: state.source.loading,
+    source: state.source.list,
     loadingManager: state.manager.loading,
     manager: state.manager.data,
     loadingBBS: state.bbs.loading,
@@ -53,6 +56,9 @@ function mapDispatchToProps(dispatch) {
     getSchedule () {
       dispatch(getSchedule())
     },
+    getSource () {
+      dispatch(getSource())
+    },
     getManager () {
       dispatch(getManager())
     },
@@ -73,6 +79,7 @@ class Home extends Component {
     // this.props.connectSocket()
 
     this.props.getSchedule()
+    this.props.getSource()
     this.props.getManager()
     this.props.getBBSList()
     // this.props.getCastList()
@@ -139,6 +146,19 @@ class Home extends Component {
     )
   }
 
+  renderSource (loading, source) {
+    const link = loading || !source || source.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>参考音源</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to='/source'><div className='inner'><span>参考音源</span><i className="fas fa-angle-right"></i></div></Link></li>
+    return (
+      <div className={'box home-source' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul>
+            {link}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
   renderManager (loading, manager) {
     if (loading || !manager) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     const date = manager.contents[0].time[0].date === '1970/01/01' ? false : manager.contents[0].time[0].date
@@ -168,13 +188,14 @@ class Home extends Component {
 
   render () {
     // State List
-    const { socketid, pc, loadingCastList, castList, loadingSchedule, schedule, loadingManager, manager, loadingBBS, BBSList } = this.props
+    const { socketid, pc, loadingCastList, castList, loadingSchedule, schedule, loadingSource, source, loadingManager, manager, loadingBBS, BBSList } = this.props
     // Dispatch List
     // const { logout } = this.props
     const socketStatus = socketid ? 'OK' : 'NG'
 
     // const showCastList = this.renderCast(loadingCastList, castList)
     const showScheduleNext = this.renderSchedule(loadingSchedule, schedule)
+    const showSource = this.renderSource(loadingSource, source)
     const showManager = this.renderManager(loadingManager, manager)
     const showBBS = this.renderBBS(loadingBBS, BBSList)
     return (
@@ -200,6 +221,8 @@ class Home extends Component {
             </ul>
           </div>
         </div>
+
+        {showSource}
 
         <div className={'box home-manager' + lib.pcClass(pc)}>
           <div className='title-frame'>

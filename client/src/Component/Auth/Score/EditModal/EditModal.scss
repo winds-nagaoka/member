@@ -236,6 +236,7 @@
       border-radius: .25rem;
       font-size: 14px;
       line-height: 1.6;
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
       
       &:focus {
         border: solid 1px rgba(182,0,5,1);

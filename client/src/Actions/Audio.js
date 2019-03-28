@@ -3,6 +3,7 @@ import { playTime, version } from '../Library/Library'
 
 import * as libArchive from '../Component/Auth/Archive/Library/Library'
 import * as libPractice from '../Component/Auth/Practice/Library/Library'
+import * as libSource from '../Component/Auth/Source/Library/Library'
 
 const prefix = 'AUDIO_'
 
@@ -80,6 +81,43 @@ const setPracticePlaylist = (practicePlaylist, practiceBaseUrl) => ({
   payload: { practicePlaylist, practiceBaseUrl }
 })
 
+// 参考音源プレイリストの読み込み
+export const loadSourcePlaylist = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    if (getState().audio.sourcePlaylist) return false
+    dispatch(loadingSourcePlaylist(true))
+    const path = 'https://app.winds-n.com/api/reference'
+    const send = {
+      userid: window.localStorage.windsid,
+      token: window.localStorage.token,
+      version,
+      member: true
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else {
+        if (res.body.status) {
+          console.warn('[audio] source load', res.body.list)
+          dispatch(setSourcePlaylist(res.body.list, res.body.url))
+        }
+      }
+      dispatch(loadingSourcePlaylist(false))
+    })
+  }
+}
+
+const loadingSourcePlaylist = (loadingSourcePlaylist) => ({
+  type: prefix + 'LOADING_SOURCE_PLAYLIST',
+  payload: { loadingSourcePlaylist }
+})
+
+const setSourcePlaylist = (sourcePlaylist, sourceBaseUrl) => ({
+  type: prefix + 'SET_SOURCE_PLAYLIST',
+  payload: { sourcePlaylist, sourceBaseUrl }
+})
+
 // オーディオタグ本体
 export const setAudioRef = (audioRef) => ({
   type: prefix + 'SET_AUDIO_REF',
@@ -151,8 +189,8 @@ export const archivePlayRequest = (concertid, number, playRequest) => {
     // 再生する曲情報
     dispatch(archiveSetPlayBase(concertid, number))
     // localStorageの記録更新
-    window.localStorage.removeItem('playerPracticeid')
-    window.localStorage.removeItem('playerPracticeFile')
+    dispatch(removePracticeStorage())
+    dispatch(removeSourceStorage())
     window.localStorage.setItem('playerConcertid', concertid)
     window.localStorage.setItem('playerNumber', number)
     // 曲を再生
@@ -168,13 +206,6 @@ const archiveSetPlayBase = (concertid, number) => {
   })
 }
 
-// const archiveSetPlay = (album, track, playlistLoad) => {
-//   return ({
-//     type: prefix + 'ARCHIVE_SET_PLAY',
-//     payload: { playmode: 'archive', album, track, playlistLoad }
-//   })
-// }
-
 // 練習記録から曲を選択
 export const practicePlayRequest = (practiceid, fileNumber, requestTimeString, playRequest) => {
   return async (dispatch, getState) => {
@@ -186,8 +217,8 @@ export const practicePlayRequest = (practiceid, fileNumber, requestTimeString, p
     // 再生する曲情報
     dispatch(practiceSetPlayBase(practiceid, fileNumber, requestTime))
     // localStorageの記録更新
-    window.localStorage.removeItem('playerConcertid')
-    window.localStorage.removeItem('playerNumber')
+    dispatch(removeArchiveStorage())
+    dispatch(removeSourceStorage())
     window.localStorage.setItem('playerPracticeid', practiceid)
     window.localStorage.setItem('playerPracticeFile', fileNumber)
     // 曲を再生
@@ -203,18 +234,58 @@ const practiceSetPlayBase = (practiceid, fileNumber, requestTime) => {
   })
 }
 
-// const practiceSetPlay = (practiceAlbum, file, playlistLoad) => {
-//   return ({
-//     type: prefix + 'PRACTICE_SET_PLAY',
-//     payload: { playmode: 'practice', practiceAlbum, file, playlistLoad }
-//   })
-// }
+// 参考音源から曲を選択
+export const sourcePlayRequest = (sourceid, sourceNumber, playRequest) => {
+  return async (dispatch, getState) => {
+    // プレイヤーを表示
+    !getState().audio.displayPlayer ? dispatch(setDisplayPlayer(true)) : false
+    // アーカイブ側は削除
+    dispatch(archiveSetPlayBase(undefined, undefined))
+    // 再生する曲情報
+    dispatch(sourceSetPlayBase(sourceid, sourceNumber))
+    // localStorageの記録更新
+    dispatch(removeArchiveStorage())
+    dispatch(removePracticeStorage())
+    window.localStorage.setItem('playerSourceid', sourceid)
+    window.localStorage.setItem('playerSourceNumber', sourceNumber)
+    // 曲を再生
+    playRequest ? dispatch(audioPlay()) : false
+  }
+}
+
+// 再生する曲情報を設定
+const sourceSetPlayBase = (sourceid, sourceNumber) => {
+  return ({
+    type: prefix + 'SOURCE_SET_PLAY_BASE',
+    payload: { playmode: 'source', sourceid, sourceNumber }
+  })
+}
+
+const removeArchiveStorage = () => {
+  return async () => {
+    window.localStorage.removeItem('playerConcertid')
+    window.localStorage.removeItem('playerNumber')
+  }
+}
+const removePracticeStorage = () => {
+  return async () => {
+    window.localStorage.removeItem('playerPracticeid')
+    window.localStorage.removeItem('playerPracticeFile')
+  }
+}
+const removeSourceStorage = () => {
+  return async () => {
+    window.localStorage.removeItem('playerSourceid')
+    window.localStorage.removeItem('playerSourceNumber')
+  }
+}
 
 // オーディオタグの操作
 
 // 再生・一時停止ボタン
 export const audioPlay = (requestTime) => {
   return async (dispatch, getState) => {
+    console.log('!!!!!!', getState().audio.playmode)
     if (getState().audio.playmode === 'archive') {
       if (!getState().archive.concertList) return false
       if (!getState().audio.archivePlaylist) return false
@@ -249,6 +320,28 @@ export const audioPlay = (requestTime) => {
         getState().audio.audioRef.src = getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path
       }
       if (requestTime) getState().audio.audioRef.currentTime = requestTime
+    } else if (getState().audio.playmode === 'source') {
+      if (!getState().source.list) return false
+      if (!getState().audio.sourcePlaylist) return false
+      const album = libSource.getAlbum(getState().audio.sourceid, getState().audio.sourcePlaylist)
+      const track = album.list[getState().audio.sourceNumber]
+      // タグに反映
+      console.log('!!!', getState().audio.sourceBaseUrl, album.baseSrc, track.path)
+      if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.sourceBaseUrl + album.baseSrc + track.path) {
+        getState().audio.audioRef.src = getState().audio.sourceBaseUrl + album.baseSrc + track.path
+      }
+      // 曲が指定されていないとき
+      if (isNaN(getState().audio.sourceNumber)) {
+        if (getState().audio.displayPlaylist) {
+          return // Actions.toastShow('曲を選択してください')
+        } else {
+          if (getState().audio.playlistLoad) {
+            return dispatch(setDisplayPlaylist(true))
+          } else {
+            return
+          }
+        }
+      }
     }
     dispatch(audioStart())
   }
@@ -282,10 +375,9 @@ export const audioStop = (button) => {
       dispatch(setDisplayPlaylist(false))
       dispatch(setDisplayPlayer(false))
       if (button) {
-        window.localStorage.removeItem('playerConcertid')
-        window.localStorage.removeItem('playerNumber')
-        window.localStorage.removeItem('playerPracticeid')
-        window.localStorage.removeItem('playerPracticeFile')
+        dispatch(removeArchiveStorage())
+        dispatch(removePracticeStorage())
+        dispatch(removeSourceStorage())
         window.localStorage.removeItem('displayPlayer')
       }
     }
@@ -311,9 +403,8 @@ export const closePlayer = () => {
   return async (dispatch, getState) => {
     dispatch(audioStop())
     dispatch(setDisplayPlayer(false))
-    window.localStorage.removeItem('playerConcertid')
-    window.localStorage.removeItem('playerNumber')
-    window.localStorage.removeItem('playerPracticeid')
-    window.localStorage.removeItem('playerPracticeFile')
+    dispatch(removeArchiveStorage())
+    dispatch(removePracticeStorage())
+    dispatch(removeSourceStorage())
   }
 }

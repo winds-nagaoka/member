@@ -6,10 +6,12 @@ import { connect } from 'react-redux'
 import * as lib from '../../../../Library/Library'
 import * as libArchive from '../../Archive/Library/Library'
 import * as libPractice from '../../Practice/Library/Library'
+import * as libSource from '../../Source/Library/Library'
 
 import {
   loadArchivePlaylist,
   loadPracticePlaylist,
+  loadSourcePlaylist,
 
   setAudioRef,
   setLoadingAudio,
@@ -20,6 +22,7 @@ import {
 
   archivePlayRequest,
   practicePlayRequest,
+  sourcePlayRequest,
 
   audioPlay,
   audioPause,
@@ -30,6 +33,7 @@ import {
 
 import { getConcertList } from '../../../../Actions/Archive'
 import { getHistory } from '../../../../Actions/History'
+import { getSource } from '../../../../Actions/Source'
 
 import './Audio.css'
 // import lib from 'react-confirm-alert';
@@ -43,6 +47,18 @@ function mapStateToProps(state) {
     archivePlaylist: state.audio.archivePlaylist,
     archiveBaseUrl: state.audio.archiveBaseUrl,
     archiveConcertList: state.archive.concertList,
+
+    // 練習記録プレイリスト
+    loadingPracticePlaylist: state.audio.loadingPracticePlaylist,
+    practicePlaylist: state.audio.practicePlaylist,
+    practiceBaseUrl: state.audio.practiceBaseUrl,
+    practiceList: state.history.list,
+
+    // 参考音源プレイリスト
+    loadingSourcePlaylist: state.audio.loadingSourcePlaylist,
+    sourcePlaylist: state.audio.sourcePlaylist,
+    sourceBaseUrl: state.audio.sourceBaseUrl,
+    sourceList: state.source.list,
 
     // オーディオタグ本体
     audioRef: state.audio.audioRef,
@@ -62,26 +78,26 @@ function mapStateToProps(state) {
     durationTime: state.audio.durationTime,
     playPercent: state.audio.playPercent,
 
-    // 再生中の曲情報
+    // 曲情報
+
+    // 再生中のモード
     playmode: state.audio.playmode,
 
-    // アーカイブ曲情報
+    // アーカイブモード
     concertid: state.audio.concertid,
     number: state.audio.number,
-    album: state.audio.album,
-    track: state.audio.track,
-
-    // 練習履歴リスト
-    loadingPracticePlaylist: state.audio.loadingPracticePlaylist,
-    practicePlaylist: state.audio.practicePlaylist,
-    practiceBaseUrl: state.audio.practiceBaseUrl,
-    practiceList: state.history.list,
+    // album: state.audio.album,
+    // track: state.audio.track,
 
     // 練習記録モード
     practiceid: state.audio.practiceid,
     fileNumber: state.audio.fileNumber,
     requestTime: state.audio.requestTime,
-    file: state.audio.file
+    // file: state.audio.file, // これ使ってる？
+
+    // 参考音源モード
+    sourceid: state.audio.sourceid,
+    sourceNumber: state.audio.sourceNumber
   }
 }
 
@@ -92,6 +108,9 @@ function mapDispatchToProps(dispatch) {
     },
     loadPracticePlaylist () {
       dispatch(loadPracticePlaylist())
+    },
+    loadSourcePlaylist () {
+      dispatch(loadSourcePlaylist())
     },
     setAudioRef (audioRef) {
       dispatch(setAudioRef(audioRef))
@@ -118,6 +137,9 @@ function mapDispatchToProps(dispatch) {
     practicePlayRequest (practiceid, fileNumber, requestTimeString, playRequest) {
       dispatch(practicePlayRequest(practiceid, fileNumber, requestTimeString, playRequest))
     },
+    sourcePlayRequest (sourceid, sourceNumber, playRequest) {
+      dispatch(sourcePlayRequest(sourceid, sourceNumber, playRequest))
+    },
 
     audioPlay () {
       dispatch(audioPlay())
@@ -141,6 +163,10 @@ function mapDispatchToProps(dispatch) {
 
     getHistory () {
       dispatch(getHistory())
+    },
+
+    getSource () {
+      dispatch(getSource())
     }
   }
 }
@@ -154,17 +180,21 @@ class Audio extends Component {
   }
 
   componentDidMount () {
-    // this.props.loadArchivePlaylist()
     this.props.loadArchivePlaylist()
     this.props.loadPracticePlaylist()
-    // this.props.displayPlayer ? this.props.loadArchivePlaylist() : false
+    this.props.loadSourcePlaylist()
+
     if (window.localStorage.displayPlayer === 'true' && window.localStorage.playerConcertid && window.localStorage.playerNumber) {
       this.props.getConcertList()
-      this.props.archivePlayRequest(window.localStorage.playerConcertid, window.localStorage.playerNumber, false)
+      this.props.archivePlayRequest(window.localStorage.playerConcertid, Number(window.localStorage.playerNumber), false)
     }
     if (window.localStorage.displayPlayer === 'true' && window.localStorage.playerPracticeid && window.localStorage.playerPracticeFile) {
       this.props.getHistory()
-      this.props.practicePlayRequest(window.localStorage.playerPracticeid, window.localStorage.playerPracticeFile, 0, false)
+      this.props.practicePlayRequest(window.localStorage.playerPracticeid, Number(window.localStorage.playerPracticeFile), 0, false)
+    }
+    if (window.localStorage.displayPlayer === 'true' && window.localStorage.playerSourceid && window.localStorage.playerSourceNumber) {
+      this.props.getSource()
+      this.props.sourcePlayRequest(window.localStorage.playerSourceid, Number(window.localStorage.playerSourceNumber), false)
     }
   }
 
@@ -255,6 +285,13 @@ class Audio extends Component {
       } else {
         this.props.audioStop()
       }
+    } else if (this.props.playmode === 'source') {
+      if (this.getSourceAlbum().list.length > (this.props.sourceNumber + 1)) {
+        // 次のトラックへ
+        this.props.sourcePlayRequest(this.props.sourceid, this.props.sourceNumber + 1, true)
+      } else {
+        this.props.audioStop()
+      }  
     }
   }
 
@@ -269,10 +306,6 @@ class Audio extends Component {
       // if (this.props.playlistLoad) this.props.setDisplayPlaylist(true)
       this.props.setDisplayPlaylist(true)
     }
-  }
-
-  selectPlay (number) {
-    this.props.archivePlayRequest(this.props.concertid, number, true)
   }
 
   renderArchiveTrackList () {
@@ -291,7 +324,7 @@ class Audio extends Component {
           const playing = this.props.number === trackNumber ? ' playing' : ''
           const playTypeClass = this.getAlbum().type ? ' ' + this.getAlbum().type : ''
           return (
-            <div key={'track' + i + j} className={'track' + playing + playTypeClass} onClick={() => this.selectPlay(trackNumber)}>
+            <div key={'track' + i + j} className={'track' + playing + playTypeClass} onClick={() => this.props.archivePlayRequest(this.props.concertid, trackNumber, true)}>
               <div className='icon'><i className='fas fa-play-circle'></i></div>
               <div className='info'>
                 <span className='title'>{title + addTitle}</span>
@@ -301,6 +334,8 @@ class Audio extends Component {
           )
         })
       })
+      if (!trackList) return false
+      if (trackList.reduce((accumulator, currentValue) => accumulator + currentValue.length, 0) === 0) return
       return (
         <div key={'part' + i}>
           <label>{item.label}</label>
@@ -396,25 +431,69 @@ class Audio extends Component {
     })
   }
 
-  getArchiveTitle () {
-    return this.getTrack() && this.props.archiveConcertList ? (this.getTrack().data !== false ? libArchive.getAudioTitle(this.props.concertid, this.getTrack().data, this.props.archiveConcertList) : this.getTrack().title) : false
+  renderSourceTrackList () {
+    const source = libSource.getSource(this.props.sourceid, this.props.sourceList).detail
+    // 初期値
+    var trackCount = 0
+    return source.contents.map((item, i) => {
+      const trackList = item.music.map((num, i) => {
+        const trackData = this.getSourceAlbum().list.filter((e) => {return e.data === num})
+        return trackData.map((each, j) => {
+          const trackNumber = trackCount
+          trackCount += 1
+          const title = each.data !== false ? libSource.getAudioTitle(this.props.sourceid, each.data, this.props.sourceList) : each.title
+          const addTitle = each.addtitle ? ' ' + each.addtitle : ''
+          const composer = each.data !== false ? <span className='composer'>{libSource.getAudioComposer(this.props.sourceid, each.data, this.props.sourceList)}</span> : (each.composer ? <span className='composer'>{each.composer}</span> : '')
+          const playing = this.props.sourceNumber === trackNumber ? ' playing' : ''
+          const playTypeClass = this.getSourceAlbum().type ? ' ' + this.getSourceAlbum().type : ''
+          return (
+            <div key={'track' + i + j} className={'track' + playing + playTypeClass} onClick={() => this.props.sourcePlayRequest(this.props.sourceid, trackNumber, true)}>
+              <div className='icon'><i className='fas fa-play-circle'></i></div>
+              <div className='info'>
+                <span className='title'>{title + addTitle}</span>
+                {composer}
+              </div>
+            </div>
+          )
+        })
+      })
+      if (!trackList) return false
+      if (trackList.reduce((accumulator, currentValue) => accumulator + currentValue.length, 0) === 0) return
+      return (
+        <div key={'part' + i}>
+          <label>{item.label}</label>
+          {trackList}
+        </div>
+      )
+    })
   }
 
-  getPracticeTitle () {
-    console.warn('practice Album', this.getPracticeAlbum())
-    return '練習'
+  getArchiveTitle () {
+    return this.getTrack() && this.props.archiveConcertList ? (this.getTrack().data !== false ? libArchive.getAudioTitle(this.props.concertid, this.getTrack().data, this.props.archiveConcertList) : this.getTrack().title) : false
   }
 
   getAlbum () {
     return this.props.concertid && this.props.archivePlaylist ? libArchive.getAlbum(this.props.concertid, this.props.archivePlaylist) : false
   }
 
+  getTrack () {
+    return this.props.concertid && this.props.archivePlaylist ? this.getAlbum().list[this.props.number] : false
+  }
+
   getPracticeAlbum () {
     return this.props.practiceid && this.props.practicePlaylist ? libPractice.getPracticeAlbum(this.props.practiceid, this.props.practicePlaylist) : false
   }
+  
+  getSourceTrack () {
+    return this.props.sourceid && this.props.sourcePlaylist ? this.getSourceAlbum().list[this.props.sourceNumber] : false
+  }
 
-  getTrack () {
-    return this.props.concertid && this.props.archivePlaylist ? this.getAlbum().list[this.props.number] : false
+  getSourceTitle () {
+    return this.getSourceTrack() && this.props.sourceList ? (this.getSourceTrack().data !== false ? libSource.getAudioTitle(this.props.sourceid, this.getSourceTrack().data, this.props.sourceList) : this.getSourceTrack().title) : false
+  }
+
+  getSourceAlbum () {
+    return this.props.sourceid && this.props.sourcePlaylist ? libSource.getAlbum(this.props.sourceid, this.props.sourcePlaylist) : false
   }
 
   renderTitle (playTypeClass) {
@@ -431,6 +510,13 @@ class Audio extends Component {
         <div>
           <span className='practice'>{isNaN(this.props.fileNumber) || !this.props.practicePlaylist ? '読み込み中' : '練習の録音'}</span>
           <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.fileNumber) || !this.props.practicePlaylist || !this.props.practiceList ? '読み込み中' : libPractice.getPracticeTitle(this.props.practiceid, this.props.practiceList)}</span>
+        </div>
+      )
+    } else if (this.props.playmode === 'source') {
+      return (
+        <div>
+          <span className='source'>{isNaN(this.props.sourceNumber) ? false : '参考音源 - ' + (this.props.sourceList ? libSource.getSourceTitle(this.props.sourceid, this.props.sourceList) : false)}</span>
+          <span><i className='fab fa-itunes-note'></i>{isNaN(this.props.sourceNumber) || !this.props.sourcePlaylist ? '読み込み中' : (this.getSourceTitle() + (this.getSourceAlbum().list[this.props.sourceNumber].addtitle ? ' ' + this.getSourceAlbum().list[this.props.sourceNumber].addtitle : ''))}</span>
         </div>
       )
     }
@@ -496,6 +582,36 @@ class Audio extends Component {
     )
   }
 
+  renderSourcePlaylist () {
+    if (!this.props.displayPlayer) return
+    // if (!this.props.playlistLoad) return
+    if (!this.props.sourcePlaylist) return
+    if (!this.props.sourceList) return
+    if (!this.props.sourceid) return
+    if (this.props.sourceNumber === undefined) return
+    // if (!this.props.displayPlaylist) return
+    const showTrackList = this.renderSourceTrackList()
+    const playStatusClass = this.props.playStatus ? ' playing' : ''
+    // const playmodeClass = this.props.playmode ? ' ' + this.props.playmode : ''
+    const playTypeClass = this.getSourceAlbum() ? ' ' + this.getSourceAlbum().type : ''
+    return (
+      <div className={'music-list' + (this.props.displayPlaylist ? ' open' : '') + lib.pcClass(this.props.pc)}>
+        <div className={'header' + playTypeClass + playStatusClass + lib.pcClass(this.props.pc)} onClick={() => this.props.setDisplayPlaylist(false)}>
+          {this.renderTitle(playTypeClass)}
+        </div>
+        <div className={'label close' + playTypeClass} onClick={() => this.props.setDisplayPlaylist(false)}><i className='fas fa-chevron-down'></i></div>
+        <div className='contents'>
+          <div className='contents-inner'>
+            <div className='album source'>
+              {showTrackList}
+            </div>
+            <div className='gap'></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   renderPlayTime () {
     if (this.props.current && this.props.duration) {
       return <div className='time'><span>{this.props.currentTime}</span><span>{this.props.durationTime}</span></div>
@@ -551,7 +667,7 @@ class Audio extends Component {
     const displayPlaylistClass = displayPlaylist ? ' list-open' : ''
     const playTypeClass = this.getAlbum() ? ' ' + this.getAlbum().type : ''
     const openIcon = archivePlaylist ? <i className='fas fa-chevron-up'></i> : ''
-    const showPlaylist = playmode === 'archive' ? this.renderArchivePlaylist() : this.renderPracticePlaylist()
+    const showPlaylist = playmode === 'archive' ? this.renderArchivePlaylist() : (playmode === 'practice' ? this.renderPracticePlaylist() : this.renderSourcePlaylist())
 
     const prevButton = this.props.playmode === 'practice' ? <div className={'control prev' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.audioBackward()}><i className='fas fa-backward'></i></div> : false
     const nextButton = this.props.playmode === 'practice' ? <div className={'control next' + playStatusClass + playTypeClass + displayPlaylistClass} onClick={() => this.props.audioForward()}><i className='fas fa-forward'></i></div> : false

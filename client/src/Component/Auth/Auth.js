@@ -8,6 +8,7 @@ import { loginAuth, windowWidthChange, setContentsRef, scrollToTop } from '../..
 
 import Home from './Home/Home'
 import Practice from './Practice/Practice'
+import Source from './Source/Source'
 import Manager from './Manager/Manager'
 import BBS from './BBS/BBS'
 
@@ -109,6 +110,7 @@ class Auth extends Component {
                   <Route exact path='/' component={Home} />
                   <Route path='/schedule' component={Practice} />
                   <Route path='/history' component={Practice} />
+                  <Route path='/source' component={Source} />
                   <Route path='/manager' component={Manager} />
                   <Route path='/bbs' component={BBS} />
                   {/* <Route path='/practice/cast' component={Cast} /> */}

@@ -54,7 +54,8 @@ input[type="password"] {
   border-radius: .25rem;
   color: #333;
   font-size: 17px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '\6E38\30B4\30B7\30C3\30AF    Medium', meiryo, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', meiryo, sans-serif;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
   &:focus {
     border: solid 1px rgba(182,0,5,1);
@@ -74,7 +75,8 @@ textarea {
   border-radius: .25rem;
   color: #333;
   font-size: 17px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '\6E38\30B4\30B7\30C3\30AF    Medium', meiryo, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', meiryo, sans-serif;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
   &:focus {
     border: solid 1px rgba(182,0,5,.6);
