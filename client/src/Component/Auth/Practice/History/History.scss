@@ -15,6 +15,10 @@
 
       &.pc {
         padding: 8px 16px;
+
+        &:last-child {
+          border-bottom: 0;
+        }
       }
 
       &.no-audio {

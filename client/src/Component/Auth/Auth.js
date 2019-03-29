@@ -22,6 +22,8 @@ import ScoreBoxModal from './Score/BoxModal/BoxModal'
 
 import Setting from './Setting/Setting'
 
+import Tutorial from './Tutorial/Tutorial'
+
 import NavigationHeader from './Component/NavigationHeader/NavigationHeader'
 import NavigationInline from './Component/NavigationInline/NavigationInline'
 
@@ -133,6 +135,7 @@ class Auth extends Component {
         <ScoreModal />
         <ScoreEditModal />
         <ScoreBoxModal />
+        <Tutorial />
       </div>
     )
   }

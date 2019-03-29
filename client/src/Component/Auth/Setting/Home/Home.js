@@ -8,6 +8,7 @@ import * as lib from '../../../../Library/Library'
 import { getUser } from '../../../../Actions/Setting'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { closePlayer } from '../../../../Actions/Audio'
+import { requestFirstTutorial } from '../../../../Actions/Tutorial'
 
 import './Home.css'
 
@@ -33,6 +34,9 @@ function mapDispatchToProps(dispatch) {
     },
     closePlayer (e) {
       dispatch(closePlayer(e))
+    },
+    requestFirstTutorial () {
+      dispatch(requestFirstTutorial())
     }
   }
 }
@@ -54,7 +58,7 @@ class Home extends Component {
     if (!this.props.displayPlayer) return false
     return (    
       <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
-        <div  onClick={(e) => this.props.closePlayer(e)} className='button'>プレイヤーを閉じる</div>
+        <div onClick={(e) => this.props.closePlayer(e)} className='button'>プレイヤーを閉じる</div>
       </div>
     )
   }
@@ -123,6 +127,7 @@ class Home extends Component {
           <div className='link'>
             <ul>
               <li><Link to='/setting/about'><div className='inner'><span>このアプリについて</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><div onClick={() => this.props.requestFirstTutorial()}>チュートリアルを開く</div></li>
               <li className='border-top'><Link to='/setting/license'><div className='inner'><span>ライセンス情報</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>

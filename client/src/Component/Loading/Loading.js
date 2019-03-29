@@ -6,7 +6,7 @@ import * as lib from '../../Library/Library'
 
 import Header from '../Base/Component/Header/Header'
 
-import WindsLogo from '../Auth/Component/NavigationHeader/logo.svg'
+// import WindsLogo from '../../../Asset/logo.svg'
 
 function mapStateToProps(state) {
   return {

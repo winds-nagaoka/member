@@ -28,6 +28,8 @@ import scoreBoxReducer from '../Reducers/ScoreBox'
 
 import settingReducer from '../Reducers/Setting'
 
+import tutorialReducer from '../Reducers/Tutorial'
+
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
@@ -56,6 +58,8 @@ export default function createStore(history) {
       scoreBox: scoreBoxReducer,
 
       setting: settingReducer,
+
+      tutorial: tutorialReducer,
 
       reg: regReducer,
       login: loginReducer,

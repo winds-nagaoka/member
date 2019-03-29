@@ -1,5 +1,6 @@
 import * as Status from './Status'
 import * as request from '../Library/Request'
+import { requestFirstTutorial } from './Tutorial'
 
 export const login = () => {
   return async (dispatch, getState) => {
@@ -22,6 +23,7 @@ export const login = () => {
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
+          dispatch(requestFirstTutorial())
         } else {
           console.warn('Login NG')
           dispatch(Status.windsidUpdate(false))

@@ -1,0 +1,244 @@
+.tutorial-modal {
+
+  .tutorial-modal-contents {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 51;
+
+    // transition: transform .3s ease-in-out;
+    transition: transform .2s ease-in-out;
+    -webkit-transform: translate3d(0,105%,0);
+    transform: translate3d(0,105%,0);
+    -webkit-overflow-scrolling: touch;
+
+    &.pc {
+      // width: 900px;
+      // top: 20%;
+      // left: calc(50% - 450px);
+      // border-radius: 4px 4px 0 0;
+    }
+
+    &.open {
+      transition: transform .4s ease;
+      -webkit-transform: translate3d(0,0%,0);
+      transform: translate3d(0,0%,0);
+      box-shadow: 6px 0 25px rgba(0,0,0,.15);
+
+      &.pc {
+        // -webkit-transform: translateY(20%);
+        // transform: translateY(20%);
+      }
+    }
+
+    .header {
+      position: fixed;
+      height: 44px;
+      width: 100%;
+      border-bottom: .55px solid #d3d3d3;
+      background: #fff;
+      text-align: center;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.pc {
+        // margin: 61px 0 0 0;
+        height: 60px;
+      }
+
+      .logo {
+        width: calc(100% - 44px);
+        height: 36px;
+        overflow: hidden;
+  
+        svg {
+          fill: #B60005;
+        }
+      }
+
+      .skip {
+        position: fixed;
+        top: 0;
+        width: auto;
+        height: 44px;
+        color: #B60005;
+        font-size: 16px;
+        cursor: pointer;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          color: rgba(182,0,5,.8);
+        }
+        &:active {
+          color: rgba(182,0,5,.6);
+        }
+        
+        &.pc {
+          height: 60px;
+        }
+      }
+
+      .skip {
+        right: 12px;
+        font-weight: bold;
+      }
+    }
+
+    .swiper-container {
+      background: #fff;
+      
+      .swiper-custom-button-prev,
+      .swiper-custom-button-next {
+        position: absolute;
+        top: 50%;
+        width: 24px;
+        height: 36px;
+        margin-top: -18px;
+        z-index: 10;
+        color: #000;
+        font-size: 36px;
+        cursor: pointer;
+        background: none;
+        opacity: 0.6;
+
+        &.mobile {
+          display: none;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        &.swiper-button-disabled {
+          opacity: 0;
+          cursor: auto;
+          pointer-events: none;
+        }
+      }
+
+      .swiper-custom-button-prev {
+        left: 10px;
+        right: auto;
+      }
+      .swiper-custom-button-next {
+        right: 10px;
+        left: auto;
+      }
+    }
+
+    .swiper-pagination {
+      position: absolute;
+      text-align: center;
+      -webkit-transition: 300ms opacity;
+      -o-transition: 300ms opacity;
+      transition: 300ms opacity;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      z-index: 10;
+
+      &.swiper-pagination-hidden {
+        opacity: 0;
+      }
+
+      .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        display: inline-block;
+        border-radius: 100%;
+        background: #000;
+        opacity: 0.2;
+      }
+
+      .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: #B60005!important;
+      }
+    }
+
+    .tutorial-slide {
+      background: rgba(0,0,0,0);
+
+      .swiper-container {
+        background: rgba(0,0,0,0);
+        .swiper-wrapper {
+          background: rgba(0,0,0,0);
+          .swiper-slide {
+            background: rgba(0,0,0,0);
+          }
+        }
+      }
+
+      .tutorial-each-page {
+        width: 100%;
+        height: calc(100vh - 45px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+
+        &.pc {
+          height: calc(100vh - 61px);
+        }
+
+        img {
+          display: block;
+          width: 100%;
+          max-width: 800px;
+          height: auto;
+          max-height: 100vh;
+          object-fit: contain;
+          z-index: 11;
+        }
+
+        .swiper-lazy-preloader {
+          width: 36px;
+          height: 36px;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -18px;
+          margin-top: -18px;
+          font-size: 36px;
+          text-align: center;
+          z-index: 10;
+
+          -webkit-transform-origin: 50%;
+          -ms-transform-origin: 50%;
+          transform-origin: 50%;
+          -webkit-animation: none;
+          animation: none;
+
+          &::after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .tutorial-modal-background {
+    display: none;
+    position: fixed;
+    z-index: 50;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+
+    &.open {
+      display: block;/*カバーを表示*/
+      opacity: .95;
+      // transition: all 3s ease-in-out;
+      // animation: menu-background-show .3s ease-in-out 0s;
+    }
+  }
+}

@@ -1,58 +1,5 @@
 .score-edit-modal {
 
-  .header {
-    position: fixed;
-    height: 44px;
-    width: 100%;
-    border-bottom: .5px solid #d3d3d3;
-    background: #fff;
-    text-align: center;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &.pc {
-      border-radius: 4px 4px 0 0;
-    }
-
-    .title {
-      width: 100%;
-      margin: 0 auto;
-      font-weight: bold;
-    }
-
-    .cancel, .save {
-      position: fixed;
-      top: 0;
-      width: auto;
-      height: 44px;
-      color: #B60005;
-      font-size: 16px;
-      cursor: pointer;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &:hover {
-        color: rgba(182,0,5,.8);
-      }
-      &:active {
-        color: rgba(182,0,5,.6);
-      }
-    }
-
-    .cancel {
-      left: 12px;
-    }
-
-    .save {
-      right: 12px;
-      font-weight: bold;
-    }
-  }
-
   .score-edit-modal-contents {
     position: fixed;
     top: 0;
@@ -84,6 +31,59 @@
       &.pc {
         // -webkit-transform: translateY(20%);
         // transform: translateY(20%);
+      }
+    }
+      
+    .header {
+      position: fixed;
+      height: 44px;
+      width: 100%;
+      border-bottom: .55px solid #d3d3d3;
+      background: #fff;
+      text-align: center;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.pc {
+        border-radius: 4px 4px 0 0;
+      }
+
+      .title {
+        width: 100%;
+        margin: 0 auto;
+        font-weight: bold;
+      }
+
+      .cancel, .save {
+        position: fixed;
+        top: 0;
+        width: auto;
+        height: 44px;
+        color: #B60005;
+        font-size: 16px;
+        cursor: pointer;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          color: rgba(182,0,5,.8);
+        }
+        &:active {
+          color: rgba(182,0,5,.6);
+        }
+      }
+
+      .cancel {
+        left: 12px;
+      }
+
+      .save {
+        right: 12px;
+        font-weight: bold;
       }
     }
 

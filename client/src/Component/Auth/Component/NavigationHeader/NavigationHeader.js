@@ -11,8 +11,8 @@ import NavigationMenuContents from '../NavigationMenuContents/NavigationMenuCont
 import * as lib from '../../../../Library/Library'
 import * as libArchive from '../../Archive/Library/Library'
 
-import WindsLogo from './logo.svg'
-import Back from './back.svg'
+import WindsLogo from '../../../../Asset/logo.svg'
+import Back from '../../../../Asset/back.svg'
 
 import './NavigationHeader.css'
 
