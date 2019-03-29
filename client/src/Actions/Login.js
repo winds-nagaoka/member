@@ -23,7 +23,6 @@ export const login = () => {
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
-          dispatch(requestFirstTutorial())
         } else {
           console.warn('Login NG')
           dispatch(Status.windsidUpdate(false))

@@ -147,7 +147,7 @@
       padding: 0 0 0 12px;
       font-size: 12px;
       color: #333;
-      
+
       & + .box {
         margin: 0 0 32px 0;
       }
@@ -156,13 +156,13 @@
         padding: 0 0 0 16px;
       }
     }
-      
+
     // 標準box
     .box {
       margin: 32px 0 32px 0;
       // padding: 12px 0 0;
       background: #fff;
-      
+
       // &.box-no-background {
       //   background: inherit;
       // }
@@ -178,12 +178,16 @@
           padding: 16px;
           font-size: 1rem;
         }
-        
+
         .link ul li a .inner {
           padding-left: 16px;
         }
 
         .link ul li .disabled-link .inner {
+          padding-left: 16px;
+        }
+
+        .link ul li .link-button .inner {
           padding-left: 16px;
         }
 
@@ -277,6 +281,8 @@
 
             .inner {
               padding-left: 12px;
+              cursor: pointer;
+
               display: flex;
               justify-content: space-between;
               align-items: center;
@@ -317,6 +323,30 @@
                   color: #eee;
                   font-size: 1.2rem;
                 }
+              }
+            }
+
+            .link-button {
+              padding-left: 12px;
+              cursor: pointer;
+              color: #333;
+
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              &:hover {
+                background: #eee;
+              }
+
+              &:active {
+                background: #e3e3e3;
+              }
+
+              span {
+                // margin: 11px 8px 11px 0;
+                line-height: 44px;
+                font-size: 16px;
               }
             }
           }

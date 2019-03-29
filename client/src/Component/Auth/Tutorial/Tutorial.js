@@ -10,6 +10,7 @@ import { setDisplayTutorial } from '../../../Actions/Tutorial'
 import * as lib from '../../../Library/Library'
 
 import WindsLogo from '../../../Asset/logo.svg'
+import WindsIcon from '../../../Asset/hr.svg'
 
 import './Tutorial.css'
 
@@ -21,7 +22,7 @@ function mapStateToProps(state) {
     standalone: state.tutorial.standalone,
 
     displayTutorial: state.tutorial.displayTutorial,
-    tutorialMode: state.tutorial.displayTutorial
+    tutorialMode: state.tutorial.tutorialMode
   }
 }
 
@@ -35,37 +36,54 @@ function mapDispatchToProps(dispatch) {
 
 class Tutorial extends Component {
 
-  renderTutorialSlide () {
-    if (!this.props.tutorialMode) return
+  renderiosGuide () {
+    return (
+      <div className='ios-guide'>
+        <div className='ios-guide-inner'>
+          <h2>全画面で表示するには</h2>
+          <p>Safariメニューの<span className='share-icon'></span>から<span className='add-icon'></span>を押してホーム画面に追加してください</p>
+        </div>
+      </div>
+    )
+  }
+
+  renderFirstTutorial () {
     const standaloneTutorial = [
-      {title: 'ようこそ', contents: 'ウィンズアプリへ'},
-      {title: 'ページ2', contents: 'ホーム画面への追加ありがとうございます'},
-      {title: 'ページ3', contents: 'ページ3です'}
+      {title: 'ようこそ', subtitle: 'ウィンズアプリへ', contents: ['このアプリは会員専用ページのコンテンツをまとめたものです'], img: 'icon'},
+      {title: 'はじめましょう', contents: ['このページは設定からいつでも表示できます'], img: 'icon', button: true}
     ]
     const iosTutorial = [
-      {title: 'ようこそ', contents: 'ウィンズアプリへ'},
-      {title: 'iOS', contents: 'メニューからホーム画面に追加してください'},
-      {title: 'ページ3', contents: 'ページ3です'},
+      {title: 'ようこそ', subtitle: 'ウィンズアプリへ', contents: ['このアプリは会員専用ページのコンテンツをまとめたものです'], img: 'icon'},
+      {title: 'まずはじめに', contents: ['全画面表示でのご利用を推奨しています', '下のメニューからホーム画面に追加してください'], iosGuide: true},
+      {title: 'はじめましょう', contents: ['このページは設定からいつでも表示できます'], img: 'icon', button: true},
     ]
     const androidTutorial = [
-      {title: 'ようこそ', contents: 'ウィンズアプリへ'},
-      {title: 'Android', contents: 'メニューからホーム画面に追加してください'},
-      {title: 'ページ3', contents: 'ページ3です'},
+      {title: 'ようこそ', subtitle: 'ウィンズアプリへ', contents: ['このアプリは会員専用ページのコンテンツをまとめたものです'], img: 'icon'},
+      {title: 'まずはじめに', contents: ['メニューからホーム画面に追加してください'], img: 'icon'},
+      {title: 'はじめましょう', contents: ['このページは設定からいつでも表示できます'], img: 'icon', button: true},
     ]
     const pcTutorial = [
-      {title: 'ようこそ', contents: 'ウィンズアプリへ'},
-      {title: 'ページ2', contents: 'PCです'},
-      {title: 'ページ3', contents: 'ページ3です'}
+      {title: 'ようこそ', subtitle: 'ウィンズアプリへ', contents: ['このアプリは会員専用ページのコンテンツをまとめたものです'], img: 'icon'},
+      {title: 'はじめましょう', contents: ['このページは設定からいつでも表示できます'], img: 'icon', button: true}
     ]
     const tutorialContents = this.props.userAgent === 'other' ? pcTutorial : (this.props.standalone ? standaloneTutorial : (this.props.userAgent === 'Android' ? androidTutorial : iosTutorial))
-
     const tutorialList = tutorialContents.map((each, i) => {
+      const img = each.img === 'icon' ? <div className='winds-icon'><WindsIcon /></div> : false
+      const subtitle = each.subtitle ? <h3>{each.subtitle}</h3> : false
+      const contents = each.contents ? each.contents.map((text, i) => <p key={'contents' + i}>{text}</p>) : false
+      const button = each.button ? <div className='start-button' onClick={() => this.props.setDisplayTutorial(false, undefined)}>スタート</div> : false
+      const iosGuide = each.iosGuide ? this.renderiosGuide() : false
       return (
         <div key={i}>
-          {/* <div className='tutorial-each-page' onClick={() => this.props.setDisplayTutorial(false, undefined)}> */}
           <div className={'tutorial-each-page' + lib.pcClass(this.props.pc)}>
-            <h2>{each.title}</h2>
-            <p>{each.contents}</p>
+            {img}
+            <div className='title'>
+              <h2>{each.title}</h2>
+              {subtitle}
+            </div>
+            {contents}
+            {button}
+            {iosGuide}
           </div>
         </div>
       )
@@ -85,25 +103,16 @@ class Tutorial extends Component {
       // スライドごとにwrapperのサイズを変更
       watchSlidesProgress: true,
       // 最初のスライドを指定
-      // activeSlideKey: this.props.photoNumber.toString()
       initialSlide: 0,
       // 次のスライドがどれくらい見えていたら次へ行くか
       longSwipesRatio: 0.4,
       preloadImages: false,
-      // preloadImages: false,
       lazy: true,
 
       pagination: {
         el: '.swiper-pagination',
         clickable: true
       }
-      // lazy: {
-      //   loadPrevNext: true,
-      //   loadPrevNextAmount: 10,
-      //   // スライド開始時にロードする
-      //   // loadOnTransitionStart: false,
-      // },
-      // preloaderClass: 'swiper-lazy-preloader-loading'
     }
     return (
       <div className='tutorial-slide'>
@@ -112,6 +121,12 @@ class Tutorial extends Component {
         </Swiper>
       </div>
     )
+  }
+
+  renderTutorialSlide () {
+    if (!this.props.tutorialMode) return
+    console.warn('asdaasdasdwrf', this.props.tutorialMode)
+    if (this.props.tutorialMode === 'first') return this.renderFirstTutorial()
   }
 
   render () {

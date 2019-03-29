@@ -78,8 +78,10 @@ class Source extends Component {
       console.log(each)
       return (
         <div key={'source' + i} className={'box source-list' + lib.pcClass(this.props.pc)}>
-          <h3 className={lib.pcClass(this.props.pc)}>{each.detail.title}</h3>
-          <ol>{showList}</ol>
+          <div className='title-frame'>
+            <label>{each.detail.title}</label>
+            <ol>{showList}</ol>
+          </div>
         </div>
       )
     })
