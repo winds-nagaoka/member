@@ -72,10 +72,8 @@ class Source extends Component {
 
   renderSource () {
     if (this.props.loading || !this.props.list) return <div className={'box source-list' + lib.pcClass(this.props.pc)}><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
-    console.log(this.props.list)
     return this.props.list.map((each, i) => {
       const showList = this.renderList(each.detail)
-      console.log(each)
       return (
         <div key={'source' + i} className={'box source-list' + lib.pcClass(this.props.pc)}>
           <div className='title-frame'>

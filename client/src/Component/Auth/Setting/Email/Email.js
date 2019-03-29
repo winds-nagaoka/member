@@ -49,12 +49,10 @@ class Email extends Component {
   }
 
   emailChanged () {
-    console.log('onComplete')
     this.props.redirect('/setting')
   }
 
   canceled () {
-    console.log('onCancel')
     this.props.redirect('/setting')
   }
 

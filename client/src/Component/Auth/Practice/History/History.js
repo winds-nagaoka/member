@@ -52,7 +52,6 @@ class History extends Component {
     if (this.props.loading || !this.props.list) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     return this.props.list.map((each, i) => {
       const practice = each.detail
-      console.log(each, practice.id)
       const audio = practice.recordStatus ? ' has-audio' : ' no-audio'
       const playRequest = practice.recordStatus ? () => this.props.practicePlayRequest(practice.id, 0, 0, true) : () => {}
       const icon = practice.recordStatus ? <i className='fas fa-play-circle'></i> : <i className='far fa-times-circle'></i>

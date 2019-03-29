@@ -52,7 +52,6 @@ class BoxModal extends Component {
   renderModalContent () {
     if (!this.props.modalContent) return <div>&nbsp;</div>
     const gap = this.props.displayPlayer ? <div className='gap'></div> : false
-    console.warn(this.props.modalContent)
     const locate = !this.props.modalContent.locate ? '未設定' : this.props.modalContent.locate
     const locateClass = !this.props.modalContent.locate ? 'locate disabled' : 'locate'
     return (

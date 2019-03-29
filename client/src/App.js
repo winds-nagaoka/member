@@ -11,13 +11,9 @@ import Auth from './Component/Auth/Auth'
 const history = createBrowserHistory()
 const store = createStore(history)
 
-console.warn(history)
-console.log(store)
-
 // react-router-redux の Action をフック
 // リンク移動先を保存
 history.listen(location => {
-  // console.warn(location, history,History, window.history.state)
   if (history.action === 'PUSH') {
     let list = window.localStorage.history ? JSON.parse(window.localStorage.history) : []
     list.push(location.pathname)

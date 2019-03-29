@@ -44,6 +44,12 @@ class About extends Component {
         </div>
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
+          <div className='text'>
+            あとで書きます
+          </div>
+        </div>
+
+        <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
               <li><Link to='/setting'><div className='inner'><i className="fas fa-angle-left"></i><span>戻る</span></div></Link></li>

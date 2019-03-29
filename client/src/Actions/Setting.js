@@ -28,7 +28,6 @@ export const getUser = () => {
         return false
       } else {
         if (res.body.status) {
-          console.log('getUser OK', res.body)
           dispatch(setUser(res.body.user))
         }
       }
@@ -62,7 +61,6 @@ export const updateModifyText = (apiPath, replacePath) => {
         return false
       } else {
         if (res.body.status) {
-          console.log('updateModifyText OK', res.body)
           dispatch(replace(replacePath))
           dispatch(showToast('変更しました'))
         } else {
@@ -209,7 +207,6 @@ export const sendScoreAdminRequest = () => {
     dispatch(loadingScoreAdminRequest(true))
     const adminRequest = 'scoreAdmin' in getState().status.user ? !getState().status.user.scoreAdmin : true
     // if (!adminRequest && getState().setting.scoreAdminRequestPass === '') return false
-    console.log('管理者Request', adminRequest)
     const path = 'https://auth.winds-n.com/api/setting/score/admin'
     const send = {
       userid: window.localStorage.windsid,

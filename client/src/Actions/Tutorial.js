@@ -2,11 +2,23 @@ import { audioPause } from './Audio'
 
 const prefix = 'TUTORIAL_'
 
-export const requestFirstTutorial = () => {
+export const openFirstTutorial = () => {
   return async (dispatch) => {
     dispatch(setStandalone())
     dispatch(setUserAgent())
     dispatch(setDisplayTutorial(true, 'first'))
+    // 音楽再生中の場合は一時停止する
+    dispatch(audioPause())
+  }
+}
+
+export const requestFirstTutorial = () => {
+  return async (dispatch) => {
+    dispatch(setStandalone())
+    dispatch(setUserAgent())
+    if (!window.matchMedia('(display-mode: standalone)').matches && getUserAgent() !== 'other') {
+      dispatch(setDisplayTutorial(true, 'first'))
+    }
     // 音楽再生中の場合は一時停止する
     dispatch(audioPause())
   }

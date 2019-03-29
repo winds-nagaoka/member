@@ -21,14 +21,12 @@ export const register = () => {
         dispatch(resetMode())
       } else {
         if (res.body.status) {
-          console.log('Register OK')
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
           dispatch(requestFirstTutorial(true, 'first'))
         } else {
-          console.log('Register NG')
           dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
@@ -54,7 +52,6 @@ export const updateMode = () => {
   return async (dispatch, getState) => {
     dispatch(loading(true))
     setTimeout(() => {
-      console.log('update')
       dispatch(loading(false))
       dispatch(setMode(true))
     }, 200)

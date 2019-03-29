@@ -129,7 +129,6 @@ class Video extends Component {
   }
 
   componentWillUnmount () {
-    console.warn('Video閉じます')
     // this.props.videoStop()
     this.props.resetVideo()
     this.props.setVideoRef(undefined)

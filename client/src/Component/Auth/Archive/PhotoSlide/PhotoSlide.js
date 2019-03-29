@@ -85,7 +85,6 @@ class PhotoSlide extends Component {
       // },
       // preloaderClass: 'swiper-lazy-preloader-loading'
     }
-    console.log('num',this.props.photoNumber)
     return (
       <div className='archive-photo-slide'>
         <Swiper {...params}>

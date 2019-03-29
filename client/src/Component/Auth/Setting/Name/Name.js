@@ -44,12 +44,10 @@ class Name extends Component {
   }
 
   nameChanged () {
-    console.log('onComplete')
     this.props.redirect('/setting')
   }
 
   canceled () {
-    console.log('onCancel')
     this.props.redirect('/setting')
   }
 

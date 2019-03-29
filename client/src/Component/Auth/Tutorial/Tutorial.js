@@ -125,7 +125,6 @@ class Tutorial extends Component {
 
   renderTutorialSlide () {
     if (!this.props.tutorialMode) return
-    console.warn('asdaasdasdwrf', this.props.tutorialMode)
     if (this.props.tutorialMode === 'first') return this.renderFirstTutorial()
   }
 

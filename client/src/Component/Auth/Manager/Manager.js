@@ -48,7 +48,6 @@ class Manager extends Component {
 
   renderManager (loading, manager) {
     if (loading || !manager) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    console.log(manager)
     return manager.contents.map((each, i) => {
       const attachment = each.attachment ? each.attachment.map((attach, i) => {
         const size = Math.round(attach.size * 0.01) / 10

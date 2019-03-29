@@ -22,14 +22,12 @@ export const loginAuth = (location) => {
         return false
       } else {
         if (res.body.status) {
-          console.log('Auth OK', res.body)
           dispatch(windsidUpdate(window.localStorage.windsid))
           dispatch(tokenUpdate(res.body.token))
           dispatch(loginUpdate(true))
           dispatch(setUser(res.body.user))
           dispatch(replace(location))
         } else {
-          console.log('Auth NG')
           dispatch(windsidUpdate(false))
           dispatch(tokenUpdate(false))
           dispatch(loginUpdate(false))

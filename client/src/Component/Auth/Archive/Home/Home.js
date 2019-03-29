@@ -91,12 +91,10 @@ class Home extends Component {
   }
 
   renderSearchResult () {
-    // console.log('result', this.state.searchResult)
     if (!this.props.searchResult) return
     const searchResult = this.props.searchResult.map((item, i) => {
       if (!item) return // <div key={i}></div>
       return item.map((each, j) => {
-        // console.log('each', each, i, j)
         if (!each) return // <div key={i + j}></div>
         // const concertType = ' ' + each.concert.type
         // const composer = each.track.composer ? each.track.composer : ''

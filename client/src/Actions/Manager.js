@@ -11,17 +11,6 @@ export const getManager = () => {
       } else {
         dispatch(update(res.body))
         dispatch(acquired(true))
-        // if (res.body.status) {
-        //   console.error('Schedule OK')
-        //   dispatch(windsidUpdate(window.localStorage.windsid))
-        //   dispatch(tokenUpdate(res.body.token))
-        //   dispatch(loginUpdate(true))
-        // } else {
-        //   console.log('Schedule NG')
-        //   dispatch(windsidUpdate(false))
-        //   dispatch(tokenUpdate(false))
-        //   dispatch(loginUpdate(false))
-        // }
       }
       dispatch(loading(false))
     })

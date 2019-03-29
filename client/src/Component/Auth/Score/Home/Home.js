@@ -184,7 +184,6 @@ class Home extends Component {
 
     const showAddNewScore = this.renderAddNewScore()
     const showBoxManagement = this.renderBoxManagement()
-    console.warn(this.props.loadingScore, this.props.loadingSearch)
 
     return (
       <React.Fragment>

@@ -1,6 +1,6 @@
 import * as Status from './Status'
 import * as request from '../Library/Request'
-import { requestFirstTutorial } from './Tutorial'
+import { showToast } from './Toast'
 
 export const login = () => {
   return async (dispatch, getState) => {
@@ -18,13 +18,12 @@ export const login = () => {
         dispatch(setErrorMessage('ログインできませんでした'))
       } else {
         if (res.body.status) {
-          console.warn('Login OK')
+          dispatch(showToast('ログインしました'))
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
         } else {
-          console.warn('Login NG')
           dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))

@@ -1,6 +1,8 @@
 import { replace } from 'react-router-redux'
 import * as request from '../Library/Request'
 
+import { showToast } from './Toast'
+
 const prefix = 'BBS_'
 const api = 'Wct5RRmoRwL8mysm4yChUcfkXGcm0fwPJSTrJPqbLGJnFDe9kSQuvPMNKa0rgky9pKukd7mMmZVds3RtimrXZ48UcfiVlvKq699OK662f2uOjP1B99jqJjMCIRrE9QdF'
 
@@ -19,7 +21,6 @@ export const getBBSList = () => {
       if (err) {
         return false
       } else if (res.body.status === 'true') {
-        console.log(res.body)
         dispatch(updateList(res.body.list))
         dispatch(loadMore())
         dispatch(acquired(true))
@@ -85,7 +86,7 @@ export const sendPost = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     if (getState().bbs.postName === '' || getState().bbs.postText === '') {
-      console.log('入力されていません')
+      dispatch(showToast('入力内容を確認してください'))
       return false
     }
     dispatch(loadingPost(true))
@@ -100,7 +101,6 @@ export const sendPost = () => {
       if (err) {
         return false
       } else if (res.body.status === 'true') {
-        console.log(res.body)
         dispatch(resetPost())
         dispatch(acquired(false))
         dispatch(replace('/bbs'))

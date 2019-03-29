@@ -63,7 +63,6 @@ export const getScoreListAll = () => {
 
 export const changeSearchText = (searchQuery) => {
   return async (dispatch, getState) => {
-    console.warn('changeSearchText')
     dispatch(loadingSearch(true))
     dispatch(getScoreList(searchQuery))
     dispatch(loadMoreLoading(false))
@@ -185,7 +184,6 @@ export const getScoreDetail = (scoreid) => {
           if (res.body.data.boxLabel === res.body.boxList[i].label) boxUse = res.body.boxList[i]
         }
         dispatch(setScoreDetail(scoreid, res.body.data, boxUse))
-        console.warn('detail scoredetail', res.body.data)
         dispatch(setBoxList(boxList))
       }
       dispatch(detailLoading(false))
@@ -227,7 +225,6 @@ const editPreLoading = (editPreLoading) => ({
 
 const loadScoreEdit = (editMode) => {
   return async (dispatch, getState) => {
-    console.log('loadScoreEdit')
     dispatch(editPreLoading(true))
     if (!window.localStorage.token) return false 
     // URL
@@ -270,12 +267,10 @@ const loadScoreEdit = (editMode) => {
           newScore['label'] = ('000000' + newScore.number).slice(-6)
           // 新しい楽譜オブジェクトのプロパティで配列の値は
           dispatch(setScoreEdit(newScore))
-          console.warn('edit newScore', newScore)
           dispatch(setBoxList(boxList))
         } else {
           // 編集
           // dispatch(setScoreEdit(res.body.data)) これはDetailと同じだと思うけど確認する
-          console.warn('edit res.body.data', res.body.data)
           dispatch(setBoxList(boxList))
         }
       }
@@ -322,7 +317,6 @@ export const updateScoreEdit = () => {
       version,
       member: true
     }
-    console.log('updateScoreEdit',send)
     request.post(path, send, (err, res) => {
       if (err) {
         return false
