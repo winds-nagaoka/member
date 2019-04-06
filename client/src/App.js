@@ -8,6 +8,8 @@ import createStore from './Store/Store'
 import Base from './Component/Base/Base'
 import Auth from './Component/Auth/Auth'
 
+import Toast from './Component/Toast/Toast'
+
 const history = createBrowserHistory()
 const store = createStore(history)
 
@@ -19,7 +21,7 @@ history.listen(location => {
     list.push(location.pathname)
     window.localStorage.setItem('history', JSON.stringify(list))
   }
-  window.localStorage.setItem('location', location.pathname)  
+  window.localStorage.setItem('location', location.pathname)
 })
 
 export default class App extends Component {
@@ -27,11 +29,14 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Switch>
-            <Route path='/login' component={Base} />
-            <Route path='/reg' component={Base} />
-            <Route path='/' component={Auth} />
-          </Switch>
+          <React.Fragment>
+            <Toast />
+            <Switch>
+              <Route path='/login' component={Base} />
+              <Route path='/reg' component={Base} />
+              <Route path='/' component={Auth} />
+            </Switch>
+          </React.Fragment>
         </ConnectedRouter>
       </Provider>
     )

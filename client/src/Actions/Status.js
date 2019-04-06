@@ -4,6 +4,8 @@ import { navigationMenu } from './Navigation'
 import * as request from '../Library/Request'
 import { version } from '../Library/Library'
 
+import { showToast } from './Toast'
+
 // import { listen } from 'react-router-redux'
 const prefix = 'STATUS_'
 
@@ -19,6 +21,7 @@ export const loginAuth = (location) => {
     }
     request.post('https://auth.winds-n.com/auth', send, (err, res) => {
       if (err) {
+        dispatch(showToast('ログインエラー'))
         return false
       } else {
         if (res.body.status) {
@@ -28,9 +31,11 @@ export const loginAuth = (location) => {
           dispatch(setUser(res.body.user))
           dispatch(replace(location))
         } else {
+          window.localStorage.clear()
           dispatch(windsidUpdate(false))
           dispatch(tokenUpdate(false))
           dispatch(loginUpdate(false))
+          dispatch(showToast('ログインしてください'))
         }
       }
       dispatch(loading(false))
@@ -41,6 +46,7 @@ export const loginAuth = (location) => {
 export const logout = () => {
   return async (dispatch) => {
     window.localStorage.clear()
+    dispatch(showToast('ログアウトしました'))
     dispatch(windsidUpdate(false))
     dispatch(tokenUpdate(false))
     dispatch(loginUpdate(false))

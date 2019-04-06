@@ -29,7 +29,7 @@ import NavigationInline from './Component/NavigationInline/NavigationInline'
 
 import Audio from './Component/Audio/Audio'
 
-import Toast from './Component/Toast/Toast'
+// import Toast from './Component/Toast/Toast'
 
 import Loading from '../Loading/Loading'
 
@@ -101,7 +101,7 @@ class Auth extends Component {
     const gap = displayPlayer ? <div className='gap'></div> : false
     return (
       <div className='auth'>
-        <Toast />
+        {/* <Toast /> */}
         <NavigationHeader />
         <div className={'contents' + (pc ? ' pc' : ' mobile')}>
           <div className={'contents-inner' + (pc ? ' pc' : ' mobile')} ref={(i) => {!this.props.contentsRef ? this.props.setContentsRef(i) : false}}>
