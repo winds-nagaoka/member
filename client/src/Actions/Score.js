@@ -89,8 +89,8 @@ export const getScoreList = (query) => {
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
     // URL
-    // const path = 'https://score.winds-n.com/api/member/score'
-    const path = 'http://192.168.1.22:3011/api/member/score'
+    const path = 'https://score.winds-n.com/api/member/score'
+    // const path = 'http://192.168.1.22:3011/api/member/score'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -164,8 +164,8 @@ export const getScoreDetail = (scoreid) => {
     dispatch(detailLoading(true))
     if (!window.localStorage.token) return false 
     // URL
-    // const path = 'https://score.winds-n.com/api/member/detail'
-    const path = 'http://192.168.1.22:3011/api/member/detail'
+    const path = 'https://score.winds-n.com/api/member/detail'
+    // const path = 'http://192.168.1.22:3011/api/member/detail'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -228,8 +228,8 @@ const loadScoreEdit = (editMode) => {
     dispatch(editPreLoading(true))
     if (!window.localStorage.token) return false 
     // URL
-    // const path = 'https://score.winds-n.com/api/member/edit/pre'
-    const path = 'http://192.168.1.22:3011/api/member/edit/pre'
+    const path = 'https://score.winds-n.com/api/member/edit/pre'
+    // const path = 'http://192.168.1.22:3011/api/member/edit/pre'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -306,8 +306,8 @@ export const updateScoreEdit = () => {
     dispatch(editLoading(true))
     if (!window.localStorage.token) return false 
     // URL
-    // const path = 'https://score.winds-n.com/api/member/edit'
-    const path = 'http://192.168.1.22:3011/api/member/edit'
+    const path = 'https://score.winds-n.com/api/member/edit'
+    // const path = 'http://192.168.1.22:3011/api/member/edit'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,

@@ -18,8 +18,9 @@ import {
 
   videoPlay,
   videoPause,
-  videoStop
+  videoStop,
   // setDisplayVideoController,
+  countUp
 } from '../../../../Actions/Archive'
 
 import * as libArchive from '../Library/Library'
@@ -47,7 +48,9 @@ function mapStateToProps(state) {
     displayPhotoController: state.archive.displayPhotoController,
     
     videoPlayStatus: state.archive.videoPlayStatus,
-    videoPlayTrack: state.archive.videoPlayTrack
+    videoPlayTrack: state.archive.videoPlayTrack,
+
+    countFlag: state.archive.countFlag
   }
 }
 
@@ -94,10 +97,13 @@ function mapDispatchToProps(dispatch) {
     },
     videoStop (e) {
       dispatch(videoStop(e))
-    }
+    },
     // setDisplayVideoController (displayVideoSlideModal, videoNumber) {
     //   dispatch(setDisplayVideoController(displayVideoSlideModal, videoNumber))
     // },
+    countUp () {
+      dispatch(countUp())
+    }
   }
 }
 
@@ -184,6 +190,9 @@ class Video extends Component {
   onTimeUpdate (e) {
     if(!isNaN(e.target.duration)){
       this.props.videoPlayUpdate(e.target.currentTime, e.target.duration)
+      if(this.props.countFlag && e.target.currentTime > 0) {
+        this.props.countUp()
+      }
     } else {
       this.props.videoPlayUpdate(undefined, undefined)
     }
@@ -271,7 +280,7 @@ class Video extends Component {
   render () {
     const showBreadNavigation = this.renderBreadNavigation()
     const showVideoList = this.renderVideoList()
-    const poster = this.props.videoPoster ? this.props.videoPoster : false
+    const poster = this.props.videoPoster ? this.props.videoPoster : 'false'
     const aspectClass = this.props.videoPoster === 'https://video.winds-n.com/poster_800_586.png' ? ' aspect-4-3' : ' aspect-16-9'
     return (
       <React.Fragment>

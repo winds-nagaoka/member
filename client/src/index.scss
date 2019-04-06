@@ -192,7 +192,7 @@ div {
   width: 270px;
   padding: 0;
   background: #fcfcfc;
-  border-radius: 2px;
+  border-radius: 12px;
   color: #000;
 
   & > h1 {
@@ -223,12 +223,12 @@ div {
     outline: none;
     &:first-child {
       border-right: 1px solid #dbdbdf;
-      border-radius: 0 0 0 2px;
+      border-radius: 0 0 0 12px;
       color: #488aff;
       font-weight: 600;
     }
     &:last-child {
-      border-radius: 0 0 2px 0;
+      border-radius: 0 0 12px 0;
       color: #f53d3d;
     }
   }
@@ -239,7 +239,7 @@ div {
     width: 270px;
     padding: 0;
     background: #f8f8f8;
-    border-radius: 2px;
+    border-radius: 12px;
     color: #000;
 
     & > h1 {
@@ -276,12 +276,12 @@ div {
         outline: none;
         &:first-child {
           border-right: 1px solid #dbdbdf;
-          border-radius: 0 0 0 2px;
+          border-radius: 0 0 0 12px;
           color: #488aff;
           font-weight: 600;
         }
         &:last-child {
-          border-radius: 0 0 2px 0;
+          border-radius: 0 0 12px 0;
           color: #f53d3d;
         }
         &:hover {

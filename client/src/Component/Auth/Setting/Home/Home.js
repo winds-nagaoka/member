@@ -127,7 +127,7 @@ class Home extends Component {
           <div className='link'>
             <ul>
               <li><Link to='/setting/about'><div className='inner'><span>このアプリについて</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><div className='link-button' onClick={() => this.props.openFirstTutorial()}><span>チュートリアルを開く</span></div></li>
+              <li className='border-top'><div className='link-button' onClick={() => this.props.openFirstTutorial()}><div className='inner'><span>チュートリアルを開く</span></div></div></li>
               <li className='border-top'><Link to='/setting/license'><div className='inner'><span>ライセンス情報</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>

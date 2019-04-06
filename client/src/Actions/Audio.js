@@ -192,6 +192,8 @@ export const archivePlayRequest = (concertid, number, playRequest) => {
     window.localStorage.setItem('playerNumber', number)
     // 曲を再生
     playRequest ? dispatch(audioPlay()) : false
+    // 再生フラグをリセット
+    dispatch(setCountFlag(true))
   }
 }
 
@@ -220,6 +222,8 @@ export const practicePlayRequest = (practiceid, fileNumber, requestTimeString, p
     window.localStorage.setItem('playerPracticeFile', fileNumber)
     // 曲を再生
     playRequest ? dispatch(audioPlay(requestTime)) : false
+    // 再生フラグをリセット
+    dispatch(setCountFlag(true))
   }
 }
 
@@ -247,6 +251,8 @@ export const sourcePlayRequest = (sourceid, sourceNumber, playRequest) => {
     window.localStorage.setItem('playerSourceNumber', sourceNumber)
     // 曲を再生
     playRequest ? dispatch(audioPlay()) : false
+    // 再生フラグをリセット
+    dispatch(setCountFlag(true))
   }
 }
 
@@ -402,3 +408,20 @@ export const closePlayer = () => {
     dispatch(removeSourceStorage())
   }
 }
+
+export const countUp = () => {
+  return async (dispatch, getState) => {
+    const play = {
+      userid: window.localStorage.windsid,
+      play: getState().audio.audioRef.src + '(' + getState().audio.currentTime + ')',
+      version
+    }
+    request.countUp(play)
+    dispatch(setCountFlag(false))
+  }
+}
+
+const setCountFlag = (countFlag) => ({
+  type: prefix + 'SET_COUNT_FLAG',
+  payload: { countFlag }
+})

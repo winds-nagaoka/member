@@ -1,5 +1,6 @@
 import * as Status from './Status'
 import * as request from '../Library/Request'
+import { version } from '../Library/Library'
 import { showToast } from './Toast'
 
 export const login = () => {
@@ -11,7 +12,8 @@ export const login = () => {
     dispatch(loading(true))
     const send = {
       userid: windsid,
-      passwd: password
+      passwd: password,
+      version
     }
     request.post('https://auth.winds-n.com/login', send, (err, res) => {
       if (err) {

@@ -82,8 +82,8 @@ class History extends Component {
       <React.Fragment>
 
         <div className={'contents-header' + lib.pcClass(pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習について</Link><i className="fas fa-chevron-right"></i><Link to='/practice/history'>過去の記録</Link></div>
-          <h2>過去の記録</h2>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習について</Link><i className="fas fa-chevron-right"></i><Link to='/practice/history'>練習の記録</Link></div>
+          <h2>練習の記録</h2>
           <p>練習の録音を掲載しています</p>
         </div>
 

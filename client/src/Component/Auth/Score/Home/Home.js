@@ -138,10 +138,11 @@ class Home extends Component {
 
   renderCount () {
     if (this.props.loadingScore || !this.props.scoreList) return false
+    const title = this.props.searchQuery ? '該当' : '楽譜'
     return (
       <div className='score-count'>
         <div>
-          {this.props.scoreList ? <span>楽譜</span> : false}
+          {this.props.scoreList ? <span>{title}</span> : false}
           {this.props.scoreList ? <span>{this.props.scoreList.length}</span> : false}
           {this.props.scoreList ? <span>件</span> : false}
         </div>

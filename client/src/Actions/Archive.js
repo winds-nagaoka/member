@@ -157,8 +157,8 @@ export const getPhotoList = () => {
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version,
       id: getState().archive.concertid,
+      version,
       member: true
     }
     request.post(path, send, (err, res) => {
@@ -204,8 +204,8 @@ export const getVideoList = () => {
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version,
       id: getState().archive.concertid,
+      version,
       member: true
     }
     request.post(path, send, (err, res) => {
@@ -302,6 +302,8 @@ export const videoPlayRequest = (number, request) => {
       getState().archive.videoRef.src = getState().archive.videoUrl + getState().archive.videoBaseSrc + track.path
       dispatch(videoPlay(number))
     }
+    // 再生フラグをリセット
+    dispatch(setCountFlag(true))
   }
 }
 
@@ -347,3 +349,20 @@ export const resetVideo = () => {
     dispatch(setDisplayVideoController(false, undefined))
   }
 }
+
+export const countUp = () => {
+  return async (dispatch, getState) => {
+    const play = {
+      userid: window.localStorage.windsid,
+      play: getState().archive.videoRef.src + '(' + getState().archive.videoCurrentTime + ')',
+      version
+    }
+    request.countUp(play)
+    dispatch(setCountFlag(false))
+  }
+}
+
+const setCountFlag = (countFlag) => ({
+  type: prefix + 'SET_COUNT_FLAG',
+  payload: { countFlag }
+})

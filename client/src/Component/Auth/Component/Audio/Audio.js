@@ -28,7 +28,9 @@ import {
   audioPause,
   audioStop,
   audioBackward,
-  audioForward
+  audioForward,
+
+  countUp
 } from '../../../../Actions/Audio'
 
 import { getConcertList } from '../../../../Actions/Archive'
@@ -97,7 +99,9 @@ function mapStateToProps(state) {
 
     // 参考音源モード
     sourceid: state.audio.sourceid,
-    sourceNumber: state.audio.sourceNumber
+    sourceNumber: state.audio.sourceNumber,
+
+    countFlag: state.audio.countFlag
   }
 }
 
@@ -167,6 +171,10 @@ function mapDispatchToProps(dispatch) {
 
     getSource () {
       dispatch(getSource())
+    },
+
+    countUp () {
+      dispatch(countUp())
     }
   }
 }
@@ -257,10 +265,9 @@ class Audio extends Component {
   onTimeUpdate (e) {
     if(!isNaN(e.target.duration)){
       this.props.playUpdate(e.target.currentTime, e.target.duration)
-      // if(this.state.audioCountFlag && e.target.currentTime > 10) {
-      //   req.countUp('audio', this.state.playAlbum, this.state.playTrack, this.audio.src)
-      //   this.setState({audioCountFlag: false})
-      // }
+      if(this.props.countFlag && e.target.currentTime > 0) {
+        this.props.countUp()
+      }
     } else {
       this.props.playUpdate(undefined, undefined)
     }

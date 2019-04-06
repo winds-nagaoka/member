@@ -11,8 +11,8 @@ const lib = require('./server/lib')
 
 // HTTPを使用する(公開用)
 const http = require('http')
-app.listen(3001)
-// app.listen(3006)
+// app.listen(3001)
+app.listen(3006)
 
 const compression = require('compression')
 app.use(compression({

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import request from 'superagent'
 
+import { version } from '../../../../../Library/Library'
+
 import './Input.css'
 
 export default class Input extends Component {
@@ -25,14 +27,15 @@ export default class Input extends Component {
     if (!e.target.value) return this.setState({list: []})
     this.setState({load: false})
     // URL
-    // request.post('https://score.winds-n.com/api/member/input')
-    request.post('http://192.168.1.22:3011/api/member/input')
+    request.post('https://score.winds-n.com/api/member/input')
+    // request.post('http://192.168.1.22:3011/api/member/input')
       .type('form')
       .send({
         userid: window.localStorage.windsid,
         token: window.localStorage.token,
         target: this.props.target,
         query: e.target.value,
+        version,
         member: true
       })
       .end((err, res) => {

@@ -46,7 +46,9 @@ const initialState = {
   videoPlayPercent: undefined,
 
   videoPlayStatus: undefined,
-  videoPlayTrack: undefined
+  videoPlayTrack: undefined,
+
+  countFlag: true
 }
 
 const prefix = 'ARCHIVE_'
@@ -185,6 +187,12 @@ export default function archiveReducer (state = initialState, action) {
         ...state,
         videoPlayStatus: action.payload.videoPlayStatus,
         videoPlayTrack: action.payload.videoPlayTrack
+      }
+
+    case prefix + 'SET_COUNT_FLAG':
+      return {
+        ...state,
+        countFlag: action.payload.countFlag
       }
 
     default:

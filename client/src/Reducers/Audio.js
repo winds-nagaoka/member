@@ -60,7 +60,9 @@ const initialState = {
 
   // 参考音源モード
   sourceid: undefined,
-  sourceNumber: undefined
+  sourceNumber: undefined,
+
+  countFlag: true
 }
 
 const prefix = 'AUDIO_'
@@ -201,7 +203,12 @@ export default function audioReducer (state = initialState, action) {
         sourceid: action.payload.sourceid,
         sourceNumber: action.payload.sourceNumber
       }
-    
+
+    case prefix + 'SET_COUNT_FLAG':
+      return {
+        ...state,
+        countFlag: action.payload.countFlag
+      }
 
     default:
       return state

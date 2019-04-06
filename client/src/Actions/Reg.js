@@ -1,5 +1,6 @@
 import * as Status from './Status'
 import * as request from '../Library/Request'
+import { version } from '../Library/Library'
 import { requestFirstTutorial } from './Tutorial'
 
 export const register = () => {
@@ -13,7 +14,8 @@ export const register = () => {
     const send = {
       userid: windsid,
       passwd: password,
-      key: approvalKey
+      key: approvalKey,
+      version
     }
     request.post('https://auth.winds-n.com/adduser', send, (err, res) => {
       if (err) {

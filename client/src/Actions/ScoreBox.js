@@ -14,8 +14,8 @@ export const getBoxList = () => {
     if (getState().scoreBox.acquired) return false
     // dispatch(loading(true))
     // URL
-    // const path = 'https://score.winds-n.com/api/member/box'
-    const path = 'http://192.168.1.22:3011/api/member/box'
+    const path = 'https://score.winds-n.com/api/member/box'
+    // const path = 'http://192.168.1.22:3011/api/member/box'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -69,8 +69,8 @@ export const updateBoxLocate = () => {
     if (!window.localStorage.token) return false
     dispatch(loadingUpdateBoxLocate(true))
     // URL
-    // const path = 'https://score.winds-n.com/api/member/box/modify'
-    const path = 'http://192.168.1.22:3011/api/member/box/modify'
+    const path = 'https://score.winds-n.com/api/member/box/modify'
+    // const path = 'http://192.168.1.22:3011/api/member/box/modify'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -107,8 +107,8 @@ export const addBox = () => {
     if (!window.localStorage.token) return false
     dispatch(loadingAddBox(true))
     // URL
-    // const path = 'https://score.winds-n.com/api/member/box/add'
-    const path = 'http://192.168.1.22:3011/api/member/box/add'
+    const path = 'https://score.winds-n.com/api/member/box/add'
+    // const path = 'http://192.168.1.22:3011/api/member/box/add'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
