@@ -30,7 +30,7 @@ function mapDispatchToProps(dispatch) {
 
 class About extends Component {
   componentDidMount () {
-    this.props.setNavigationTitle('ライセンス情報')
+    this.props.setNavigationTitle('このアプリについて')
     this.props.setBackNavigation(true, '/setting')
   }
 
@@ -45,7 +45,7 @@ class About extends Component {
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='text'>
-            あとで書きます
+            バージョン: {lib.version}
           </div>
         </div>
 
