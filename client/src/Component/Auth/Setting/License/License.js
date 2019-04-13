@@ -45,7 +45,7 @@ class License extends Component {
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='text'>
-            あとで書きます
+            バージョン: {lib.version}
           </div>
         </div>
 
