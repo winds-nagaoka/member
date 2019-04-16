@@ -16,12 +16,12 @@ const store = createStore(history)
 // react-router-redux の Action をフック
 // リンク移動先を保存
 history.listen(location => {
-  if (history.action === 'PUSH') {
-    let list = window.localStorage.history ? JSON.parse(window.localStorage.history) : []
-    list.push(location.pathname)
-    window.localStorage.setItem('history', JSON.stringify(list))
-  }
   window.localStorage.setItem('location', location.pathname)
+  // if (history.action === 'PUSH') {
+  //   let list = window.localStorage.history ? JSON.parse(window.localStorage.history) : []
+  //   list.push(location.pathname)
+  //   window.localStorage.setItem('history', JSON.stringify(list))
+  // }
 })
 
 export default class App extends Component {
