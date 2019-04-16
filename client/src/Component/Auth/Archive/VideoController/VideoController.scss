@@ -145,7 +145,8 @@
         margin-left: 16px;
         color: #fff;
         font-size: 13px;
-        font-family: "source-han-sans-japanese",sans-serif;
+        // font-family: "source-han-sans-japanese",sans-serif;
+        cursor: default;
 
         display: flex;
         justify-content: space-between;
@@ -265,12 +266,12 @@
           &:first-child {
             color: #888;
             font-size: 12px;
-            font-family: "kan48typos-std",sans-serif;
+            // font-family: "kan48typos-std",sans-serif;
           }
 
           &:last-child {
             font-size: 16px;
-            font-family: "tbchibirgothicplusk-pro",sans-serif;
+            // font-family: "tbchibirgothicplusk-pro",sans-serif;
           }
 
           i {
