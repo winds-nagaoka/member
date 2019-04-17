@@ -7,6 +7,8 @@ import * as lib from '../../../../Library/Library'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 
+import Logo from '../../../../Asset/hr.svg'
+
 import './About.css'
 
 function mapStateToProps(state) {
@@ -43,9 +45,38 @@ class About extends Component {
           <h2>このアプリについて</h2>
         </div>
 
-        <div className={'box' + lib.pcClass(this.props.pc)}>
+        <div className={'box about ' + lib.pcClass(this.props.pc)}>
+          <div className='app-version'>
+            <div><Logo /></div>
+            <div>
+              <div className='app-title'><span>団員専用アプリ</span></div>
+              <div className='app-version-number'><span><span>Version</span><span>{lib.version}</span></span></div>
+              {/* {update} */}
+            </div>
+          </div>
           <div className='text'>
-            バージョン: {lib.version}
+            <h2>アカウントについて</h2>
+            <p>
+              ひとつのアカウントで同時に複数の端末にログインすることはできません。
+              他の端末でログインすると元の端末からは自動的にログアウトします。
+              複数の端末で同時に利用したい場合はアカウントも複数作ることをおすすめします。
+            </p>
+            <p>
+              アカウント登録の際に記録される情報は名前およびパスワードのみです。
+              パスワードはSHA-512でハッシュ化されています。
+              これらの情報はアカウントを削除した際に全て消去します。
+            </p>
+            <h2>楽曲再生時の注意点</h2>
+            <p>
+              アプリにて閲覧できる音源、写真、映像はウェブ利用にあわせ圧縮および最適化しています。
+              高品質でご覧になりたい場合はCDやDVDをご利用ください。
+              また、オリジナルのデータが必要な場合はお問い合わせください。
+            </p>
+            <p>
+              再生ごとにサーバーから音源データを取得するため通信量がかかります。
+              録音は5分あたり5MBほど、映像は5分あたり20MBほど使用します。
+              WiFiの使用を推奨します。
+            </p>
           </div>
         </div>
 
