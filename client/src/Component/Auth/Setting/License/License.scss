@@ -1,0 +1,88 @@
+.license {
+
+  &.pc {
+    .app-version {
+      // padding: 16px 16px 0;
+      padding: 16px;
+      font-size: 1rem;
+    }
+  }
+
+  .app-version {
+    // padding: 12px 12px 0;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+
+    & > div:first-child {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: .55px solid #eee;
+      border-radius: 20px;
+
+      svg {
+        width: 60px;
+        height: 60px;
+        padding: 4px;
+        fill: #B60005;
+      }
+    }
+
+    & > div:last-child {
+      margin-left: 16px;
+      border: 0;
+      flex: 2;
+
+      display: flex;
+      justify-content: center;
+      // align-items: center;
+      flex-direction: column;
+
+      span {
+        // font-family: "source-han-sans-japanese", sans-serif;
+      }
+
+      & .app-title span:first-child {
+        font-size: 16px;
+        // font-family: "ten-mincho",serif;
+      }
+
+      & .app-version-number span:last-child {
+
+        & > span:first-child {
+          margin: 0 4px 0 0;
+          font-size: 12px;
+        }
+        & > span:last-child {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .text {
+
+    h2 {
+      margin: 8px 0;
+      // font-weight: normal;
+      font-size: 16px;
+
+      &:first-child {
+        margin: 0 0 8px;
+      }
+    }
+
+    h3 {
+      margin: 8px 0;
+      font-weight: normal;
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 14px;
+      // text-indent: 1em;
+    }
+  }
+}

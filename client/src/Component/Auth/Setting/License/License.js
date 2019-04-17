@@ -7,6 +7,8 @@ import * as lib from '../../../../Library/Library'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 
+import Logo from '../../../../Asset/hr.svg'
+
 import './License.css'
 
 function mapStateToProps(state) {
@@ -43,9 +45,14 @@ class License extends Component {
           <h2>ライセンス情報</h2>
         </div>
 
-        <div className={'box' + lib.pcClass(this.props.pc)}>
-          <div className='text'>
-            バージョン: {lib.version}
+        <div className={'box license ' + lib.pcClass(this.props.pc)}>
+          <div className='app-version'>
+            <div><Logo /></div>
+            <div>
+              <div className='app-title'><span>団員専用アプリ</span></div>
+              <div className='app-version-number'><span><span>Version</span><span>{lib.version}</span></span></div>
+              {/* {update} */}
+            </div>
           </div>
         </div>
 
