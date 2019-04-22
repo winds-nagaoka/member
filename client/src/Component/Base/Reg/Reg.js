@@ -116,7 +116,7 @@ class Reg extends Component {
           <div className={'form-base reg' + lib.pcClass(this.props.pc)}>
             <div className={'form login' + lib.pcClass(this.props.pc)}>
               <h2 className={lib.pcClass(this.props.pc)}>新規登録</h2>
-              <p>以下の内容でアカウントを作成します</p>
+              <p>ユーザー名とパスワードは自由に指定できます</p>
               <label>ユーザー名</label>
               <input type='text' tabIndex='1' value={windsid} onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputWindsidRef = i} />
               <label>パスワード</label>
