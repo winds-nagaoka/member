@@ -320,7 +320,7 @@ export const audioPlay = (requestTime) => {
       if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path) {
         getState().audio.audioRef.src = getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path
       }
-      if (requestTime) getState().audio.audioRef.currentTime = requestTime
+      if (isFinite(requestTime)) getState().audio.audioRef.currentTime = requestTime
     } else if (getState().audio.playmode === 'source') {
       if (!getState().source.list) return false
       if (!getState().audio.sourcePlaylist) return false

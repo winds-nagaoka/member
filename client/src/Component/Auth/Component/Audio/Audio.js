@@ -373,7 +373,6 @@ class Audio extends Component {
       }
 
       const trackList = item.list.map((each, j) => {
-
         let playClass = ''
         if (this.props.fileNumber === i && this.props.current) {
           if (Math.ceil(this.props.current) >= libPractice.timeSecond(each.time) - 1) {
@@ -386,12 +385,8 @@ class Audio extends Component {
             }
           }
         }
-
-        const moreLabel = 'contents' in each ? <div className='more'><i className='fas fa-caret-square-down'></i></div> : false
-
+        const moreLabel = 'contents' in each ? <div className='more'><i className='fas fa-list-ul'></i></div> : false
         const addTrackList = ('contents' in each && playClass === ' playing') ? each.contents.map((addEach, k) => {
-        // const addTrackList = 'contents' in each ? each.contents.map((addEach, k) => {
-
           let addPlayClass = ''
           if (this.props.fileNumber === i && this.props.current && playClass !== '') {
             if (Math.ceil(this.props.current) >= libPractice.timeSecond(addEach.time) - 1) {
@@ -404,7 +399,6 @@ class Audio extends Component {
               }
             }
           }
-
           return (
             <div key={'list' + i + j + k} className={'list add' + addPlayClass} onClick={(e) => this.selectPractice(e, practiceAlbum.id, i, addEach.time, true)}>
               <div className='icon'><i className='far fa-play-circle'></i></div>
@@ -427,7 +421,7 @@ class Audio extends Component {
       })
       return (
         <div key={'list' + i}>
-          <div className={'list' + headPlayClass} onClick={(e) => this.selectPractice(e, practiceAlbum.id, i, 0)}>
+          <div className={'list' + headPlayClass} onClick={(e) => this.selectPractice(e, practiceAlbum.id, i, '00:00')}>
             <div className='icon'><i className='fas fa-play-circle'></i></div>
             <div>録音開始</div>
             <div className='time'>00:00</div>

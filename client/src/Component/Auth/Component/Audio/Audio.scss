@@ -830,10 +830,7 @@
           flex-direction: row;
 
           &.add {
-            padding: 8px 8px 8px 24px;
-            div:first-child {
-              // margin-right: 16px;
-            }
+            padding: 8px;
           }
 
           &:hover {
@@ -862,13 +859,19 @@
               background: #fff;
             }
             .more {
-              color: #fff;
+              color: $base-play-color;
+            }
+            & ~ .add {
+              background: $base-play-color-very-light;
+
+              &.playing {
+                background: $base-play-color-light;
+              }
             }
           }
 
           .icon {
             margin-right: 8px;
-
 
             display: flex;
             justify-content: center;
@@ -885,7 +888,7 @@
           
           .more {
             margin-left: 8px;
-            color: #ddd;
+            color: #ccc;
           }
 
           .time {
