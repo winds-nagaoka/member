@@ -75,7 +75,7 @@ class Login extends Component {
             {showError}
             <div className='links'>
               <div className='link'><Link to='/reg' tabIndex='-1'>新規登録はこちら</Link></div>
-              <button tabIndex='3' onClick={() => login(windsid, password)} disabled={disabled}>{buttonLabel}</button>
+              <button tabIndex='3' onClick={() => this.props.login()} disabled={disabled}>{buttonLabel}</button>
             </div>
           </div>
         </div>

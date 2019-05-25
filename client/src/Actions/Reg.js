@@ -23,11 +23,12 @@ export const register = () => {
         dispatch(resetMode())
       } else {
         if (res.body.status) {
+          location.reload()
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
-          dispatch(requestFirstTutorial(true, 'first'))
+          // dispatch(requestFirstTutorial(true, 'first'))
         } else {
           dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))

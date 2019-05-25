@@ -1,5 +1,5 @@
 export const appName = 'member'
-export const version = '0.0.7'
+export const version = '0.0.8'
 
 export function playTime (t) {
   var hms = ''

@@ -20,6 +20,7 @@ export const login = () => {
         dispatch(setErrorMessage('ログインできませんでした'))
       } else {
         if (res.body.status) {
+          location.reload()
           dispatch(showToast('ログインしました'))
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))

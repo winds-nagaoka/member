@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route, Switch, Redirect, Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
+import { scrollToTop } from '../../../Actions/Status'
 
 import * as lib from '../../../Library/Library'
 
@@ -24,11 +25,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    scrollToTop () {
+      dispatch(scrollToTop())
+    }
   }
 }
 
 class Setting extends Component {
-  componentWillMount () {
+
+  componentWillReceiveProps () {
+    this.props.scrollToTop()
   }
 
   render () {
