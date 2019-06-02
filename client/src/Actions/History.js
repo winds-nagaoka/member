@@ -15,10 +15,7 @@ export const getHistory = () => {
     dispatch(loading(true))
     const path = lib.getAppPath() + '/api/practice'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version: lib.version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {

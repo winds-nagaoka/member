@@ -14,6 +14,8 @@ export const login = () => {
     const send = {
       userid: windsid,
       passwd: password,
+      clientid: lib.getClientid(),
+      useragent: window.navigator.useragent,
       version: lib.version
     }
     request.post(path, send, (err, res) => {

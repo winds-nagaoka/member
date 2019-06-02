@@ -90,11 +90,8 @@ export const getScoreList = (query) => {
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
     const path = lib.getScorePath() + '/api/member/score'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      query: query === undefined ? '' : query,
-      version: lib.version,
-      member: true
+      session: lib.getSession(),
+      query: query === undefined ? '' : query
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -163,11 +160,8 @@ export const getScoreDetail = (scoreid) => {
     if (!window.localStorage.token) return false 
     const path = lib.getScorePath() + '/api/member/detail'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      id: scoreid,
-      version: lib.version,
-      member: true
+      session: lib.getSession(),
+      id: scoreid
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -226,12 +220,9 @@ const loadScoreEdit = (editMode) => {
     // URL
     const path = lib.getScorePath() + '/api/member/edit/pre'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
+      session: lib.getSession(),
       mode: editMode,
-      id: (editMode !== 'new' ? getState().score.scoreid : false),
-      version: lib.version,
-      member: true
+      id: (editMode !== 'new' ? getState().score.scoreid : false)
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -303,13 +294,10 @@ export const updateScoreEdit = () => {
     // URL
     const path = lib.getScorePath() + '/api/member/edit'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
+      session: lib.getSession(),
       mode: getState().score.editMode,
       id: getState().score.scoreid,
-      data: getState().score.scoreEdit,
-      version: lib.version,
-      member: true
+      data: getState().score.scoreEdit
     }
     request.post(path, send, (err, res) => {
       if (err) {

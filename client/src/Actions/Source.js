@@ -15,10 +15,7 @@ export const getSource = () => {
     dispatch(loading(true))
     const path = lib.getAppPath() + '/api/source'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version: lib.version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {

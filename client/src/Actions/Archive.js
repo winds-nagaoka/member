@@ -20,10 +20,7 @@ export const getConcertList = () => {
     dispatch(loading(true))
     const path = lib.getAppPath() + '/api/concert'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -156,11 +153,8 @@ export const getPhotoList = () => {
     dispatch(loadingPhoto(true))
     const path = lib.getAppPath() + '/api/photo'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
+      session: lib.getSession(),
       id: getState().archive.concertid,
-      version,
-      member: true
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -203,11 +197,8 @@ export const getVideoList = () => {
     dispatch(loadingVideo(true))
     const path = lib.getAppPath() + '/api/video'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      id: getState().archive.concertid,
-      version,
-      member: true
+      session: lib.getSession(),
+      id: getState().archive.concertid
     }
     request.post(path, send, (err, res) => {
       if (err) {

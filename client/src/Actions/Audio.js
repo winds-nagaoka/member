@@ -16,10 +16,7 @@ export const loadArchivePlaylist = () => {
     dispatch(loadingArchivePlaylist(true))
     const path = lib.getAppPath() + '/api/audio'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -52,10 +49,7 @@ export const loadPracticePlaylist = () => {
     dispatch(loadingPracticePlaylist(true))
     const path = lib.getAppPath() + '/api/record'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -88,10 +82,7 @@ export const loadSourcePlaylist = () => {
     dispatch(loadingSourcePlaylist(true))
     const path = lib.getAppPath() + '/api/reference'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {

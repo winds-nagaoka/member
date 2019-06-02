@@ -90,6 +90,7 @@ export const sendPost = () => {
       return false
     }
     dispatch(loadingPost(true))
+    const path = lib.getApiPath() + '/bbs/' // スラッシュ必須
     const send = {
       api,
       write: true,
@@ -97,7 +98,7 @@ export const sendPost = () => {
       text: getState().bbs.postText,
       delpass: getState().bbs.postPass
     }
-    request.post('https://api.winds-n.com/bbs/', send, (err, res) => {
+    request.post(path, send, (err, res) => {
       if (err) {
         return false
       } else if (res.body.status === 'true') {

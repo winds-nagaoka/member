@@ -16,6 +16,8 @@ export const register = () => {
       userid: windsid,
       passwd: password,
       key: approvalKey,
+      clientid: lib.getClientid(),
+      useragent: window.navigator.userAgent,
       version: lib.version
     }
     request.post(path, send, (err, res) => {

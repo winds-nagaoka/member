@@ -1,5 +1,5 @@
 export const appName = 'member'
-export const version = '0.0.9'
+export const version = '0.1.0'
 const mode = 'dev' // dev or prod
 import uuidv1 from 'uuid/v1'
 
@@ -32,6 +32,7 @@ export function getSession () {
     userid: window.localStorage.userid,
     clientid: getClientid(),
     clientToken: window.localStorage.token,
+    useragent: window.navigator.userAgent,
     version
   }
 }

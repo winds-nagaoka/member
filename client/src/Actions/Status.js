@@ -16,9 +16,7 @@ export const loginAuth = (location) => {
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/auth'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version: lib.version
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {

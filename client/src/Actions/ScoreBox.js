@@ -15,10 +15,7 @@ export const getBoxList = () => {
     // dispatch(loading(true))
     const path = lib.getScorePath() + '/api/member/box'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version: lib.version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -68,12 +65,9 @@ export const updateBoxLocate = () => {
     dispatch(loadingUpdateBoxLocate(true))
     const path = lib.getScorePath() + '/api/member/box/modify'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
+      session: lib.getSession(),
       id: getState().scoreBox.modalContent._id,
-      locate: getState().scoreBox.inputBoxLocate,
-      version: lib.version,
-      member: true
+      locate: getState().scoreBox.inputBoxLocate
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -104,10 +98,7 @@ export const addBox = () => {
     dispatch(loadingAddBox(true))
     const path = lib.getScorePath() + '/api/member/box/add'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version: lib.version,
-      member: true
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {

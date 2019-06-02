@@ -20,9 +20,7 @@ export const getUser = () => {
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/auth'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version: lib.version
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -52,10 +50,8 @@ export const updateModifyText = (apiPath, replacePath) => {
     if (!window.localStorage.token) return false
     dispatch(loadingModify(true))
     const send = {
-      text: getState().setting.modifyText,
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      version: lib.version
+      session: lib.getSession(),
+      text: getState().setting.modifyText
     }
     request.post(apiPath, send, (err, res) => {
       if (err) {
@@ -84,12 +80,10 @@ export const deleteEmailRequest = () => {
     dispatch(loadingDeleteEmailRequest(true))
     const path = lib.getAuthPath() + '/api/setting/email'
     const send = {
+      session: lib.getSession(),
       // ここで空にする(この値が保存される)
       text: '',
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      delMail: true,
-      version: lib.version
+      delMail: true
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -127,11 +121,9 @@ export const updatePassword = () => {
     dispatch(loadingUpdatePassword(true))
     const path = lib.getAuthPath() + '/api/setting/password'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
+      session: lib.getSession(),
       old: getState().setting.oldPassword,
-      new: getState().setting.newPassword,
-      version: lib.version
+      new: getState().setting.newPassword
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -168,10 +160,8 @@ export const sendDeleteRequest = () => {
     dispatch(loadingDeleteAccount(true))
     const path = lib.getAuthPath() + '/api/setting/delete'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      pass: getState().setting.deletePassword,
-      version: lib.version
+      session: lib.getSession(),
+      pass: getState().setting.deletePassword
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -210,11 +200,9 @@ export const sendScoreAdminRequest = () => {
     // if (!adminRequest && getState().setting.scoreAdminRequestPass === '') return false
     const path = lib.getAuthPath() + '/api/setting/score/admin'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
+      session: lib.getSession(),
       admin: adminRequest,
-      pass: getState().setting.scoreAdminRequestPass,
-      version: lib.version
+      pass: getState().setting.scoreAdminRequestPass
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -246,10 +234,7 @@ export const getScoreCount = () => {
     dispatch(loadingScoreCount(true))
     const path = lib.getScorePath() + '/api/member/count'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
-      member: true,
-      version: lib.version
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -283,8 +268,7 @@ export const scoreMailRequest = () => {
     if (!email) return false
     const path = lib.getScorePath() + '/api/member/sendmail'
     const send = {
-      userid: window.localStorage.windsid,
-      token: window.localStorage.token,
+      session: lib.getSession(),
       to: email,
       name: getState().status.user.name,
       subject: 'ウィンズスコア',
@@ -292,9 +276,7 @@ export const scoreMailRequest = () => {
           + 'CSV形式で記録されています。\r\n'
           + '直接Excelで開くと文字化けするため\r\n'
           + '一度Googleスプレッドシードなどで開き\r\n'
-          + '上書き保存してからご利用ください。\r\n',
-      member: true,
-      version: lib.version
+          + '上書き保存してからご利用ください。\r\n'
     }
     request.post(path, send, (err, res) => {
       if (err) {
