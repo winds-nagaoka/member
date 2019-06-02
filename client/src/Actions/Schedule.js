@@ -1,11 +1,13 @@
 import * as request from '../Library/Request'
+import * as lib from '../Library/Library'
 
 export const getSchedule = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     if (getState().schedule.acquired) return false
     dispatch(loading(true))
-    request.post('https://api.winds-n.com/schedule/', {}, (err, res) => {
+    const path = lib.getApiPath() + '/schedule/'
+    request.post(path, {}, (err, res) => {
       if (err) {
         return false
       } else {

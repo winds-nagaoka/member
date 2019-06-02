@@ -1,4 +1,5 @@
 import * as request from '../Library/Request'
+import * as lib from '../Library/Library'
 import { playTime, version } from '../Library/Library'
 
 import * as libArchive from '../Component/Auth/Archive/Library/Library'
@@ -13,7 +14,7 @@ export const loadArchivePlaylist = () => {
     if (!window.localStorage.token) return false
     if (getState().audio.archivePlaylist) return false
     dispatch(loadingArchivePlaylist(true))
-    const path = 'https://app.winds-n.com/api/audio'
+    const path = lib.getAppPath() + '/api/audio'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -49,7 +50,7 @@ export const loadPracticePlaylist = () => {
     if (!window.localStorage.token) return false
     if (getState().audio.practicePlaylist) return false
     dispatch(loadingPracticePlaylist(true))
-    const path = 'https://app.winds-n.com/api/record'
+    const path = lib.getAppPath() + '/api/record'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -85,7 +86,7 @@ export const loadSourcePlaylist = () => {
     if (!window.localStorage.token) return false
     if (getState().audio.sourcePlaylist) return false
     dispatch(loadingSourcePlaylist(true))
-    const path = 'https://app.winds-n.com/api/reference'
+    const path = lib.getAppPath() + '/api/reference'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,

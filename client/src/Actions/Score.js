@@ -1,5 +1,5 @@
 import * as request from '../Library/Request'
-import { version } from '../Library/Library'
+import * as lib from '../Library/Library'
 import { scrollToTop } from './Status'
 import { showToast } from './Toast'
 
@@ -88,14 +88,12 @@ export const getScoreList = (query) => {
     const requestTime = String((new Date()).getTime())
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
-    // URL
-    const path = 'https://score.winds-n.com/api/member/score'
-    // const path = 'http://192.168.1.22:3011/api/member/score'
+    const path = lib.getScorePath() + '/api/member/score'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       query: query === undefined ? '' : query,
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {
@@ -163,14 +161,12 @@ export const getScoreDetail = (scoreid) => {
   return async (dispatch, getState) => {
     dispatch(detailLoading(true))
     if (!window.localStorage.token) return false 
-    // URL
-    const path = 'https://score.winds-n.com/api/member/detail'
-    // const path = 'http://192.168.1.22:3011/api/member/detail'
+    const path = lib.getScorePath() + '/api/member/detail'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       id: scoreid,
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {
@@ -228,14 +224,13 @@ const loadScoreEdit = (editMode) => {
     dispatch(editPreLoading(true))
     if (!window.localStorage.token) return false 
     // URL
-    const path = 'https://score.winds-n.com/api/member/edit/pre'
-    // const path = 'http://192.168.1.22:3011/api/member/edit/pre'
+    const path = lib.getScorePath() + '/api/member/edit/pre'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       mode: editMode,
       id: (editMode !== 'new' ? getState().score.scoreid : false),
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {
@@ -306,15 +301,14 @@ export const updateScoreEdit = () => {
     dispatch(editLoading(true))
     if (!window.localStorage.token) return false 
     // URL
-    const path = 'https://score.winds-n.com/api/member/edit'
-    // const path = 'http://192.168.1.22:3011/api/member/edit'
+    const path = lib.getScorePath() + '/api/member/edit'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       mode: getState().score.editMode,
       id: getState().score.scoreid,
       data: getState().score.scoreEdit,
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {

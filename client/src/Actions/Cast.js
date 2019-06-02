@@ -4,10 +4,11 @@ export const getList = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(listLoading(true))
+    const path = 'https://cast.winds-n.com/api/presenter'
     const send = {
       id: getState().socket.id
     }
-    request.post('https://cast.winds-n.com/api/presenter', send, (err, res) => {
+    request.post(path, send, (err, res) => {
       if (err) {
         return false
       } else {

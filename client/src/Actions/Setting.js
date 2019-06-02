@@ -1,6 +1,6 @@
 import * as request from '../Library/Request'
 import { replace } from 'react-router-redux'
-import { version } from '../Library/Library'
+import * as lib from '../Library/Library'
 import { showToast } from './Toast'
 
 import { setUser, logout } from './Status'
@@ -18,12 +18,13 @@ export const getUser = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loading(true))
+    const path = lib.getAuthPath() + '/auth'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version
+      version: lib.version
     }
-    request.post('https://auth.winds-n.com/auth', send, (err, res) => {
+    request.post(path, send, (err, res) => {
       if (err) {
         return false
       } else {
@@ -54,7 +55,7 @@ export const updateModifyText = (apiPath, replacePath) => {
       text: getState().setting.modifyText,
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version
+      version: lib.version
     }
     request.post(apiPath, send, (err, res) => {
       if (err) {
@@ -81,14 +82,14 @@ export const deleteEmailRequest = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingDeleteEmailRequest(true))
-    const path = 'https://auth.winds-n.com/api/setting/email'
+    const path = lib.getAuthPath() + '/api/setting/email'
     const send = {
       // ここで空にする(この値が保存される)
       text: '',
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       delMail: true,
-      version
+      version: lib.version
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -124,13 +125,13 @@ export const updatePassword = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingUpdatePassword(true))
-    const path = 'https://auth.winds-n.com/api/setting/password'
+    const path = lib.getAuthPath() + '/api/setting/password'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       old: getState().setting.oldPassword,
       new: getState().setting.newPassword,
-      version
+      version: lib.version
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -165,12 +166,12 @@ export const sendDeleteRequest = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingDeleteAccount(true))
-    const path = 'https://auth.winds-n.com/api/setting/delete'
+    const path = lib.getAuthPath() + '/api/setting/delete'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       pass: getState().setting.deletePassword,
-      version
+      version: lib.version
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -207,13 +208,13 @@ export const sendScoreAdminRequest = () => {
     dispatch(loadingScoreAdminRequest(true))
     const adminRequest = 'scoreAdmin' in getState().status.user ? !getState().status.user.scoreAdmin : true
     // if (!adminRequest && getState().setting.scoreAdminRequestPass === '') return false
-    const path = 'https://auth.winds-n.com/api/setting/score/admin'
+    const path = lib.getAuthPath() + '/api/setting/score/admin'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       admin: adminRequest,
       pass: getState().setting.scoreAdminRequestPass,
-      version
+      version: lib.version
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -243,12 +244,12 @@ export const getScoreCount = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingScoreCount(true))
-    const path = 'https://score.winds-n.com/api/member/count'
+    const path = lib.getScorePath() + '/api/member/count'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       member: true,
-      version
+      version: lib.version
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -280,7 +281,7 @@ export const scoreMailRequest = () => {
     const name = 'name' in getState().status.user ? getState().status.user.name : 'ウィンズユーザー'
     const email = 'email' in getState().status.user ? getState().status.user.email : false
     if (!email) return false
-    const path = 'https://score.winds-n.com/api/member/sendmail'
+    const path = lib.getScorePath() + '/api/member/sendmail'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -293,7 +294,7 @@ export const scoreMailRequest = () => {
           + '一度Googleスプレッドシードなどで開き\r\n'
           + '上書き保存してからご利用ください。\r\n',
       member: true,
-      version
+      version: lib.version
     }
     request.post(path, send, (err, res) => {
       if (err) {

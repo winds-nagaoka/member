@@ -1,5 +1,5 @@
 import * as request from '../Library/Request'
-import { version } from '../Library/Library'
+import * as lib from '../Library/Library'
 
 const prefix = 'SCOREBOX_'
 
@@ -13,13 +13,11 @@ export const getBoxList = () => {
     if (!window.localStorage.token) return false
     if (getState().scoreBox.acquired) return false
     // dispatch(loading(true))
-    // URL
-    const path = 'https://score.winds-n.com/api/member/box'
-    // const path = 'http://192.168.1.22:3011/api/member/box'
+    const path = lib.getScorePath() + '/api/member/box'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {
@@ -68,15 +66,13 @@ export const updateBoxLocate = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingUpdateBoxLocate(true))
-    // URL
-    const path = 'https://score.winds-n.com/api/member/box/modify'
-    // const path = 'http://192.168.1.22:3011/api/member/box/modify'
+    const path = lib.getScorePath() + '/api/member/box/modify'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
       id: getState().scoreBox.modalContent._id,
       locate: getState().scoreBox.inputBoxLocate,
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {
@@ -106,13 +102,11 @@ export const addBox = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingAddBox(true))
-    // URL
-    const path = 'https://score.winds-n.com/api/member/box/add'
-    // const path = 'http://192.168.1.22:3011/api/member/box/add'
+    const path = lib.getScorePath() + '/api/member/box/add'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {

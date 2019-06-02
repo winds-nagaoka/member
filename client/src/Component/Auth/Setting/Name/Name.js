@@ -62,7 +62,7 @@ class Name extends Component {
         </div>
 
         <Modify
-          api='https://auth.winds-n.com/api/setting/username'
+          api={lib.getAuthPath() + '/api/setting/username'}
           text={this.props.user.name}
           title='名前'
           onComplete={() => this.nameChanged()}

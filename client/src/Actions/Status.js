@@ -2,7 +2,7 @@ import { replace } from 'react-router-redux'
 
 import { navigationMenu } from './Navigation'
 import * as request from '../Library/Request'
-import { version } from '../Library/Library'
+import * as lib from '../Library/Library'
 
 import { showToast } from './Toast'
 
@@ -14,12 +14,13 @@ export const loginAuth = (location) => {
     if (!window.localStorage.token) return dispatch(loginUpdate(false))
     if(getState().status.loading) return false
     dispatch(loading(true))
+    const path = lib.getAuthPath() + '/auth'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version
+      version: lib.version
     }
-    request.post('https://auth.winds-n.com/auth', send, (err, res) => {
+    request.post(path, send, (err, res) => {
       if (err) {
         dispatch(showToast('ログインエラー'))
         return false

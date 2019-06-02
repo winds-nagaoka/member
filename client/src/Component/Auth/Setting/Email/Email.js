@@ -82,7 +82,7 @@ class Email extends Component {
         </div>
 
         <Modify
-          api='https://auth.winds-n.com/api/setting/email'
+          api={lib.getAuthPath() + '/api/setting/email'}
           text={email}
           title='メール'
           onComplete={() => this.emailChanged()}

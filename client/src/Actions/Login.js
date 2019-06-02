@@ -1,6 +1,6 @@
 import * as Status from './Status'
 import * as request from '../Library/Request'
-import { version } from '../Library/Library'
+import * as lib from '../Library/Library'
 import { showToast } from './Toast'
 
 export const login = () => {
@@ -10,12 +10,13 @@ export const login = () => {
       return dispatch(setErrorMessage('入力を確認してください'))
     }
     dispatch(loading(true))
+    const path = lib.getAuthPath() + '/login'
     const send = {
       userid: windsid,
       passwd: password,
-      version
+      version: lib.version
     }
-    request.post('https://auth.winds-n.com/login', send, (err, res) => {
+    request.post(path, send, (err, res) => {
       if (err) {
         dispatch(setErrorMessage('ログインできませんでした'))
       } else {

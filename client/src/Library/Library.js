@@ -1,5 +1,40 @@
 export const appName = 'member'
-export const version = '0.0.8'
+export const version = '0.0.9'
+const mode = 'dev' // dev or prod
+import uuidv1 from 'uuid/v1'
+
+export function getClientid () {
+  if (window.localStorage.clientid) return window.localStorage.clientid
+  const clientid = uuidv1().split('-').join('')
+  window.localStorage.setItem('clientid', clientid)
+  return clientid
+}
+
+export function getAppPath () {
+  return mode === 'prod' ? 'https://app.winds-n.com' : 'http://192.168.1.22:3007'
+}
+
+export function getAuthPath () {
+  return mode === 'prod' ? 'https://auth.winds-n.com' : 'http://192.168.1.22:3003'
+}
+
+export function getScorePath () {
+  // return mode === 'prod' ? 'https://score.winds-n.com' : 'http://192.168.1.22:3011'
+  return 'https://score.winds-n.com'
+}
+
+export function getApiPath () {
+  return 'https://api.winds-n.com'
+}
+
+export function getSession () {
+  return {
+    userid: window.localStorage.userid,
+    clientid: getClientid(),
+    clientToken: window.localStorage.token,
+    version
+  }
+}
 
 export function playTime (t) {
   var hms = ''

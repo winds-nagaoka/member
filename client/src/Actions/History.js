@@ -1,5 +1,5 @@
 import * as request from '../Library/Request'
-import { version } from '../Library/Library'
+import * as lib from '../Library/Library'
 
 const prefix = 'HISTORY_'
 
@@ -13,11 +13,11 @@ export const getHistory = () => {
     if (!window.localStorage.token) return false
     if (getState().history.acquired) return false
     dispatch(loading(true))
-    const path = 'https://app.winds-n.com/api/practice'
+    const path = lib.getAppPath() + '/api/practice'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
-      version,
+      version: lib.version,
       member: true
     }
     request.post(path, send, (err, res) => {

@@ -1,4 +1,5 @@
 import * as request from '../Library/Request'
+import * as lib from '../Library/Library'
 import { playTime, version } from '../Library/Library'
 import { escapeReg } from '../Component/Auth/Archive/Library/Library'
 
@@ -17,7 +18,7 @@ export const getConcertList = () => {
     if (getState().archive.concertList) return false
     if (getState().archive.loading) return false
     dispatch(loading(true))
-    const path = 'https://app.winds-n.com/api/concert'
+    const path = lib.getAppPath() + '/api/concert'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -153,7 +154,7 @@ export const getPhotoList = () => {
     if (!getState().archive.concertid) return false
     if (getState().archive.photoConcertid === getState().archive.concertid) return false
     dispatch(loadingPhoto(true))
-    const path = 'https://app.winds-n.com/api/photo'
+    const path = lib.getAppPath() + '/api/photo'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,
@@ -200,7 +201,7 @@ export const getVideoList = () => {
     if (!getState().archive.concertid) return false
     if (getState().archive.videoConcertid === getState().archive.concertid) return false
     dispatch(loadingVideo(true))
-    const path = 'https://app.winds-n.com/api/video'
+    const path = lib.getAppPath() + '/api/video'
     const send = {
       userid: window.localStorage.windsid,
       token: window.localStorage.token,

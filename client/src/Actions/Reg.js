@@ -1,6 +1,6 @@
 import * as Status from './Status'
 import * as request from '../Library/Request'
-import { version } from '../Library/Library'
+import * as lib from '../Library/Library'
 import { requestFirstTutorial } from './Tutorial'
 
 export const register = () => {
@@ -11,13 +11,14 @@ export const register = () => {
       return dispatch(setErrorMessage('入力を確認してください'))
     }
     dispatch(loading(true))
+    const path = lib.getAuthPath() + '/adduser'
     const send = {
       userid: windsid,
       passwd: password,
       key: approvalKey,
-      version
+      version: lib.version
     }
-    request.post('https://auth.winds-n.com/adduser', send, (err, res) => {
+    request.post(path, send, (err, res) => {
       if (err) {
         dispatch(setErrorMessage('登録できませんでした'))
         dispatch(resetMode())

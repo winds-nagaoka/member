@@ -1,5 +1,6 @@
 import { replace } from 'react-router-redux'
 import * as request from '../Library/Request'
+import * as lib from '../Library/Library'
 
 import { showToast } from './Toast'
 
@@ -14,10 +15,9 @@ export const getBBSList = () => {
     // 既に読み込んでるデータをリセット
     dispatch(updateList(undefined))
     dispatch(showListUpdate([], 0, true))
-    const send = {
-      api
-    }
-    request.post('https://api.winds-n.com/bbs/', send, (err, res) => {
+    const path = lib.getApiPath() + '/bbs/' // スラッシュ必須
+    const send = { api }
+    request.post(path, send, (err, res) => {
       if (err) {
         return false
       } else if (res.body.status === 'true') {
