@@ -404,9 +404,8 @@ export const closePlayer = () => {
 export const countUp = () => {
   return async (dispatch, getState) => {
     const play = {
-      userid: window.localStorage.windsid,
+      session: lib.getSession(),
       play: getState().audio.audioRef.src + '(' + getState().audio.currentTime + ')',
-      version
     }
     request.countUp(play)
     dispatch(setCountFlag(false))
