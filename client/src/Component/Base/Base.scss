@@ -70,10 +70,24 @@
         }
       }
 
-      p {
+      .text {
         margin: 24px 0;
         font-size: 14px;
         color: #333;
+
+        p {
+          margin: 0;
+          padding: 0;
+
+          .red {
+            margin: 0 2px;
+            padding: 0 2px;
+            border-radius: 2px;
+            background: rgba(255,59,48,.8);
+            color: #fff;
+            // color: rgba(255,59,48,1);
+          }
+        }  
       }
 
       label {

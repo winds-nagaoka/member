@@ -68,6 +68,11 @@ class Login extends Component {
         <div className={'form-base login' + lib.pcClass(this.props.pc)}>
           <div className={'form login' + lib.pcClass(this.props.pc)}>
             <h2 className={lib.pcClass(this.props.pc)}>ログイン</h2>
+            {/* <div className='text'>
+              <p>認証サーバアップデートに伴い、</p>
+              <p>2019年6月4日に<span className='red'>全ての登録情報を削除</span>しました</p>
+              <p>既に登録していた方はお手数ですが改めて登録をお願いします</p>
+            </div> */}
             <label>ユーザー名</label>
             <input type='text' tabIndex='1' onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputRef = i} />
             <label>パスワード</label>

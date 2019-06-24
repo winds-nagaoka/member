@@ -1,6 +1,7 @@
 export const appName = 'member'
-export const version = '0.1.0'
-const mode = 'dev' // dev or prod
+export const version = '0.1.1'
+// mode を prod 以外にするとローカルのAPIを使う
+const mode = 'prod' // dev or prod
 import uuidv1 from 'uuid/v1'
 
 export function getClientid () {
@@ -29,7 +30,7 @@ export function getApiPath () {
 
 export function getSession () {
   return {
-    userid: window.localStorage.userid,
+    userid: window.localStorage.windsid,
     clientid: getClientid(),
     clientToken: window.localStorage.token,
     useragent: window.navigator.userAgent,

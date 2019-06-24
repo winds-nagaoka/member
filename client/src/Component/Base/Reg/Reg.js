@@ -94,7 +94,14 @@ class Reg extends Component {
           <div className={'form-base reg' + lib.pcClass(this.props.pc)}>
             <div className={'form login' + lib.pcClass(this.props.pc)}>
               <h2 className={lib.pcClass(this.props.pc)}>新規登録</h2>
-              <p>共通パスワードを入力してください</p>
+              {/* <div className='text'>
+                <p>認証サーバアップデートに伴い、</p>
+                <p>2019年6月4日に<span className='red'>全ての登録情報を削除</span>しました</p>
+                <p>既に登録していた方はお手数ですが改めて登録をお願いします</p>
+              </div> */}
+              <div className='text'>
+                <p>共通パスワードを入力してください</p>
+              </div>
               <label>団員専用パスワード</label>
               <input type='text' tabIndex='1' value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)}  ref={(i) => this.inputKeyRef = i} />
               {showError}

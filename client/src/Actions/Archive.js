@@ -345,9 +345,8 @@ export const resetVideo = () => {
 export const countUp = () => {
   return async (dispatch, getState) => {
     const play = {
-      userid: window.localStorage.windsid,
-      play: getState().archive.videoRef.src + '(' + getState().archive.videoCurrentTime + ')',
-      version
+      session: lib.getSession(),
+      play: getState().archive.videoRef.src + '(' + getState().archive.videoCurrentTime + ')'
     }
     request.countUp(play)
     dispatch(setCountFlag(false))

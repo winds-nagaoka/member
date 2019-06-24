@@ -21,6 +21,7 @@ export const loginAuth = (location) => {
     request.post(path, send, (err, res) => {
       if (err) {
         dispatch(showToast('ログインエラー'))
+        dispatch(replace('/login'))
         return false
       } else {
         if (res.body.status) {

@@ -48,7 +48,7 @@ class Home extends Component {
 
   renderUserStatus () {
     if (this.props.loading || !this.props.user) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    const secure = this.props.user.hash && this.props.user.token ? <span className='secure'><i className='fas fa-lock'></i></span> : <span className='non-secure'><i class="fas fa-ban"></i></span>
+    const secure = this.props.user.hash && this.props.user.token ? <span className='secure'><i className='fas fa-lock'></i></span> : <span className='non-secure'><i className="fas fa-ban"></i></span>
     const email = this.props.user.email ? this.props.user.email : '未設定'
     return (
       <div>
