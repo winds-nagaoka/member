@@ -59,7 +59,7 @@ class Mail extends Component {
     return (
       <div>
         <div><label>楽譜登録数</label>{showScoreCount}</div>
-        <div><label>メール</label>{email}</div>
+        <div><label>メールアドレス</label>{email}</div>
       </div>
     )
   }
@@ -77,7 +77,7 @@ class Mail extends Component {
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/score/mail'>CSV出力</Link></div>
           <h2>CSV出力</h2>
-          <p>メールでウィンズスコア一覧をCSV出力できます。</p>
+          <p>ウィンズスコア一覧をCSVにて登録されたメールアドレスへ送信します。</p>
         </div>
 
         <div className={'box setting-status' + lib.pcClass(this.props.pc)}>

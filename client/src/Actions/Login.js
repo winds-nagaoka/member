@@ -6,9 +6,7 @@ import { showToast } from './Toast'
 export const login = () => {
   return async (dispatch, getState) => {
     const { login: {windsid, password} } = getState()
-    if (windsid === '' || password === '') {
-      return dispatch(setErrorMessage('入力を確認してください'))
-    }
+    if (windsid === '' || password === '') return dispatch(setErrorMessage('入力を確認してください'))
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/login'
     const send = {

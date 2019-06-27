@@ -52,3 +52,5 @@ app.use('/setting/score/admin', express.static(client))
 app.use('/setting/score/mail', express.static(client))
 app.use('/setting/about', express.static(client))
 app.use('/setting/license', express.static(client))
+
+app.use('/valid/:key', express.static(client))

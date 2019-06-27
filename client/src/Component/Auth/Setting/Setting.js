@@ -9,6 +9,7 @@ import * as lib from '../../../Library/Library'
 import Home from './Home/Home'
 import Name from './Name/Name'
 import Email from './Email/Email'
+import EmailValidation from './EmailValidation/EmailValidation'
 import Password from './Password/Password'
 import AccountDelete from './AccountDelete/AccountDelete'
 import Score from './Score/Score'
@@ -45,6 +46,7 @@ class Setting extends Component {
           <Route exact path='/setting' component={Home} />
           <Route exact path='/setting/name' component={Name} />
           <Route exact path='/setting/email' component={Email} />
+          <Route exact path='/setting/valid/:key' component={EmailValidation} />
           <Route exact path='/setting/password' component={Password} />
           <Route exact path='/setting/delete' component={AccountDelete} />
           <Route exact path='/setting/about' component={About} />

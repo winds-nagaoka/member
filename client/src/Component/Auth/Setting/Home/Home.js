@@ -65,9 +65,9 @@ class Home extends Component {
 
   renderUserStatus () {
     if (this.props.loading || !this.props.user) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    
     const secure = this.props.user.hash && lib.getToken(this.props.user) ? <span className='secure'><i className='fas fa-lock'></i></span> : <span className='non-secure'><i className="fas fa-ban"></i></span>
     const email = this.props.user.email ? <span>{this.props.user.email}</span> : <span className='light'>未設定</span>
+    const emailValid = this.props.user.email ? (this.props.user.emailValid ? <div className='label ok'><span><i className="fas fa-check-circle"></i>確認済み</span></div> : <div className='label ng'><span><i className="fas fa-times-circle"></i>未確認</span></div>) : false
     const scoreAdmin = 'scoreAdmin' in this.props.user ? this.props.user.scoreAdmin : false
     const showScoreAdmin = scoreAdmin ? <div className='label'><span>楽譜管理者</span></div> : false
     return (
@@ -75,7 +75,7 @@ class Home extends Component {
         <div><label>WindsID&nbsp;{secure}</label><span className='light'>{this.props.user.userid}</span></div>
         {/* <div><label>登録日</label><span>{this.props.user.createdAt}</span></div> */}
         <div><label>名前</label><span>{this.props.user.name}</span>{showScoreAdmin}</div>
-        <div><label>メール</label>{email}</div>
+        <div><label>メール</label><span>{email}</span>{emailValid}</div>
       </div>
     )
   }
@@ -101,12 +101,12 @@ class Home extends Component {
 
         {showPlayerClose}
 
-        <div className={'box-label' + lib.pcClass(this.props.pc)}>登録情報の変更</div>
+        <div className={'box-label' + lib.pcClass(this.props.pc)}>アカウント情報の変更</div>
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
               <li><Link to='/setting/name'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メール</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メールアドレス</span><i className="fas fa-angle-right"></i></div></Link></li>
               <li className='border-top'><Link to='/setting/password'><div className='inner'><span>パスワード</span><i className="fas fa-angle-right"></i></div></Link></li>
               <li className='border-top'><Link to='/setting/delete'><div className='inner'><span>アカウントの削除</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>

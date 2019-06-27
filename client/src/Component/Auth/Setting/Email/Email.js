@@ -41,7 +41,7 @@ function mapDispatchToProps(dispatch) {
 
 class Email extends Component {
   componentDidMount () {
-    this.props.setNavigationTitle('メールの設定')
+    this.props.setNavigationTitle('メールアドレスの設定')
     this.props.setBackNavigation(true, '/setting')
   }
 
@@ -60,7 +60,7 @@ class Email extends Component {
     if (!this.props.user.email) return false
     const buttonHandler = this.props.loadingDeleteEmailRequest ? () => {} : () => this.props.deleteEmailRequest()
     const disabledClass = this.props.loadingDeleteEmailRequest ? ' disable' : ''
-    const buttonText = this.props.loadingDeleteEmailRequest ? '読み込み中...' : 'メールを削除'
+    const buttonText = this.props.loadingDeleteEmailRequest ? '読み込み中...' : 'メールアドレスの登録を解除'
     return (
       <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
         <div onClick={buttonHandler} className={'button save' + disabledClass}>{buttonText}</div>
@@ -76,15 +76,15 @@ class Email extends Component {
       <React.Fragment>
 
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/email'>メールの設定</Link></div>
-          <h2>メールの設定</h2>
-          <p>ウィンズスコアからデータを受け取るために使用します</p>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/email'>メールアドレスの設定</Link></div>
+          <h2>メールアドレスの設定</h2>
+          <p>連絡先を登録します</p>
         </div>
 
         <Modify
           api={lib.getAuthPath() + '/api/setting/email'}
           text={email}
-          title='メール'
+          title='メールアドレス'
           onComplete={() => this.emailChanged()}
           onCancel={() => this.canceled()}
         />

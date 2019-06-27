@@ -33,6 +33,8 @@ import tutorialReducer from '../Reducers/Tutorial'
 import loginReducer from '../Reducers/Login'
 import regReducer from '../Reducers/Reg'
 
+import emailValidationReducer from '../Reducers/EmailValidation'
+
 // historyはsrc/App.jsから渡す
 export default function createStore(history) {
   return reduxCreateStore(
@@ -63,6 +65,8 @@ export default function createStore(history) {
 
       reg: regReducer,
       login: loginReducer,
+
+      emailValidation: emailValidationReducer,
 
       // react-router-reduxのReducer
       router: routerReducer,

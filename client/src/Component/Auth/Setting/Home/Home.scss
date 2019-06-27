@@ -5,7 +5,7 @@
     font-size: 12px;
     
     .secure i {
-      color: rgba(76,217,100,1);
+      color: rgba(50,215,75,1);
     }
 
     .non-secure i {
@@ -25,9 +25,22 @@
       margin: 0 8px;
       padding: 2px 6px;
       border-radius: 12px;
-      background: rgba(76,217,100,1);
+      background: rgba(50,215,75,1);
       font-size: 12px;
       color: #fff;
+
+      i {
+        display: inline-block;
+        margin-right: .2em;
+      }
+    }
+    
+    &.ok span {
+      background: rgba(50,215,75,1);
+    }
+
+    &.ng span {
+      background: rgba(255,69,58,1);
     }
   }
 }

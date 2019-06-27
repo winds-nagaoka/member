@@ -6,6 +6,7 @@ import { loginAuth, windowWidthChange } from '../../Actions/Status'
 
 import Login from './Login/Login'
 import Reg from './Reg/Reg'
+import EmailValidation from './EmailValidation/EmailValidation'
 
 import Header from './Component/Header/Header'
 
@@ -58,6 +59,7 @@ class Base extends Component {
         <Switch>
           <Route exact path='/login' component={Login} />
           <Route exact path='/reg' component={Reg} />
+          <Route path='/valid/:key' component={EmailValidation} />
         </Switch>
       </div>
     )

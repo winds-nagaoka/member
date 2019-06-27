@@ -215,7 +215,7 @@ class Home extends Component {
           <h2>アーカイブ</h2>
           <p>過去のウィンズの活動履歴を確認できます</p>
         </div>
-        <div className={'box archive-list no-border-bottom-mobile' + lib.pcClass(this.props.pc)}>
+        <div className={'box archive-list' + lib.pcClass(this.props.pc)}>
           {showSearch}
           {showSearchResult}
           {showConcertSwitch}

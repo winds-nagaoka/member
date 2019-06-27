@@ -34,6 +34,7 @@ export default class App extends Component {
             <Switch>
               <Route path='/login' component={Base} />
               <Route path='/reg' component={Base} />
+              <Route path='/valid' component={Base} />
               <Route path='/' component={Auth} />
             </Switch>
           </React.Fragment>
