@@ -29,9 +29,9 @@ export const loginAuth = (location) => {
           dispatch(tokenUpdate(res.body.token))
           dispatch(loginUpdate(true))
           dispatch(setUser(res.body.user))
-          dispatch(replace(location))
+          location ? dispatch(replace(location)) : dispatch(replace('/'))
         } else {
-          window.localStorage.clear()
+          lib.removeLocalStorage()
           dispatch(windsidUpdate(false))
           dispatch(tokenUpdate(false))
           dispatch(loginUpdate(false))
@@ -45,7 +45,7 @@ export const loginAuth = (location) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    window.localStorage.clear()
+    lib.removeLocalStorage()
     dispatch(showToast('ログアウトしました'))
     dispatch(windsidUpdate(false))
     dispatch(tokenUpdate(false))

@@ -1,3 +1,5 @@
+import { replace } from 'react-router-redux'
+
 import * as Status from './Status'
 import * as request from '../Library/Request'
 import * as lib from '../Library/Library'
@@ -26,11 +28,12 @@ export const register = () => {
         dispatch(resetMode())
       } else {
         if (res.body.status) {
-          location.reload()
+          // location.reload()
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
+          dispatch(replace('/'))
           // dispatch(requestFirstTutorial(true, 'first'))
         } else {
           dispatch(Status.windsidUpdate(false))

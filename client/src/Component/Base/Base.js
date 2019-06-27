@@ -50,8 +50,7 @@ class Base extends Component {
 
   render () {
     const { login, loading } = this.props
-    if (login) return <Redirect to='/' />
-    // if (loading) return <div className='full-loading'><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
+    // if (login) return <Redirect to='/' />
     if (loading) return <Loading />
     return (
       <div className='base'>

@@ -1,3 +1,5 @@
+import { replace } from 'react-router-redux'
+
 import * as Status from './Status'
 import * as request from '../Library/Request'
 import * as lib from '../Library/Library'
@@ -21,12 +23,13 @@ export const login = () => {
         dispatch(setErrorMessage('ログインできませんでした'))
       } else {
         if (res.body.status) {
-          location.reload()
+          // location.reload()
           dispatch(showToast('ログインしました'))
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
+          dispatch(replace('/'))
         } else {
           dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))

@@ -19,8 +19,10 @@ export const setKey = (key) => ({
 
 export const checkAuth = (key) => {
   return (dispatch, getState) => {
-    console.log(key)
-    if (window.localStorage.token) dispatch(replace('/setting/valid/' + key))
+    if (window.localStorage.token) {
+      console.log('replace /setting/valid/')
+      dispatch(replace('/setting/valid/' + key))
+    }
   }
 }
 
@@ -44,14 +46,14 @@ export const requestLogin = () => {
         dispatch(setErrorMessage('ログインできませんでした'))
       } else {
         if (res.body.status) {
-          dispatch(replace('/setting/valid/' + getState().emailValidation.key))
-          location.reload()
+          // location.reload()
           // dispatch(showToast('ログインしました'))
           console.warn('ログインしました', '/setting/valid/' + getState().emailValidation.key)
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
           dispatch(Status.setUser(res.body.user))
+          dispatch(replace('/setting/valid/' + getState().emailValidation.key))
         } else {
           dispatch(Status.windsidUpdate(false))
           dispatch(Status.tokenUpdate(false))

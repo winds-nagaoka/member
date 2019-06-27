@@ -1,5 +1,5 @@
 export const appName = 'member'
-export const version = '0.1.5'
+export const version = '0.1.6'
 // mode を prod 以外にするとローカルのAPIを使う
 const mode = 'prod' // dev or prod
 import uuidv1 from 'uuid/v1'
@@ -9,6 +9,12 @@ export function getClientid () {
   const clientid = uuidv1().split('-').join('')
   window.localStorage.setItem('clientid', clientid)
   return clientid
+}
+
+export function removeLocalStorage () {
+  const clientid = getClientid()
+  window.localStorage.clear()
+  window.localStorage.setItem('clientid', clientid)
 }
 
 export function getAppPath () {

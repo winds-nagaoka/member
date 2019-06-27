@@ -47,7 +47,6 @@ class EmailValidation extends Component {
     const key = params.key ? params.key : ''
     this.props.setKey(key)
     this.props.checkAuth(key)
-    console.warn(key)
     this.inputRef = React.createRef()
   }
   
@@ -61,34 +60,27 @@ class EmailValidation extends Component {
     if (e.which === 13) this.props.requestLogin()
   }
 
-  renderLogin () {
+  render () {
+    // if (this.props.loading) return <div>読み込み中</div>
     const { windsid, password, errorMessage, loading } = this.props
     const { changeWindsid, changePassword } = this.props
     const buttonLabel = loading ? '読み込み中' : '送信'
     const disabled = (windsid && password) ? (loading ? true : false) : true
     const showError = errorMessage ? <div className='error'>{errorMessage}</div> : false
     return (
-      <div className={'form login' + lib.pcClass(this.props.pc)}>
-        <h2 className={lib.pcClass(this.props.pc)}>ログイン</h2>
-        <label>ユーザー名</label>
-        <input type='text' tabIndex='1' onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputRef = i} />
-        <label>パスワード</label>
-        <input type='password' tabIndex='2' onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
-        {showError}
-        <div className='links'>
-          <button tabIndex='3' onClick={() => this.props.requestLogin()} disabled={disabled}>{buttonLabel}</button>
-        </div>
-      </div>
-    )
-  }
-
-  render () {
-    if (this.props.loading) return <div>読み込み中</div>
-    const showLogin = this.renderLogin()
-    return (
-      <div className={'contents email-validation' + lib.pcClass(this.props.pc)}>
-        <div>
-          {showLogin}
+      <div className={'contents' + lib.pcClass(this.props.pc)}>
+        <div className={'form-base login' + lib.pcClass(this.props.pc)}>
+          <div className={'form login' + lib.pcClass(this.props.pc)}>
+            <h2 className={lib.pcClass(this.props.pc)}>ログイン</h2>
+            <label>ユーザー名</label>
+            <input type='text' tabIndex='1' onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputRef = i} />
+            <label>パスワード</label>
+            <input type='password' tabIndex='2' onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+            {showError}
+            <div className='links'>
+              <button tabIndex='3' onClick={() => this.props.requestLogin()} disabled={disabled}>{buttonLabel}</button>
+            </div>
+          </div>
         </div>
         <Footer />
       </div>

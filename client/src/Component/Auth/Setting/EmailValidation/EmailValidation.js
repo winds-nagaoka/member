@@ -13,11 +13,12 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     loading: state.emailValidation.loading,
     key: state.emailValidation.key,
-    valid: state.emailValidation.valid,
+    // valid: state.emailValidation.valid,
     windsid: state.login.windsid,
     password: state.login.password,
     err: state.emailValidation.err,
 
+    user: state.status.user,
     login: state.status.login
   }
 }
@@ -42,43 +43,64 @@ class EmailValidation extends Component {
     this.props.requestValid(key)
   }
 
-  renderError () {
+  renderResult () {
     if (this.props.err) {
       switch (this.props.err.type) {
         case 'DBError':
           return (
-            <div>データベースエラーです</div>
+            <div className='label ng'><span><i className="fas fa-times-circle"></i>データベースエラーです</span></div>
           )
+        case 'notMatchError':
+            return (
+              <div className='label ng'><span><i className="fas fa-times-circle"></i>URLが無効です</span></div>
+            )
         case 'noDataError':
           return (
-            <div>URLが無効です</div>
+            <div className='label ng'><span><i className="fas fa-times-circle"></i>URLが無効です</span></div>
           )
         case 'expiredError':
           return (
-            <div>リンクの期限が切れています</div>
+            <div className='label ng'><span><i className="fas fa-times-circle"></i>リンクの期限が切れています</span></div>
           )
         case 'alreadyValid':
           return (
-            <div>確認済み</div>
+            <div className='label ok'><span><i className="fas fa-check-circle"></i>確認しました</span></div>
           )
         default:
           return (
-            <div>エラーが発生しました</div>
+            <div className='label ng'><span><i className="fas fa-times-circle"></i>エラーが発生しました</span></div>
           )
       }
+    } else {
+      return (
+        <div className='label ok'><span><i className="fas fa-check-circle"></i>確認済み</span></div>
+      )
     }
   }
 
   render () {
-    if (this.props.loading) return <div>読み込み中</div>
-    const validResult = this.props.valid ? <div>確認しました</div> : this.renderError()
+    const validResult = (this.props.loading || !this.props.user) ? <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div> : this.props.user.emailValid ? <div className='label ok'><span><i className="fas fa-check-circle"></i>確認済み</span></div> : this.renderResult()
     return (
-      <div className={'contents email-validation' + lib.pcClass(this.props.pc)}>
-        <div>メールアドレスの確認</div>
-        <div>
-          {validResult}
+      <React.Fragment>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/email'>メールアドレスの確認</Link></div>
+          <h2>メールアドレスの確認</h2>
         </div>
-      </div>
+
+        <div className={'box email-validation' + lib.pcClass(this.props.pc)}>
+          <div className='text'>
+            {validResult}
+          </div>
+        </div>
+
+        <div className={'box' + lib.pcClass(this.props.pc)}>
+          <div className='back-link'>
+            <ul>
+              <li><Link to='/setting'><div className='inner'><i className="fas fa-angle-left"></i><span>戻る</span></div></Link></li>
+            </ul>
+          </div>
+        </div>
+      </React.Fragment>
     )
   }
 }
