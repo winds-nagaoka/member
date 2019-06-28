@@ -19,10 +19,7 @@ export const setKey = (key) => ({
 
 export const checkAuth = (key) => {
   return (dispatch, getState) => {
-    if (window.localStorage.token) {
-      console.log('replace /setting/valid/')
-      dispatch(replace('/setting/valid/' + key))
-    }
+    if (window.localStorage.token) dispatch(replace('/setting/valid/' + key))
   }
 }
 

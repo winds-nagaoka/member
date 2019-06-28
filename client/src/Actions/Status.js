@@ -29,7 +29,8 @@ export const loginAuth = (location) => {
           dispatch(tokenUpdate(res.body.token))
           dispatch(loginUpdate(true))
           dispatch(setUser(res.body.user))
-          location ? dispatch(replace(location)) : dispatch(replace('/'))
+          // location ? dispatch(replace(location)) : dispatch(replace('/'))
+          location ? dispatch(replace(location)) : false
         } else {
           lib.removeLocalStorage()
           dispatch(windsidUpdate(false))

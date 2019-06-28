@@ -111,12 +111,9 @@ class Auth extends Component {
                 <Switch>
                   <Route exact path='/' component={Home} />
                   <Route path='/practice' component={Practice} />
-                  {/* <Route path='/history' component={Practice} /> */}
                   <Route path='/source' component={Source} />
                   <Route path='/manager' component={Manager} />
                   <Route path='/bbs' component={BBS} />
-                  {/* <Route path='/practice/cast' component={Cast} /> */}
-                  {/* <Route path='/practice/record' component={Record} /> */}
                   <Route path='/archive' component={Archive} />
                   <Route path='/score' component={Score} />
                   <Route path='/setting' component={Setting} />

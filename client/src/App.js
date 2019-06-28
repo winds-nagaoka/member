@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import createBrowserHistory from 'history/createBrowserHistory'
+// import createBrowserHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
+
 import createStore from './Store/Store'
 
 import Base from './Component/Base/Base'

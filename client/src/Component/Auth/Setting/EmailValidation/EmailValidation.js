@@ -80,6 +80,7 @@ class EmailValidation extends Component {
 
   render () {
     const validResult = (this.props.loading || !this.props.user) ? <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div> : this.props.user.emailValid ? <div className='label ok'><span><i className="fas fa-check-circle"></i>確認済み</span></div> : this.renderResult()
+    const emailAddress = (this.props.loading || !this.props.user) ? false : this.props.user.email
     return (
       <React.Fragment>
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
@@ -89,6 +90,7 @@ class EmailValidation extends Component {
 
         <div className={'box email-validation' + lib.pcClass(this.props.pc)}>
           <div className='text'>
+            {emailAddress}
             {validResult}
           </div>
         </div>

@@ -51,9 +51,7 @@ class EmailValidation extends Component {
   }
   
   componentDidMount () {
-    if (this.inputRef) {
-      this.inputRef.focus()
-    }
+    if (this.inputRef) this.inputRef.focus()
   }
 
   keyPress (e) {
