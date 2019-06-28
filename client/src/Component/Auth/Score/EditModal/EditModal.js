@@ -148,7 +148,7 @@ class EditModal extends Component {
   }
 
   reloadNumberLabel () {
-    
+
   }
 
   renderInfo () {
@@ -292,7 +292,7 @@ class EditModal extends Component {
     )
   }
 
-  // this.props.editMode === 'new' || this.props.editMode === 'editStatus' 
+  // this.props.editMode === 'new' || this.props.editMode === 'editStatus'
 
   render () {
     const displayEditScoreModalClass = this.props.displayEditScoreModal ? ' open' : ''

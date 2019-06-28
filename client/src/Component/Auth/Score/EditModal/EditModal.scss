@@ -33,7 +33,7 @@
         // transform: translateY(20%);
       }
     }
-      
+
     .header {
       position: fixed;
       height: 44px;
@@ -237,7 +237,7 @@
       font-size: 14px;
       line-height: 1.6;
       transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-      
+
       &:focus {
         border: solid 1px rgba(182,0,5,1);
         box-shadow: 0 0 0 0.2rem rgba(182,0,5,.25);
@@ -260,7 +260,7 @@
 
   .score-edit-send {
     margin-bottom: 32px;
-    
+
     .send-button {
       display: block;
       width: 100%;
@@ -275,15 +275,15 @@
       text-align: center;
       cursor: pointer;
       transition: all ease-in-out .2s;
-  
+
       &:hover, &:focus {
         background: #eee;
       }
-  
+
       &:active {
         background: #e3e3e3;
       }
-  
+
       i {
         margin-right: .2em;
       }

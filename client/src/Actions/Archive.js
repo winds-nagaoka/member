@@ -252,7 +252,7 @@ export const videoPlayUpdate = (videoCurrent, videoDuration) => {
   return async (dispatch, getState) => {
     if (!getState().archive.displayVideoController && !getState().archive.videoRef.paused) {
       const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
-      dispatch(setDisplayVideoController(true, audioPlayerDisplay))  
+      dispatch(setDisplayVideoController(true, audioPlayerDisplay))
     }
     const videoPlayPercent = (videoDuration && videoCurrent) ? Math.round((videoCurrent / videoDuration) * 1000) / 10 : undefined
     const videoCurrentTime = videoCurrent ? playTime(Math.floor(videoCurrent)) : undefined
@@ -312,7 +312,7 @@ export const videoPause = (e) => {
     if (!getState().archive.videoRef.paused) {
       getState().archive.videoRef.pause()
       dispatch(setVideoPlayStatus(false, getState().archive.videoPlayTrack))
-    }  
+    }
   }
 }
 

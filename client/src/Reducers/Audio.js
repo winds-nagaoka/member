@@ -152,7 +152,7 @@ export default function audioReducer (state = initialState, action) {
         durationTime: action.payload.durationTime,
         playPercent: action.payload.playPercent
       }
-      
+
     // 曲情報
     case prefix + 'ARCHIVE_SET_PLAY_BASE':
       return {
@@ -174,7 +174,7 @@ export default function audioReducer (state = initialState, action) {
     //     track: action.payload.track,
     //     playlistLoad: action.payload.playlistLoad
     //   }
-            
+
     // 曲情報
     case prefix + 'PRACTICE_SET_PLAY_BASE':
       return {

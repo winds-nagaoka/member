@@ -126,7 +126,7 @@ export const scrollToTop = () => {
   return (dispatch, getState) => {
     if (getState().status.contentsRef) {
       getState().status.contentsRef.scrollTop = 0
-    } 
+    }
   }
 }
 
@@ -134,10 +134,10 @@ export const scrollToTopSmooth = () => {
   return (dispatch, getState) => {
     if (getState().status.contentsRef) {
       getState().status.contentsRef.scroll({
-        top: 0, 
-        left: 0, 
+        top: 0,
+        left: 0,
         behavior: 'smooth'
       })
-    } 
+    }
   }
 }

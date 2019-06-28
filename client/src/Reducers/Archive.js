@@ -90,7 +90,7 @@ export default function archiveReducer (state = initialState, action) {
         ...state,
         concertid: action.payload.concertid
       }
-    
+
     // Search
     case prefix + 'LOADING_SEARCH':
       return {
@@ -134,7 +134,7 @@ export default function archiveReducer (state = initialState, action) {
         displayPhotoSlideModal: action.payload.displayPhotoSlideModal,
         photoNumber: action.payload.photoNumber
       }
-    
+
     // Video and VideoController Component
     case prefix + 'LOADING_VIDEO':
       return {

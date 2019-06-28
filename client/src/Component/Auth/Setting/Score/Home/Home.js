@@ -74,7 +74,7 @@ class Home extends Component {
 
         {/* <div className={'box setting-status' + lib.pcClass(this.props.pc)}>
           <div className='text'>
-            {showUserStatus} 
+            {showUserStatus}
           </div>
         </div> */}
 

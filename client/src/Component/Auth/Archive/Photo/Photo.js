@@ -17,7 +17,7 @@ function mapStateToProps(state) {
 
     concertList: state.archive.concertList,
     concertid: state.archive.concertid,
-    
+
     loadingPhoto: state.archive.loadingPhoto,
 
     photoList: state.archive.photoList,

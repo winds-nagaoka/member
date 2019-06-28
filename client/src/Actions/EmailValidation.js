@@ -56,7 +56,7 @@ export const requestLogin = () => {
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
           dispatch(setErrorMessage('ログインできませんでした'))
-        }  
+        }
       }
       dispatch(changePassword(''))
       dispatch(loading(false))
@@ -97,6 +97,25 @@ export const requestValid = (key) => {
         }
       }
       dispatch(loading(false))
+    })
+  }
+}
+
+export const requestEmail = () => {
+  return async (dispatch, getState) => {
+    // 送信済みの場合キャンセル
+    if (getState().emailValidation.loading) return
+    if (!getState().status.user.email) return
+    dispatch(loading(true))
+    const path = lib.getAuthPath() + '/api/setting/email'
+    const send = {
+      session: lib.getSession(),
+      text: getState().status.user.email
+    }
+    request.post(path, send, (err, res) => {
+      dispatch(loading(false))
+      if (err) return dispatch(showToast('エラーが発生しました'))
+      if (res.body.status) return dispatch(showToast('確認メールを再送しました'))
     })
   }
 }

@@ -242,7 +242,7 @@ export const getScoreCount = () => {
       } else {
         if (res.body.status) {
           dispatch(setScoreCount(res.body.count))
-        }  
+        }
       }
       dispatch(loadingScoreCount(false))
     })

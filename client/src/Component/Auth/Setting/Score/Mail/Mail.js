@@ -15,7 +15,7 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     loading: state.status.loading,
     user: state.status.user,
-    
+
     loadingScoreCount: state.setting.loadingScoreCount,
     scoreCount: state.setting.scoreCount,
     loadingScoreMailRequest: state.setting.loadingScoreMailRequest
@@ -82,7 +82,7 @@ class Mail extends Component {
 
         <div className={'box setting-status' + lib.pcClass(this.props.pc)}>
           <div className='text'>
-            {showScoreStatus} 
+            {showScoreStatus}
           </div>
         </div>
 

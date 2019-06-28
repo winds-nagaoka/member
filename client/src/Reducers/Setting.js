@@ -45,7 +45,7 @@ export default function settingReducer (state = initialState, action) {
         loadingModify: action.payload.loadingModify
       }
 
-    
+
     case prefix + 'LOADING_DELETE_EMAIL_REQUEST':
       return {
         ...state,
@@ -80,7 +80,7 @@ export default function settingReducer (state = initialState, action) {
         loadingDeleteAccount: action.payload.loadingDeleteAccount
       }
 
-    
+
     // Score Setting
     case prefix + 'LOADING_SCORE_ADMIN_REQUEST':
       return {
@@ -103,7 +103,7 @@ export default function settingReducer (state = initialState, action) {
         ...state,
         scoreCount: action.payload.scoreCount
       }
-    
+
     case prefix + 'LOADING_SCORE_MAIL_REQUEST':
       return {
         ...state,

@@ -49,7 +49,7 @@ class EmailValidation extends Component {
     this.props.checkAuth(key)
     this.inputRef = React.createRef()
   }
-  
+
   componentDidMount () {
     if (this.inputRef) this.inputRef.focus()
   }

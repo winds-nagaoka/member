@@ -87,7 +87,7 @@ class Home extends Component {
   }
 
   renderScoreList () {
-    if (this.props.loadingScore || !this.props.scoreList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div> 
+    if (this.props.loadingScore || !this.props.scoreList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     return this.props.showList.map((each, i) => {
       if (!each.status) return
       const composer = each.composer.length === 0 ? '' : libScore.makeLine(each.composer)

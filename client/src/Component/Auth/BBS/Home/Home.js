@@ -57,7 +57,7 @@ class Home extends Component {
   //     const bbsList = this.state.bbsList.concat(this.props.list.list.slice(this.state.showCount, showCount))
   //     console.log('load call', this.state.showCount, showCount, bbsList, showCount, this.props.list.list.length)
   //     this.setState({bbsList, showCount})
-  //     if (showCount > this.props.list.list.length) this.setState({hasMore: false})    
+  //     if (showCount > this.props.list.list.length) this.setState({hasMore: false})
   //   }, 100)
   // }
 

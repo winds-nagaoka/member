@@ -97,7 +97,7 @@ class Tutorial extends Component {
       },
       renderPrevButton: () => <CustomButton className="swiper-custom-button-prev" pc={this.props.pc}><i className="fas fa-chevron-left"></i></CustomButton>,
       renderNextButton: () => <CustomButton className="swiper-custom-button-next" pc={this.props.pc}><i className="fas fa-chevron-right"></i></CustomButton>,
-      
+
       // カーソルキーでの操作
       keyboard: true,
       // スライドごとにwrapperのサイズを変更

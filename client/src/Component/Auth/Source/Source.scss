@@ -47,15 +47,15 @@
     }
 
     li {
-  
+
       label.sticky-label {
         letter-spacing: .25em;
-  
+
         &.other {
           letter-spacing: 0;
         }
       }
-  
+
       ol {
 
         li {
@@ -63,32 +63,32 @@
           font-size: 14px;
         }
       }
-  
+
       li.track {
         min-height: 28px;
         letter-spacing: -0.001em;
-  
+
         display: flex;
         align-items: center;
-  
+
         &.has-audio {
           background: #fff;
           cursor: pointer;
-  
+
           &:hover {
             background: #eee;
           }
-  
+
           &:active {
             background: #e3e3e3;
           }
-  
+
           // no Audio icon
           // i {
           //   color: #ccc;
           // }
         }
-  
+
         div:first-child {
           // has Audio icon
           i {
@@ -96,16 +96,16 @@
             color: #ccc;
           }
         }
-  
+
         div {
           display: flex;
           flex-direction: column;
-  
+
           span {
             display: block;
             margin: 2px 0;
             font-size: 14px;
-  
+
             &.composer {
               margin: 2px 0;
               color: #888;
@@ -113,7 +113,7 @@
               line-height: 12px;
               // font-family: "source-han-sans-japanese",sans-serif;
               font-weight: 200;
-  
+
               span {
                 display: inline-block;
                 margin: 0 .2em;
@@ -121,10 +121,10 @@
             }
           }
         }
-  
+
         ol {
           margin: 2px 0;
-  
+
           li {
             margin: 0;
             padding: 2px 8px;

@@ -35,7 +35,7 @@ export const login = () => {
           dispatch(Status.tokenUpdate(false))
           dispatch(Status.loginUpdate(false))
           dispatch(setErrorMessage('ログインできませんでした'))
-        }  
+        }
       }
       dispatch(changePassword(''))
       dispatch(loading(false))

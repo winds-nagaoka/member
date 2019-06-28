@@ -73,7 +73,7 @@ class Box extends Component {
   }
 
   renderBlankBox () {
-    if (this.props.loading || !this.props.boxList) return    
+    if (this.props.loading || !this.props.boxList) return
     if (this.props.boxList.length % 3 === 0) return
     // 空白を埋める あんまり良いやり方じゃないと思う
     return (3 - this.props.boxList.length % 3 === 1 ? [''] : ['', '']).map((each, i) => {

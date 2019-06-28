@@ -122,10 +122,10 @@ class Home extends Component {
     return (
       <div className='search-result'>
         {searchResult}
-      </div>  
+      </div>
     )
   }
-  
+
   renderConcertSwitch (loadingArchive, concertList) {
     if (loadingArchive || !concertList) return false
     if (this.props.searchQuery) return false
@@ -137,7 +137,7 @@ class Home extends Component {
       </div>
     )
   }
-  
+
   renderConcertList (loadingArchive, concertList) {
     if (loadingArchive || !concertList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     if (this.props.searchResult) return

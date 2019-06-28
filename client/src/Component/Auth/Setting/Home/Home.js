@@ -8,6 +8,7 @@ import * as lib from '../../../../Library/Library'
 import { getUser } from '../../../../Actions/Setting'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { closePlayer } from '../../../../Actions/Audio'
+import { requestEmail } from '../../../../Actions/EmailValidation'
 import { openFirstTutorial } from '../../../../Actions/Tutorial'
 
 import './Home.css'
@@ -35,6 +36,9 @@ function mapDispatchToProps(dispatch) {
     closePlayer (e) {
       dispatch(closePlayer(e))
     },
+    requestEmail () {
+      dispatch(requestEmail())
+    },
     openFirstTutorial () {
       dispatch(openFirstTutorial())
     }
@@ -56,11 +60,21 @@ class Home extends Component {
 
   renderPlayerClose () {
     if (!this.props.displayPlayer) return false
-    return (    
+    return (
       <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
         <div onClick={(e) => this.props.closePlayer(e)} className='button'>プレイヤーを閉じる</div>
       </div>
     )
+  }
+
+  renderRequestEmailValid () {
+    if (this.props.user.email && !this.props.user.emailValid) {
+      return (
+        <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
+          <div onClick={() => this.props.requestEmail()} className='button'>確認メールの再送</div>
+        </div>
+      )
+    }
   }
 
   renderUserStatus () {
@@ -68,14 +82,17 @@ class Home extends Component {
     const secure = this.props.user.hash && lib.getToken(this.props.user) ? <span className='secure'><i className='fas fa-lock'></i></span> : <span className='non-secure'><i className="fas fa-ban"></i></span>
     const email = this.props.user.email ? <span>{this.props.user.email}</span> : <span className='light'>未設定</span>
     const emailValid = this.props.user.email ? (this.props.user.emailValid ? <div className='label ok'><span><i className="fas fa-check-circle"></i>確認済み</span></div> : <div className='label ng'><span><i className="fas fa-times-circle"></i>未確認</span></div>) : false
+
     const scoreAdmin = 'scoreAdmin' in this.props.user ? this.props.user.scoreAdmin : false
     const showScoreAdmin = scoreAdmin ? <div className='label'><span>楽譜管理者</span></div> : false
     return (
       <div>
-        <div><label>WindsID&nbsp;{secure}</label><span className='light'>{this.props.user.userid}</span></div>
-        {/* <div><label>登録日</label><span>{this.props.user.createdAt}</span></div> */}
-        <div><label>名前</label><span>{this.props.user.name}</span>{showScoreAdmin}</div>
-        <div><label>メール</label><span>{email}</span>{emailValid}</div>
+        <div className='text'>
+          <div><label>WindsID&nbsp;{secure}</label><span className='light'>{this.props.user.userid}</span></div>
+          {/* <div><label>登録日</label><span>{this.props.user.createdAt}</span></div> */}
+          <div><label>名前</label><span>{this.props.user.name}</span>{showScoreAdmin}</div>
+          <div><label>メール</label><span>{email}</span>{emailValid}</div>
+        </div>
       </div>
     )
   }
@@ -83,6 +100,7 @@ class Home extends Component {
   render () {
     const showUserStatus = this.renderUserStatus()
     const showPlayerClose = this.renderPlayerClose()
+    const showRequestEmailValid = this.renderRequestEmailValid()
 
     return (
       <React.Fragment>
@@ -94,14 +112,13 @@ class Home extends Component {
         </div>
 
         <div className={'box setting-status' + lib.pcClass(this.props.pc)}>
-          <div className='text'>
-            {showUserStatus} 
-          </div>
+          {showUserStatus}
         </div>
 
+        {showRequestEmailValid}
         {showPlayerClose}
 
-        <div className={'box-label' + lib.pcClass(this.props.pc)}>アカウント情報の変更</div>
+        <div className={'box-label' + lib.pcClass(this.props.pc)}>アカウント情報の設定</div>
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>

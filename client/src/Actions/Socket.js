@@ -36,7 +36,7 @@ export const disconnectSocket = () => {
     if (getState().socket.status) {
       console.log('接続解除')
       socket.disconnect()
-      dispatch(updateSocket(false, false))  
+      dispatch(updateSocket(false, false))
     }
   }
 }

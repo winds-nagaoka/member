@@ -10,7 +10,7 @@ import {
   getVideoList,
   resetVideo,
   setVideoRef,
-  setLoadingVideoSource, 
+  setLoadingVideoSource,
   videoLoadPercentUpdate,
   videoPlayUpdate,
 
@@ -46,7 +46,7 @@ function mapStateToProps(state) {
     videoRef: state.archive.videoRef,
 
     displayPhotoController: state.archive.displayPhotoController,
-    
+
     videoPlayStatus: state.archive.videoPlayStatus,
     videoPlayTrack: state.archive.videoPlayTrack,
 
@@ -139,7 +139,7 @@ class Video extends Component {
     this.props.resetVideo()
     this.props.setVideoRef(undefined)
   }
-  
+
   onLoadStart (e) {
     // console.log('読み込み開始', e)
     if (this.props.videoRef.src) {
@@ -244,7 +244,7 @@ class Video extends Component {
                 {composer}
               </div>
             </div>
-          )  
+          )
         })
       })
       return (
@@ -276,7 +276,7 @@ class Video extends Component {
       </div>
     )
   }
-  
+
   render () {
     const showBreadNavigation = this.renderBreadNavigation()
     const showVideoList = this.renderVideoList()

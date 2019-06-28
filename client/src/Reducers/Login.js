@@ -22,7 +22,7 @@ export default function loginReducer (state = initialState, action) {
         ...state,
         token: action.payload.token
       }
-    case 'LOGIN_ERROR': 
+    case 'LOGIN_ERROR':
       return {
         ...state,
         errorMessage: action.payload.errorMessage

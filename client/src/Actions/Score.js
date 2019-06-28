@@ -98,7 +98,7 @@ export const getScoreList = (query) => {
         return false
       } else {
         if (res.body.status && window.localStorage.scoreLoadList === requestTime) {
-          dispatch(setScoreList(res.body.list))  
+          dispatch(setScoreList(res.body.list))
           dispatch(showListUpdate(res.body.list.slice(0, 10)))
         }
       }
@@ -157,7 +157,7 @@ const detailLoading = (detailLoading) => ({
 export const getScoreDetail = (scoreid) => {
   return async (dispatch, getState) => {
     dispatch(detailLoading(true))
-    if (!window.localStorage.token) return false 
+    if (!window.localStorage.token) return false
     const path = lib.getScorePath() + '/api/member/detail'
     const send = {
       session: lib.getSession(),
@@ -201,7 +201,7 @@ export const setDisplayEditScoreModal = (displayEditScoreModal, editMode, scoreE
   return async (dispatch, getState) => {
     if (getState().score.editModalRef) getState().score.editModalRef.scrollTop = 0
     // 開くときは loadScoreEdit の最後に dispatch する
-    displayEditScoreModal ? false : dispatch(updateDisplayEditScoreModal(displayEditScoreModal)) 
+    displayEditScoreModal ? false : dispatch(updateDisplayEditScoreModal(displayEditScoreModal))
     displayEditScoreModal ? dispatch(loadScoreEdit(editMode)) : false
     dispatch(setEditMode(editMode))
     dispatch(setScoreEdit(scoreEdit))
@@ -216,7 +216,7 @@ const editPreLoading = (editPreLoading) => ({
 const loadScoreEdit = (editMode) => {
   return async (dispatch, getState) => {
     dispatch(editPreLoading(true))
-    if (!window.localStorage.token) return false 
+    if (!window.localStorage.token) return false
     // URL
     const path = lib.getScorePath() + '/api/member/edit/pre'
     const send = {
@@ -290,7 +290,7 @@ const editLoading = (editLoading) => ({
 export const updateScoreEdit = () => {
   return async (dispatch, getState) => {
     dispatch(editLoading(true))
-    if (!window.localStorage.token) return false 
+    if (!window.localStorage.token) return false
     // URL
     const path = lib.getScorePath() + '/api/member/edit'
     const send = {
@@ -304,7 +304,7 @@ export const updateScoreEdit = () => {
         return false
       } else if (res.body.status) {
         if (getState().score.editMode !== 'new') {
-          dispatch(getScoreDetail(getState().score.scoreid))          
+          dispatch(getScoreDetail(getState().score.scoreid))
           dispatch(showToast('楽譜情報を修正しました'))
         } else {
           dispatch(getScoreListAll())

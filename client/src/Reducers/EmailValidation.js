@@ -42,7 +42,7 @@ export default function emailValidationReducer (state = initialState, action) {
         ...state,
         err: action.payload.err
       }
-    case prefix + 'SET_ERROR_MESSAGE': 
+    case prefix + 'SET_ERROR_MESSAGE':
       return {
         ...state,
         errorMessage: action.payload.errorMessage

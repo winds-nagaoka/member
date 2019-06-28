@@ -284,7 +284,7 @@ class Audio extends Component {
         this.props.archivePlayRequest(this.props.concertid, this.props.number + 1, true)
       } else {
         this.props.audioStop()
-      }  
+      }
     } else if (this.props.playmode === 'practice') {
       const practiceAlbum = libPractice.getPracticeAlbum(this.props.practiceid, this.props.practicePlaylist)
       if (practiceAlbum.file.length > (this.props.fileNumber + 1)) {
@@ -298,7 +298,7 @@ class Audio extends Component {
         this.props.sourcePlayRequest(this.props.sourceid, this.props.sourceNumber + 1, true)
       } else {
         this.props.audioStop()
-      }  
+      }
     }
   }
 
@@ -366,7 +366,7 @@ class Audio extends Component {
         if (item.list.length > 0) {
           if (Math.ceil(this.props.current) < libPractice.timeSecond(item.list[0].time) - 1) {
             headPlayClass = ' playing'
-          }  
+          }
         } else {
           headPlayClass = ' playing'
         }
@@ -484,7 +484,7 @@ class Audio extends Component {
   getPracticeAlbum () {
     return this.props.practiceid && this.props.practicePlaylist ? libPractice.getPracticeAlbum(this.props.practiceid, this.props.practicePlaylist) : false
   }
-  
+
   getSourceTrack () {
     return this.props.sourceid && this.props.sourcePlaylist ? this.getSourceAlbum().list[this.props.sourceNumber] : false
   }
