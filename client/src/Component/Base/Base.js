@@ -23,8 +23,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loginAuth () {
-      dispatch(loginAuth())
+    loginAuth (location) {
+      dispatch(loginAuth(location))
     },
     windowWidthChange () {
       dispatch(windowWidthChange())
@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
 
 class Base extends Component {
   componentWillMount () {
-    this.props.loginAuth()
+    this.props.loginAuth(false)
   }
 
   componentDidMount () {

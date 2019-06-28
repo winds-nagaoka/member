@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { loginAuth, windowWidthChange, setContentsRef, scrollToTop } from '../../Actions/Status'
-
-// import { replace } from 'react-router-redux'
+import { loginAuth, windowWidthChange } from '../../Actions/Status'
 
 import Home from './Home/Home'
 import Practice from './Practice/Practice'
@@ -29,8 +27,6 @@ import NavigationInline from './Component/NavigationInline/NavigationInline'
 
 import Audio from './Component/Audio/Audio'
 
-// import Toast from './Component/Toast/Toast'
-
 import Loading from '../Loading/Loading'
 
 import './Auth.css'
@@ -52,35 +48,25 @@ function mapDispatchToProps(dispatch) {
     },
     windowWidthChange () {
       dispatch(windowWidthChange())
-    },
-    setContentsRef (contentsRef) {
-      dispatch(setContentsRef(contentsRef))
-    },
-    scrollToTop () {
-      dispatch(scrollToTop())
     }
-    // replace (path) {
-    //   dispatch(replace(path))
-    // }
   }
 }
 
 class Auth extends Component {
+  constructor (props) {
+    super(props)
+    this.contentsRef = React.createRef()
+  }
+
   componentWillMount () {
     // 過去のlocation情報が存在する場合はそのページへRedirect
     this.props.loginAuth(window.localStorage.location ? window.localStorage.location : false)
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
-    // console.warn(nextProps, nextContext)
-    this.props.scrollToTop()
-    // if(this.props.contentsRef) {
-    //   this.props.contentsRef.scrollTop = 0
-    // }
-  }
-
-  componentDidUpdate () {
-    // console.warn('update')
+    if (this.contentsRef) {
+      this.contentsRef.scrollTop = 0
+    }
   }
 
   componentDidMount () {
@@ -104,7 +90,7 @@ class Auth extends Component {
         {/* <Toast /> */}
         <NavigationHeader />
         <div className={'contents' + (pc ? ' pc' : ' mobile')}>
-          <div className={'contents-inner' + (pc ? ' pc' : ' mobile')} ref={(i) => {!this.props.contentsRef ? this.props.setContentsRef(i) : false}}>
+          <div className={'contents-inner' + (pc ? ' pc' : ' mobile')} ref={(i) => {this.contentsRef = i}}>
             <div className={pc ? 'flex-frame': ''}>
               <NavigationInline />
               <div className={pc ? 'inline-contents' : 'full-contents'}>

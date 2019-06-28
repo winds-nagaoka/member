@@ -122,11 +122,6 @@ export const setWidth = (width, pc, mobile) => ({
   payload: { width, pc, mobile }
 })
 
-export const setContentsRef = (contentsRef) => ({
-  type: prefix + 'SET_CONTENTS_REF',
-  payload: { contentsRef }
-})
-
 export const scrollToTop = () => {
   return (dispatch, getState) => {
     if (getState().status.contentsRef) {

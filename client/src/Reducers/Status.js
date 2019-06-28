@@ -6,8 +6,7 @@ const initialState = {
   loading: false,
   width: 0,
   pc: true,
-  mobile: false,
-  contentsRef: undefined
+  mobile: false
 }
 
 const prefix = 'STATUS_'
@@ -45,11 +44,6 @@ export default function statusReducer (state = initialState, action) {
         width: action.payload.width,
         pc: action.payload.pc,
         mobile: action.payload.mobile
-      }
-    case prefix + 'SET_CONTENTS_REF':
-      return {
-        ...state,
-        contentsRef: action.payload.contentsRef
       }
     // react-router-redux の Action をフック
     // リンク移動先を保存
