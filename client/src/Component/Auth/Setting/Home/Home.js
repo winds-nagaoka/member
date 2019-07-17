@@ -118,13 +118,14 @@ class Home extends Component {
         {showRequestEmailValid}
         {showPlayerClose}
 
-        <div className={'box-label' + lib.pcClass(this.props.pc)}>アカウント情報の設定</div>
+        <div className={'box-label' + lib.pcClass(this.props.pc)}>アカウントの設定</div>
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
               <li><Link to='/setting/name'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
               <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メールアドレス</span><i className="fas fa-angle-right"></i></div></Link></li>
               <li className='border-top'><Link to='/setting/password'><div className='inner'><span>パスワード</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/session'><div className='inner'><span>セッションの管理</span><i className="fas fa-angle-right"></i></div></Link></li>
               <li className='border-top'><Link to='/setting/delete'><div className='inner'><span>アカウントの削除</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>

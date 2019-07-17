@@ -143,6 +143,34 @@ export const updatePassword = () => {
   }
 }
 
+// Session Management
+export const requestDeleteSession = (clientid) => {
+  return (dispatch, getState) => {
+    console.log('requestDeleteSession', clientid)
+    dispatch(loading('update'))
+    const path = lib.getAuthPath() + '/api/setting/deletesession'
+    const send = {
+      session: lib.getSession(),
+      clientid
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return dispatch(showToast('ネットワークエラーです'))
+      } else {
+        if (res.body.status) {
+          console.log('Delete OK!', res.body)
+          dispatch(showToast('セッションを削除しました'))
+          dispatch(getUser())
+        } else {
+          console.log('Delete NG!', res.body)
+          dispatch(showToast('削除できませんでした'))
+        }
+      }
+      dispatch(loading(false))
+    })
+  }
+}
+
 // Delete Account
 export const setDeletePassword = (deletePassword) => ({
   type: prefix + 'SET_DELETE_PASSWORD',

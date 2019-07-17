@@ -11,6 +11,7 @@ import Name from './Name/Name'
 import Email from './Email/Email'
 import EmailValidation from './EmailValidation/EmailValidation'
 import Password from './Password/Password'
+import SessionList from './SessionList/SessionList'
 import AccountDelete from './AccountDelete/AccountDelete'
 import Score from './Score/Score'
 import License from './License/License'
@@ -48,6 +49,7 @@ class Setting extends Component {
           <Route exact path='/setting/email' component={Email} />
           <Route exact path='/setting/valid/:key' component={EmailValidation} />
           <Route exact path='/setting/password' component={Password} />
+          <Route exact path='/setting/session' component={SessionList} />
           <Route exact path='/setting/delete' component={AccountDelete} />
           <Route exact path='/setting/about' component={About} />
           <Route exact path='/setting/license' component={License} />
