@@ -3,6 +3,7 @@ import { replace } from 'react-router-redux'
 import * as Status from './Status'
 import * as request from '../Library/Request'
 import * as lib from '../Library/Library'
+import { getUser } from './Setting'
 import { showToast } from './Toast'
 
 const prefix = 'EMAIL_VALIDATION_'
@@ -45,7 +46,6 @@ export const requestLogin = () => {
         if (res.body.status) {
           // location.reload()
           // dispatch(showToast('ログインしました'))
-          console.warn('ログインしました', '/setting/valid/' + getState().emailValidation.key)
           dispatch(Status.windsidUpdate(windsid))
           dispatch(Status.tokenUpdate(res.body.token))
           dispatch(Status.loginUpdate(true))
@@ -66,7 +66,6 @@ export const requestLogin = () => {
 
 export const requestValid = (key) => {
   return async (dispatch, getState) => {
-    console.warn('requestValid')
     // 送信済みの場合キャンセル
     if (getState().emailValidation.loading) return
     dispatch(loading(true))
@@ -115,6 +114,11 @@ export const requestEmail = () => {
     request.post(path, send, (err, res) => {
       dispatch(loading(false))
       if (err) return dispatch(showToast('エラーが発生しました'))
+      if (res.body.status && res.body.valid) {
+        dispatch(getUser())
+        dispatch(showToast('確認済みです'))
+        return
+      }
       if (res.body.status) return dispatch(showToast('確認メールを再送しました'))
     })
   }
