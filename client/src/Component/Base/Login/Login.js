@@ -77,6 +77,7 @@ class Login extends Component {
             </div>
           </div>
         </div>
+        <div className='old'><a href='https://winds-n.com/old'>旧団員専用ページはこちら</a></div>
         <Footer />
       </div>
     )
