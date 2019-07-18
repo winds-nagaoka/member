@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert'
 
 import { connect } from 'react-redux'

@@ -45,12 +45,27 @@ export const loginAuth = (location) => {
 }
 
 export const logout = () => {
-  return async (dispatch) => {
-    lib.removeLocalStorage()
-    dispatch(showToast('ログアウトしました'))
-    dispatch(windsidUpdate(false))
-    dispatch(tokenUpdate(false))
-    dispatch(loginUpdate(false))
+  return async (dispatch, getState) => {
+    if(getState().status.loading) return false
+    dispatch(loading(true))
+    const path = lib.getAuthPath() + '/logout'
+    const send = {
+      session: lib.getSession()
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        dispatch(showToast('ネットワークエラー'))
+        dispatch(replace('/login'))
+        return false
+      } else {
+        lib.removeLocalStorage()
+        dispatch(showToast('ログアウトしました'))
+        dispatch(windsidUpdate(false))
+        dispatch(tokenUpdate(false))
+        dispatch(loginUpdate(false))
+      }
+      dispatch(loading(false))
+    })
   }
 }
 

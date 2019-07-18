@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert'
 
 import { connect } from 'react-redux'
 
@@ -10,6 +11,7 @@ import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navig
 import { closePlayer } from '../../../../Actions/Audio'
 import { requestEmail } from '../../../../Actions/EmailValidation'
 import { openFirstTutorial } from '../../../../Actions/Tutorial'
+import { logout } from '../../../../Actions/Status'
 
 import './Home.css'
 
@@ -41,6 +43,9 @@ function mapDispatchToProps(dispatch) {
     },
     openFirstTutorial () {
       dispatch(openFirstTutorial())
+    },
+    logout () {
+      dispatch(logout())
     }
   }
 }
@@ -56,6 +61,26 @@ class Home extends Component {
   }
 
   componentWillUnmount () {
+  }
+
+  logout () {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='alert'>
+            <h1>ログアウトしますか？</h1>
+            <p>ユーザー情報は端末に残りません。</p>
+            <div className='button-group'>
+              <button onClick={onClose}>キャンセル</button>
+              <button onClick={() => {
+                this.props.logout()
+                onClose()
+              }}>ログアウト</button>
+            </div>
+          </div>
+        )
+      }
+    })
   }
 
   renderPlayerClose () {
@@ -150,6 +175,10 @@ class Home extends Component {
               <li className='border-top'><Link to='/setting/license'><div className='inner'><span>ライセンス情報</span><i className="fas fa-angle-right"></i></div></Link></li>
             </ul>
           </div>
+        </div>
+
+        <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
+          <div onClick={() => this.logout()} className='button'>ログアウト</div>
         </div>
 
       </React.Fragment>
