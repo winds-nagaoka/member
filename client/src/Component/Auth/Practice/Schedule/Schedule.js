@@ -33,10 +33,7 @@ function mapDispatchToProps(dispatch) {
     },
     getSchedule () {
       dispatch(getSchedule())
-    },
-    // goBack () {
-    //   dispatch(goBack())
-    // }
+    }
   }
 }
 
@@ -120,6 +117,16 @@ class Schedule extends Component {
     })
   }
 
+  renderScheduleSync () {
+    if (lib.browser(window.navigator.userAgent) === 'iPhone') {
+      return (
+        <div className={'box button' + lib.pcClass(this.props.pc)}>
+          <a href='webcal://api.winds-n.com/schedule/cal.ics'>カレンダーアプリと同期する</a>
+        </div>
+      )
+    }
+  }
+
   render () {
     // State List
     const { pc, loadingSchedule, schedule} = this.props
@@ -128,6 +135,7 @@ class Schedule extends Component {
 
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
+    const showScheduleSync = this.renderScheduleSync()
     return (
       <React.Fragment>
 
@@ -156,6 +164,8 @@ class Schedule extends Component {
               </div>
             </div>
           </div>
+
+          {showScheduleSync}
 
           <div className={'box' + lib.pcClass(pc)}>
             <div className='link'>

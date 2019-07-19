@@ -73,33 +73,6 @@ class SessionList extends Component {
     }
   }
 
-  browser (userAgent) {
-    const agent = userAgent.toLowerCase()
-    if(agent.indexOf('iphone') > -1) {
-      return 'iPhone'
-    } else if (agent.indexOf('ipad') > -1) {
-      return 'iPad'
-    } else if ((agent.indexOf('android') > -1) && (agent.indexOf('mobile') > -1)) {
-      return 'Android'
-    } else if ((agent.indexOf('android') > -1) && (agent.indexOf('mobile') == -1)) {
-      return 'Android'// Tablet
-    } else if (agent.indexOf("msie") > -1){
-      return 'Internet Explorer'
-    } else if (agent.indexOf("trident/7") > -1){
-      return 'Internet Explorer 11'
-    } else if (agent.indexOf("edge") > -1){
-      return 'Edge'
-    } else if (agent.indexOf("chrome") > -1){
-      return 'Chrome'
-    } else if (agent.indexOf("safari") > -1){
-      return 'Safari'
-    } else if (agent.indexOf("opera") > -1){
-      return 'Opera'
-    } else if (agent.indexOf("firefox") > -1){
-      return 'Firefox'
-    }
-    return 'Unknown'
-  }
 
   renderList () {
     if (this.props.user) {
@@ -107,7 +80,7 @@ class SessionList extends Component {
         const lastLogin = each.id === lib.getClientid() ? '今' : this.lastLogin((new Date()).getTime() - each.lastLogin)
         const selfLabel = each.id === lib.getClientid() ? <span className='self'>現在の端末</span> : false
         const icon = each.agent.match(/(iPhone|iPad|iPod|Android)/i) ? (each.agent.match(/iPad/i) ? <i className='fas fa-tablet-alt'></i> : <i className='fas fa-mobile-alt'></i>) : <i className='fas fa-desktop'></i>
-        const deviceLabel = this.browser(each.agent)
+        const deviceLabel = lib.browser(each.agent)
         const listClass = each.id === lib.getClientid() ? 'self' : 'other'
         const listClick = each.id === lib.getClientid() ? () => {} : () => this.deleteConfirm(each.id)
         return (

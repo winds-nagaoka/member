@@ -1,5 +1,5 @@
 export const appName = 'member'
-export const version = '0.2.3'
+export const version = '0.2.4'
 // mode を prod 以外にするとローカルのAPIを使う
 const mode = 'prod' // dev or prod
 import uuidv1 from 'uuid/v1'
@@ -49,6 +49,34 @@ export function getToken (user) {
   const client = user.clientList.filter((e) => {return e.id === getClientid()})
   if (client.length === 0) return false
   return client[0].token
+}
+
+export function browser (userAgent) {
+  const agent = userAgent.toLowerCase()
+  if(agent.indexOf('iphone') > -1) {
+    return 'iPhone'
+  } else if (agent.indexOf('ipad') > -1) {
+    return 'iPad'
+  } else if ((agent.indexOf('android') > -1) && (agent.indexOf('mobile') > -1)) {
+    return 'Android'
+  } else if ((agent.indexOf('android') > -1) && (agent.indexOf('mobile') == -1)) {
+    return 'Android'// Tablet
+  } else if (agent.indexOf("msie") > -1){
+    return 'Internet Explorer'
+  } else if (agent.indexOf("trident/7") > -1){
+    return 'Internet Explorer 11'
+  } else if (agent.indexOf("edge") > -1){
+    return 'Edge'
+  } else if (agent.indexOf("chrome") > -1){
+    return 'Chrome'
+  } else if (agent.indexOf("safari") > -1){
+    return 'Safari'
+  } else if (agent.indexOf("opera") > -1){
+    return 'Opera'
+  } else if (agent.indexOf("firefox") > -1){
+    return 'Firefox'
+  }
+  return 'Unknown'
 }
 
 export function playTime (t) {
