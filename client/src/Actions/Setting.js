@@ -288,20 +288,11 @@ export const scoreMailRequest = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     dispatch(loadingScoreMailRequest(true))
-    const name = 'name' in getState().status.user ? getState().status.user.name : 'ウィンズユーザー'
     const email = 'email' in getState().status.user ? getState().status.user.email : false
     if (!email) return false
     const path = lib.getScorePath() + '/api/member/sendmail'
     const send = {
-      session: lib.getSession(),
-      to: email,
-      name: getState().status.user.name,
-      subject: 'ウィンズスコア',
-      body: 'ウィンズが保管している楽譜データをお送りします。\r\n'
-          + 'CSV形式で記録されています。\r\n'
-          + '直接Excelで開くと文字化けするため\r\n'
-          + '一度Googleスプレッドシードなどで開き\r\n'
-          + '上書き保存してからご利用ください。\r\n'
+      session: lib.getSession()
     }
     request.post(path, send, (err, res) => {
       if (err) {

@@ -69,8 +69,8 @@ class Mail extends Component {
 
     const email = 'email' in this.props.user ? this.props.user.email : false
     const buttonText = this.props.loadingScoreMailRequest ? '送信中...' : '送信'
-    const disabledClass = !email || email === '' || this.props.loadingScoreMailRequest ? ' disabled' : ''
-    const buttonHandler = !email || email === '' || this.props.loadingScoreMailRequest ? () => {} : () => this.props.scoreMailRequest()
+    const disabledClass = !email || email === '' || !this.props.user.emailValid || this.props.loadingScoreMailRequest ? ' disabled' : ''
+    const buttonHandler = !email || email === '' || !this.props.user.emailValid || this.props.loadingScoreMailRequest ? () => {} : () => this.props.scoreMailRequest()
     return (
       <React.Fragment>
 

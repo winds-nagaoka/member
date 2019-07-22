@@ -86,7 +86,7 @@ class Reg extends Component {
     const { mode, windsid, password, approvalKey, errorMessage, loading } = this.props
     const { updateMode, changeWindsid, changePassword, changeKey, register } = this.props
     if (!mode) {
-      const buttonLabel = loading ? '読み込み中' : '送信'
+      const buttonLabel = loading ? '読み込み中' : '次へ'
       const disabled = approvalKey ? (loading ? true : false) : true
       const showError = errorMessage ? <div className='error'>{errorMessage}</div> : false
       return (
