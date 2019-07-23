@@ -1,5 +1,7 @@
 const initialState = {
   list: undefined,
+  showList: [],
+  showMore: true,
   acquired: false,
   loading: false
 }
@@ -18,6 +20,11 @@ export default function historyReducer (state = initialState, action) {
         ...state,
         list: action.payload.list
       }
+    case prefix + 'SHOW_LIST_UPDATE':
+        return {
+          ...state,
+          showList: action.payload.showList
+        }
     case prefix + 'ACQUIRED':
       return {
         ...state,

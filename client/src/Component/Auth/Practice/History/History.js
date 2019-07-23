@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { practicePlayRequest } from '../../../../Actions/Audio'
-import { getHistory } from '../../../../Actions/History'
+import { getHistory, loadMore } from '../../../../Actions/History'
 
 import * as lib from '../../../../Library/Library'
 
@@ -16,7 +16,8 @@ function mapStateToProps(state) {
     pc: state.status.pc,
 
     loading: state.history.loading,
-    list: state.history.list
+    list: state.history.list,
+    showList: state.history.showList
   }
 }
 
@@ -33,6 +34,9 @@ function mapDispatchToProps(dispatch) {
     },
     getHistory () {
       dispatch(getHistory())
+    },
+    loadMore () {
+      dispatch(loadMore())
     }
   }
 }
@@ -49,8 +53,9 @@ class History extends Component {
   }
 
   renderHistoryList () {
-    if (this.props.loading || !this.props.list) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    return this.props.list.map((each, i) => {
+    if (this.props.loading || !this.props.list || this.props.showList.length === 0) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    console.log(this.props.list, this.props.showList)
+    return this.props.showList.map((each, i) => {
       const practice = each.detail
       const audio = practice.recordStatus ? ' has-audio' : ' no-audio'
       const playRequest = practice.recordStatus ? () => this.props.practicePlayRequest(practice.id, 0, 0, true) : () => {}
@@ -71,12 +76,20 @@ class History extends Component {
     })
   }
 
+  renderLoadMore () {
+    if (this.props.loading || !this.props.list) return
+    if (this.props.list.length > 10 && this.props.list.length !== this.props.showList.length) {
+      return <div onClick={() => this.props.loadMore()} className='load-more'><span>すべて表示</span></div>
+    }
+  }
+
   render () {
     // State List
     const { pc } = this.props
 
     const showHistoryList = this.renderHistoryList()
-    const historyClass = this.props.loading || !this.props.list ? '' : ' no-border-bottom'
+    const showLoadMore = this.renderLoadMore()
+    const historyClass = this.props.loading || !this.props.list ? '' : (this.props.list.length > 10 && this.props.list.length !== this.props.showList.length ? '' : ' no-border-bottom')
 
     return (
       <React.Fragment>
@@ -90,6 +103,7 @@ class History extends Component {
         <div className={'box history' + historyClass + lib.pcClass(pc)}>
           <ul>
             {showHistoryList}
+            {showLoadMore}
           </ul>
         </div>
 

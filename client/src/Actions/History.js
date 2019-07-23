@@ -21,7 +21,9 @@ export const getHistory = () => {
       if (err) {
         return false
       } else {
-        dispatch(setList(res.body.list.reverse()))
+        const reverseList = res.body.list.reverse()
+        dispatch(setList(reverseList))
+        dispatch(showListUpdate(reverseList.slice(0, 10)))
         dispatch(acquired(true))
       }
       dispatch(loading(false))
@@ -32,6 +34,18 @@ export const getHistory = () => {
 const setList = (list) => ({
   type: prefix + 'SET_LIST',
   payload: { list }
+})
+
+export const loadMore = () => {
+  return async (dispatch, getState) => {
+    const showList = getState().history.showList.concat(getState().history.list.slice(10))
+    dispatch(showListUpdate(showList))
+  }
+}
+
+const showListUpdate = (showList) => ({
+  type: prefix + 'SHOW_LIST_UPDATE',
+  payload: { showList }
 })
 
 const acquired = (acquired) => ({

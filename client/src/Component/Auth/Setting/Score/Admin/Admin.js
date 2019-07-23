@@ -57,7 +57,7 @@ class Admin extends Component {
         return (
           <div className='alert'>
             <h1>楽譜管理者を辞めますか？</h1>
-            <p>改めて楽譜管理者になるには管理者までお問い合わせください</p>
+            <p>改めて楽譜管理者になるにはパスワードの再入力が必要です</p>
             <div className='button-group'>
               <button onClick={onClose}>キャンセル</button>
               <button onClick={() => {
