@@ -51,11 +51,25 @@ class License extends Component {
             <div>
               <div className='app-title'><span>団員専用アプリ</span></div>
               <div className='app-version-number'><span><span>Version</span><span>{lib.version}</span></span></div>
-              {/* {update} */}
             </div>
           </div>
-        </div>
 
+          <div className='license-detail'>
+            <h2>Application Dependencies</h2>
+            <p><i className="fab fa-react"></i>Developed with React</p>
+            <p><span className='react'>React</span><span>version</span><span>16.8.6</span></p>
+            <p><span className='redux'>Redux</span><span>version</span><span>4.0.1</span></p>
+            <p><span className='nodejs'>SuperAgent</span><span>version</span><span>3.8.2</span></p>
+            <h2>Server Dependencies</h2>
+            <p><i className="fab fa-node-js"></i>Developed with Node.js</p>
+            <p><span className='express'>Express</span><span>version</span><span>4.17.1</span></p>
+            <p><span className='nodejs'>NeDB</span><span>version</span><span>1.8.0</span></p>
+            <h2>Based Technologies</h2>
+            <p><i className="fab fa-html5"></i>HTML 5</p>
+            <p><i className="fab fa-css3-alt"></i>CSS 3</p>
+            <p><i className="fab fa-js"></i>JavaScript (ECMAScript2018)</p>
+          </div>
+        </div>
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
