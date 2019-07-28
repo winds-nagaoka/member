@@ -594,7 +594,7 @@ class Audio extends Component {
     const showTrackList = this.renderSourceTrackList()
     const playStatusClass = this.props.playStatus ? ' playing' : ''
     // const playmodeClass = this.props.playmode ? ' ' + this.props.playmode : ''
-    const playTypeClass = this.getSourceAlbum() ? ' ' + this.getSourceAlbum().type : ''
+    const playTypeClass = this.getSourceAlbum().type ? ' ' + this.getSourceAlbum().type : ''
     return (
       <div className={'music-list' + (this.props.displayPlaylist ? ' open' : '') + lib.pcClass(this.props.pc)}>
         <div className={'header' + playTypeClass + playStatusClass + lib.pcClass(this.props.pc)} onClick={() => this.props.setDisplayPlaylist(false)}>
