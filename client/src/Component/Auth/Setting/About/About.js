@@ -49,7 +49,7 @@ class About extends Component {
           <div className='app-version'>
             <div><Logo /></div>
             <div>
-              <div className='app-title'><span>団員専用アプリ</span></div>
+              <div className='app-title'><span>会員専用アプリ</span></div>
               <div className='app-version-number'><span><span>Version</span><span>{lib.version}</span></span></div>
               {/* {update} */}
             </div>

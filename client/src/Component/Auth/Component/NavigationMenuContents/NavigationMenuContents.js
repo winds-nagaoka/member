@@ -61,7 +61,7 @@ class NavigationMenuContents extends Component {
       <div className={'navigation-menu-contents' + lib.pcClass(pc)}>
         <div className='app-info'>
           <img src='https://winds-n.com/img/apple-icon-archive.png' alt='logo' />
-          <span>団員専用ページ</span>
+          <span>会員専用ページ</span>
         </div>
         <ol>
           <li><CustomLink path={path} activeOnlyWhenExact={true} to='/' label='ホーム' icon='fas fa-home' onClick={() => {navigationMenu(false)}} /></li>

@@ -202,7 +202,7 @@ class Home extends Component {
       <div className={'home' + lib.pcClass(pc)}>
         <div className={'contents-header' + lib.pcClass(pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link></div>
-          <h2>団員専用ページ</h2>
+          <h2>会員専用ページ</h2>
         </div>
 
         {/* {showCastList} */}
@@ -240,7 +240,7 @@ class Home extends Component {
 
         <div className={'box home-bbs' + lib.pcClass(pc)}>
           <div className='title-frame'>
-            <label>団員専用掲示板</label>
+            <label>会員専用掲示板</label>
             <div className='text border-bottom'>
               <div className='home-bbs-list'>
                 {showBBS}
