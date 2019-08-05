@@ -46,7 +46,7 @@ function mapDispatchToProps(dispatch) {
 
 class Home extends Component {
   componentDidMount () {
-    this.props.setNavigationTitle('団員専用掲示板')
+    this.props.setNavigationTitle('会員専用掲示板')
     this.props.setBackNavigation(true, '/')
     this.props.getBBSList()
   }
@@ -89,7 +89,7 @@ class Home extends Component {
 
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/bbs'>掲示板</Link></div>
-          <h2>団員専用掲示板</h2>
+          <h2>会員専用掲示板</h2>
         </div>
 
         <div className={'box bbs-post' + lib.pcClass(this.props.pc)}>
