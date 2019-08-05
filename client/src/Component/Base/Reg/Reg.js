@@ -102,7 +102,7 @@ class Reg extends Component {
               <div className='text'>
                 <p>共通パスワードを入力してください</p>
               </div>
-              <label>団員専用パスワード</label>
+              <label>会員専用パスワード</label>
               <input type='text' tabIndex='1' value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)}  ref={(i) => this.inputKeyRef = i} />
               {showError}
               <div className='links'>
@@ -111,7 +111,7 @@ class Reg extends Component {
               </div>
             </div>
           </div>
-          <div className='old'><a href='https://winds-n.com/member'>旧団員専用ページはこちら</a></div>
+          <div className='old'><a href='https://winds-n.com/member'>旧会員専用ページはこちら</a></div>
           <Footer />
         </div>
       )
@@ -129,7 +129,7 @@ class Reg extends Component {
               <input type='text' tabIndex='1' value={windsid} onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputWindsidRef = i} />
               <label>パスワード</label>
               <input type='password' tabIndex='2' value={password} onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
-              {/* <label>団員専用パスワード</label> */}
+              {/* <label>会員専用パスワード</label> */}
               {/* <input type='text' value={approvalKey} onChange={(e) => changeKey(e.target.value)} onKeyPress={(e) => this.keyPress(e)} /> */}
               {showError}
               <div className='links'>
@@ -138,7 +138,7 @@ class Reg extends Component {
               </div>
             </div>
           </div>
-          <div className='old'><a href='https://winds-n.com/member'>旧団員専用ページはこちら</a></div>
+          <div className='old'><a href='https://winds-n.com/member'>旧会員専用ページはこちら</a></div>
           <Footer />
         </div>
       )
