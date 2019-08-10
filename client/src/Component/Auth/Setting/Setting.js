@@ -14,6 +14,7 @@ import Password from './Password/Password'
 import SessionList from './SessionList/SessionList'
 import AccountDelete from './AccountDelete/AccountDelete'
 import Score from './Score/Score'
+import Terms from './Terms/Terms'
 import License from './License/License'
 import About from './About/About'
 
@@ -51,6 +52,7 @@ class Setting extends Component {
           <Route exact path='/setting/password' component={Password} />
           <Route exact path='/setting/session' component={SessionList} />
           <Route exact path='/setting/delete' component={AccountDelete} />
+          <Route exact path='/setting/terms' component={Terms} />
           <Route exact path='/setting/about' component={About} />
           <Route exact path='/setting/license' component={License} />
           <Route path='/setting/score' component={Score} />
