@@ -54,6 +54,12 @@ class License extends Component {
             </div>
           </div>
 
+          <div className='text'>
+            <p>Made for The Wind Ensemble members.</p>
+            <p>This software is made possible with the following open sources.</p>
+            <p>Thank the open source community for all of their contributions.</p>
+          </div>
+
           <div className='license-detail'>
             <h2>Application Dependencies</h2>
             <p><i className="fab fa-react"></i>Developed with React</p>
