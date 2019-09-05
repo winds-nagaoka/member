@@ -54,7 +54,6 @@ class History extends Component {
 
   renderHistoryList () {
     if (this.props.loading || !this.props.list || this.props.showList.length === 0) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    console.log(this.props.list, this.props.showList)
     return this.props.showList.map((each, i) => {
       const practice = each.detail
       const audio = practice.recordStatus ? ' has-audio' : ' no-audio'
@@ -98,6 +97,7 @@ class History extends Component {
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習について</Link><i className="fas fa-chevron-right"></i><Link to='/practice/history'>練習の記録</Link></div>
           <h2>練習の記録</h2>
           <p>練習の録音を掲載しています</p>
+          <p>合奏前から録音しているため適宜早送りしてご利用ください</p>
         </div>
 
         <div className={'box history' + historyClass + lib.pcClass(pc)}>
