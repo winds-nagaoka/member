@@ -17,3 +17,12 @@ export function countUp (send) {
       return
     })
 }
+
+export function sendPath (send) {
+  request.post('https://app.winds-n.com/api/path')
+    .type('form')
+    .send(send)
+    .end((error, response) => {
+      return
+    })
+}
