@@ -12,6 +12,9 @@ import Auth from './Component/Auth/Auth'
 
 import Toast from './Component/Toast/Toast'
 
+import * as request from './Library/Request'
+import * as lib from './Library/Library'
+
 const history = createBrowserHistory()
 const store = createStore(history)
 
@@ -19,11 +22,10 @@ const store = createStore(history)
 // リンク移動先を保存
 history.listen(location => {
   window.localStorage.setItem('location', location.pathname)
-  // if (history.action === 'PUSH') {
-  //   let list = window.localStorage.history ? JSON.parse(window.localStorage.history) : []
-  //   list.push(location.pathname)
-  //   window.localStorage.setItem('history', JSON.stringify(list))
-  // }
+  request.sendPath({
+    session: lib.getSession(),
+    path: location.pathname
+  })
 })
 
 export default class App extends Component {
