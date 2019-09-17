@@ -30,7 +30,8 @@ import {
   audioBackward,
   audioForward,
 
-  countUp
+  countUp,
+  countPlay
 } from '../../../../Actions/Audio'
 
 import { getConcertList } from '../../../../Actions/Archive'
@@ -175,6 +176,9 @@ function mapDispatchToProps(dispatch) {
 
     countUp () {
       dispatch(countUp())
+    },
+    countPlay (time) {
+      dispatch(countPlay(time))
     }
   }
 }
@@ -308,6 +312,7 @@ class Audio extends Component {
       if(!isNaN(total)){
         // console.log(e.pageX, this.audioProgress.clientWidth)
         this.props.audioRef.currentTime = Math.round(total * (e.pageX / this.audioProgress.clientWidth))
+        this.props.countPlay(Math.round(total * (e.pageX / this.audioProgress.clientWidth)))
       }
     } else {
       // if (this.props.playlistLoad) this.props.setDisplayPlaylist(true)
