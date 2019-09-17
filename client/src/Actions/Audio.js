@@ -412,6 +412,16 @@ export const countUp = () => {
   }
 }
 
+export const countPlay = (time) => {
+  return async (dispatch, getState) => {
+    const seek = {
+      session: lib.getSession(),
+      seek: getState().audio.audioRef.src + '(' + lib.playTime(time) + ')',
+    }
+    request.sendSeek(seek)
+  }
+}
+
 const setCountFlag = (countFlag) => ({
   type: prefix + 'SET_COUNT_FLAG',
   payload: { countFlag }

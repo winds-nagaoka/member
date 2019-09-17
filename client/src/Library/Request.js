@@ -18,6 +18,15 @@ export function countUp (send) {
     })
 }
 
+export function sendSeek (send) {
+  request.post('https://app.winds-n.com/api/seek')
+  .type('form')
+  .send(send)
+  .end((error, response) => {
+    return
+  })
+}
+
 export function sendPath (send) {
   request.post('https://app.winds-n.com/api/path')
     .type('form')
