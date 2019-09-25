@@ -59,7 +59,7 @@ class Modify extends Component {
         <div className={'box setting-text' + lib.pcClass(this.props.pc)}>
           <div>
             <label>{this.props.title}</label>
-            <input type='text' value={this.props.modifyText} onChange={(e) => this.props.setModifyText(e.target.value)} placeholder={this.props.text} onKeyPress={(e) => this.keyPress(e)} />
+            <input type={this.props.type} value={this.props.modifyText} onChange={(e) => this.props.setModifyText(e.target.value)} placeholder={this.props.text} onKeyPress={(e) => this.keyPress(e)} />
           </div>
         </div>
         <div className={'box setting-button' + lib.pcClass(this.props.pc)}>

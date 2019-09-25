@@ -285,12 +285,12 @@ class Video extends Component {
     const aspectClass = this.props.videoPoster === 'https://video.winds-n.com/poster_800_586.png' ? ' aspect-4-3' : ' aspect-16-9'
     return (
       <React.Fragment>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           {showBreadNavigation}
           <h2>映像</h2>
         </div>
 
-        <div className='box archive-video-list'>
+        <div className={'box archive-video-list' + lib.pcClass(this.props.pc)}>
           <div className='video-player'>
             <div className={'video-frame' + aspectClass}>
               <video
@@ -320,7 +320,7 @@ class Video extends Component {
           </div>
         </div>
 
-        <div className='box'>
+        <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
               <li><Link to='/archive'><div className='inner'><Back /><span>一覧へ</span></div></Link></li>

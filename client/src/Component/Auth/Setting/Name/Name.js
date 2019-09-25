@@ -63,6 +63,7 @@ class Name extends Component {
         </div>
 
         <Modify
+          type='text'
           api={lib.getAuthPath() + '/api/setting/username'}
           text={this.props.user.name}
           title='名前'

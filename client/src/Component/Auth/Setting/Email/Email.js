@@ -83,6 +83,7 @@ class Email extends Component {
         </div>
 
         <Modify
+          type='email'
           api={lib.getAuthPath() + '/api/setting/email'}
           text={email}
           title='メールアドレス'

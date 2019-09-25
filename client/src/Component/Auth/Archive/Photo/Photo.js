@@ -129,17 +129,17 @@ class Photo extends Component {
 
     return (
       <React.Fragment>
-        <div className='contents-header'>
+        <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           {showBreadNavigation}
           <h2>写真</h2>
           <p>過去のウィンズの活動履歴を確認できます</p>
         </div>
 
-        <div className='box archive-photo'>
+        <div className={'box archive-photo' + lib.pcClass(this.props.pc)}>
           {showPhoto}
         </div>
 
-        <div className='box'>
+        <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
               <li><Link to='/archive'><div className='inner'><Back /><span>一覧へ</span></div></Link></li>

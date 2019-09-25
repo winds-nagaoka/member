@@ -39,11 +39,12 @@ a {
 // }
 
 // Forms
-input[type="text"], input[type="address"], input[type="password"], input[type="date"], input[type="time"], textarea {
+input[type="text"], input[type="email"], input[type="address"], input[type="password"], input[type="date"], input[type="time"], textarea {
   -webkit-appearance: none;
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"] {
   -webkit-appearance: none;
   display: block;
