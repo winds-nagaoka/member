@@ -11,6 +11,7 @@ import { getList } from '../../../../Actions/Cast'
 
 // import { goBack } from 'react-router-redux'
 
+import Back from '../../../../Library/Icons/Back'
 import './Cast.css'
 
 function mapStateToProps(state) {
@@ -98,7 +99,7 @@ class Cast extends Component {
         <div className='box back-to-home'>
           <div className='back-link'>
             <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

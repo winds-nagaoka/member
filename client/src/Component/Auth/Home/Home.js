@@ -13,6 +13,7 @@ import { getList } from '../../../Actions/Cast'
 
 import { showToast } from '../../../Actions/Toast'
 
+import Forward from '../../../Library/Icons/Forward'
 import * as lib from '../../../Library/Library'
 
 import './Home.css'
@@ -106,7 +107,7 @@ class Home extends Component {
         </div>
         <div className='link'>
           <ul>
-            <li><Link to='/cast'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+            <li><Link to='/cast'><div className='inner'><span>More</span><Forward /></div></Link></li>
           </ul>
         </div>
       </div>
@@ -147,7 +148,7 @@ class Home extends Component {
   }
 
   renderSource (loading, source) {
-    const link = loading || !source || source.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>参考音源</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to='/source'><div className='inner'><span>参考音源</span><i className="fas fa-angle-right"></i></div></Link></li>
+    const link = loading || !source || source.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>参考音源</span><Forward /></div></div></li> : <li><Link to='/source'><div className='inner'><span>参考音源</span><Forward /></div></Link></li>
     return (
       <div className={'box home-source' + lib.pcClass(this.props.pc)}>
         <div className='link'>
@@ -216,8 +217,8 @@ class Home extends Component {
           </div>
           <div className='link'>
             <ul>
-              <li><Link to='/practice'><div className='inner'><span>練習について</span><i className="fas fa-angle-right"></i></div></Link></li>
-              {/* <li className='border-top'><Link to='/history'><div className='inner'><span>過去の記録</span><i className="fas fa-angle-right"></i></div></Link></li> */}
+              <li><Link to='/practice'><div className='inner'><span>練習について</span><Forward /></div></Link></li>
+              {/* <li className='border-top'><Link to='/history'><div className='inner'><span>過去の記録</span><Forward /></div></Link></li> */}
             </ul>
           </div>
         </div>
@@ -233,7 +234,7 @@ class Home extends Component {
           </div>
           <div className='link'>
             <ul>
-              <li><Link to='/manager'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/manager'><div className='inner'><span>More</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>
@@ -249,7 +250,7 @@ class Home extends Component {
           </div>
           <div className='link'>
             <ul>
-              <li><Link to='/bbs'><div className='inner'><span>More</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/bbs'><div className='inner'><span>More</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>
@@ -264,7 +265,7 @@ class Home extends Component {
           </div> */}
           <div className='link'>
             <ul>
-              <li><Link to='/archive'><div className='inner'><span>アーカイブ</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/archive'><div className='inner'><span>アーカイブ</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>
@@ -278,7 +279,7 @@ class Home extends Component {
           </div> */}
           <div className='link'>
             <ul>
-              <li><Link to='/score'><div className='inner'><span>ウィンズスコア</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/score'><div className='inner'><span>ウィンズスコア</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>
@@ -292,7 +293,7 @@ class Home extends Component {
           </div> */}
           <div className='link'>
             <ul>
-              <li><Link to='/setting'><div className='inner'><span>設定</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting'><div className='inner'><span>設定</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>

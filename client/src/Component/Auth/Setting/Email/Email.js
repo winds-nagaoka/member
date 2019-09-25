@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
+import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
 
 import { redirect, setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
@@ -82,6 +83,7 @@ class Email extends Component {
         </div>
 
         <Modify
+          type='email'
           api={lib.getAuthPath() + '/api/setting/email'}
           text={email}
           title='メールアドレス'
@@ -94,7 +96,7 @@ class Email extends Component {
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/setting'><div className='inner'><i className="fas fa-angle-left"></i><span>戻る</span></div></Link></li>
+              <li><Link to='/setting'><div className='inner'><Back /><span>戻る</span></div></Link></li>
             </ul>
           </div>
         </div>

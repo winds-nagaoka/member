@@ -4,14 +4,15 @@ import { confirmAlert } from 'react-confirm-alert'
 
 import { connect } from 'react-redux'
 
-import * as lib from '../../../../Library/Library'
-
 import { getUser } from '../../../../Actions/Setting'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { closePlayer } from '../../../../Actions/Audio'
 import { requestEmail } from '../../../../Actions/EmailValidation'
 import { openFirstTutorial } from '../../../../Actions/Tutorial'
 import { logout } from '../../../../Actions/Status'
+
+import Forward from '../../../../Library/Icons/Forward'
+import * as lib from '../../../../Library/Library'
 
 import './Home.css'
 
@@ -147,11 +148,11 @@ class Home extends Component {
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/setting/name'><div className='inner'><span>名前</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メールアドレス</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/password'><div className='inner'><span>パスワード</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/session'><div className='inner'><span>セッションの管理</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/delete'><div className='inner'><span>アカウントの削除</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting/name'><div className='inner'><span>名前</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メールアドレス</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/password'><div className='inner'><span>パスワード</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/session'><div className='inner'><span>セッションの管理</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/delete'><div className='inner'><span>アカウントの削除</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>
@@ -160,8 +161,8 @@ class Home extends Component {
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/setting/score/mail'><div className='inner'><span>CSV出力</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/score/admin'><div className='inner'><span>管理者設定</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting/score/mail'><div className='inner'><span>CSV出力</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/score/admin'><div className='inner'><span>管理者設定</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>
@@ -170,10 +171,10 @@ class Home extends Component {
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/setting/terms'><div className='inner'><span>ウィンズ会員規約</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/about'><div className='inner'><span>このアプリについて</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting/terms'><div className='inner'><span>ウィンズ会員規約</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/about'><div className='inner'><span>このアプリについて</span><Forward /></div></Link></li>
               <li className='border-top'><div className='link-button' onClick={() => this.props.openFirstTutorial()}><div className='inner'><span>チュートリアルを開く</span></div></div></li>
-              <li className='border-top'><Link to='/setting/license'><div className='inner'><span>ライセンス情報</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li className='border-top'><Link to='/setting/license'><div className='inner'><span>ライセンス情報</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>

@@ -9,6 +9,8 @@ import { getList } from '../../../../Actions/Cast'
 
 // import { requestPlayAudio, requestStopAudio } from '../../../../Actions/Audio'
 
+import Back from '../../../../Library/Icons/Back'
+
 import './Record.css'
 
 function mapStateToProps(state) {
@@ -97,7 +99,7 @@ class Record extends Component {
         <div className='box back-to-home'>
           <div className='back-link'>
             <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

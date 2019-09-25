@@ -7,6 +7,7 @@ import { setNavigationTitle, setBackNavigation } from '../../../Actions/Navigati
 import { getSource } from '../../../Actions/Source'
 import { sourcePlayRequest } from '../../../Actions/Audio'
 
+import Back from '../../../Library/Icons/Back'
 import * as lib from '../../../Library/Library'
 import * as libSource from './Library/Library'
 
@@ -102,7 +103,7 @@ class Source extends Component {
         <div className={'box back-to-home' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

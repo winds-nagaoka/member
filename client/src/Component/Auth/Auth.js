@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { loginAuth, windowWidthChange } from '../../Actions/Status'
+import { audioPlay, audioPause } from '../../Actions/Audio'
 
 import Home from './Home/Home'
 import Practice from './Practice/Practice'
@@ -37,7 +38,8 @@ function mapStateToProps(state) {
     loading: state.status.loading,
     pc: state.status.pc,
     contentsRef: state.status.contentsRef,
-    displayPlayer: state.audio.displayPlayer
+    displayPlayer: state.audio.displayPlayer,
+    playStatus: state.audio.playStatus
   }
 }
 
@@ -48,6 +50,12 @@ function mapDispatchToProps(dispatch) {
     },
     windowWidthChange () {
       dispatch(windowWidthChange())
+    },
+    audioPlay () {
+      dispatch(audioPlay())
+    },
+    audioPause () {
+      dispatch(audioPause())
     }
   }
 }
@@ -64,7 +72,7 @@ class Auth extends Component {
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
-    if (this.contentsRef) {
+    if (this.contentsRef.scrollTop) {
       this.contentsRef.scrollTop = 0
     }
   }
@@ -80,13 +88,20 @@ class Auth extends Component {
     window.removeEventListener('resize', () => {})
   }
 
+  onKeyPress (e) {
+    if (!this.props.displayPlayer) return false
+    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.which === 32) {
+      this.props.playStatus ? this.props.audioPause() : this.props.audioPlay()
+    }
+  }
+
   render () {
     const { login, loading, pc, displayPlayer } = this.props
     if (loading) return <Loading />
     if (!login) return <Redirect to='/login' />
     const gap = displayPlayer ? <div className='gap'></div> : false
     return (
-      <div className='auth'>
+      <div className='auth' onKeyPress={(e) => this.onKeyPress(e)} tabIndex='0'>
         {/* <Toast /> */}
         <NavigationHeader />
         <div className={'contents' + (pc ? ' pc' : ' mobile')}>
