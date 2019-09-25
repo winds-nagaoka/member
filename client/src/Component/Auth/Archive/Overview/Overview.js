@@ -7,6 +7,8 @@ import { setNavigationTitle, setNavigationTitleArchiveConcertid, setBackNavigati
 import { getConcertList, setConcertid, getPhotoList, getVideoList } from '../../../../Actions/Archive'
 import { archivePlayRequest } from '../../../../Actions/Audio'
 
+import Forward from '../../../../Library/Icons/Forward'
+import Back from '../../../../Library/Icons/Back'
 import * as libArchive from '../Library/Library'
 import * as lib from '../../../../Library/Library'
 
@@ -179,8 +181,8 @@ class Overview extends Component {
 
   renderNavigationLink () {
     if (this.props.loadingArchive || !this.props.concertList || !this.props.concertid) return
-    const photoLink = !this.props.photoList ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : (this.props.photoList.length === 0 || this.props.loadingPhoto ? <li><div className='disabled-link'><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><i className="fas fa-angle-right"></i></div></Link></li>)
-    const videoLink = !this.props.videoList ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : (this.props.videoList.length === 0 || this.props.loadingVideo ? <li><div className='disabled-link'><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></div></li> : <li><Link to={'/archive/video/' + this.props.concertid}><div className='inner'><span>映像</span><i className="fas fa-angle-right"></i></div></Link></li>)
+    const photoLink = !this.props.photoList ? <li><div className='disabled-link'><div className='inner'><span>写真</span><Forward /></div></div></li> : (this.props.photoList.length === 0 || this.props.loadingPhoto ? <li><div className='disabled-link'><div className='inner'><span>写真</span><Forward /></div></div></li> : <li><Link to={'/archive/photo/' + this.props.concertid}><div className='inner'><span>写真</span><Forward /></div></Link></li>)
+    const videoLink = !this.props.videoList ? <li><div className='disabled-link'><div className='inner'><span>映像</span><Forward /></div></div></li> : (this.props.videoList.length === 0 || this.props.loadingVideo ? <li><div className='disabled-link'><div className='inner'><span>映像</span><Forward /></div></div></li> : <li><Link to={'/archive/video/' + this.props.concertid}><div className='inner'><span>映像</span><Forward /></div></Link></li>)
     return (
       <div className={'box' + lib.pcClass(this.props.pc)}>
         <div className='link'>
@@ -247,7 +249,7 @@ class Overview extends Component {
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/archive'><div className='inner'><i className="fas fa-angle-left"></i><span>一覧へ</span></div></Link></li>
+              <li><Link to='/archive'><div className='inner'><Back /><span>一覧へ</span></div></Link></li>
             </ul>
           </div>
         </div>

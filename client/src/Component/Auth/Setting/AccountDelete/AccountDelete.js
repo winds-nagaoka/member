@@ -4,6 +4,7 @@ import { confirmAlert } from 'react-confirm-alert'
 
 import { connect } from 'react-redux'
 
+import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
 
 import { redirect, setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
@@ -99,7 +100,7 @@ class AccountDelete extends Component {
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/setting'><div className='inner'><i className="fas fa-angle-left"></i><span>戻る</span></div></Link></li>
+              <li><Link to='/setting'><div className='inner'><Back /><span>戻る</span></div></Link></li>
             </ul>
           </div>
         </div>

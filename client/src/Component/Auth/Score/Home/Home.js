@@ -16,6 +16,7 @@ import {
   setDisplayEditScoreModal
  } from '../../../../Actions/Score'
 
+import Forward from '../../../../Library/Icons/Forward'
 import * as lib from '../../../../Library/Library'
 import * as libScore from '../Library/Library'
 
@@ -167,7 +168,7 @@ class Home extends Component {
       <div className={'box score-box-link' + lib.pcClass(this.props.pc)}>
         <div className='link'>
           <ul>
-            <li><Link to='/score/box'><div className='inner'><span>楽譜管理箱</span><i className="fas fa-angle-right"></i></div></Link></li>
+            <li><Link to='/score/box'><div className='inner'><span>楽譜管理箱</span><Forward /></div></Link></li>
           </ul>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { Route, Switch, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { scrollToTop } from '../../../Actions/Status'
 
+import Back from '../../../Library/Icons/Back'
 import * as lib from '../../../Library/Library'
 
 import Home from './Home/Home'
@@ -61,7 +62,7 @@ class Setting extends Component {
         <div className='box back-to-home'>
           <div className='back-link'>
             <ul>
-              <li className={'border-top-mobile border-bottom-mobile' + lib.pcClass(this.props.pc)}><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+              <li className={'border-top-mobile border-bottom-mobile' + lib.pcClass(this.props.pc)}><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

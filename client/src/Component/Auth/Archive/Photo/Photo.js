@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getConcertList, setConcertid, getPhotoList, resetPhotoList, setDisplayPhotoSlideModal } from '../../../../Actions/Archive'
 
+import Back from '../../../../Library/Icons/Back'
 import * as libArchive from '../Library/Library'
 import * as lib from '../../../../Library/Library'
 
@@ -141,7 +142,7 @@ class Photo extends Component {
         <div className='box'>
           <div className='back-link'>
             <ul>
-              <li><Link to='/archive'><div className='inner'><i className="fas fa-angle-left"></i><span>一覧へ</span></div></Link></li>
+              <li><Link to='/archive'><div className='inner'><Back /><span>一覧へ</span></div></Link></li>
             </ul>
           </div>
         </div>

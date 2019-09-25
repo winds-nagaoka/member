@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import * as lib from '../../../../../Library/Library'
-
 import { getUser } from '../../../../../Actions/Setting'
 import { setNavigationTitle, setBackNavigation } from '../../../../../Actions/Navigation'
+
+import Forward from '../../../../../Library/Icons/Forward'
+import * as lib from '../../../../../Library/Library'
 
 import './Home.css'
 
@@ -81,8 +82,8 @@ class Home extends Component {
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/setting/score/admin'><div className='inner'><span>管理者設定</span><i className="fas fa-angle-right"></i></div></Link></li>
-              <li className='border-top'><Link to='/setting/score/mail'><div className='inner'><span>CSV出力</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/setting/score/admin'><div className='inner'><span>管理者設定</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/score/mail'><div className='inner'><span>CSV出力</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>

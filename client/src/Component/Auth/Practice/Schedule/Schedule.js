@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getSchedule } from '../../../../Actions/Schedule'
 
+import Forward from '../../../../Library/Icons/Forward'
 import * as lib from '../../../../Library/Library'
 
 // import { goBack } from 'react-router-redux'
@@ -170,7 +171,7 @@ class Schedule extends Component {
           <div className={'box' + lib.pcClass(pc)}>
             <div className='link'>
               <ul>
-                <li><Link to='/practice/history'><div className='inner'><span>練習の記録</span><i className="fas fa-angle-right"></i></div></Link></li>
+                <li><Link to='/practice/history'><div className='inner'><span>練習の記録</span><Forward /></div></Link></li>
               </ul>
             </div>
           </div>

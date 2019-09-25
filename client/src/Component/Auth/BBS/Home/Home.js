@@ -10,6 +10,8 @@ import { getBBSList, loadMore } from '../../../../Actions/BBS'
 
 import { showToast } from '../../../../Actions/Toast'
 
+import Forward from '../../../../Library/Icons/Forward'
+
 import './Home.css'
 
 function mapStateToProps(state) {
@@ -95,7 +97,7 @@ class Home extends Component {
         <div className={'box bbs-post' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/bbs/post'><div className='inner'><span>書き込む</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/bbs/post'><div className='inner'><span>書き込む</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>
@@ -112,7 +114,7 @@ class Home extends Component {
         <div className={'box bbs-post' + lib.pcClass(this.props.pc)}>
           <div className='link'>
             <ul>
-              <li><Link to='/bbs/post'><div className='inner'><span>書き込む</span><i className="fas fa-angle-right"></i></div></Link></li>
+              <li><Link to='/bbs/post'><div className='inner'><span>書き込む</span><Forward /></div></Link></li>
             </ul>
           </div>
         </div>

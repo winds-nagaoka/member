@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Schedule from './Schedule/Schedule'
 import History from './History/History'
 
+import Back from '../../../Library/Icons/Back'
 import * as lib from '../../../Library/Library'
 
 // import { goBack } from 'react-router-redux'
@@ -41,7 +42,7 @@ class Practice extends Component {
         <div className={'box back-to-home' + lib.pcClass(pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/'><div className='inner'><i className="fas fa-angle-left"></i><span>ホーム</span></div></Link></li>
+              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
             </ul>
           </div>
         </div>

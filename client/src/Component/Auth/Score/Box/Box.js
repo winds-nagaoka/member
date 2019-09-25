@@ -11,6 +11,7 @@ import {
   addBox
 } from '../../../../Actions/ScoreBox'
 
+import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
 import * as libScore from '../Library/Library'
 
@@ -126,7 +127,7 @@ class Box extends Component {
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/score'><div className='inner'><i className="fas fa-angle-left"></i><span>楽譜一覧へ</span></div></Link></li>
+              <li><Link to='/score'><div className='inner'><Back /><span>楽譜一覧へ</span></div></Link></li>
             </ul>
           </div>
         </div>

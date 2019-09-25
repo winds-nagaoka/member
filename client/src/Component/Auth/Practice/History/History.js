@@ -7,6 +7,7 @@ import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navig
 import { practicePlayRequest } from '../../../../Actions/Audio'
 import { getHistory, loadMore } from '../../../../Actions/History'
 
+import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
 
 import './History.css'
@@ -110,7 +111,7 @@ class History extends Component {
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/practice'><div className='inner'><i className="fas fa-angle-left"></i><span>戻る</span></div></Link></li>
+              <li><Link to='/practice'><div className='inner'><Back /><span>戻る</span></div></Link></li>
             </ul>
           </div>
         </div>
