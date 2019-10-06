@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import request from 'superagent'
 
-import { version } from '../../../../../Library/Library'
+import * as lib from '../../../../../Library/Library'
 
 import './Input.css'
 
@@ -31,12 +31,9 @@ export default class Input extends Component {
     // request.post('http://192.168.1.22:3011/api/member/input')
       .type('form')
       .send({
-        userid: window.localStorage.windsid,
-        token: window.localStorage.token,
+        session: lib.getSession(),
         target: this.props.target,
-        query: e.target.value,
-        version,
-        member: true
+        query: e.target.value
       })
       .end((err, res) => {
         if (err) return
