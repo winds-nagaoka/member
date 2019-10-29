@@ -4,6 +4,7 @@ import { Route, Switch, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Notice from './Notice/Notice'
+import Selection from './Selection/Selection'
 
 import Back from '../../../Library/Icons/Back'
 import * as lib from '../../../Library/Library'
@@ -30,6 +31,7 @@ class Manager extends Component {
 
         <Switch>
           <Route exact path='/manager' component={Notice} />
+          <Route exact path='/manager/selection' component={Selection} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(pc)}>
