@@ -109,14 +109,17 @@ class Home extends Component {
     const email = this.props.user.email ? <span>{this.props.user.email}</span> : <span className='light'>未設定</span>
     const emailValid = this.props.user.email ? (this.props.user.emailValid ? <div className='label ok'><span><i className="fas fa-check-circle"></i>確認済み</span></div> : <div className='label ng'><span><i className="fas fa-times-circle"></i>未確認</span></div>) : false
 
+    const admin = 'admin' in this.props.user ? this.props.user.admin : false
+    const showAdmin = admin ? <div className='label'><span>管理者</span></div> : false
     const scoreAdmin = 'scoreAdmin' in this.props.user ? this.props.user.scoreAdmin : false
     const showScoreAdmin = scoreAdmin ? <div className='label'><span>楽譜管理者</span></div> : false
+
     return (
       <div>
         <div className='text'>
           <div><label>WindsID&nbsp;{secure}</label><span className='light'>{this.props.user.userid}</span></div>
           {/* <div><label>登録日</label><span>{this.props.user.createdAt}</span></div> */}
-          <div><label>名前</label><span>{this.props.user.name}</span>{showScoreAdmin}</div>
+          <div><label>名前</label><span>{this.props.user.name}</span>{showAdmin}{showScoreAdmin}</div>
           <div><label>メール</label><span>{email}</span>{emailValid}</div>
         </div>
       </div>
@@ -152,6 +155,7 @@ class Home extends Component {
               <li className='border-top'><Link to='/setting/email'><div className='inner'><span>メールアドレス</span><Forward /></div></Link></li>
               <li className='border-top'><Link to='/setting/password'><div className='inner'><span>パスワード</span><Forward /></div></Link></li>
               <li className='border-top'><Link to='/setting/session'><div className='inner'><span>セッションの管理</span><Forward /></div></Link></li>
+              <li className='border-top'><Link to='/setting/admin'><div className='inner'><span>管理者設定</span><Forward /></div></Link></li>
               <li className='border-top'><Link to='/setting/delete'><div className='inner'><span>アカウントの削除</span><Forward /></div></Link></li>
             </ul>
           </div>
