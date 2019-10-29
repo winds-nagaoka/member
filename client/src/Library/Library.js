@@ -34,6 +34,10 @@ export function getApiPath () {
   return 'https://api.winds-n.com'
 }
 
+export function getSurveyPath () {
+  return mode === 'prod' ? 'https://survey.winds-n.com' : 'http://192.168.1.22:3002'
+}
+
 export function getSession () {
   return {
     userid: window.localStorage.windsid,

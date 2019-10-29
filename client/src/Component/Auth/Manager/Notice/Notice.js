@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { getManager } from '../../../../Actions/Manager'
+import { getManager, getSelectionPhase } from '../../../../Actions/Manager'
 
 import { showToast } from '../../../../Actions/Toast'
 
-import Back from '../../../../Library/Icons/Back'
+import Forward from '../../../../Library/Icons/Forward'
 import * as lib from '../../../../Library/Library'
 
 import './Notice.css'
@@ -18,7 +18,10 @@ function mapStateToProps(state) {
     pc: state.status.pc,
 
     loadingManager: state.manager.loading,
-    manager: state.manager.data
+    manager: state.manager.data,
+
+    loadingSelectionPhase: state.manager.loadingSelectionPhase,
+    selectionPhase: state.manager.selectionPhase
   }
 }
 
@@ -33,6 +36,9 @@ function mapDispatchToProps(dispatch) {
     getManager () {
       dispatch(getManager())
     },
+    getSelectionPhase () {
+      dispatch(getSelectionPhase())
+    },
 
     showToast (string) {
       dispatch(showToast(string))
@@ -45,6 +51,20 @@ class Notice extends Component {
     this.props.setNavigationTitle('お知らせ')
     this.props.setBackNavigation(true, '/')
     this.props.getManager()
+    this.props.getSelectionPhase()
+  }
+
+  renderSelection () {
+    const link = this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' ? <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li> : <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li>
+    return (
+      <div className={'box selection' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul>
+            {link}
+          </ul>
+        </div>
+      </div>
+    )
   }
 
   renderManager (loading, manager) {
@@ -77,6 +97,7 @@ class Notice extends Component {
     // Dispatch List
     // none
 
+    const showSelection = this.renderSelection()
     const showManager = this.renderManager(loadingManager, manager)
     return (
       <React.Fragment>
@@ -85,6 +106,8 @@ class Notice extends Component {
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link></div>
           <h2>事務局からのお知らせ</h2>
         </div>
+
+        {showSelection}
 
         {/* <div className={'box manager' + lib.pcClass(pc)}> */}
           {/* <div className='text'> */}
