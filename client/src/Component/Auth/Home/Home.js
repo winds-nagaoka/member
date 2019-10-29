@@ -147,19 +147,6 @@ class Home extends Component {
     )
   }
 
-  renderSource (loading, source) {
-    const link = loading || !source || source.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>参考音源</span><Forward /></div></div></li> : <li><Link to='/source'><div className='inner'><span>参考音源</span><Forward /></div></Link></li>
-    return (
-      <div className={'box home-source' + lib.pcClass(this.props.pc)}>
-        <div className='link'>
-          <ul>
-            {link}
-          </ul>
-        </div>
-      </div>
-    )
-  }
-
   renderManager (loading, manager) {
     if (loading || !manager) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     const date = manager.contents[0].time[0].date === '1970/01/01' ? false : manager.contents[0].time[0].date
@@ -196,7 +183,6 @@ class Home extends Component {
 
     // const showCastList = this.renderCast(loadingCastList, castList)
     const showScheduleNext = this.renderSchedule(loadingSchedule, schedule)
-    const showSource = this.renderSource(loadingSource, source)
     const showManager = this.renderManager(loadingManager, manager)
     const showBBS = this.renderBBS(loadingBBS, BBSList)
     return (
@@ -222,8 +208,6 @@ class Home extends Component {
             </ul>
           </div>
         </div>
-
-        {showSource}
 
         <div className={'box home-manager' + lib.pcClass(pc)}>
           <div className='title-frame'>

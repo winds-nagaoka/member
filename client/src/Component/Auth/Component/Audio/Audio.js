@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import * as lib from '../../../../Library/Library'
 import * as libArchive from '../../Archive/Library/Library'
 import * as libPractice from '../../Practice/Library/Library'
-import * as libSource from '../../Source/Library/Library'
+import * as libSource from '../../Practice/Source/Library/Library'
 
 import {
   loadArchivePlaylist,

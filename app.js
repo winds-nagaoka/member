@@ -25,10 +25,10 @@ app.use(compression({
 const client = './client/build'
 app.use('/', express.static(client))
 app.use('/practice', express.static(client))
+app.use('/practice/source', express.static(client))
 app.use('/practice/history', express.static(client))
 app.use('/manager', express.static(client))
 app.use('/manager/selection', express.static(client))
-app.use('/source', express.static(client))
 app.use('/bbs', express.static(client))
 app.use('/bbs/post', express.static(client))
 app.use('/cast', express.static(client))

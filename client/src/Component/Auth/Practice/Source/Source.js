@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
-import { setNavigationTitle, setBackNavigation } from '../../../Actions/Navigation'
-import { getSource } from '../../../Actions/Source'
-import { sourcePlayRequest } from '../../../Actions/Audio'
+import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
+import { getSource } from '../../../../Actions/Source'
+import { sourcePlayRequest } from '../../../../Actions/Audio'
 
-import Back from '../../../Library/Icons/Back'
-import * as lib from '../../../Library/Library'
+import Back from '../../../../Library/Icons/Back'
+import * as lib from '../../../../Library/Library'
 import * as libSource from './Library/Library'
 
 import './Source.css'
@@ -100,22 +100,23 @@ class Source extends Component {
     return (
       <div className={'source' + lib.pcClass(this.props.pc)}>
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/source'>参考音源</Link></div>
+          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習について</Link><i className="fas fa-chevron-right"></i><Link to='/practice/source'>参考音源</Link></div>
           <h2>参考音源</h2>
-          <p>直近の演奏会の参考音源です。</p>
+          <p>直近の演奏会の参考音源です</p>
         </div>
 
         {/* <div className={'box source-list' + lib.pcClass(this.props.pc)}> */}
           {showSource}
         {/* </div> */}
 
-        <div className={'box back-to-home' + lib.pcClass(this.props.pc)}>
+        <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
+              <li><Link to='/practice'><div className='inner'><Back /><span>戻る</span></div></Link></li>
             </ul>
           </div>
         </div>
+
       </div>
     )
   }
