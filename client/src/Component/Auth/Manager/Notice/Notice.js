@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getManager, getSelectionPhase } from '../../../../Actions/Manager'
 
-import { showToast } from '../../../../Actions/Toast'
-
 import Forward from '../../../../Library/Icons/Forward'
 import * as lib from '../../../../Library/Library'
 
@@ -38,10 +36,6 @@ function mapDispatchToProps(dispatch) {
     },
     getSelectionPhase () {
       dispatch(getSelectionPhase())
-    },
-
-    showToast (string) {
-      dispatch(showToast(string))
     }
   }
 }
@@ -82,10 +76,6 @@ class Notice extends Component {
             <div className='notice-text text' dangerouslySetInnerHTML={{__html: each.text}}></div>
           </div>
           {attachment}
-          {/* <div className='notice-each'>
-            <div className='notice-title'></div>
-            
-          </div> */}
         </div>
       )
     })
@@ -109,11 +99,7 @@ class Notice extends Component {
 
         {showSelection}
 
-        {/* <div className={'box manager' + lib.pcClass(pc)}> */}
-          {/* <div className='text'> */}
-          {showManager}
-          {/* </div> */}
-        {/* </div> */}
+        {showManager}
 
       </React.Fragment>
     )
