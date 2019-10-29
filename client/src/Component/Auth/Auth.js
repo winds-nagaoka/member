@@ -72,8 +72,10 @@ class Auth extends Component {
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
-    if (this.contentsRef.current) {
-      this.contentsRef.current.scrollTop = 0
+    if (this.contentsRef) {
+      if (this.contentsRef.scrollTop) {
+        this.contentsRef.scrollTop = 0
+      }
     }
   }
 
