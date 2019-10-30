@@ -6,6 +6,9 @@ const initialState = {
   loadingSelectionPhase: false,
   selectionPhase: false,
 
+  loadingSelectionList: false,
+  selectionList: [],
+
   loadingSelectionPost: false,
   selectionPost: {
     titleJa: '',
@@ -44,6 +47,16 @@ export default function managerReducer (state = initialState, action) {
       return {
         ...state,
         selectionPhase: action.payload.selectionPhase
+      }
+    case prefix + 'LOADING_SELECTION_LIST':
+      return {
+        ...state,
+        loadingSelectionList: action.payload.loadingSelectionList
+      }
+    case prefix + 'SET_SELECTION_LIST':
+      return {
+        ...state,
+        selectionList: action.payload.selectionList
       }
     case prefix + 'LOADING_SELECTION_POST':
       return {

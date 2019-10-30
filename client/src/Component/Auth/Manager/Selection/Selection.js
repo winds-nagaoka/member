@@ -9,7 +9,9 @@ import { getSelectionPhase, getSelectionList } from '../../../../Actions/Manager
 import { showToast } from '../../../../Actions/Toast'
 
 import Forward from '../../../../Library/Icons/Forward'
+import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
+import * as libScore from '../../Score/Library/Library'
 
 import './Selection.css'
 
@@ -18,7 +20,10 @@ function mapStateToProps(state) {
     pc: state.status.pc,
 
     loadingSelectionPhase: state.manager.loadingSelectionPhase,
-    selectionPhase: state.manager.selectionPhase
+    selectionPhase: state.manager.selectionPhase,
+
+    loadingSelectionList: state.manager.loadingSelectionList,
+    selectionList: state.manager.selectionList
   }
 }
 
@@ -33,6 +38,9 @@ function mapDispatchToProps(dispatch) {
     getSelectionPhase () {
       dispatch(getSelectionPhase())
     },
+    getSelectionList () {
+      dispatch(getSelectionList())
+    },
 
     showToast (string) {
       dispatch(showToast(string))
@@ -45,6 +53,7 @@ class Selection extends Component {
     this.props.setNavigationTitle('選曲アンケート')
     this.props.setBackNavigation(true, '/manager')
     this.props.getSelectionPhase()
+    this.props.getSelectionList()
   }
 
   renderPost () {
@@ -60,6 +69,28 @@ class Selection extends Component {
     )
   }
 
+  renderList () {
+    if (!this.props.selectionList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    return this.props.selectionList.map((each, i) => {
+      if (each.remove) return
+      const selection = each.selection
+      console.warn(selection)
+      const composer = selection.composer.length === 0 ? '' : libScore.makeLine(selection.composer)
+      const arranger = selection.arranger.length === 0 ? '' : libScore.makeLine(selection.arranger)
+      const bar = composer === '' || arranger === '' ? '' : <span className='bar'>/</span>
+      return (
+        <div key={each._id} className='selection-list' onTouchStart={() => {}}>
+          <div className='content'>
+            <div className='title-ja'><span>{selection.titleJa}</span></div>
+            <div className='title-en'><span>{selection.titleEn}</span></div>
+            <div className='composer-arranger'><span><span>{composer}</span>{bar}<span>{arranger}</span></span></div>
+          </div>
+          <Forward />
+        </div>
+      )
+    })
+  }
+
   render () {
     // State List
     const { pc } = this.props
@@ -67,6 +98,10 @@ class Selection extends Component {
     // none
 
     const showPost = this.renderPost()
+    const showList = this.renderList()
+
+    const endLabel = this.props.selectionList ? !(this.props.selectionList.length > 10 && this.props.selectionList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loadingSelectionList && !this.props.loadingSearch ? this.props.selectionList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
+
     return (
       <React.Fragment>
         
@@ -76,6 +111,19 @@ class Selection extends Component {
         </div>
 
         {showPost}
+
+        <div className={'box selection' + lib.pcClass(this.props.pc)}>
+          {showList}
+          {endLabel}
+        </div>
+
+        <div className={'box' + lib.pcClass(this.props.pc)}>
+          <div className='back-link'>
+            <ul>
+              <li><Link to='/manager'><div className='inner'><Back /><span>戻る</span></div></Link></li>
+            </ul>
+          </div>
+        </div>
 
       </React.Fragment>
     )

@@ -25,25 +25,20 @@ export const getManager = () => {
 
 export const update = (data) => ({
   type: prefix + 'UPDATE',
-  payload: {
-    data
-  }
+  payload: { data }
 })
 
 export const acquired = (acquired) => ({
   type: prefix + 'ACQUIRED',
-  payload: {
-    acquired
-  }
+  payload: { acquired }
 })
 
 export const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: {
-    loading: loading
-  }
+  payload: { loading }
 })
 
+// Selection Components
 export const getSelectionPhase = () => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
@@ -73,6 +68,37 @@ const setSelectionPhase = (selectionPhase) => ({
   payload: { selectionPhase }
 })
 
+// Selection List
+export const getSelectionList = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingSelectionList(true))
+    const path = lib.getSurveyPath() + '/api/selection/list'
+    const send = {
+      session: lib.getSession()
+    }
+    request.post(path, send, (err, res) => {
+      dispatch(loadingSelectionList(false))
+      if (err) {
+        dispatch(setSelectionList(false))
+      } else {
+        dispatch(setSelectionList(res.body.list))
+      }
+    })
+  }
+}
+
+const loadingSelectionList = (loadingSelectionList) => ({
+  type: prefix + 'LOADING_SELECTION_LIST',
+  payload: { loadingSelectionList }
+})
+
+const setSelectionList = (selectionList) => ({
+  type: prefix + 'SET_SELECTION_LIST',
+  payload: { selectionList }
+})
+
+// Selection Post
 export const setSelectionPost = (selectionPost) => ({
   type: prefix + 'SET_SELECTION_POST',
   payload: { selectionPost }
@@ -95,6 +121,7 @@ export const sendPost = () => {
       if (err) {
         dispatch(showToast('サーバーエラー'))
       } else {
+        dispatch(showToast('投稿しました'))
         dispatch(replace('/manager/selection'))
       }
     })
