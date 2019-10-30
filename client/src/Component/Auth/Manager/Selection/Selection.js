@@ -47,8 +47,8 @@ class Selection extends Component {
     this.props.getSelectionPhase()
   }
 
-  renderSelection () {
-    const link = this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' ? <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li> : <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li>
+  renderPost () {
+    const link = this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' ? <li><div className='disabled-link'><div className='inner'><span>候補曲を追加する</span><Forward /></div></div></li> : <li><Link to='/manager/selection/post'><div className='inner'><span>候補曲を追加する</span><Forward /></div></Link></li>
     return (
       <div className={'box selection' + lib.pcClass(this.props.pc)}>
         <div className='link'>
@@ -66,6 +66,7 @@ class Selection extends Component {
     // Dispatch List
     // none
 
+    const showPost = this.renderPost()
     return (
       <React.Fragment>
         
@@ -73,6 +74,8 @@ class Selection extends Component {
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link></div>
           <h2>選曲アンケート</h2>
         </div>
+
+        {showPost}
 
       </React.Fragment>
     )
