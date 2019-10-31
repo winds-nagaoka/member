@@ -57,7 +57,7 @@ class Selection extends Component {
   }
 
   renderPost () {
-    const link = this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' ? <li><div className='disabled-link'><div className='inner'><span>候補曲を追加する</span><Forward /></div></div></li> : <li><Link to='/manager/selection/post'><div className='inner'><span>候補曲を追加する</span><Forward /></div></Link></li>
+    const link = this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' ? <li><div className='disabled-link'><div className='inner'><span>候補曲を追加する</span><Forward /></div></div></li> : <li><Link to='/manager/selection/add'><div className='inner'><span>候補曲を追加する</span><Forward /></div></Link></li>
     return (
       <div className={'box selection' + lib.pcClass(this.props.pc)}>
         <div className='link'>
@@ -74,15 +74,13 @@ class Selection extends Component {
     return this.props.selectionList.map((each, i) => {
       if (each.remove) return
       const selection = each.selection
-      console.warn(selection)
       const composer = selection.composer.length === 0 ? '' : libManager.makeLine(selection.composer)
       const arranger = selection.arranger.length === 0 ? '' : libManager.makeLine(selection.arranger)
       const bar = composer === '' || arranger === '' ? '' : <span className='bar'>/</span>
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className='content'>
-            <div className='title-ja'><span>{selection.titleJa}</span></div>
-            <div className='title-en'><span>{selection.titleEn}</span></div>
+            <div className='selection-title'><span>{selection.title}</span></div>
             <div className='composer-arranger'><span><span>{composer}</span>{bar}<span>{arranger}</span></span></div>
           </div>
           <Forward />

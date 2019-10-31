@@ -34,7 +34,8 @@ class Manager extends Component {
         <Switch>
           <Route exact path='/manager' component={Notice} />
           <Route exact path='/manager/selection' component={Selection} />
-          <Route exact path='/manager/selection/post' component={Post} />
+          <Route exact path='/manager/selection/add' component={Post} />
+          <Route exact path='/manager/selection/edit/:id' component={Post} />
           <Route exact path='/manager/selection/detail/:id' component={Detail} />
         </Switch>
 

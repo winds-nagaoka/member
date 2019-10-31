@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getSelectionDetail } from '../../../../Actions/Manager'
 
+import Forward from '../../../../Library/Icons/Forward'
 import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
 import * as libManager from '../Library/Library'
@@ -42,7 +43,6 @@ class Detail extends Component {
     super(props)
     const { params } = this.props.match
     const id = params.id ? params.id : ''
-    console.log(id)
     this.props.getSelectionDetail(id)
   }
 
@@ -54,29 +54,28 @@ class Detail extends Component {
 
   renderDetail () {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    const selection = this.props.selectionDetail.selection
-    console.warn(selection.url, libManager.makeLineUrl(selection.url))
+    const selection = this.props.selectionDetail
     return (
       <ul className='selection-detail-list'>
         <li>
-          <label>タイトル(日本語)</label>
-          <p>{selection.titleJa ? <span className='title-ja'>{selection.titleJa}</span> : <span className='no-data'>No Data</span>}</p>
-        </li>
-        <li>
-          <label>タイトル(原語)</label>
-          <p>{selection.titleEn ? <span className='title-en'>{selection.titleEn}</span> : <span className='no-data'>No Data</span>}</p>
+          <label>曲名</label>
+          <p>{selection.title ? <span className='title'>{selection.title}</span> : <span className='no-data'>記載なし</span>}</p>
         </li>
         <li>
           <label>作曲者</label>
-          <p>{selection.composer.length === 0 || libManager.makeLine(selection.composer) === '' ? <span className='no-data'>No Data</span> : <span>{libManager.makeLine(selection.composer)}</span>}</p>
+          <p>{selection.composer.length === 0 || libManager.makeLine(selection.composer) === '' ? <span className='no-data'>記載なし</span> : <span>{libManager.makeLine(selection.composer)}</span>}</p>
         </li>
         <li>
           <label>編曲者</label>
-          <p>{selection.arranger.length === 0 || libManager.makeLine(selection.arranger) === '' ? <span className='no-data'>No Data</span> : <span>{libManager.makeLine(selection.arranger)}</span>}</p>
+          <p>{selection.arranger.length === 0 || libManager.makeLine(selection.arranger) === '' ? <span className='no-data'>記載なし</span> : <span>{libManager.makeLine(selection.arranger)}</span>}</p>
+        </li>
+        <li>
+          <label>演奏時間</label>
+          <p>{selection.duration ? <span className='duration'>{selection.duration}</span> : <span className='no-data'>記載なし</span>}</p>
         </li>
         <li>
           <label>参考音源</label>
-          <div className='link'>{selection.url.length === 0 || libManager.makeLineUrl(selection.url) === '' ? <span className='no-data'>No Data</span> : <div>{libManager.makeLineUrl(selection.url)}</div>}</div>
+          <div className='link'>{selection.url.length === 0 || libManager.makeLine(selection.url) === '' ? <span className='no-data'>記載なし</span> : <div>{libManager.makeLineUrl(selection.url)}</div>}</div>
         </li>
       </ul>
     )
@@ -99,11 +98,15 @@ class Detail extends Component {
   }
 
   renderEditDetailLink () {
-    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return false
-    if (!libManager.admin(this.props.user)) return false
+    if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return false
+    // if (!libManager.admin(this.props.user)) return false
     return (
-      <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
-        <div onClick={() => this.props.setDisplayEditScoreModal(true, 'editDetail', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>詳細情報を修正</span>}</div>
+      <div className={'box selection-edit-link' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul>
+            <li><Link to={'/manager/selection/edit/' + this.props.selectionDetailid}><div className='inner'><span>編集する</span><Forward /></div></Link></li>
+          </ul>
+        </div>
       </div>
     )
   }

@@ -9,12 +9,16 @@ const initialState = {
   loadingSelectionList: false,
   selectionList: [],
 
+  loadingSelectionPostDetail: false,
   loadingSelectionPost: false,
+  selectionPostid: false,
   selectionPost: {
+    title: '',
     titleJa: '',
     titleEn: '',
     composer: [''],
     arranger: [''],
+    duration: '',
     url: ['']
   },
 
@@ -62,10 +66,20 @@ export default function managerReducer (state = initialState, action) {
         ...state,
         selectionList: action.payload.selectionList
       }
+    case prefix + 'LOADING_SELECTION_POST_DETAIL':
+      return {
+        ...state,
+        loadingSelectionPostDetail: action.payload.loadingSelectionPostDetail
+      }
     case prefix + 'LOADING_SELECTION_POST':
       return {
         ...state,
         loadingSelectionPost: action.payload.loadingSelectionPost
+      }
+    case prefix + 'SET_SELECTION_POSTID':
+      return {
+        ...state,
+        selectionPostid: action.payload.selectionPostid
       }
     case prefix + 'SET_SELECTION_POST':
       return {

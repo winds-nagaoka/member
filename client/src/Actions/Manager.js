@@ -99,21 +99,53 @@ const setSelectionList = (selectionList) => ({
 })
 
 // Selection Post
+export const getSelectionPost = (id) => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingSelectionPostDetail(true))
+    const path = lib.getSurveyPath() + '/api/selection/detail'
+    const send = {
+      session: lib.getSession(),
+      id
+    }
+    request.post(path, send, (err, res) => {
+      dispatch(loadingSelectionPostDetail(false))
+      if (err) {
+        dispatch(setSelectionPost(false))
+      } else {
+        dispatch(setSelectionPost(res.body.selection.selection))
+      }
+    })
+  }
+}
+
+const loadingSelectionPostDetail = (loadingSelectionPostDetail) => ({
+  type: prefix + 'LOADING_SELECTION_POST_DETAIL',
+  payload: { loadingSelectionPostDetail }
+})
+
+export const setSelectionPostid = (selectionPostid) => ({
+  type: prefix + 'SET_SELECTION_POSTID',
+  payload: { selectionPostid }
+})
+
 export const setSelectionPost = (selectionPost) => ({
   type: prefix + 'SET_SELECTION_POST',
   payload: { selectionPost }
 })
 
-export const sendPost = () => {
+export const sendPost = (removeRequest) => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
-    if (!getState().manager.selectionPost.titleJa && !getState().manager.selectionPost.titleEn) {
+    if (!getState().manager.selectionPost.title) {
       return dispatch(showToast('入力内容を確認してください'))
     }
     dispatch(loadingSelectionPost(true))
     const path = lib.getSurveyPath() + '/api/selection/post'
     const send = {
       session: lib.getSession(),
+      id: getState().manager.selectionPostid,
+      remove: removeRequest ? true : false,
       selection: getState().manager.selectionPost
     }
     request.post(path, send, (err, res) => {
@@ -121,8 +153,20 @@ export const sendPost = () => {
       if (err) {
         dispatch(showToast('サーバーエラー'))
       } else {
-        dispatch(showToast('投稿しました'))
-        dispatch(replace('/manager/selection'))
+        if (res.body.status) {
+          if (removeRequest && getState().manager.selectionPostid) {
+            dispatch(showToast('削除しました'))
+            dispatch(replace('/manager/selection'))
+          } else if (getState().manager.selectionPostid) {
+            dispatch(showToast('更新しました'))
+            dispatch(replace('/manager/selection/detail/' + getState().manager.selectionPostid))
+          } else {
+            dispatch(showToast('投稿しました'))
+            dispatch(replace('/manager/selection'))
+          }  
+        } else {
+          dispatch(showToast('サーバーエラー'))
+        }
       }
     })
   }
@@ -150,7 +194,7 @@ export const getSelectionDetail = (id) => {
         dispatch(setSelectionDetail(false))
       } else {
         console.log(res.body.selection)
-        dispatch(setSelectionDetail(res.body.selection))
+        dispatch(setSelectionDetail(res.body.selection.selection))
       }
     })
   }
