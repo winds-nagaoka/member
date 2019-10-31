@@ -18,7 +18,6 @@ function mapStateToProps(state) {
     pc: state.status.pc,
 
     selectionPost: state.manager.selectionPost,
-
     loadingSelectionPost: state.manager.loadingSelectionPost,
   }
 }
@@ -93,7 +92,7 @@ class Post extends Component {
       return <input key={i} type='text' value={each} name='arranger' onChange={(e) => this.changeArrayValue(i, e)} />
     })
     const urlInput = this.props.selectionPost.url.map((each, i) => {
-      return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} />
+      return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} placeholder='YouTubeのURLなど' />
     })
 
     return (
@@ -102,10 +101,14 @@ class Post extends Component {
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection/post'>候補曲を追加する</Link></div>
           <h2>候補曲を追加する</h2>
-          <p>候補曲は期間中何度でも投稿できます</p>
-          <p>投稿者情報は公開されません</p>
-          <p>日本語か英語が必須でそれ以外は任意です</p>
-          <p>事務局が投稿に対して追記や修正を行う場合があります</p>
+        </div>
+
+        <div className={'box manager-selection-guide' + lib.pcClass(this.props.pc)}>
+          <div className='text'>
+            <p>候補曲は期間中何度でも投稿できます。</p>
+            <p>投稿者情報は公開されません。</p>
+            <p>事務局が投稿に対して追記や修正を行う場合があります。</p>
+          </div>
         </div>
 
         <div className={'box manager-selection-post' + lib.pcClass(this.props.pc)}>
@@ -115,7 +118,7 @@ class Post extends Component {
               <input type='text' name='titleJa' value={this.props.selectionPost.titleJa} onChange={(e) => this.changeValue(e)} />
             </div>
             <div>
-              <label>タイトル(英語)</label>
+              <label>タイトル(原語)</label>
               <input type='text' name='titleEn' value={this.props.selectionPost.titleEn} onChange={(e) => this.changeValue(e)} />
             </div>
             <div>
@@ -137,7 +140,7 @@ class Post extends Component {
               <div className='multi'>
                 {urlInput}
               </div>
-              <div className='add-data' onClick={() => this.addBlank('url')}><i className="fas fa-plus-circle"></i>参考音源を追加</div>
+              <div className='add-data' onClick={() => this.addBlank('url')}placeholder='YouTubeのURLなど'><i className="fas fa-plus-circle"></i>参考音源を追加</div>
             </div>
           </div>
         </div>
@@ -151,10 +154,11 @@ class Post extends Component {
         <div className={'box' + lib.pcClass(this.props.pc)}>
           <div className='back-link'>
             <ul>
-              <li><Link to='/bbs'><div className='inner'><Back /><span>戻る</span></div></Link></li>
+              <li><Link to='/manager/selection'><div className='inner'><Back /><span>候補曲一覧へ</span></div></Link></li>
             </ul>
           </div>
         </div>
+
       </React.Fragment>
     )
   }
