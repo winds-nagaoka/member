@@ -132,3 +132,41 @@ const loadingSelectionPost = (loadingSelectionPost) => ({
   type: prefix + 'LOADING_SELECTION_POST',
   payload: { loadingSelectionPost }
 })
+
+// Selection Detail
+export const getSelectionDetail = (id) => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingSelectionDetail(true))
+    dispatch(setSelectionDetailid(id))
+    const path = lib.getSurveyPath() + '/api/selection/detail'
+    const send = {
+      session: lib.getSession(),
+      id
+    }
+    request.post(path, send, (err, res) => {
+      dispatch(loadingSelectionDetail(false))
+      if (err) {
+        dispatch(setSelectionDetail(false))
+      } else {
+        console.log(res.body.selection)
+        dispatch(setSelectionDetail(res.body.selection))
+      }
+    })
+  }
+}
+
+const loadingSelectionDetail = (loadingSelectionDetail) => ({
+  type: prefix + 'LOADING_SELECTION_DETAIL',
+  payload: { loadingSelectionDetail }
+})
+
+const setSelectionDetailid = (selectionDetailid) => ({
+  type: prefix + 'SET_SELECTION_DETAILID',
+  payload: { selectionDetailid }
+})
+
+const setSelectionDetail = (selectionDetail) => ({
+  type: prefix + 'SET_SELECTION_DETAIL',
+  payload: { selectionDetail }
+})

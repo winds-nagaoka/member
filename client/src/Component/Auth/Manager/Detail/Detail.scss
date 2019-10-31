@@ -1,0 +1,27 @@
+.selection-detail {
+  ul.selection-detail-list {
+    margin: 0 12px;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 8px 0;
+
+      label {
+        color: #888;
+        font-size: 13px;
+      }
+
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        word-break: break-all;
+
+        .no-data {
+          color: #ccc;
+        }
+      }
+    }
+  }
+}

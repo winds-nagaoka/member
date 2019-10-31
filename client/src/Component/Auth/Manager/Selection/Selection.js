@@ -11,7 +11,7 @@ import { showToast } from '../../../../Actions/Toast'
 import Forward from '../../../../Library/Icons/Forward'
 import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
-import * as libScore from '../../Score/Library/Library'
+import * as libManager from '../Library/Library'
 
 import './Selection.css'
 
@@ -75,18 +75,18 @@ class Selection extends Component {
       if (each.remove) return
       const selection = each.selection
       console.warn(selection)
-      const composer = selection.composer.length === 0 ? '' : libScore.makeLine(selection.composer)
-      const arranger = selection.arranger.length === 0 ? '' : libScore.makeLine(selection.arranger)
+      const composer = selection.composer.length === 0 ? '' : libManager.makeLine(selection.composer)
+      const arranger = selection.arranger.length === 0 ? '' : libManager.makeLine(selection.arranger)
       const bar = composer === '' || arranger === '' ? '' : <span className='bar'>/</span>
       return (
-        <div key={each._id} className='selection-list' onTouchStart={() => {}}>
+        <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className='content'>
             <div className='title-ja'><span>{selection.titleJa}</span></div>
             <div className='title-en'><span>{selection.titleEn}</span></div>
             <div className='composer-arranger'><span><span>{composer}</span>{bar}<span>{arranger}</span></span></div>
           </div>
           <Forward />
-        </div>
+        </Link>
       )
     })
   }

@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Notice from './Notice/Notice'
 import Selection from './Selection/Selection'
 import Post from './Post/Post'
+import Detail from './Detail/Detail'
 
 import Back from '../../../Library/Icons/Back'
 import * as lib from '../../../Library/Library'
@@ -34,6 +35,7 @@ class Manager extends Component {
           <Route exact path='/manager' component={Notice} />
           <Route exact path='/manager/selection' component={Selection} />
           <Route exact path='/manager/selection/post' component={Post} />
+          <Route exact path='/manager/selection/detail/:id' component={Detail} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(pc)}>

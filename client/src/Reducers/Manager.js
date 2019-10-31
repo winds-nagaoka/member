@@ -16,7 +16,11 @@ const initialState = {
     composer: [''],
     arranger: [''],
     url: ['']
-  }
+  },
+
+  loadingSelectionDetail: false,
+  selectionDetailid: false,
+  selectionDetail: false
 }
 
 const prefix = 'MANAGER_'
@@ -67,6 +71,21 @@ export default function managerReducer (state = initialState, action) {
       return {
         ...state,
         selectionPost: action.payload.selectionPost
+      }
+    case prefix + 'LOADING_SELECTION_DETAIL':
+      return {
+        ...state,
+        loadingSelectionDetail: action.payload.loadingSelectionDetail
+      }
+    case prefix + 'SET_SELECTION_DETAILID':
+      return {
+        ...state,
+        selectionDetailid: action.payload.selectionDetailid
+      }
+    case prefix + 'SET_SELECTION_DETAIL':
+      return {
+        ...state,
+        selectionDetail: action.payload.selectionDetail
       }
     default:
       return state
