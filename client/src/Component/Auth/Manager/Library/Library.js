@@ -21,7 +21,7 @@ export function makeLineUrl (array) {
       newArray[i] = array[i]
     }
   }
-  const list = newArray.map((each, i) => <div key={i}>{each}</div>)
+  const list = newArray.map((each, i) => <div key={i} className='link-frame'>{each}</div>)
   return (
     <div>
       {list}

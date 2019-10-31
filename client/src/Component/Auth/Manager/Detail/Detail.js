@@ -76,7 +76,7 @@ class Detail extends Component {
         </li>
         <li>
           <label>参考音源</label>
-          <div>{selection.url.length === 0 || libManager.makeLineUrl(selection.url) === '' ? <span className='no-data'>No Data</span> : <span>{libManager.makeLineUrl(selection.url)}</span>}</div>
+          <div className='link'>{selection.url.length === 0 || libManager.makeLineUrl(selection.url) === '' ? <span className='no-data'>No Data</span> : <div>{libManager.makeLineUrl(selection.url)}</div>}</div>
         </li>
       </ul>
     )
