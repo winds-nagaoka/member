@@ -8,12 +8,14 @@ import { getManager, getSelectionPhase } from '../../../../Actions/Manager'
 
 import Forward from '../../../../Library/Icons/Forward'
 import * as lib from '../../../../Library/Library'
+import * as libManager from '../Library/Library'
 
 import './Notice.css'
 
 function mapStateToProps(state) {
   return {
     pc: state.status.pc,
+    user: state.status.user,
 
     loadingManager: state.manager.loading,
     manager: state.manager.data,
@@ -49,7 +51,7 @@ class Notice extends Component {
   }
 
   renderSelection () {
-    const link = this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' ? <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li> : <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li>
+    const link = (this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' || this.props.selectionPhase === 'admin') && !libManager.admin(this.props.user) ? <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li> : <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li>
     return (
       <div className={'box selection' + lib.pcClass(this.props.pc)}>
         <div className='link'>

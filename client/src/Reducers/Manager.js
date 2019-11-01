@@ -11,6 +11,7 @@ const initialState = {
 
   loadingSelectionPostDetail: false,
   loadingSelectionPost: false,
+  loadingSelectionRemovePost: false,
   selectionPostid: false,
   selectionPost: {
     title: '',

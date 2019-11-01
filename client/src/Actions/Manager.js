@@ -140,7 +140,7 @@ export const sendPost = (removeRequest) => {
     if (!getState().manager.selectionPost.title) {
       return dispatch(showToast('入力内容を確認してください'))
     }
-    dispatch(loadingSelectionPost(true))
+    removeRequest ? dispatch(loadingSelectionRemovePost(true)) : dispatch(loadingSelectionPost(true))
     const path = lib.getSurveyPath() + '/api/selection/post'
     const send = {
       session: lib.getSession(),
@@ -150,7 +150,7 @@ export const sendPost = (removeRequest) => {
       remove: removeRequest ? true : false
     }
     request.post(path, send, (err, res) => {
-      dispatch(loadingSelectionPost(false))
+      removeRequest ? dispatch(loadingSelectionRemovePost(false)) : dispatch(loadingSelectionPost(false))
       if (err) {
         dispatch(showToast('サーバーエラー'))
       } else {
@@ -176,6 +176,11 @@ export const sendPost = (removeRequest) => {
 const loadingSelectionPost = (loadingSelectionPost) => ({
   type: prefix + 'LOADING_SELECTION_POST',
   payload: { loadingSelectionPost }
+})
+
+const loadingSelectionRemovePost = (loadingSelectionRemovePost) => ({
+  type: prefix + 'LOADING_SELECTION_REMOVE_POST',
+  payload: { loadingSelectionRemovePost }
 })
 
 // Selection Detail

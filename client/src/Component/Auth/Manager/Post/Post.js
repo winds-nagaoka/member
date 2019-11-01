@@ -22,6 +22,7 @@ function mapStateToProps(state) {
     selectionPostid: state.manager.selectionPostid,
     selectionPost: state.manager.selectionPost,
     loadingSelectionPost: state.manager.loadingSelectionPost,
+    loadingSelectionRemovePost: state.manager.loadingSelectionRemovePost
   }
 }
 
@@ -217,7 +218,7 @@ class Post extends Component {
       return (
         <div className={'box manager-selection-post-button' + lib.pcClass(this.props.pc)}>
           <div onClick={() => this.props.sendPost(true)} className='send-button'>
-            {this.props.loadingSelectionPost ? '読み込み中' : <span><i className='far fa-edit'></i>削除する</span>}
+            {this.props.loadingSelectionRemovePost ? '読み込み中' : <span><i className='far fa-edit'></i>削除する</span>}
           </div>
         </div>
       )

@@ -132,7 +132,6 @@ class Detail extends Component {
 
         <div className={'box selection-detail' + lib.pcClass(this.props.pc)}>
           <div className='title-frame'>
-            <label>詳細情報</label>
             {showDetail}
           </div>
         </div>
