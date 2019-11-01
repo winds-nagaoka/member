@@ -30,5 +30,5 @@ export function makeLineUrl (array) {
 }
 
 export function admin (user) {
-  return user.scoreAdmin ? true : false
+  return user.admin ? true : false
 }

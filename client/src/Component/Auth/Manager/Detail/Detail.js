@@ -54,6 +54,7 @@ class Detail extends Component {
 
   renderDetail () {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    if ('removed' in this.props.selectionDetail) return <div className='removed'>データがありません</div>
     const selection = this.props.selectionDetail
     return (
       <ul className='selection-detail-list'>
@@ -99,7 +100,7 @@ class Detail extends Component {
 
   renderEditDetailLink () {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return false
-    // if (!libManager.admin(this.props.user)) return false
+    if (!(this.props.selectionDetail.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
     return (
       <div className={'box selection-edit-link' + lib.pcClass(this.props.pc)}>
         <div className='link'>

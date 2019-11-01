@@ -145,8 +145,9 @@ export const sendPost = (removeRequest) => {
     const send = {
       session: lib.getSession(),
       id: getState().manager.selectionPostid,
-      remove: removeRequest ? true : false,
-      selection: getState().manager.selectionPost
+      postUserid: getState().status.user._id,
+      selection: getState().manager.selectionPost,
+      remove: removeRequest ? true : false
     }
     request.post(path, send, (err, res) => {
       dispatch(loadingSelectionPost(false))
@@ -163,7 +164,7 @@ export const sendPost = (removeRequest) => {
           } else {
             dispatch(showToast('投稿しました'))
             dispatch(replace('/manager/selection'))
-          }  
+          }
         } else {
           dispatch(showToast('サーバーエラー'))
         }
@@ -193,8 +194,11 @@ export const getSelectionDetail = (id) => {
       if (err) {
         dispatch(setSelectionDetail(false))
       } else {
-        console.log(res.body.selection)
-        dispatch(setSelectionDetail(res.body.selection.selection))
+        if (res.body.status) {
+          dispatch(setSelectionDetail(res.body.selection.selection))
+        } else {
+          dispatch(setSelectionDetail({removed: true}))
+        }
       }
     })
   }

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
+import * as libManager from '../Library/Library'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getSelectionPost, setSelectionPostid, setSelectionPost, sendPost } from '../../../../Actions/Manager'
@@ -16,6 +17,7 @@ import './Post.css'
 function mapStateToProps(state) {
   return {
     pc: state.status.pc,
+    user: state.status.user,
 
     selectionPostid: state.manager.selectionPostid,
     selectionPost: state.manager.selectionPost,
@@ -73,7 +75,7 @@ class Post extends Component {
         url: ['']
       })
       this.props.setNavigationTitle('候補曲を追加する')
-      this.props.setBackNavigation(true, '/manager/selection')  
+      this.props.setBackNavigation(true, '/manager/selection')
     }
   }
 
@@ -197,8 +199,21 @@ class Post extends Component {
     }
   }
 
+  renderSendButton () {
+    const buttonLabel = this.props.selectionPostid ? '更新する' : '書き込む'
+    if (this.props.selectionPostid && !(this.props.selectionPost.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
+    return (
+      <div className={'box manager-selection-post-button' + lib.pcClass(this.props.pc)}>
+        <div onClick={() => this.props.sendPost()} className='send-button'>
+          {this.props.loadingSelectionPost ? '読み込み中' : <span><i className='far fa-edit'></i>{buttonLabel}</span>}
+        </div>
+      </div>
+    )
+  }
+
   renderRemoveButton () {
     if (this.props.selectionPostid) {
+      if (!(this.props.selectionPost.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
       return (
         <div className={'box manager-selection-post-button' + lib.pcClass(this.props.pc)}>
           <div onClick={() => this.props.sendPost(true)} className='send-button'>
@@ -217,10 +232,9 @@ class Post extends Component {
     const showTitle = this.renderTitle()
     const showMessage = this.renderMessage()
     const showForm = this.renderForm()
+    const showSendButton = this.renderSendButton()
     const showRemoveButton = this.renderRemoveButton()
     const showBackLink = this.renderBackLink()
-
-    const buttonLabel = this.props.selectionPostid ? '更新する' : '書き込む'
 
     return (
       <React.Fragment>
@@ -238,11 +252,7 @@ class Post extends Component {
           {showForm}
         </div>
 
-        <div className={'box manager-selection-post-button' + lib.pcClass(this.props.pc)}>
-          <div onClick={() => this.props.sendPost()} className='send-button'>
-            {this.props.loadingSelectionPost ? '読み込み中' : <span><i className='far fa-edit'></i>{buttonLabel}</span>}
-          </div>
-        </div>
+        {showSendButton}
 
         {showRemoveButton}
 
