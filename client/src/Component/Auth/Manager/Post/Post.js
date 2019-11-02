@@ -73,7 +73,8 @@ class Post extends Component {
         composer: [''],
         arranger: [''],
         duration: '',
-        url: ['']
+        url: [''],
+        memo: ''
       })
       this.props.setNavigationTitle('候補曲を追加する')
       this.props.setBackNavigation(true, '/manager/selection')
@@ -123,12 +124,26 @@ class Post extends Component {
     const urlInput = this.props.selectionPost.url.map((each, i) => {
       return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} placeholder='YouTubeのURLなど' />
     })
+    const titleJa = libManager.admin(this.props.user) ? (
+      <div>
+        <label>タイトル(日本語)</label>
+        <input type='text' name='titleJa' value={this.props.selectionPost.titleJa} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
+      </div>
+    ) : false
+    const titleEn = libManager.admin(this.props.user) ? (
+      <div>
+        <label>タイトル(原語)</label>
+        <input type='text' name='titleEn' value={this.props.selectionPost.titleEn} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
+      </div>
+    ) : false
     return (
       <div className='form'>
         <div>
           <label>曲名</label>
           <input type='text' name='title' value={this.props.selectionPost.title} onChange={(e) => this.changeValue(e)} placeholder='必須' />
         </div>
+        {titleJa}
+        {titleEn}
         <div>
           <label>作曲者</label>
           <div className='multi'>
@@ -154,6 +169,10 @@ class Post extends Component {
           </div>
           <div className='add-data' onClick={() => this.addBlank('url')}><i className="fas fa-plus-circle"></i>参考音源を追加</div>
         </div>
+        <div>
+          <label>メモ</label>
+          <input type='text' name='memo' value={this.props.selectionPost.memo} onChange={(e) => this.changeValue(e)} />
+        </div>
       </div>
     )
   }
@@ -168,7 +187,7 @@ class Post extends Component {
     } else {
       return (
         <div className='text'>
-          <p>候補曲は期間中何度でも投稿できます。</p>
+          <p>候補曲は期間中何回でも投稿できます。</p>
           <p>投稿者情報は公開されません。</p>
           <p>事務局が投稿に対して追記や修正を行う場合があります。</p>
         </div>

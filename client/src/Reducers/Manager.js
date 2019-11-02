@@ -20,7 +20,8 @@ const initialState = {
     composer: [''],
     arranger: [''],
     duration: '',
-    url: ['']
+    url: [''],
+    memo: ''
   },
 
   loadingSelectionDetail: false,

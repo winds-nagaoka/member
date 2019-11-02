@@ -23,27 +23,16 @@
       width: calc(100% - 12px - 2px - 30px);
       margin: 12px 2px 12px 12px;
 
+      &.add-edit, &.add-link {
+        width: calc(100% - 12px - 2px - 30px - 34px);
+      }
+
+      &.add-edit.add-link {
+        width: calc(100% - 12px - 2px - 30px - 34px - 34px);
+      }
+
       display: flex;
       flex-direction: column;
-
-      .locate {
-        padding: 0 0 2px;
-        font-size: 13px;
-
-        .box-label {
-          margin: 2px;
-          padding: 2px 8px;
-          border-radius: 2px;
-          background: #eee;
-        }
-
-        .score-number {
-          margin: 2px;
-          padding: 2px 8px;
-          border-radius: 2px;
-          background: #eee;
-        }
-      }
 
       .selection-title {
         width: 100%;
@@ -55,23 +44,6 @@
 
         & > span {
           line-height: 16px;
-          display: block;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      }
-
-      .title-en {
-        width: 100%;
-        min-height: 10px;
-        margin: 2px 0;
-        color: #888;
-        font-size: 10px;
-        overflow: hidden;
-
-        & > span {
-          line-height: 12px;
           display: block;
           overflow: hidden;
           white-space: nowrap;
@@ -99,6 +71,18 @@
           }
         }
       }
+    }
+
+    .edit {
+      display: flex;
+      margin: 0 8px;
+      color: #ccc;
+    }
+
+    .youtube-link {
+      display: flex;
+      margin: 0 8px;
+      color: #ccc;
     }
   }
 

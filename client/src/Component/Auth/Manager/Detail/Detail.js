@@ -56,28 +56,48 @@ class Detail extends Component {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     if ('removed' in this.props.selectionDetail) return <div className='removed'>データがありません</div>
     const selection = this.props.selectionDetail
+    console.log(selection)
+    const composer = selection.composer.length !== 0 && libManager.makeLine(selection.composer) !== '' ? (
+      <li>
+        <label>作曲者</label>
+        <p><span>{libManager.makeLine(selection.composer)}</span></p>
+      </li>
+    ) : false
+    const arranger = selection.arranger.length !== 0 && libManager.makeLine(selection.arranger) !== '' ? (
+      <li>
+        <label>編曲者</label>
+        <p><span>{libManager.makeLine(selection.arranger)}</span></p>
+      </li>
+    ) : false
+    const duration = selection.duration ? (
+      <li>
+        <label>演奏時間</label>
+        <p><span className='duration'>{selection.duration}</span></p>
+      </li>
+    ) : false
+    const url = selection.url.length !== 0 && libManager.makeLine(selection.url) !== '' ? (
+      <li>
+        <label>参考音源</label>
+        <div className='link'>{libManager.makeLineUrl(selection.url)}</div>
+      </li>
+    ) : false
+    const memo = selection.memo ? (
+      <li>
+        <label>アピールポイント</label>
+        <p><span className='memo'>{selection.memo}</span></p>
+      </li>
+    ) : false
     return (
       <ul className='selection-detail-list'>
         <li>
           <label>曲名</label>
           <p>{selection.title ? <span className='title'>{selection.title}</span> : <span className='no-data'>記載なし</span>}</p>
         </li>
-        <li>
-          <label>作曲者</label>
-          <p>{selection.composer.length === 0 || libManager.makeLine(selection.composer) === '' ? <span className='no-data'>記載なし</span> : <span>{libManager.makeLine(selection.composer)}</span>}</p>
-        </li>
-        <li>
-          <label>編曲者</label>
-          <p>{selection.arranger.length === 0 || libManager.makeLine(selection.arranger) === '' ? <span className='no-data'>記載なし</span> : <span>{libManager.makeLine(selection.arranger)}</span>}</p>
-        </li>
-        <li>
-          <label>演奏時間</label>
-          <p>{selection.duration ? <span className='duration'>{selection.duration}</span> : <span className='no-data'>記載なし</span>}</p>
-        </li>
-        <li>
-          <label>参考音源</label>
-          <div className='link'>{selection.url.length === 0 || libManager.makeLine(selection.url) === '' ? <span className='no-data'>記載なし</span> : <div>{libManager.makeLineUrl(selection.url)}</div>}</div>
-        </li>
+        {composer}
+        {arranger}
+        {duration}
+        {url}
+        {memo}
       </ul>
     )
   }
@@ -115,9 +135,7 @@ class Detail extends Component {
   render () {
 
     const showBreadNavigation = this.renderBreadNavigation()
-
     const showDetail = this.renderDetail()
-
     const showEditStatusLink = this.renderEditStatusLink()
     const showEditDetailLink = this.renderEditDetailLink()
 
@@ -132,7 +150,9 @@ class Detail extends Component {
 
         <div className={'box selection-detail' + lib.pcClass(this.props.pc)}>
           <div className='title-frame'>
-            {showDetail}
+            <div className='text'>
+              {showDetail}
+            </div>
           </div>
         </div>
 

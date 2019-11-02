@@ -18,6 +18,7 @@ import './Selection.css'
 function mapStateToProps(state) {
   return {
     pc: state.status.pc,
+    user: state.status.user,
 
     loadingSelectionPhase: state.manager.loadingSelectionPhase,
     selectionPhase: state.manager.selectionPhase,
@@ -73,16 +74,23 @@ class Selection extends Component {
     if (!this.props.selectionList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     return this.props.selectionList.map((each, i) => {
       if (each.remove) return
+      console.log(each, this.props.user)
       const selection = each.selection
       const composer = selection.composer.length === 0 ? '' : libManager.makeLine(selection.composer)
       const arranger = selection.arranger.length === 0 ? '' : libManager.makeLine(selection.arranger)
       const bar = composer === '' || arranger === '' ? '' : <span className='bar'>/</span>
+      const link = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? <div className='youtube-link'><i className='fab fa-youtube'></i></div> : false
+      const edit = selection.postUserid === this.props.user._id ? <div className='edit'><i className='fas fa-edit'></i></div> : false
+      const contentClassLink = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? ' add-link' : ''
+      const contentClassEdit = selection.postUserid === this.props.user._id ? ' add-edit' : ''
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
-          <div className='content'>
+          <div className={'content' + contentClassLink + contentClassEdit}>
             <div className='selection-title'><span>{selection.title}</span></div>
             <div className='composer-arranger'><span><span>{composer}</span>{bar}<span>{arranger}</span></span></div>
           </div>
+          {edit}
+          {link}
           <Forward />
         </Link>
       )

@@ -1,11 +1,14 @@
 .selection-detail {
   ul.selection-detail-list {
-    margin: 0 12px;
+    // margin: 0 12px;
+    margin: 0;
     padding: 0;
     list-style: none;
 
     li {
-      padding: 8px 0;
+      &:not(:first-child) {
+        margin-top: 12px;
+      }
 
       label {
         color: #888;
@@ -24,15 +27,17 @@
       }
 
       .link {
+        display: flex;
+        margin: 0;
 
         .link-frame {
+          display: inline-block;
+
           &:not(:first-child) {
-            margin-top: 8px;
+            margin-left: 8px;
           }
 
           a {
-            padding: 6px 12px;
-            border-radius: .25rem;
             background: #eee;
             text-decoration: none;
             color: #333;
@@ -40,6 +45,32 @@
 
             &:hover {
               background: #ccc;
+            }
+
+            &.youtube {
+              padding: 0;
+              width: 40px;
+              height: 40px;
+              border-radius: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              i {
+                font-size: 18px;
+                color: #FF0000;
+              }
+
+              &:hover {
+                i {
+                  color: rgba(255,0,0,.6);
+                }
+              }
+            }
+
+            &.other {
+              padding: 0 6px;
+              border-radius: .25rem;
             }
           }
         }
