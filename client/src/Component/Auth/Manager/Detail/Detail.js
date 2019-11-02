@@ -56,7 +56,6 @@ class Detail extends Component {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     if ('removed' in this.props.selectionDetail) return <div className='removed'>データがありません</div>
     const selection = this.props.selectionDetail
-    console.log(selection)
     const composer = selection.composer.length !== 0 && libManager.makeLine(selection.composer) !== '' ? (
       <li>
         <label>作曲者</label>
@@ -83,7 +82,7 @@ class Detail extends Component {
     ) : false
     const memo = selection.memo ? (
       <li>
-        <label>アピールポイント</label>
+        <label>メモ</label>
         <p><span className='memo'>{selection.memo}</span></p>
       </li>
     ) : false

@@ -149,14 +149,14 @@ class Post extends Component {
           <div className='multi'>
             {composerInput}
           </div>
-          <div className='add-data' onClick={() => this.addBlank('composer')}><i className="fas fa-plus-circle"></i>作曲者を追加</div>
+          <div className='add-data' onClick={() => this.addBlank('composer')}><i className='fas fa-plus-circle'></i>作曲者を追加</div>
         </div>
         <div>
           <label>編曲者</label>
           <div className='multi'>
             {arrangerInput}
           </div>
-          <div className='add-data' onClick={() => this.addBlank('arranger')}><i className="fas fa-plus-circle"></i>編曲者を追加</div>
+          <div className='add-data' onClick={() => this.addBlank('arranger')}><i className='fas fa-plus-circle'></i>編曲者を追加</div>
         </div>
         <div>
           <label>演奏時間</label>
@@ -167,7 +167,7 @@ class Post extends Component {
           <div className='multi'>
             {urlInput}
           </div>
-          <div className='add-data' onClick={() => this.addBlank('url')}><i className="fas fa-plus-circle"></i>参考音源を追加</div>
+          <div className='add-data' onClick={() => this.addBlank('url')}><i className='fas fa-plus-circle'></i>参考音源を追加</div>
         </div>
         <div>
           <label>メモ</label>
@@ -181,7 +181,7 @@ class Post extends Component {
     if (this.props.selectionPostid) {
       return (
         <div className='text'>
-          <p>修正ページです。</p>
+          <p>修正ページです</p>
         </div>
       )
     } else {

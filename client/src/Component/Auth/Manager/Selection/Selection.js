@@ -57,24 +57,10 @@ class Selection extends Component {
     this.props.getSelectionList()
   }
 
-  renderPost () {
-    const link = this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' ? <li><div className='disabled-link'><div className='inner'><span>候補曲を追加する</span><Forward /></div></div></li> : <li><Link to='/manager/selection/add'><div className='inner'><span>候補曲を追加する</span><Forward /></div></Link></li>
-    return (
-      <div className={'box selection' + lib.pcClass(this.props.pc)}>
-        <div className='link'>
-          <ul>
-            {link}
-          </ul>
-        </div>
-      </div>
-    )
-  }
-
   renderList () {
     if (!this.props.selectionList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     return this.props.selectionList.map((each, i) => {
       if (each.remove) return
-      console.log(each, this.props.user)
       const selection = each.selection
       const composer = selection.composer.length === 0 ? '' : libManager.makeLine(selection.composer)
       const arranger = selection.arranger.length === 0 ? '' : libManager.makeLine(selection.arranger)
@@ -97,12 +83,69 @@ class Selection extends Component {
     })
   }
 
+  renderPost () {
+    const link = (this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user)) ? (
+      <li><Link to='/manager/selection/add'><div className='inner'><span>候補曲を追加する</span><Forward /></div></Link></li>
+    ) : (
+      <li><div className='disabled-link'><div className='inner'><span>候補曲を追加する</span><Forward /></div></div></li>
+    )
+    return (
+      <div className={'box selection' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul>
+            {link}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
+  renderMessage () {
+    if (this.props.selectionPhase === 'onlyadmin') {
+      return (
+        <div className='text'>
+          <p>管理者のみ閲覧可能です</p>
+        </div>
+      )
+    } else if (this.props.selectionPhase === 'getmusic') {
+      return (
+        <div className='text'>
+          <p>候補曲を集めています。</p>
+          <p>思いついたときにどんどん投稿してください。</p>
+          <p>修正は投稿期間が終わるとできなくなりますのでご注意ください。</p>
+          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です</p>
+        </div>
+      )
+    } else if (this.props.selectionPhase === 'showlist') {
+      return (
+        <div className='text'>
+          <p>候補曲の募集期間は終了しました。</p>
+          <p>これ以上の曲の追加および修正はできません。</p>
+          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です</p>
+        </div>
+      )
+    } else if (this.props.selectionPhase === 'hide') {
+      return (
+        <div className='text'>
+          <p>管理者のみ閲覧可能です</p>
+        </div>
+      )
+    } else {
+      return (
+        <div className='text'>
+          <p>管理者のみ閲覧可能です</p>
+        </div>
+      )
+    }
+  }
+
   render () {
     // State List
     const { pc } = this.props
     // Dispatch List
     // none
 
+    const showMessage = this.renderMessage()
     const showPost = this.renderPost()
     const showList = this.renderList()
 
@@ -114,6 +157,10 @@ class Selection extends Component {
         <div className={'contents-header' + lib.pcClass(pc)}>
           <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link></div>
           <h2>選曲アンケート</h2>
+        </div>
+
+        <div className={'box selection-message' + lib.pcClass(this.props.pc)}>
+          {showMessage}
         </div>
 
         {showPost}

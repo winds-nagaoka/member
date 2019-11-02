@@ -38,23 +38,24 @@
           }
 
           a {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 20px;
             background: #eee;
             text-decoration: none;
             color: #333;
             font-size: .9rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             &:hover {
               background: #ccc;
             }
 
             &.youtube {
-              padding: 0;
-              width: 40px;
-              height: 40px;
-              border-radius: 20px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
 
               i {
                 font-size: 18px;
@@ -69,8 +70,10 @@
             }
 
             &.other {
-              padding: 0 6px;
-              border-radius: .25rem;
+              i {
+                font-size: 18px;
+                color: #666;
+              }
             }
           }
         }

@@ -14,7 +14,7 @@ export function makeLineUrl (array) {
   let newArray = []
   for (var i = 0; i<array.length; i++) {
     if (array[i].match(/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/g)) {
-      const label = array[i].match(/youtu\.?be/) ? <i className='fab fa-youtube'></i> : array[i]
+      const label = array[i].match(/youtu\.?be/) ? <i className='fab fa-youtube'></i> : <i className='fas fa-external-link-square-alt'></i>
       const className = array[i].match(/youtu\.?be/) ? 'youtube' : 'other'
       const link = <a href={array[i]} target='_blank' className={className}>{label}</a>
       newArray[i] = link
