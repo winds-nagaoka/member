@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { getSelectionPhase, getSelectionList } from '../../../../Actions/Manager'
+import { getSelectionPhase, getSelectionList, getSelectionLike } from '../../../../Actions/Manager'
 
 import { showToast } from '../../../../Actions/Toast'
 
@@ -24,7 +24,10 @@ function mapStateToProps(state) {
     selectionPhase: state.manager.selectionPhase,
 
     loadingSelectionList: state.manager.loadingSelectionList,
-    selectionList: state.manager.selectionList
+    selectionList: state.manager.selectionList,
+
+    loadingSelectionLike: state.manager.loadingSelectionLike,
+    selectionLike: state.manager.selectionLike
   }
 }
 
@@ -42,6 +45,9 @@ function mapDispatchToProps(dispatch) {
     getSelectionList () {
       dispatch(getSelectionList())
     },
+    getSelectionLike () {
+      dispatch(getSelectionLike())
+    },
 
     showToast (string) {
       dispatch(showToast(string))
@@ -55,6 +61,7 @@ class Selection extends Component {
     this.props.setBackNavigation(true, '/manager')
     this.props.getSelectionPhase()
     this.props.getSelectionList()
+    this.props.getSelectionLike()
   }
 
   renderList () {
@@ -113,7 +120,7 @@ class Selection extends Component {
           <p>候補曲を集めています。</p>
           <p>思いついたときにどんどん投稿してください。</p>
           <p>修正は投稿期間が終わるとできなくなりますのでご注意ください。</p>
-          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です</p>
+          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です。</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'showlist') {
@@ -121,7 +128,7 @@ class Selection extends Component {
         <div className='text'>
           <p>候補曲の募集期間は終了しました。</p>
           <p>これ以上の曲の追加および修正はできません。</p>
-          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です</p>
+          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です。</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'hide') {

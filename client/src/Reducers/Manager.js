@@ -8,6 +8,10 @@ const initialState = {
 
   loadingSelectionList: false,
   selectionList: [],
+  
+  loadingSelectionLike: false,
+  selectionLike: false,
+  loadingSelectionSendLike: false,
 
   loadingSelectionPostDetail: false,
   loadingSelectionPost: false,
@@ -67,6 +71,21 @@ export default function managerReducer (state = initialState, action) {
       return {
         ...state,
         selectionList: action.payload.selectionList
+      }
+    case prefix + 'LOADING_SELECTION_LIKE':
+      return {
+        ...state,
+        loadingSelectionLike: action.payload.loadingSelectionLike
+      }
+    case prefix + 'SET_SELECTION_LIKE':
+      return {
+        ...state,
+        selectionLike: action.payload.selectionLike
+      }
+    case prefix + 'LOADING_SELECTION_SEND_LIKE':
+      return {
+        ...state,
+        loadingSelectionSendLike: action.payload.loadingSelectionSendLike
       }
     case prefix + 'LOADING_SELECTION_POST_DETAIL':
       return {

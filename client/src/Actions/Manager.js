@@ -98,6 +98,66 @@ const setSelectionList = (selectionList) => ({
   payload: { selectionList }
 })
 
+// Selection Like
+export const getSelectionLike = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingSelectionLike(true))
+    const path = lib.getSurveyPath() + '/api/selection/like/get'
+    const send = {
+      session: lib.getSession()
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        dispatch(setSelectionLike(false))
+      } else {
+        console.log(res.body.like)
+        dispatch(setSelectionLike(res.body.like))
+      }
+      dispatch(loadingSelectionLike(false))
+    })
+  }
+}
+
+const loadingSelectionLike = (loadingSelectionLike) => ({
+  type: prefix + 'LOADING_SELECTION_LIKE',
+  payload: { loadingSelectionLike }
+})
+
+const setSelectionLike = (selectionLike) => ({
+  type: prefix + 'SET_SELECTION_LIKE',
+  payload: { selectionLike }
+})
+
+export const sendSelectionLike = (selectionid) => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    if ('removed' in getState().manager.selectionDetail) return false
+    dispatch(loadingSelectionSendLike(true))
+    console.log('sendLike: ', selectionid)
+    const path = lib.getSurveyPath() + '/api/selection/like/add'
+    const send = {
+      session: lib.getSession(),
+      selectionid,
+      likeUserid: getState().status.user._id,
+      userid: getState().status.user.userid,
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        dispatch(setSelectionLike(false))
+      } else {
+        if (res.body.status) dispatch(getSelectionLike())
+      }
+      dispatch(loadingSelectionSendLike(false))
+    })
+  }
+}
+
+const loadingSelectionSendLike = (loadingSelectionSendLike) => ({
+  type: prefix + 'LOADING_SELECTION_SEND_LIKE',
+  payload: { loadingSelectionSendLike }
+})
+
 // Selection Post
 export const getSelectionPost = (id) => {
   return async (dispatch, getState) => {

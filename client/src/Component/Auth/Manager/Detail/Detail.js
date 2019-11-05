@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { getSelectionDetail } from '../../../../Actions/Manager'
+import { getSelectionDetail, getSelectionLike, sendSelectionLike } from '../../../../Actions/Manager'
 
 import Forward from '../../../../Library/Icons/Forward'
 import Back from '../../../../Library/Icons/Back'
@@ -20,7 +20,11 @@ function mapStateToProps(state) {
 
     loadingSelectionDetail: state.manager.loadingSelectionDetail,
     selectionDetailid: state.manager.selectionDetailid,
-    selectionDetail: state.manager.selectionDetail
+    selectionDetail: state.manager.selectionDetail,
+
+    loadingSelectionLike: state.manager.loadingSelectionLike,
+    selectionLike: state.manager.selectionLike,
+    loadingSelectionSendLike: state.manager.loadingSelectionSendLike
   }
 }
 
@@ -34,6 +38,12 @@ function mapDispatchToProps(dispatch) {
     },
     getSelectionDetail (id) {
       dispatch(getSelectionDetail(id))
+    },
+    getSelectionLike () {
+      dispatch(getSelectionLike())
+    },
+    sendSelectionLike (selectionid) {
+      dispatch(sendSelectionLike(selectionid))
     }
   }
 }
@@ -50,6 +60,7 @@ class Detail extends Component {
   componentDidMount () {
     this.props.setNavigationTitle('候補曲詳細')
     this.props.setBackNavigation(true, '/manager/selection')
+    !this.props.selectionLike ? this.props.getSelectionLike() : false
   }
 
   renderDetail () {
@@ -101,6 +112,46 @@ class Detail extends Component {
     )
   }
 
+  countLike (list, id) {
+    let like = 0
+    list.forEach((item, i) => {
+      console.log(i, item)
+      if (item.like.find(item => item === id)) {
+        like++
+      }      
+    })
+    return like
+  }
+
+  renderLike () {
+    if (!this.props.selectionLike) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    if ('removed' in this.props.selectionDetail) return
+    // this.props.loadingSelectionLike
+    // loadingSelectionSendLike
+    const likeList = this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) ? this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) : {like: []}
+    // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <i className='fas fa-thumbs-up'></i> : <i className='far fa-thumbs-up'></i>
+    // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <span className='like-true'><i className='fas fa-heart'></i></span> : <span><i className='far fa-heart'></i></span>
+    const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <span className='like-true'><i className='fas fa-vote-yea'></i></span> : <span><i className='fas fa-vote-yea'></i></span>
+    const buttonClass = likeList.like.find(item => item === this.props.selectionDetailid) ? ' true' : ' false'
+    const buttonLabel = this.props.loadingSelectionSendLike ? '読み込み中...' : likeList.like.find(item => item === this.props.selectionDetailid) ? '投票済み' : '投票する'
+    const count = this.countLike(this.props.selectionLike, this.props.selectionDetailid)
+    return (
+      <div className={'box selection-like' + lib.pcClass(this.props.pc)}>
+        <div className='title-frame'>
+          <div className='text'>
+            <div className='like'>
+              <div className='count'><span>{count}</span>票</div>
+              <div className='button-frame'>
+                <div onClick={() => this.props.sendSelectionLike(this.props.selectionDetailid)} className={'button' + buttonClass}>{icon}{buttonLabel}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   renderBreadNavigation () {
     return (
       <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/detail/' + this.props.selectionDetailid}>候補曲詳細</Link></div>
@@ -135,6 +186,7 @@ class Detail extends Component {
 
     const showBreadNavigation = this.renderBreadNavigation()
     const showDetail = this.renderDetail()
+    const showLike = this.renderLike()
     const showEditStatusLink = this.renderEditStatusLink()
     const showEditDetailLink = this.renderEditDetailLink()
 
@@ -154,6 +206,8 @@ class Detail extends Component {
             </div>
           </div>
         </div>
+
+        {showLike}
 
         {showEditDetailLink}
 
