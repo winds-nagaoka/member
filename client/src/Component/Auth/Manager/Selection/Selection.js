@@ -73,9 +73,10 @@ class Selection extends Component {
       const arranger = selection.arranger.length === 0 ? '' : libManager.makeLine(selection.arranger)
       const bar = composer === '' || arranger === '' ? '' : <span className='bar'>/</span>
       const link = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? <div className='youtube-link'><i className='fab fa-youtube'></i></div> : false
-      const edit = selection.postUserid === this.props.user._id ? <div className='edit'><i className='fas fa-edit'></i></div> : false
+      const edit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? <div className='edit'><i className='fas fa-edit'></i></div> : false
       const contentClassLink = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? ' add-link' : ''
-      const contentClassEdit = selection.postUserid === this.props.user._id ? ' add-edit' : ''
+      const contentClassEdit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? ' add-edit' : ''
+      const like = this.props.loadingSelectionLike ? false : <div className='like'>{libManager.countLike(this.props.selectionLike, each._id)}</div>
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className={'content' + contentClassLink + contentClassEdit}>
@@ -84,6 +85,7 @@ class Selection extends Component {
           </div>
           {edit}
           {link}
+          {like}
           <Forward />
         </Link>
       )
@@ -111,16 +113,16 @@ class Selection extends Component {
     if (this.props.selectionPhase === 'onlyadmin') {
       return (
         <div className='text'>
-          <p>管理者のみ閲覧可能です</p>
+          <p>現在管理者のみ閲覧できます</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'getmusic') {
       return (
         <div className='text'>
-          <p>候補曲を集めています。</p>
+          <p>現在候補曲を集めています。</p>
           <p>思いついたときにどんどん投稿してください。</p>
-          <p>修正は投稿期間が終わるとできなくなりますのでご注意ください。</p>
-          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です。</p>
+          <p>投稿期間が終わると投稿および修正ができなくなりますのでご注意ください。</p>
+          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : ' '}件です。</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'showlist') {
@@ -128,19 +130,19 @@ class Selection extends Component {
         <div className='text'>
           <p>候補曲の募集期間は終了しました。</p>
           <p>これ以上の曲の追加および修正はできません。</p>
-          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : 0}件です。</p>
+          <p>投稿数は{this.props.selectionList ? this.props.selectionList.length : ' '}件です。</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'hide') {
       return (
         <div className='text'>
-          <p>管理者のみ閲覧可能です</p>
+          <p>現在管理者のみ閲覧できます</p>
         </div>
       )
     } else {
       return (
         <div className='text'>
-          <p>管理者のみ閲覧可能です</p>
+          <p>現在管理者のみ閲覧できます</p>
         </div>
       )
     }

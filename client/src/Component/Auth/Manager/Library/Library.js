@@ -30,6 +30,16 @@ export function makeLineUrl (array) {
   )
 }
 
+export function countLike (list, id) {
+  let like = 0
+  list.forEach((item, i) => {
+    if (item.like.find(item => item === id)) {
+      like++
+    }
+  })
+  return like
+}
+
 export function admin (user) {
   return user.admin ? true : false
 }

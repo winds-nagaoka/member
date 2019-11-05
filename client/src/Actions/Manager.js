@@ -2,6 +2,7 @@ import { replace } from 'react-router-redux'
 import * as request from '../Library/Request'
 import * as lib from '../Library/Library'
 import { showToast } from './Toast'
+import * as libManager from '../Component/Auth/Manager/Library/Library'
 
 const prefix = 'MANAGER_'
 
@@ -111,7 +112,6 @@ export const getSelectionLike = () => {
       if (err) {
         dispatch(setSelectionLike(false))
       } else {
-        console.log(res.body.like)
         dispatch(setSelectionLike(res.body.like))
       }
       dispatch(loadingSelectionLike(false))
@@ -133,8 +133,8 @@ export const sendSelectionLike = (selectionid) => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return false
     if ('removed' in getState().manager.selectionDetail) return false
+    if (getState().manager.selectionPhase !== 'getmusic' && !libManager.admin(getState().status.user)) return false
     dispatch(loadingSelectionSendLike(true))
-    console.log('sendLike: ', selectionid)
     const path = lib.getSurveyPath() + '/api/selection/like/add'
     const send = {
       session: lib.getSession(),

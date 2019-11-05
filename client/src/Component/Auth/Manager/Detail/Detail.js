@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { getSelectionDetail, getSelectionLike, sendSelectionLike } from '../../../../Actions/Manager'
+import { getSelectionPhase, getSelectionDetail, getSelectionLike, sendSelectionLike } from '../../../../Actions/Manager'
 
 import Forward from '../../../../Library/Icons/Forward'
 import Back from '../../../../Library/Icons/Back'
@@ -17,6 +17,9 @@ function mapStateToProps(state) {
   return {
     pc: state.status.pc,
     user: state.status.user,
+
+    loadingSelectionPhase: state.manager.loadingSelectionPhase,
+    selectionPhase: state.manager.selectionPhase,
 
     loadingSelectionDetail: state.manager.loadingSelectionDetail,
     selectionDetailid: state.manager.selectionDetailid,
@@ -35,6 +38,9 @@ function mapDispatchToProps(dispatch) {
     },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
+    getSelectionPhase () {
+      dispatch(getSelectionPhase())
     },
     getSelectionDetail (id) {
       dispatch(getSelectionDetail(id))
@@ -60,6 +66,7 @@ class Detail extends Component {
   componentDidMount () {
     this.props.setNavigationTitle('候補曲詳細')
     this.props.setBackNavigation(true, '/manager/selection')
+    this.props.getSelectionPhase()
     !this.props.selectionLike ? this.props.getSelectionLike() : false
   }
 
@@ -112,30 +119,18 @@ class Detail extends Component {
     )
   }
 
-  countLike (list, id) {
-    let like = 0
-    list.forEach((item, i) => {
-      console.log(i, item)
-      if (item.like.find(item => item === id)) {
-        like++
-      }      
-    })
-    return like
-  }
 
   renderLike () {
-    if (!this.props.selectionLike) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    if ('removed' in this.props.selectionDetail) return
-    // this.props.loadingSelectionLike
-    // loadingSelectionSendLike
+    if (!this.props.selectionLike || this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return false
+    if ('removed' in this.props.selectionDetail) return false
     const likeList = this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) ? this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) : {like: []}
     // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <i className='fas fa-thumbs-up'></i> : <i className='far fa-thumbs-up'></i>
     // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <span className='like-true'><i className='fas fa-heart'></i></span> : <span><i className='far fa-heart'></i></span>
     const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <span className='like-true'><i className='fas fa-vote-yea'></i></span> : <span><i className='fas fa-vote-yea'></i></span>
     const buttonClass = likeList.like.find(item => item === this.props.selectionDetailid) ? ' true' : ' false'
+    const disableClass = this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user) ? ' use' : ' not-use'
     const buttonLabel = this.props.loadingSelectionSendLike ? '読み込み中...' : likeList.like.find(item => item === this.props.selectionDetailid) ? '投票済み' : '投票する'
-    const count = this.countLike(this.props.selectionLike, this.props.selectionDetailid)
+    const count = libManager.countLike(this.props.selectionLike, this.props.selectionDetailid)
     return (
       <div className={'box selection-like' + lib.pcClass(this.props.pc)}>
         <div className='title-frame'>
@@ -143,7 +138,7 @@ class Detail extends Component {
             <div className='like'>
               <div className='count'><span>{count}</span>票</div>
               <div className='button-frame'>
-                <div onClick={() => this.props.sendSelectionLike(this.props.selectionDetailid)} className={'button' + buttonClass}>{icon}{buttonLabel}</div>
+                <div onClick={() => this.props.sendSelectionLike(this.props.selectionDetailid)} className={'button' + buttonClass + disableClass}>{icon}{buttonLabel}</div>
               </div>
             </div>
           </div>
@@ -158,28 +153,20 @@ class Detail extends Component {
     )
   }
 
-  renderEditStatusLink () {
-    if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return false
-    if (!libManager.admin(this.props.user)) return false
-    return (
-      <div className={'box score-edit-link' + lib.pcClass(this.props.pc)}>
-        <div onClick={() => this.props.setDisplayEditScoreModal(true, 'editStatus', JSON.parse(JSON.stringify(this.props.scoreDetail)))}>{this.props.editPreLoading ? <span><i className='fas fa-spinner fa-pulse'></i></span> : <span><i className='far fa-edit'></i>状態を変更</span>}</div>
-      </div>
-    )
-  }
-
   renderEditDetailLink () {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return false
     if (!(this.props.selectionDetail.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
-    return (
-      <div className={'box selection-edit-link' + lib.pcClass(this.props.pc)}>
-        <div className='link'>
-          <ul>
-            <li><Link to={'/manager/selection/edit/' + this.props.selectionDetailid}><div className='inner'><span>編集する</span><Forward /></div></Link></li>
-          </ul>
+    if (this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user)) {
+      return (
+        <div className={'box selection-edit-link' + lib.pcClass(this.props.pc)}>
+          <div className='link'>
+            <ul>
+              <li><Link to={'/manager/selection/edit/' + this.props.selectionDetailid}><div className='inner'><span>編集する</span><Forward /></div></Link></li>
+            </ul>
+          </div>
         </div>
-      </div>
-    )
+      )  
+    }
   }
 
   render () {
@@ -187,7 +174,6 @@ class Detail extends Component {
     const showBreadNavigation = this.renderBreadNavigation()
     const showDetail = this.renderDetail()
     const showLike = this.renderLike()
-    const showEditStatusLink = this.renderEditStatusLink()
     const showEditDetailLink = this.renderEditDetailLink()
 
     return (
@@ -196,8 +182,6 @@ class Detail extends Component {
           {showBreadNavigation}
           <h2>候補曲詳細</h2>
         </div>
-
-        {showEditStatusLink}
 
         <div className={'box selection-detail' + lib.pcClass(this.props.pc)}>
           <div className='title-frame'>

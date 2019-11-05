@@ -51,12 +51,19 @@ class Notice extends Component {
   }
 
   renderSelection () {
-    const link = (this.props.loadingSelectionPhase || !this.props.selectionPhase || this.props.selectionPhase === 'prepare' || this.props.selectionPhase === 'admin') && !libManager.admin(this.props.user) ? <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li> : <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li>
+    // const link = !(!this.props.loadingSelectionPhase || this.props.selectionPhase || this.props.selectionPhase !== 'getmusic') || libManager.admin(this.props.user) ? <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li> : <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li>
+    let link = false
+    if (!this.props.loadingSelectionPhase || this.props.selectionPhase) {
+      if (this.props.selectionPhase === 'getmusic' || this.props.selectionPhase === 'showlist' || libManager.admin(this.props.user)) {
+        link = true
+      }
+    }
+    const showLink = link ? <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li> : <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li>
     return (
       <div className={'box selection' + lib.pcClass(this.props.pc)}>
         <div className='link'>
           <ul>
-            {link}
+            {showLink}
           </ul>
         </div>
       </div>

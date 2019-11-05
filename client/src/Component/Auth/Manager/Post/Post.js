@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert'
 
 import { connect } from 'react-redux'
 
@@ -8,7 +9,7 @@ import * as lib from '../../../../Library/Library'
 import * as libManager from '../Library/Library'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { getSelectionPost, setSelectionPostid, setSelectionPost, sendPost } from '../../../../Actions/Manager'
+import { getSelectionPhase, getSelectionPost, setSelectionPostid, setSelectionPost, sendPost } from '../../../../Actions/Manager'
 
 import { showToast } from '../../../../Actions/Toast'
 
@@ -18,6 +19,9 @@ function mapStateToProps(state) {
   return {
     pc: state.status.pc,
     user: state.status.user,
+
+    loadingSelectionPhase: state.manager.loadingSelectionPhase,
+    selectionPhase: state.manager.selectionPhase,
 
     selectionPostid: state.manager.selectionPostid,
     selectionPost: state.manager.selectionPost,
@@ -33,6 +37,9 @@ function mapDispatchToProps(dispatch) {
     },
     setBackNavigation (backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
+    },
+    getSelectionPhase () {
+      dispatch(getSelectionPhase())
     },
     getSelectionPost (id) {
       dispatch(getSelectionPost(id))
@@ -55,14 +62,13 @@ function mapDispatchToProps(dispatch) {
 class Post extends Component {
   constructor (props) {
     super(props)
-    console.warn('constructor')
     const { params } = this.props.match
     const id = params.id ? params.id : ''
     if (id) {
       this.props.getSelectionPost(id)
       this.props.setSelectionPostid(id)
       this.props.setNavigationTitle('曲情報を編集する')
-      this.props.setBackNavigation(true, '/manager/detail/' + id)
+      this.props.setBackNavigation(true, '/manager/selection/detail/' + id)
     } else {
       this.props.setSelectionPostid(false)
       // Reducer と同じにする
@@ -76,13 +82,13 @@ class Post extends Component {
         url: [''],
         memo: ''
       })
-      this.props.setNavigationTitle('候補曲を追加する')
-      this.props.setBackNavigation(true, '/manager/selection')
     }
   }
 
   componentDidMount () {
-    console.warn('componentDidMout', this.props.selectionPostid)
+    this.props.setNavigationTitle('候補曲を追加する')
+    this.props.setBackNavigation(true, '/manager/selection')
+    this.props.getSelectionPhase()
   }
 
   changeValue (e) {
@@ -124,13 +130,13 @@ class Post extends Component {
     const urlInput = this.props.selectionPost.url.map((each, i) => {
       return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} placeholder='YouTubeのURLなど' />
     })
-    const titleJa = libManager.admin(this.props.user) ? (
+    const titleJa = this.props.selectionPostid && libManager.admin(this.props.user) ? (
       <div>
         <label>タイトル(日本語)</label>
         <input type='text' name='titleJa' value={this.props.selectionPost.titleJa} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
       </div>
     ) : false
-    const titleEn = libManager.admin(this.props.user) ? (
+    const titleEn = this.props.selectionPostid && libManager.admin(this.props.user) ? (
       <div>
         <label>タイトル(原語)</label>
         <input type='text' name='titleEn' value={this.props.selectionPost.titleEn} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
@@ -220,31 +226,52 @@ class Post extends Component {
   }
 
   renderSendButton () {
-    const buttonLabel = this.props.selectionPostid ? '更新する' : '書き込む'
-    if (this.props.selectionPostid && !(this.props.selectionPost.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
-    return (
-      <div className={'box manager-selection-post-button' + lib.pcClass(this.props.pc)}>
-        <div onClick={() => this.props.sendPost()} className='send-button'>
-          {this.props.loadingSelectionPost ? '読み込み中' : <span><i className='far fa-edit'></i>{buttonLabel}</span>}
+    if (this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user)) {
+      const buttonLabel = this.props.selectionPostid ? '更新する' : '投稿する'
+      if (this.props.selectionPostid && !(this.props.selectionPost.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
+      return (
+        <div className={'box manager-selection-post-button' + lib.pcClass(this.props.pc)}>
+          <div onClick={() => this.props.sendPost()} className='send-button'>
+            {this.props.loadingSelectionPost ? '読み込み中' : <span><i className='far fa-edit'></i>{buttonLabel}</span>}
+          </div>
         </div>
-      </div>
-    )
+      )  
+    }
   }
 
   renderRemoveButton () {
-    if (this.props.selectionPostid) {
+    if ((this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user)) && this.props.selectionPostid) {
       if (!(this.props.selectionPost.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
       return (
         <div className={'box manager-selection-post-button' + lib.pcClass(this.props.pc)}>
-          <div onClick={() => this.props.sendPost(true)} className='send-button'>
+          <div onClick={() => this.removeRequest()} className='send-button'>
             {this.props.loadingSelectionRemovePost ? '読み込み中' : <span><i className='far fa-edit'></i>削除する</span>}
           </div>
         </div>
       )
-    } else {
-      return false
     }
   }
+
+  removeRequest () {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='alert'>
+            <h1>候補曲を削除します</h1>
+            <p>この操作は取り消せません。</p>
+            <div className='button-group'>
+              <button onClick={onClose}>キャンセル</button>
+              <button onClick={() => {
+                this.props.sendPost(true)
+                onClose()
+              }}>削除</button>
+            </div>
+          </div>
+        )
+      }
+    })
+  }
+
 
   render () {
 
