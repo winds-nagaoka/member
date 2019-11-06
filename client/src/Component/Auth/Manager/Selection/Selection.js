@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { getSelectionPhase, getSelectionList, getSelectionLike } from '../../../../Actions/Manager'
+import {
+  getSelectionPhase,
+  getSelectionLike,
+  getSelectionList,
+  getSelectionListSearch,
+  changeSearchQuery,
+  resetSearchQuery,
+  setSearchBoxRef
+} from '../../../../Actions/Manager'
 
 import { showToast } from '../../../../Actions/Toast'
 
@@ -27,7 +35,11 @@ function mapStateToProps(state) {
     selectionList: state.manager.selectionList,
 
     loadingSelectionLike: state.manager.loadingSelectionLike,
-    selectionLike: state.manager.selectionLike
+    selectionLike: state.manager.selectionLike,
+
+    loadingSelectionListSearch: state.manager.loadingSelectionListSearch,
+    searchQuery: state.manager.searchQuery,
+    searchBoxRef: state.manager.searchBoxRef
   }
 }
 
@@ -42,11 +54,26 @@ function mapDispatchToProps(dispatch) {
     getSelectionPhase () {
       dispatch(getSelectionPhase())
     },
+
+    getSelectionLike () {
+      dispatch(getSelectionLike())
+    },
+
     getSelectionList () {
       dispatch(getSelectionList())
     },
-    getSelectionLike () {
-      dispatch(getSelectionLike())
+    getSelectionListSearch (query) {
+      dispatch(getSelectionListSearch(query))
+    },
+
+    changeSearchQuery (query) {
+      dispatch(changeSearchQuery(query))
+    },
+    resetSearchQuery () {
+      dispatch(resetSearchQuery())
+    },
+    setSearchBoxRef (searchBoxRef) {
+      dispatch(setSearchBoxRef(searchBoxRef))
     },
 
     showToast (string) {
@@ -60,15 +87,35 @@ class Selection extends Component {
     this.props.setNavigationTitle('選曲アンケート')
     this.props.setBackNavigation(true, '/manager')
     this.props.getSelectionPhase()
-    this.props.getSelectionList()
     this.props.getSelectionLike()
+    this.props.searchQuery ? this.props.changeSearchQuery(this.props.searchQuery) : this.props.getSelectionList()
+  }
+
+  keyPress (e) {
+    if (e.which === 13) this.props.getSelectListSearch(this.props.searchQuery)
+  }
+
+  renderSearch () {
+    const searchIcon = this.props.loadingSelectionListSearch ? <i className='fas fa-spinner fa-pulse'></i> : <i className='fas fa-search'></i>
+    const searchBarButtonClass = this.props.searchQuery ? 'search-bar-button' : 'search-bar-button hidden'
+    return (
+      <div className='search-bar'>
+        <div className='search-frame'>
+          <div className='search-box'>
+            <div className='search-bar-icon'>{searchIcon}</div>
+            <input type='text' value={this.props.searchQuery} onChange={(e) => this.props.changeSearchQuery(e.target.value)} onKeyPress={(e) => this.keyPress(e)}  ref={(i) => {!this.props.searchBoxRef ? this.props.setSearchBoxRef(i) : false}} placeholder='検索' />
+            <div onClick={() => this.props.resetSearchQuery()} className={searchBarButtonClass}><i className='fas fa-times-circle'></i></div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   renderList () {
     if (!this.props.selectionList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     return this.props.selectionList.map((each, i) => {
       if (each.remove) return
-      const selection = each.selection
+      const selection = each
       const composer = selection.composer.length === 0 ? '' : libManager.makeLine(selection.composer)
       const arranger = selection.arranger.length === 0 ? '' : libManager.makeLine(selection.arranger)
       const bar = composer === '' || arranger === '' ? '' : <span className='bar'>/</span>
@@ -76,7 +123,7 @@ class Selection extends Component {
       const edit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? <div className='edit'><i className='fas fa-edit'></i></div> : false
       const contentClassLink = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? ' add-link' : ''
       const contentClassEdit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? ' add-edit' : ''
-      const like = this.props.loadingSelectionLike ? false : <div className='like'>{libManager.countLike(this.props.selectionLike, each._id)}</div>
+      const like = this.props.loadingSelectionLike ? false : <div className='like'><span>{libManager.countLike(this.props.selectionLike, each._id)}</span></div>
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className={'content' + contentClassLink + contentClassEdit}>
@@ -119,9 +166,10 @@ class Selection extends Component {
     } else if (this.props.selectionPhase === 'getmusic') {
       return (
         <div className='text'>
-          <p>現在候補曲を集めています。</p>
+          <p>現在第33回定期演奏会に向けて候補曲を集めています。</p>
           <p>思いついたときにどんどん投稿してください。</p>
-          <p>投稿期間が終わると投稿および修正ができなくなりますのでご注意ください。</p>
+          <p>また、投稿期間中は各曲に投票できます。</p>
+          <p>投稿期間が終わると修正および投票もできなくなりますのでご注意ください。</p>
           <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : ' '}件です。</p>
         </div>
       )
@@ -129,7 +177,7 @@ class Selection extends Component {
       return (
         <div className='text'>
           <p>候補曲の募集期間は終了しました。</p>
-          <p>これ以上の曲の追加および修正はできません。</p>
+          <p>これ以上の曲の追加および修正、投票はできません。</p>
           <p>投稿数は{this.props.selectionList ? this.props.selectionList.length : ' '}件です。</p>
         </div>
       )
@@ -156,6 +204,8 @@ class Selection extends Component {
 
     const showMessage = this.renderMessage()
     const showPost = this.renderPost()
+
+    const showSearch = this.renderSearch()
     const showList = this.renderList()
 
     const endLabel = this.props.selectionList ? !(this.props.selectionList.length > 10 && this.props.selectionList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loadingSelectionList && !this.props.loadingSearch ? this.props.selectionList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
@@ -175,6 +225,7 @@ class Selection extends Component {
         {showPost}
 
         <div className={'box selection' + lib.pcClass(this.props.pc)}>
+          {showSearch}
           {showList}
           {endLabel}
         </div>

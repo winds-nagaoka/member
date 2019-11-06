@@ -72,18 +72,47 @@ const setSelectionPhase = (selectionPhase) => ({
 // Selection List
 export const getSelectionList = () => {
   return async (dispatch, getState) => {
-    if (!window.localStorage.token) return false
     dispatch(loadingSelectionList(true))
+    dispatch(getSelectionListSearch(''))
+  }
+}
+
+export const changeSearchQuery = (searchQuery) => {
+  return (dispatch, getState) => {
+    dispatch(loadingSelectionListSearch(true))
+    dispatch(getSelectionListSearch(searchQuery))
+    dispatch(setSearchQuery(searchQuery))
+  }
+}
+
+export const resetSearchQuery = () => {
+  return async (dispatch, getState) => {
+    dispatch(changeSearchQuery(''))
+    getState().manager.searchBoxRef.focus()
+  }
+}
+
+export const getSelectionListSearch = (query) => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    const requestTime = String((new Date()).getTime())
+    !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
+    if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
+    dispatch(loadingSelectionListSearch(true))
     const path = lib.getSurveyPath() + '/api/selection/list'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
+      query
     }
     request.post(path, send, (err, res) => {
       dispatch(loadingSelectionList(false))
+      dispatch(loadingSelectionListSearch(false))
       if (err) {
         dispatch(setSelectionList(false))
       } else {
-        dispatch(setSelectionList(res.body.list))
+        if (res.body.status && window.localStorage.scoreLoadList === requestTime) {
+          dispatch(setSelectionList(res.body.list))
+        }
       }
     })
   }
@@ -94,9 +123,24 @@ const loadingSelectionList = (loadingSelectionList) => ({
   payload: { loadingSelectionList }
 })
 
+const loadingSelectionListSearch = (loadingSelectionListSearch) => ({
+  type: prefix + 'LOADING_SELECTION_LIST_SEARCH',
+  payload: { loadingSelectionListSearch }
+})
+
+export const setSearchQuery = (searchQuery) => ({
+  type: prefix + 'SET_SEARCH_QUERY',
+  payload: { searchQuery }
+})
+
 const setSelectionList = (selectionList) => ({
   type: prefix + 'SET_SELECTION_LIST',
   payload: { selectionList }
+})
+
+export const setSearchBoxRef = (searchBoxRef) => ({
+  type: prefix + 'SET_SEARCH_BOX_REF',
+  payload: { searchBoxRef }
 })
 
 // Selection Like
@@ -173,7 +217,7 @@ export const getSelectionPost = (id) => {
       if (err) {
         dispatch(setSelectionPost(false))
       } else {
-        dispatch(setSelectionPost(res.body.selection.selection))
+        dispatch(setSelectionPost(res.body.selection))
       }
     })
   }
@@ -260,7 +304,7 @@ export const getSelectionDetail = (id) => {
         dispatch(setSelectionDetail(false))
       } else {
         if (res.body.status) {
-          dispatch(setSelectionDetail(res.body.selection.selection))
+          dispatch(setSelectionDetail(res.body.selection))
         } else {
           dispatch(setSelectionDetail({removed: true}))
         }

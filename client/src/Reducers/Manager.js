@@ -7,7 +7,10 @@ const initialState = {
   selectionPhase: false,
 
   loadingSelectionList: false,
+  loadingSelectionListSearch: false,
+  searchQuery: '',
   selectionList: [],
+  searchBoxRef: undefined,
   
   loadingSelectionLike: false,
   selectionLike: false,
@@ -67,10 +70,25 @@ export default function managerReducer (state = initialState, action) {
         ...state,
         loadingSelectionList: action.payload.loadingSelectionList
       }
+    case prefix + 'LOADING_SELECTION_LIST_SEARCH':
+      return {
+        ...state,
+        loadingSelectionListSearch: action.payload.loadingSelectionListSearch
+      }
+    case prefix + 'SET_SEARCH_QUERY':
+      return {
+        ...state,
+        searchQuery: action.payload.searchQuery
+      }
     case prefix + 'SET_SELECTION_LIST':
       return {
         ...state,
         selectionList: action.payload.selectionList
+      }
+    case prefix + 'SET_SEARCH_BOX_REF':
+      return {
+        ...state,
+        searchBoxRef: action.payload.searchBoxRef
       }
     case prefix + 'LOADING_SELECTION_LIKE':
       return {

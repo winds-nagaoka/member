@@ -67,7 +67,7 @@ class Detail extends Component {
     this.props.setNavigationTitle('候補曲詳細')
     this.props.setBackNavigation(true, '/manager/selection')
     this.props.getSelectionPhase()
-    !this.props.selectionLike ? this.props.getSelectionLike() : false
+    this.props.getSelectionLike()
   }
 
   renderDetail () {
@@ -119,17 +119,22 @@ class Detail extends Component {
     )
   }
 
-
   renderLike () {
     if (!this.props.selectionLike || this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return false
     if ('removed' in this.props.selectionDetail) return false
     const likeList = this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) ? this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) : {like: []}
     // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <i className='fas fa-thumbs-up'></i> : <i className='far fa-thumbs-up'></i>
     // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <span className='like-true'><i className='fas fa-heart'></i></span> : <span><i className='far fa-heart'></i></span>
-    const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <span className='like-true'><i className='fas fa-vote-yea'></i></span> : <span><i className='fas fa-vote-yea'></i></span>
+    const icon = this.props.loadingSelectionSendLike ? <span className='icon'><i className='fas fa-spinner fa-pulse'></i></span> : (
+      likeList.like.find(item => item === this.props.selectionDetailid) ? (
+        <span className='icon like-true'><i className='fas fa-vote-yea'></i></span>
+      ) : (
+        <span className='icon'><i className='fas fa-vote-yea'></i></span>
+      )
+    )
     const buttonClass = likeList.like.find(item => item === this.props.selectionDetailid) ? ' true' : ' false'
     const disableClass = this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user) ? ' use' : ' not-use'
-    const buttonLabel = this.props.loadingSelectionSendLike ? '読み込み中...' : likeList.like.find(item => item === this.props.selectionDetailid) ? '投票済み' : '投票する'
+    const buttonLabel = likeList.like.find(item => item === this.props.selectionDetailid) ? '投票済み' : '投票する'
     const count = libManager.countLike(this.props.selectionLike, this.props.selectionDetailid)
     return (
       <div className={'box selection-like' + lib.pcClass(this.props.pc)}>

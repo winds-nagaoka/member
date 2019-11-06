@@ -1,4 +1,75 @@
 .selection {
+  .search-bar {
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    // height: 40px;
+    border-bottom: .55px solid #d3d3d3;
+    background: #fff;
+    z-index: 9;
+
+    .search-frame {
+      padding: 6px 12px;
+
+      .search-box {
+        // margin: 7px 12px;
+        margin: 0;
+        border-radius: 10px;
+        background: #ededed;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .search-bar-icon {
+          padding: 0 10px;
+
+          i {
+            color: #888;
+          }
+        }
+
+        input {
+          display: block;
+          height: 36px;
+          width: 100%;
+          padding: 0;
+          border: 0;
+          background: rgba(0,0,0,0);
+          color: #000;
+          font-size: 1.4rem;
+          font-size: 14px;
+          font-weight: 400;
+          font-family: inherit;
+
+          &:focus {
+            border: 0!important;
+            box-shadow: none;
+            outline: 0;
+          }
+        }
+
+        .search-bar-button {
+          padding: 0 8px;
+          cursor: pointer;
+
+          &.hidden {
+            visibility: hidden;
+            cursor: normal;
+          }
+
+          i {
+            color: #888;
+          }
+        }
+      }
+    }
+  }
+
   .selection-list {
     width: 100%;
     min-height: 44px;
@@ -21,15 +92,18 @@
     }
 
     .content {
-      width: calc(100% - 12px - 2px - 30px);
-      margin: 12px 2px 12px 12px;
+      // width, margin, margin, like, forward
+      width: calc(100% - 12px - 2px - 24px - 30px);
+      margin: 12px auto 12px 12px;
 
       &.add-edit, &.add-link {
-        width: calc(100% - 12px - 2px - 30px - 34px);
+        // width, margin, margin, like, forward, icon
+        width: calc(100% - 12px - 2px - 24px - 30px - 22px);
       }
 
       &.add-edit.add-link {
-        width: calc(100% - 12px - 2px - 30px - 34px - 34px);
+        // width, margin, margin, like, forward, icon, icon
+        width: calc(100% - 12px - 2px - 24px - 30px - 22px - 22px);
       }
 
       display: flex;
@@ -76,21 +150,27 @@
 
     .edit {
       display: flex;
-      margin: 0 8px;
+      margin: 0 2px;
       color: #ccc;
     }
 
     .youtube-link {
       display: flex;
-      margin: 0 8px;
+      margin: 0 2px;
       color: #ccc;
     }
 
     .like {
       display: flex;
-      margin: 0 8px;
+      justify-content: center;
+      align-items: center;
+      min-width: 16px;
+      margin: 0 2px;
+      padding: 2px;
+      border-radius: .25rem;
+      font-size: 10px;
+      background: #eee;
       color: #888;
-      font-size: 12px;
     }
   }
 

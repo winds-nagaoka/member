@@ -272,7 +272,6 @@ class Post extends Component {
     })
   }
 
-
   render () {
 
     const showBreadNavigation = this.renderBreadNavigation()
