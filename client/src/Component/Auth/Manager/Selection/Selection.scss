@@ -1,4 +1,32 @@
+.selection-message {
+  label {
+    color: #888;
+    font-size: 13px;
+  }
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: 1.2rem;
+    font-weight: normal;
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
+
+  div {
+    font-size: 1rem;
+
+    span {
+      margin-left: 2px;
+      color: #666;
+      font-size: .9rem;
+    }
+  }
+}
+
 .selection {
+
   .search-bar {
     width: 100%;
     position: -webkit-sticky;

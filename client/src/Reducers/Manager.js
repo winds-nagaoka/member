@@ -9,7 +9,7 @@ const initialState = {
   loadingSelectionList: false,
   loadingSelectionListSearch: false,
   searchQuery: '',
-  selectionList: [],
+  selectionList: false,
   searchBoxRef: undefined,
   
   loadingSelectionLike: false,
@@ -27,6 +27,7 @@ const initialState = {
     composer: [''],
     arranger: [''],
     duration: '',
+    time: '',
     url: [''],
     memo: ''
   },

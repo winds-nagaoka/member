@@ -98,11 +98,12 @@ export const getSelectionListSearch = (query) => {
     const requestTime = String((new Date()).getTime())
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
-    dispatch(loadingSelectionListSearch(true))
     const path = lib.getSurveyPath() + '/api/selection/list'
     const send = {
       session: lib.getSession(),
-      query
+      query,
+      sort: '',
+      order: ''
     }
     request.post(path, send, (err, res) => {
       dispatch(loadingSelectionList(false))

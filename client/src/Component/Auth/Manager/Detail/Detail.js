@@ -74,6 +74,18 @@ class Detail extends Component {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     if ('removed' in this.props.selectionDetail) return <div className='removed'>データがありません</div>
     const selection = this.props.selectionDetail
+    const titleJa = libManager.admin(this.props.user) && selection.titleJa ? (
+      <li>
+        <label>タイトル(日本語)[管理者のみ]</label>
+        <p><span className='title-ja'>{selection.titleJa}</span></p>
+      </li>
+    ) : false
+    const titleEn = libManager.admin(this.props.user) && selection.titleEn ? (
+      <li>
+        <label>タイトル(原語)[管理者のみ]</label>
+        <p><span className='title-en'>{selection.titleEn}</span></p>
+      </li>
+    ) : false
     const composer = selection.composer.length !== 0 && libManager.makeLine(selection.composer) !== '' ? (
       <li>
         <label>作曲者</label>
@@ -92,6 +104,12 @@ class Detail extends Component {
         <p><span className='duration'>{selection.duration}</span></p>
       </li>
     ) : false
+    const time = libManager.admin(this.props.user) && selection.time ? (
+      <li>
+        <label>演奏時間(秒)[管理者のみ]</label>
+        <p><span className='time'>{selection.time}</span></p>
+      </li>
+    ) : false
     const url = selection.url.length !== 0 && libManager.makeLine(selection.url) !== '' ? (
       <li>
         <label>参考音源</label>
@@ -104,17 +122,34 @@ class Detail extends Component {
         <p><span className='memo'>{selection.memo}</span></p>
       </li>
     ) : false
+    const createdAt = libManager.admin(this.props.user) ? (
+      <li>
+        <label>投稿日時[管理者のみ]</label>
+        <p><span>{selection.createdAt}</span></p>
+      </li>
+    ) : false
+    const updatedAt = libManager.admin(this.props.user) ? (
+      <li>
+        <label>更新日時[管理者のみ]</label>
+        <p><span>{selection.updatedAt}</span></p>
+      </li>
+    ) : false
     return (
       <ul className='selection-detail-list'>
         <li>
           <label>曲名</label>
           <p>{selection.title ? <span className='title'>{selection.title}</span> : <span className='no-data'>記載なし</span>}</p>
         </li>
+        {titleJa}
+        {titleEn}
         {composer}
         {arranger}
         {duration}
+        {time}
         {url}
         {memo}
+        {createdAt}
+        {updatedAt}
       </ul>
     )
   }

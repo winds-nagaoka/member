@@ -113,6 +113,7 @@ class Selection extends Component {
 
   renderList () {
     if (!this.props.selectionList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    if (libManager.admin(this.props.user)) console.log('/title/composer/arranger/duration/memo/like/created(GMT)/updated(GMT)')
     return this.props.selectionList.map((each, i) => {
       if (each.remove) return
       const selection = each
@@ -123,7 +124,8 @@ class Selection extends Component {
       const edit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? <div className='edit'><i className='fas fa-edit'></i></div> : false
       const contentClassLink = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? ' add-link' : ''
       const contentClassEdit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? ' add-edit' : ''
-      const like = this.props.loadingSelectionLike ? false : <div className='like'><span>{libManager.countLike(this.props.selectionLike, each._id)}</span></div>
+      const like = this.props.loadingSelectionLike || this.props.selectionPhase === 'getmusic' ? false : <div className='like'><span>{libManager.countLike(this.props.selectionLike, each._id)}</span></div>
+      if (libManager.admin(this.props.user)) console.log('/' + selection.title + '/' + composer + '/' + arranger + '/' + selection.duration + '/' + selection.memo + '/' + libManager.countLike(this.props.selectionLike, each._id) + '/' + selection.createdAt + '/' + selection.updatedAt)
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className={'content' + contentClassLink + contentClassEdit}>
@@ -166,19 +168,30 @@ class Selection extends Component {
     } else if (this.props.selectionPhase === 'getmusic') {
       return (
         <div className='text'>
-          <p>現在第33回定期演奏会に向けて候補曲を集めています。</p>
-          <p>思いついたときにどんどん投稿してください。</p>
-          <p>また、投稿期間中は各曲に投票できます。</p>
-          <p>投稿期間が終わると修正および投票もできなくなりますのでご注意ください。</p>
-          <p>現在の投稿数は{this.props.selectionList ? this.props.selectionList.length : ' '}件です。</p>
+          <h2>候補曲の募集について</h2>
+          <p>現在第33回定期演奏会に向けて候補曲を集めます。投稿数に制限はありません。思いついたときにどんどん投稿してください。</p>
+          <p>選曲会議では投稿された曲から選曲する予定です。会議での候補曲の追加は行いません。</p>
+          <p>また、参考音源をあらかじめ聴いておいていただけると嬉しいです。</p>
+          <h2>投票について</h2>
+          <p>投稿期間中は各曲に投票できます。</p>
+          <p>アカウントごとに投票数の制限はありません。</p>
+          <p>投票数の多いものから選曲される予定です。</p>
+          <h2>投稿および投票締め切り</h2>
+          <div>11月30日(土)</div>
+          <h2>投稿数</h2>
+          <div>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></div>
         </div>
       )
     } else if (this.props.selectionPhase === 'showlist') {
       return (
         <div className='text'>
+          <h2>募集終了しました</h2>
           <p>候補曲の募集期間は終了しました。</p>
-          <p>これ以上の曲の追加および修正、投票はできません。</p>
-          <p>投稿数は{this.props.selectionList ? this.props.selectionList.length : ' '}件です。</p>
+          <p>以降の曲の追加および修正、投票はできません。</p>
+          <p>ご協力ありがとうございました。</p>
+          <p>選曲会議までに参考音源を聴いておいていただけると嬉しいです。</p>
+          <h2>投稿数</h2>
+          <div>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></div>
         </div>
       )
     } else if (this.props.selectionPhase === 'hide') {

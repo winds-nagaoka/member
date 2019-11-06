@@ -67,7 +67,7 @@ class Post extends Component {
     if (id) {
       this.props.getSelectionPost(id)
       this.props.setSelectionPostid(id)
-      this.props.setNavigationTitle('曲情報を編集する')
+      this.props.setNavigationTitle('曲情報編集')
       this.props.setBackNavigation(true, '/manager/selection/detail/' + id)
     } else {
       this.props.setSelectionPostid(false)
@@ -79,6 +79,7 @@ class Post extends Component {
         composer: [''],
         arranger: [''],
         duration: '',
+        time: '',
         url: [''],
         memo: ''
       })
@@ -86,7 +87,7 @@ class Post extends Component {
   }
 
   componentDidMount () {
-    this.props.setNavigationTitle('候補曲を追加する')
+    this.props.setNavigationTitle('候補曲追加')
     this.props.setBackNavigation(true, '/manager/selection')
     this.props.getSelectionPhase()
   }
@@ -132,14 +133,20 @@ class Post extends Component {
     })
     const titleJa = this.props.selectionPostid && libManager.admin(this.props.user) ? (
       <div>
-        <label>タイトル(日本語)</label>
+        <label>タイトル(日本語)[管理者のみ]</label>
         <input type='text' name='titleJa' value={this.props.selectionPost.titleJa} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
       </div>
     ) : false
     const titleEn = this.props.selectionPostid && libManager.admin(this.props.user) ? (
       <div>
-        <label>タイトル(原語)</label>
+        <label>タイトル(原語)[管理者のみ]</label>
         <input type='text' name='titleEn' value={this.props.selectionPost.titleEn} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
+      </div>
+    ) : false
+    const time = this.props.selectionPostid && libManager.admin(this.props.user) ? (
+      <div>
+        <label>演奏時間(秒)[管理者のみ]</label>
+        <input type='text' name='time' value={this.props.selectionPost.time} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
       </div>
     ) : false
     return (
@@ -168,6 +175,7 @@ class Post extends Component {
           <label>演奏時間</label>
           <input type='text' name='duration' value={this.props.selectionPost.duration} onChange={(e) => this.changeValue(e)} />
         </div>
+        {time}
         <div>
           <label>参考音源</label>
           <div className='multi'>
@@ -203,9 +211,9 @@ class Post extends Component {
 
   renderBreadNavigation () {
     if (this.props.selectionPostid) {
-      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/detail/' + this.props.selectionPostid}>候補曲詳細</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/edit/' + this.props.selectionPostid}>曲情報を編集する</Link></div>
+      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/detail/' + this.props.selectionPostid}>候補曲詳細</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/edit/' + this.props.selectionPostid}>曲情報編集</Link></div>
     } else {
-      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection/add'>候補曲を追加する</Link></div>
+      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection/add'>候補曲追加</Link></div>
     }
   }
 
