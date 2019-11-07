@@ -1,5 +1,5 @@
 export const appName = 'member'
-export const version = '0.3.8'
+export const version = '0.4.3'
 // mode を prod 以外にするとローカルのAPIを使う
 const mode = 'prod' // dev or prod
 import uuidv1 from 'uuid/v1'
@@ -32,6 +32,10 @@ export function getScorePath () {
 
 export function getApiPath () {
   return 'https://api.winds-n.com'
+}
+
+export function getSurveyPath () {
+  return mode === 'prod' ? 'https://survey.winds-n.com' : 'http://192.168.1.22:3002'
 }
 
 export function getSession () {

@@ -168,6 +168,47 @@ export const requestDeleteSession = (clientid) => {
   }
 }
 
+// Administrator
+export const setAdminRequestPass = (adminRequestPass) => ({
+  type: prefix + 'SET_ADMIN_REQUEST_PASS',
+  payload: { adminRequestPass }
+})
+
+const loadingAdminRequest = (loadingAdminRequest) => ({
+  type: prefix + 'LOADING_ADMIN_REQUEST',
+  payload: { loadingAdminRequest }
+})
+
+export const sendAdminRequest = () => {
+  return async (dispatch, getState) => {
+    if (!window.localStorage.token) return false
+    dispatch(loadingAdminRequest(true))
+    const adminRequest = 'admin' in getState().status.user ? !getState().status.user.admin : true
+    const path = lib.getAuthPath() + '/api/setting/admin'
+    const send = {
+      session: lib.getSession(),
+      admin: adminRequest,
+      pass: getState().setting.adminRequestPass
+    }
+    request.post(path, send, (err, res) => {
+      if (err) {
+        return false
+      } else {
+        if (res.body.status) {
+          if (!res.body.error) {
+            dispatch(replace('/setting'))
+            res.body.admin ? dispatch(showToast('管理者になりました')) : dispatch(showToast('管理者を辞めました'))
+          } else {
+            dispatch(showToast('管理者パスワードが違います'))
+          }
+        }
+      }
+      dispatch(setAdminRequestPass(''))
+      dispatch(loadingAdminRequest(false))
+    })
+  }
+}
+
 // Delete Account
 export const setDeletePassword = (deletePassword) => ({
   type: prefix + 'SET_DELETE_PASSWORD',

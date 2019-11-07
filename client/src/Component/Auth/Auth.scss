@@ -169,7 +169,7 @@
 
       &.pc {
         .title-frame > label {
-          padding: 8px 0 8px 16px;
+          padding: 8px 16px;
           font-size: 20px;
         }
 
@@ -211,7 +211,7 @@
         & > label {
           display: block;
           // margin: 8px 0;
-          padding: 4px 0 4px 12px;
+          // padding: 4px 0 4px 12px;
           padding: 0 12px;
           border-bottom: .55px solid #c8c7cc;
           // border-bottom: .55px dotted #c8c7cc;
@@ -239,7 +239,7 @@
       .text {
         // padding: 13px 16px 14px;
         padding: 12px;
-        font-size: 1rem;
+        font-size: .9rem;
 
         p {
           margin: 0;
@@ -311,6 +311,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                cursor: default;
 
                 span {
                   // margin: 11px 8px 11px 0;

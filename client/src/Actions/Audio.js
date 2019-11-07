@@ -4,7 +4,7 @@ import { playTime, version } from '../Library/Library'
 
 import * as libArchive from '../Component/Auth/Archive/Library/Library'
 import * as libPractice from '../Component/Auth/Practice/Library/Library'
-import * as libSource from '../Component/Auth/Source/Library/Library'
+import * as libSource from '../Component/Auth/Practice/Source/Library/Library'
 
 const prefix = 'AUDIO_'
 
@@ -89,7 +89,11 @@ export const loadSourcePlaylist = () => {
         return false
       } else {
         if (res.body.status) {
-          dispatch(setSourcePlaylist(res.body.list, res.body.url))
+          if (res.body.list.length === 0) {
+            dispatch(closePlayer())
+          } else {
+            dispatch(setSourcePlaylist(res.body.list, res.body.url))
+          }
         }
       }
       dispatch(loadingSourcePlaylist(false))

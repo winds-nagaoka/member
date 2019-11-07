@@ -7,7 +7,6 @@ import { audioPlay, audioPause } from '../../Actions/Audio'
 
 import Home from './Home/Home'
 import Practice from './Practice/Practice'
-import Source from './Source/Source'
 import Manager from './Manager/Manager'
 import BBS from './BBS/BBS'
 
@@ -72,8 +71,10 @@ class Auth extends Component {
   }
 
   componentWillReceiveProps (nextProps, nextContext) {
-    if (this.contentsRef.scrollTop) {
-      this.contentsRef.scrollTop = 0
+    if (this.contentsRef) {
+      if (this.contentsRef.scrollTop) {
+        this.contentsRef.scrollTop = 0
+      }
     }
   }
 
@@ -112,7 +113,6 @@ class Auth extends Component {
                 <Switch>
                   <Route exact path='/' component={Home} />
                   <Route path='/practice' component={Practice} />
-                  <Route path='/source' component={Source} />
                   <Route path='/manager' component={Manager} />
                   <Route path='/bbs' component={BBS} />
                   <Route path='/archive' component={Archive} />

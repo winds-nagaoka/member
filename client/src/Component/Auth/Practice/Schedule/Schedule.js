@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getSchedule } from '../../../../Actions/Schedule'
+import { getSource } from '../../../../Actions/Source'
 
 import Forward from '../../../../Library/Icons/Forward'
 import * as lib from '../../../../Library/Library'
@@ -21,6 +22,8 @@ function mapStateToProps(state) {
     schedule: state.schedule.data,
     loadingManager: state.manager.loading,
     manager: state.manager.data,
+    loadingSource: state.source.loading,
+    source: state.source.list
   }
 }
 
@@ -34,6 +37,9 @@ function mapDispatchToProps(dispatch) {
     },
     getSchedule () {
       dispatch(getSchedule())
+    },
+    getSource () {
+      dispatch(getSource())
     }
   }
 }
@@ -43,6 +49,7 @@ class Schedule extends Component {
     this.props.setNavigationTitle('練習日程')
     this.props.setBackNavigation(true, '/')
     this.props.getSchedule()
+    this.props.getSource()
   }
 
   renderScheduleNext (loading, schedule) {
@@ -128,6 +135,19 @@ class Schedule extends Component {
     }
   }
 
+  renderSource () {
+    const link = this.props.loading || !this.props.source || this.props.source.length === 0 ? <li><div className='disabled-link'><div className='inner'><span>参考音源</span><Forward /></div></div></li> : <li><Link to='/practice/source'><div className='inner'><span>参考音源</span><Forward /></div></Link></li>
+    return (
+      <div className={'box' + lib.pcClass(this.props.pc)}>
+        <div className='link'>
+          <ul>
+            {link}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
   render () {
     // State List
     const { pc, loadingSchedule, schedule} = this.props
@@ -137,6 +157,7 @@ class Schedule extends Component {
     const showScheduleNext = this.renderScheduleNext(loadingSchedule, schedule)
     const showScheduleList = this.renderScheduleList(loadingSchedule, schedule)
     const showScheduleSync = this.renderScheduleSync()
+    const showSource = this.renderSource()
     return (
       <React.Fragment>
 
@@ -167,6 +188,10 @@ class Schedule extends Component {
           </div>
 
           {showScheduleSync}
+
+
+
+          {showSource}
 
           <div className={'box' + lib.pcClass(pc)}>
             <div className='link'>

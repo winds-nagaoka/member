@@ -11,6 +11,10 @@ const initialState = {
   newPassword: '',
   loadingUpdatePassword: false,
 
+  // Administrator
+  loadingAdminRequest: false,
+  adminRequestPass: '',
+
   // Delete Account
   deletePassword: '',
   loadingDeleteAccount: false,
@@ -69,6 +73,19 @@ export default function settingReducer (state = initialState, action) {
         loadingUpdatePassword: action.payload.loadingUpdatePassword
       }
 
+    // Administrator
+    case prefix + 'LOADING_ADMIN_REQUEST':
+      return {
+        ...state,
+        loadingAdminRequest: action.payload.loadingAdminRequest
+      }
+    case prefix + 'SET_ADMIN_REQUEST_PASS':
+      return {
+        ...state,
+        adminRequestPass: action.payload.adminRequestPass
+      }
+
+    // Delete Account
     case prefix + 'SET_DELETE_PASSWORD':
       return {
         ...state,

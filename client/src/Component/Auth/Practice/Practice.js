@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import Schedule from './Schedule/Schedule'
 import History from './History/History'
+import Source from './Source/Source'
 
 import Back from '../../../Library/Icons/Back'
 import * as lib from '../../../Library/Library'
@@ -36,6 +37,7 @@ class Practice extends Component {
 
         <Switch>
           <Route exact path='/practice' component={Schedule} />
+          <Route exact path='/practice/source' component={Source} />
           <Route exact path='/practice/history' component={History} />
         </Switch>
 
