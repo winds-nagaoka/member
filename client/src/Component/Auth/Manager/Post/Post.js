@@ -71,6 +71,8 @@ class Post extends Component {
       this.props.setBackNavigation(true, '/manager/selection/detail/' + id)
     } else {
       this.props.setSelectionPostid(false)
+      this.props.setNavigationTitle('候補曲追加')
+      this.props.setBackNavigation(true, '/manager/selection')
       // Reducer と同じにする
       this.props.setSelectionPost({
         title: '',
@@ -87,8 +89,6 @@ class Post extends Component {
   }
 
   componentDidMount () {
-    this.props.setNavigationTitle('候補曲追加')
-    this.props.setBackNavigation(true, '/manager/selection')
     this.props.getSelectionPhase()
   }
 
@@ -145,8 +145,8 @@ class Post extends Component {
     ) : false
     const time = this.props.selectionPostid && libManager.admin(this.props.user) ? (
       <div>
-        <label>演奏時間(秒)[管理者のみ]</label>
-        <input type='text' name='time' value={this.props.selectionPost.time} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
+        <label>演奏時間(秒)[管理者のみ] - 4桁の文字列</label>
+        <input type='text' name='time' value={this.props.selectionPost.time} onChange={(e) => this.changeValue(e)} pattern='\d*' placeholder='隠しフィールド' />
       </div>
     ) : false
     return (
@@ -225,6 +225,20 @@ class Post extends Component {
     }
   }
 
+  renderAdditionalBackLink () {
+    if (this.props.selectionPostid) {
+      return (
+        <div className={'box' + lib.pcClass(this.props.pc)}>
+          <div className='back-link'>
+            <ul>
+              <li><Link to='/manager/selection'><div className='inner'><Back /><span>候補曲一覧へ</span></div></Link></li>
+            </ul>
+          </div>
+        </div>
+      )
+    }
+  }
+
   renderTitle () {
     if (this.props.selectionPostid) {
       return <h2>曲情報を編集する</h2>
@@ -289,6 +303,7 @@ class Post extends Component {
     const showSendButton = this.renderSendButton()
     const showRemoveButton = this.renderRemoveButton()
     const showBackLink = this.renderBackLink()
+    const showAdditionalBackLink = this.renderAdditionalBackLink()
 
     return (
       <React.Fragment>
@@ -317,6 +332,8 @@ class Post extends Component {
             </ul>
           </div>
         </div>
+
+        {showAdditionalBackLink}
 
       </React.Fragment>
     )

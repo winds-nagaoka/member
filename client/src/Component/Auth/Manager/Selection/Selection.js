@@ -89,6 +89,8 @@ class Selection extends Component {
     this.props.getSelectionPhase()
     this.props.getSelectionLike()
     this.props.searchQuery ? this.props.changeSearchQuery(this.props.searchQuery) : this.props.getSelectionList()
+    localStorage.getItem('selectionSort') ? false : localStorage.setItem('selectionSort', 'createdAt')
+    localStorage.getItem('selectionOrder') ? false : localStorage.setItem('selectionOrder', '1')
   }
 
   keyPress (e) {
@@ -113,7 +115,7 @@ class Selection extends Component {
 
   renderList () {
     if (!this.props.selectionList) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    if (libManager.admin(this.props.user)) console.log('/title/composer/arranger/duration/memo/like/created(GMT)/updated(GMT)')
+    if (libManager.admin(this.props.user)) console.log('/title/composer/arranger/duration/time/memo/like/created(GMT)/updated(GMT)')
     return this.props.selectionList.map((each, i) => {
       if (each.remove) return
       const selection = each
@@ -125,7 +127,7 @@ class Selection extends Component {
       const contentClassLink = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? ' add-link' : ''
       const contentClassEdit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? ' add-edit' : ''
       const like = this.props.loadingSelectionLike || this.props.selectionPhase === 'getmusic' ? false : <div className='like'><span>{libManager.countLike(this.props.selectionLike, each._id)}</span></div>
-      if (libManager.admin(this.props.user)) console.log('/' + selection.title + '/' + composer + '/' + arranger + '/' + selection.duration + '/' + selection.memo + '/' + libManager.countLike(this.props.selectionLike, each._id) + '/' + selection.createdAt + '/' + selection.updatedAt)
+      if (libManager.admin(this.props.user)) console.log('/' + selection.title + '/' + composer + '/' + arranger + '/' + selection.duration + '/' + selection.time + '/' + selection.memo + '/' + (this.props.loadingSelectionLike ? '-' : libManager.countLike(this.props.selectionLike, each._id)) + '/' + selection.createdAt + '/' + selection.updatedAt)
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className={'content' + contentClassLink + contentClassEdit}>
@@ -139,6 +141,34 @@ class Selection extends Component {
         </Link>
       )
     })
+  }
+
+  toggleSort (target) {
+    if (localStorage.getItem('selectionSort') === target) {
+      localStorage.setItem('selectionOrder', parseInt(localStorage.getItem('selectionOrder')) * -1)
+    } else {
+      localStorage.setItem('selectionSort', target)
+      localStorage.setItem('selectionOrder', '1')
+    }
+    this.props.getSelectionListSearch(this.props.searchQuery)
+  }
+
+  renderSort () {
+    const postIcon = localStorage.getItem('selectionSort') === 'createdAt' ? (localStorage.getItem('selectionOrder') > 0 ? <i className='fas fa-sort-down'></i> : <i className='fas fa-sort-up'></i>) : <i className='fas fa-sort'></i>
+    const titleIcon = localStorage.getItem('selectionSort') === 'title' ? (localStorage.getItem('selectionOrder') > 0 ? <i className='fas fa-sort-down'></i> : <i className='fas fa-sort-up'></i>) : <i className='fas fa-sort'></i>
+    const timeIcon = localStorage.getItem('selectionSort') === 'time' ? (localStorage.getItem('selectionOrder') > 0 ? <i className='fas fa-sort-down'></i> : <i className='fas fa-sort-up'></i>) : <i className='fas fa-sort'></i>
+    const postClass = localStorage.getItem('selectionSort') === 'createdAt' ? ' active' : ''
+    const titleClass = localStorage.getItem('selectionSort') === 'title' ? ' active' : ''
+    const timeClass = localStorage.getItem('selectionSort') === 'time' ? ' active' : ''
+    return (
+      <div className='sort'>
+        <div className='buttons'>
+          <div className={'sort-created-at' + postClass} onClick={() => this.toggleSort('createdAt')}>{postIcon}投稿日時</div>
+          <div className={'sort-title' + titleClass} onClick={() => this.toggleSort('title')}>{titleIcon}曲名</div>
+          <div className={'sort-time' + timeClass} onClick={() => this.toggleSort('time')}>{timeIcon}演奏時間</div>
+        </div>
+      </div>
+    )
   }
 
   renderPost () {
@@ -219,6 +249,7 @@ class Selection extends Component {
     const showPost = this.renderPost()
 
     const showSearch = this.renderSearch()
+    const showSort = this.renderSort()
     const showList = this.renderList()
 
     const endLabel = this.props.selectionList ? !(this.props.selectionList.length > 10 && this.props.selectionList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loadingSelectionList && !this.props.loadingSearch ? this.props.selectionList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
@@ -239,6 +270,7 @@ class Selection extends Component {
 
         <div className={'box selection' + lib.pcClass(this.props.pc)}>
           {showSearch}
+          {showSort}
           {showList}
           {endLabel}
         </div>

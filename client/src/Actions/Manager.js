@@ -102,8 +102,8 @@ export const getSelectionListSearch = (query) => {
     const send = {
       session: lib.getSession(),
       query,
-      sort: '',
-      order: ''
+      sort: localStorage.getItem('selectionSort') ? localStorage.getItem('selectionSort') : 'createdAt',
+      order: localStorage.getItem('selectionOrder') ? localStorage.getItem('selectionOrder') : '1'
     }
     request.post(path, send, (err, res) => {
       dispatch(loadingSelectionList(false))
