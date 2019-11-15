@@ -207,21 +207,21 @@ class Selection extends Component {
           <p>投票数の制限は設けておりません。</p>
           <p>投票数の多い曲から優先的に選曲される予定です。</p>
           <h2>投稿および投票締め切り</h2>
-          <div>11月30日(土)</div>
+          <p>11月30日(土)</p>
           <h2>現在の投稿数</h2>
-          <div>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></div>
+          <p>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></p>
         </div>
       )
     } else if (this.props.selectionPhase === 'showlist') {
       return (
         <div className='text'>
-          <h2>募集終了しました</h2>
+          <h2>募集終了</h2>
           <p>候補曲の募集期間は終了しました。</p>
           <p>以後は曲の追加、修正および投票はできません。</p>
           <p>ご協力ありがとうございました。</p>
           <p>選曲会議に参加する予定の方は参考音源をあらかじめ聴いておいていただけると嬉しいです。</p>
           <h2>投稿数</h2>
-          <div>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></div>
+          <p>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></p>
         </div>
       )
     } else if (this.props.selectionPhase === 'hide') {
@@ -231,11 +231,7 @@ class Selection extends Component {
         </div>
       )
     } else {
-      return (
-        <div className='text'>
-          <p>現在管理者のみ閲覧できます</p>
-        </div>
-      )
+      return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     }
   }
 
