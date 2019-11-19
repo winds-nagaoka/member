@@ -173,7 +173,7 @@ class Selection extends Component {
 
   renderPost () {
     const link = (this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user)) ? (
-      <li><Link to='/manager/selection/add'><div className='inner'><span>候補曲を投稿する</span><Forward /></div></Link></li>
+      <li className='selection-post'><Link to='/manager/selection/add'><div className='inner'><span>候補曲を投稿する</span><Forward /></div></Link></li>
     ) : (
       <li><div className='disabled-link'><div className='inner'><span>候補曲を投稿する</span><Forward /></div></div></li>
     )

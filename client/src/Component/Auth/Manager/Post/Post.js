@@ -71,7 +71,7 @@ class Post extends Component {
       this.props.setBackNavigation(true, '/manager/selection/detail/' + id)
     } else {
       this.props.setSelectionPostid(false)
-      this.props.setNavigationTitle('候補曲追加')
+      this.props.setNavigationTitle('候補曲投稿')
       this.props.setBackNavigation(true, '/manager/selection')
       // Reducer と同じにする
       this.props.setSelectionPost({
@@ -123,13 +123,13 @@ class Post extends Component {
   renderForm () {
     if (!this.props.selectionPost) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
     const composerInput = this.props.selectionPost.composer.map((each, i) => {
-      return <input key={i} type='text' value={each} name='composer' onChange={(e) => this.changeArrayValue(i, e)} />
+      return <input key={i} type='text' value={each} name='composer' onChange={(e) => this.changeArrayValue(i, e)} placeholder='入力しなくてもOK' />
     })
     const arrangerInput = this.props.selectionPost.arranger.map((each, i) => {
-      return <input key={i} type='text' value={each} name='arranger' onChange={(e) => this.changeArrayValue(i, e)} />
+      return <input key={i} type='text' value={each} name='arranger' onChange={(e) => this.changeArrayValue(i, e)} placeholder='入力しなくてもOK' />
     })
     const urlInput = this.props.selectionPost.url.map((each, i) => {
-      return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} placeholder='YouTubeのURLなど' />
+      return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} placeholder='YouTubeのURLなど(入力しなくてもOK)' />
     })
     const titleJa = this.props.selectionPostid && libManager.admin(this.props.user) ? (
       <div>
@@ -173,7 +173,7 @@ class Post extends Component {
         </div>
         <div>
           <label>演奏時間</label>
-          <input type='text' name='duration' value={this.props.selectionPost.duration} onChange={(e) => this.changeValue(e)} />
+          <input type='text' name='duration' value={this.props.selectionPost.duration} onChange={(e) => this.changeValue(e)} placeholder='入力しなくてもOK' />
         </div>
         {time}
         <div>
@@ -185,7 +185,7 @@ class Post extends Component {
         </div>
         <div>
           <label>メモ</label>
-          <input type='text' name='memo' value={this.props.selectionPost.memo} onChange={(e) => this.changeValue(e)} />
+          <input type='text' name='memo' value={this.props.selectionPost.memo} onChange={(e) => this.changeValue(e)} placeholder='入力しなくてもOK' />
         </div>
       </div>
     )
@@ -201,6 +201,7 @@ class Post extends Component {
     } else {
       return (
         <div className='text'>
+          <p>投稿には曲名のみ必須です。それ以外は書かなくても大丈夫です。</p>
           <p>候補曲は期間中何回でも投稿できます。</p>
           <p>投稿者情報は公開されません。</p>
           <p>事務局が投稿に対して追記や修正を行う場合があります。</p>
@@ -213,7 +214,7 @@ class Post extends Component {
     if (this.props.selectionPostid) {
       return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/detail/' + this.props.selectionPostid}>候補曲詳細</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/edit/' + this.props.selectionPostid}>曲情報編集</Link></div>
     } else {
-      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection/add'>候補曲追加</Link></div>
+      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection/add'>候補曲投稿</Link></div>
     }
   }
 
@@ -243,7 +244,7 @@ class Post extends Component {
     if (this.props.selectionPostid) {
       return <h2>曲情報を編集する</h2>
     } else {
-      return <h2>候補曲を追加する</h2>
+      return <h2>候補曲を投稿する</h2>
     }
   }
 
