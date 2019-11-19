@@ -209,7 +209,7 @@ class Selection extends Component {
           <h2>投稿および投票締め切り</h2>
           <p>11月30日(土)</p>
           <h2>現在の投稿数</h2>
-          <p>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></p>
+          <p>{this.props.selectionList ? this.props.selectionList.length : '読み込み中'}{this.props.selectionList ? <span>件</span> : false}</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'showlist') {
@@ -221,7 +221,7 @@ class Selection extends Component {
           <p>ご協力ありがとうございました。</p>
           <p>選曲会議に参加する予定の方は参考音源をあらかじめ聴いておいていただけると嬉しいです。</p>
           <h2>投稿数</h2>
-          <p>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></p>
+          <p>{this.props.selectionList ? this.props.selectionList.length : '読み込み中'}{this.props.selectionList ? <span>件</span> : false}</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'hide') {
@@ -248,7 +248,7 @@ class Selection extends Component {
     const showSort = this.renderSort()
     const showList = this.renderList()
 
-    const endLabel = this.props.selectionList ? !(this.props.selectionList.length > 10 && this.props.selectionList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loadingSelectionList && !this.props.loadingSearch ? this.props.selectionList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
+    const endLabel = this.props.selectionList ? <div className='end-label'>{!this.props.loadingSelectionList && !this.props.loadingSearch ? this.props.selectionList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false
 
     return (
       <React.Fragment>
