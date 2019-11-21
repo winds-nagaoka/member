@@ -71,7 +71,7 @@ class Post extends Component {
       this.props.setBackNavigation(true, '/manager/selection/detail/' + id)
     } else {
       this.props.setSelectionPostid(false)
-      this.props.setNavigationTitle('候補曲追加')
+      this.props.setNavigationTitle('候補曲投稿')
       this.props.setBackNavigation(true, '/manager/selection')
       // Reducer と同じにする
       this.props.setSelectionPost({
@@ -122,73 +122,131 @@ class Post extends Component {
 
   renderForm () {
     if (!this.props.selectionPost) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+    const title = <div>
+      <label>曲名</label>
+      <input type='text' name='title' value={this.props.selectionPost.title} onChange={(e) => this.changeValue(e)} placeholder='必須' />
+    </div>
     const composerInput = this.props.selectionPost.composer.map((each, i) => {
-      return <input key={i} type='text' value={each} name='composer' onChange={(e) => this.changeArrayValue(i, e)} />
+      return <input key={i} type='text' value={each} name='composer' onChange={(e) => this.changeArrayValue(i, e)} placeholder='入力しなくてもOK' />
     })
+    const composer = <div>
+      <label>作曲者</label>
+      <div className='multi'>
+        {composerInput}
+      </div>
+      <div className='add-data' onClick={() => this.addBlank('composer')}><i className='fas fa-plus-circle'></i>作曲者を追加</div>
+    </div>
     const arrangerInput = this.props.selectionPost.arranger.map((each, i) => {
-      return <input key={i} type='text' value={each} name='arranger' onChange={(e) => this.changeArrayValue(i, e)} />
+      return <input key={i} type='text' value={each} name='arranger' onChange={(e) => this.changeArrayValue(i, e)} placeholder='入力しなくてもOK' />
     })
+    const arranger = <div>
+      <label>編曲者</label>
+      <div className='multi'>
+        {arrangerInput}
+      </div>
+      <div className='add-data' onClick={() => this.addBlank('arranger')}><i className='fas fa-plus-circle'></i>編曲者を追加</div>
+    </div>
+    const duration = <div>
+      <label>演奏時間</label>
+      <input type='text' name='duration' value={this.props.selectionPost.duration} onChange={(e) => this.changeValue(e)} placeholder='入力しなくてもOK' />
+    </div>
     const urlInput = this.props.selectionPost.url.map((each, i) => {
-      return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} placeholder='YouTubeのURLなど' />
+      return <input key={i} type='text' value={each} name='url' onChange={(e) => this.changeArrayValue(i, e)} placeholder='YouTubeのURLなど(入力しなくてもOK)' />
     })
-    const titleJa = this.props.selectionPostid && libManager.admin(this.props.user) ? (
-      <div>
-        <label>タイトル(日本語)[管理者のみ]</label>
-        <input type='text' name='titleJa' value={this.props.selectionPost.titleJa} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
+    const url = <div>
+      <label>参考音源</label>
+      <div className='multi'>
+        {urlInput}
       </div>
-    ) : false
-    const titleEn = this.props.selectionPostid && libManager.admin(this.props.user) ? (
-      <div>
-        <label>タイトル(原語)[管理者のみ]</label>
-        <input type='text' name='titleEn' value={this.props.selectionPost.titleEn} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
-      </div>
-    ) : false
-    const time = this.props.selectionPostid && libManager.admin(this.props.user) ? (
-      <div>
-        <label>演奏時間(秒)[管理者のみ] - 4桁の文字列</label>
-        <input type='text' name='time' value={this.props.selectionPost.time} onChange={(e) => this.changeValue(e)} pattern='\d*' placeholder='隠しフィールド' />
-      </div>
-    ) : false
-    return (
-      <div className='form'>
-        <div>
-          <label>曲名</label>
-          <input type='text' name='title' value={this.props.selectionPost.title} onChange={(e) => this.changeValue(e)} placeholder='必須' />
-        </div>
-        {titleJa}
-        {titleEn}
-        <div>
-          <label>作曲者</label>
-          <div className='multi'>
-            {composerInput}
+      <div className='add-data' onClick={() => this.addBlank('url')}><i className='fas fa-plus-circle'></i>参考音源を追加</div>
+    </div>
+    const memo = <div>
+      <label>メモ</label>
+      <input type='text' name='memo' value={this.props.selectionPost.memo} onChange={(e) => this.changeValue(e)} placeholder='入力しなくてもOK' />
+    </div>
+    if (!this.props.selectionPostid) {
+      // New
+      return (
+        <React.Fragment>
+          <div className={'box manager-selection-post' + lib.pcClass(this.props.pc)}>
+            <div className='form'>
+              {title}
+            </div>
           </div>
-          <div className='add-data' onClick={() => this.addBlank('composer')}><i className='fas fa-plus-circle'></i>作曲者を追加</div>
-        </div>
-        <div>
-          <label>編曲者</label>
-          <div className='multi'>
-            {arrangerInput}
+
+          <div className={'box manager-selection-guide' + lib.pcClass(this.props.pc)}>
+            <div className='text'>
+              <p>以下は入力しなくても大丈夫です。</p>
+            </div>
           </div>
-          <div className='add-data' onClick={() => this.addBlank('arranger')}><i className='fas fa-plus-circle'></i>編曲者を追加</div>
-        </div>
-        <div>
-          <label>演奏時間</label>
-          <input type='text' name='duration' value={this.props.selectionPost.duration} onChange={(e) => this.changeValue(e)} />
-        </div>
-        {time}
-        <div>
-          <label>参考音源</label>
-          <div className='multi'>
-            {urlInput}
+
+          <div className={'box manager-selection-post' + lib.pcClass(this.props.pc)}>
+            <div className='form'>
+              {composer}
+              {arranger}
+              {duration}
+              {url}
+              {memo}
+            </div>
           </div>
-          <div className='add-data' onClick={() => this.addBlank('url')}><i className='fas fa-plus-circle'></i>参考音源を追加</div>
-        </div>
+        </React.Fragment>
+      )
+    } else {
+      // Edit
+      const titleJa = this.props.selectionPostid && libManager.admin(this.props.user) ? (
         <div>
-          <label>メモ</label>
-          <input type='text' name='memo' value={this.props.selectionPost.memo} onChange={(e) => this.changeValue(e)} />
+          <label>タイトル(日本語)[管理者のみ]</label>
+          <input type='text' name='titleJa' value={this.props.selectionPost.titleJa} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
         </div>
-      </div>
-    )
+      ) : false
+      const titleEn = this.props.selectionPostid && libManager.admin(this.props.user) ? (
+        <div>
+          <label>タイトル(原語)[管理者のみ]</label>
+          <input type='text' name='titleEn' value={this.props.selectionPost.titleEn} onChange={(e) => this.changeValue(e)} placeholder='隠しフィールド' />
+        </div>
+      ) : false
+      const time = this.props.selectionPostid && libManager.admin(this.props.user) ? (
+        <div>
+          <label>演奏時間(秒)[管理者のみ] - 4桁の文字列</label>
+          <input type='text' name='time' value={this.props.selectionPost.time} onChange={(e) => this.changeValue(e)} pattern='\d*' placeholder='隠しフィールド' />
+        </div>
+      ) : false
+      const message = libManager.admin(this.props.user) ? (
+        <div className={'box manager-selection-guide' + lib.pcClass(this.props.pc)}>
+          <div className='text'>
+            <p>以下の項目は管理者専用です。</p>
+          </div>
+        </div>
+      ) : false
+      const adminForm = libManager.admin(this.props.user) ? (
+        <div className={'box manager-selection-post' + lib.pcClass(this.props.pc)}>
+          <div className='form'>
+            {titleJa}
+            {titleEn}
+            {time}
+          </div>
+        </div>
+      ) : false
+      return (
+        <React.Fragment>
+          <div className={'box manager-selection-post' + lib.pcClass(this.props.pc)}>
+            <div className='form'>
+              {title}
+              {composer}
+              {arranger}
+              {duration}
+              {url}
+              {memo}
+            </div>
+          </div>
+
+          {message}
+
+          {adminForm}
+
+        </React.Fragment>
+      )
+    }
   }
 
   renderMessage () {
@@ -201,6 +259,7 @@ class Post extends Component {
     } else {
       return (
         <div className='text'>
+          <p>投稿には曲名のみ必須です。</p>
           <p>候補曲は期間中何回でも投稿できます。</p>
           <p>投稿者情報は公開されません。</p>
           <p>事務局が投稿に対して追記や修正を行う場合があります。</p>
@@ -213,7 +272,7 @@ class Post extends Component {
     if (this.props.selectionPostid) {
       return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/detail/' + this.props.selectionPostid}>候補曲詳細</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/edit/' + this.props.selectionPostid}>曲情報編集</Link></div>
     } else {
-      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection/add'>候補曲追加</Link></div>
+      return <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection/add'>候補曲投稿</Link></div>
     }
   }
 
@@ -243,7 +302,7 @@ class Post extends Component {
     if (this.props.selectionPostid) {
       return <h2>曲情報を編集する</h2>
     } else {
-      return <h2>候補曲を追加する</h2>
+      return <h2>候補曲を投稿する</h2>
     }
   }
 
@@ -257,7 +316,7 @@ class Post extends Component {
             {this.props.loadingSelectionPost ? '読み込み中' : <span><i className='far fa-edit'></i>{buttonLabel}</span>}
           </div>
         </div>
-      )  
+      )
     }
   }
 
@@ -317,9 +376,7 @@ class Post extends Component {
           {showMessage}
         </div>
 
-        <div className={'box manager-selection-post' + lib.pcClass(this.props.pc)}>
-          {showForm}
-        </div>
+        {showForm}
 
         {showSendButton}
 

@@ -127,10 +127,12 @@ class Selection extends Component {
       const contentClassLink = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? ' add-link' : ''
       const contentClassEdit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? ' add-edit' : ''
       const like = this.props.loadingSelectionLike || this.props.selectionPhase === 'getmusic' ? false : <div className='like'><span>{libManager.countLike(this.props.selectionLike, each._id)}</span></div>
+      const duration = localStorage.getItem('selectionSort') === 'time' ? <div className='selection-duration'><span>{selection.duration}</span></div> : false
       if (libManager.admin(this.props.user)) console.log('/' + selection.title + '/' + composer + '/' + arranger + '/' + selection.duration + '/' + selection.time + '/' + selection.memo + '/' + (this.props.loadingSelectionLike ? '-' : libManager.countLike(this.props.selectionLike, each._id)) + '/' + selection.createdAt + '/' + selection.updatedAt)
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className={'content' + contentClassLink + contentClassEdit}>
+            {duration}
             <div className='selection-title'><span>{selection.title}</span></div>
             <div className='composer-arranger'><span><span>{composer}</span>{bar}<span>{arranger}</span></span></div>
           </div>
@@ -173,9 +175,9 @@ class Selection extends Component {
 
   renderPost () {
     const link = (this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user)) ? (
-      <li><Link to='/manager/selection/add'><div className='inner'><span>候補曲を追加する</span><Forward /></div></Link></li>
+      <li className='selection-post'><Link to='/manager/selection/add'><div className='inner'><span>候補曲を投稿する</span><Forward /></div></Link></li>
     ) : (
-      <li><div className='disabled-link'><div className='inner'><span>候補曲を追加する</span><Forward /></div></div></li>
+      <li><div className='disabled-link'><div className='inner'><span>候補曲を投稿する</span><Forward /></div></div></li>
     )
     return (
       <div className={'box selection' + lib.pcClass(this.props.pc)}>
@@ -209,7 +211,7 @@ class Selection extends Component {
           <h2>投稿および投票締め切り</h2>
           <p>11月30日(土)</p>
           <h2>現在の投稿数</h2>
-          <p>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></p>
+          <p>{this.props.selectionList ? this.props.selectionList.length : '読み込み中'}{this.props.selectionList ? <span>件</span> : false}</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'showlist') {
@@ -221,7 +223,7 @@ class Selection extends Component {
           <p>ご協力ありがとうございました。</p>
           <p>選曲会議に参加する予定の方は参考音源をあらかじめ聴いておいていただけると嬉しいです。</p>
           <h2>投稿数</h2>
-          <p>{this.props.selectionList ? this.props.selectionList.length : ' '}<span>件</span></p>
+          <p>{this.props.selectionList ? this.props.selectionList.length : '読み込み中'}{this.props.selectionList ? <span>件</span> : false}</p>
         </div>
       )
     } else if (this.props.selectionPhase === 'hide') {
@@ -248,7 +250,7 @@ class Selection extends Component {
     const showSort = this.renderSort()
     const showList = this.renderList()
 
-    const endLabel = this.props.selectionList ? !(this.props.selectionList.length > 10 && this.props.selectionList.length !== this.props.showList.length) ? <div className='end-label'>{!this.props.loadingSelectionList && !this.props.loadingSearch ? this.props.selectionList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false : false
+    const endLabel = this.props.selectionList ? <div className='end-label'>{!this.props.loadingSelectionList && !this.props.loadingSearch ? this.props.selectionList.length === 0 ? 'みつかりませんでした' : 'これ以上データはありません' : false}</div> : false
 
     return (
       <React.Fragment>

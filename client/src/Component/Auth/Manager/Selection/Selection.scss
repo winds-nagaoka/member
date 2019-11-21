@@ -28,6 +28,16 @@
   }
 }
 
+.selection-post {
+  a {
+    .inner {
+      span {
+        color: rgba(182,0,5,1);
+      }
+    }
+  }
+}
+
 .selection {
 
   .search-bar {
@@ -128,7 +138,7 @@
         &:last-child {
           border-radius: 0 .25rem .25rem 0;
         }
-        
+
         i {
           margin-right: 6px;
           color: #666;
@@ -142,7 +152,7 @@
             color: #eee;
           }
         }
-      }  
+      }
     }
   }
 
@@ -211,15 +221,28 @@
         font-weight: 200;
 
         & > span {
-          line-height: 14px;
           display: block;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          line-height: 14px;
 
           .bar {
             margin: 0 .2em;
           }
+        }
+      }
+
+      .selection-duration {
+        width: 100%;
+        margin: 0 0 2px;
+        line-height: 12px;
+
+        span {
+          display: inline-block;
+          margin: 0;
+          color: rgba(182,0,5,.8);
+          font-size: 12px;
         }
       }
     }

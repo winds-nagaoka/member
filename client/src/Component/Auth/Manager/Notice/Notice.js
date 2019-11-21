@@ -58,7 +58,7 @@ class Notice extends Component {
         link = true
       }
     }
-    const showLink = link ? <li><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li> : <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li>
+    const showLink = link ? <li className='selection-post'><Link to='/manager/selection'><div className='inner'><span>選曲アンケート</span><Forward /></div></Link></li> : <li><div className='disabled-link'><div className='inner'><span>選曲アンケート</span><Forward /></div></div></li>
     return (
       <div className={'box selection' + lib.pcClass(this.props.pc)}>
         <div className='link'>
