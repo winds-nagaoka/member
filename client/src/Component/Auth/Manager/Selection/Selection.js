@@ -127,10 +127,12 @@ class Selection extends Component {
       const contentClassLink = selection.url.length > 0 && selection.url[0].match(/youtu\.?be/) ? ' add-link' : ''
       const contentClassEdit = selection.postUserid === this.props.user._id && this.props.selectionPhase === 'getmusic' ? ' add-edit' : ''
       const like = this.props.loadingSelectionLike || this.props.selectionPhase === 'getmusic' ? false : <div className='like'><span>{libManager.countLike(this.props.selectionLike, each._id)}</span></div>
+      const duration = localStorage.getItem('selectionSort') === 'time' ? <div className='selection-duration'><span>{selection.duration}</span></div> : false
       if (libManager.admin(this.props.user)) console.log('/' + selection.title + '/' + composer + '/' + arranger + '/' + selection.duration + '/' + selection.time + '/' + selection.memo + '/' + (this.props.loadingSelectionLike ? '-' : libManager.countLike(this.props.selectionLike, each._id)) + '/' + selection.createdAt + '/' + selection.updatedAt)
       return (
         <Link key={each._id} to={'/manager/selection/detail/' + each._id} className='selection-list' onTouchStart={() => {}}>
           <div className={'content' + contentClassLink + contentClassEdit}>
+            {duration}
             <div className='selection-title'><span>{selection.title}</span></div>
             <div className='composer-arranger'><span><span>{composer}</span>{bar}<span>{arranger}</span></span></div>
           </div>
