@@ -210,7 +210,7 @@ class Selection extends Component {
           <p>投票数の多い曲から優先的に選曲される予定です。</p>
           <h2>投稿および投票締め切り</h2>
           <p>11月30日(土)</p>
-          <h2>現在の投稿数</h2>
+          <h2>{this.props.searchQuery ? '検索結果' : '投稿数'}</h2>
           <p>{this.props.selectionList ? this.props.selectionList.length : '読み込み中'}{this.props.selectionList ? <span>件</span> : false}</p>
         </div>
       )
@@ -222,7 +222,7 @@ class Selection extends Component {
           <p>以後は曲の追加、修正および投票はできません。</p>
           <p>ご協力ありがとうございました。</p>
           <p>選曲会議に参加する予定の方は参考音源をあらかじめ聴いておいていただけると嬉しいです。</p>
-          <h2>投稿数</h2>
+          <h2>{this.props.searchQuery ? '検索結果' : '投稿数'}</h2>
           <p>{this.props.selectionList ? this.props.selectionList.length : '読み込み中'}{this.props.selectionList ? <span>件</span> : false}</p>
         </div>
       )
