@@ -270,7 +270,14 @@ class Detail extends Component {
   }
 
   renderDetailNavigation () {
-    if (this.props.loadingSelectionList || this.props.loadingSelectionListSearch || !this.props.selectionList || !this.props.selectionDetailid) return
+    if (this.props.loadingSelectionList || this.props.loadingSelectionListSearch || !this.props.selectionList || !this.props.selectionDetailid) {
+      return (
+        <div className={'box selection-detail-navigation' + lib.pcClass(this.props.pc)}>
+          <span className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</span>
+          <span className={nextClass}>次<i className='fas fa-chevron-circle-right'></i></span>
+        </div>
+      )
+    }
     const item = libManager.getDetail(this.props.selectionDetailid, this.props.selectionList)
     console.log(this.props.selectionDetailid, this.props.selectionList,item)
     const prevClass = 'prev ' + libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)
