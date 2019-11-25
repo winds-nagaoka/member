@@ -72,6 +72,7 @@ const setSelectionPhase = (selectionPhase) => ({
 // Selection List
 export const getSelectionList = () => {
   return async (dispatch, getState) => {
+    console.log('getSelectionList')
     dispatch(loadingSelectionList(true))
     dispatch(getSelectionListSearch(''))
   }
@@ -319,12 +320,12 @@ const loadingSelectionDetail = (loadingSelectionDetail) => ({
   payload: { loadingSelectionDetail }
 })
 
-const setSelectionDetailid = (selectionDetailid) => ({
+export const setSelectionDetailid = (selectionDetailid) => ({
   type: prefix + 'SET_SELECTION_DETAILID',
   payload: { selectionDetailid }
 })
 
-const setSelectionDetail = (selectionDetail) => ({
+export const setSelectionDetail = (selectionDetail) => ({
   type: prefix + 'SET_SELECTION_DETAIL',
   payload: { selectionDetail }
 })

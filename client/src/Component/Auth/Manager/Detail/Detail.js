@@ -4,7 +4,17 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { getSelectionPhase, getSelectionDetail, getSelectionLike, sendSelectionLike } from '../../../../Actions/Manager'
+import {
+  getSelectionPhase,
+  getSelectionDetail,
+  setSelectionDetailid,
+  setSelectionDetail,
+  getSelectionLike,
+  sendSelectionLike,
+  getSelectionList,
+  getSelectionListSearch,
+  changeSearchQuery
+} from '../../../../Actions/Manager'
 
 import Forward from '../../../../Library/Icons/Forward'
 import Back from '../../../../Library/Icons/Back'
@@ -27,7 +37,13 @@ function mapStateToProps(state) {
 
     loadingSelectionLike: state.manager.loadingSelectionLike,
     selectionLike: state.manager.selectionLike,
-    loadingSelectionSendLike: state.manager.loadingSelectionSendLike
+    loadingSelectionSendLike: state.manager.loadingSelectionSendLike,
+
+    loadingSelectionList: state.manager.loadingSelectionList,
+    selectionList: state.manager.selectionList,
+
+    loadingSelectionListSearch: state.manager.loadingSelectionListSearch,
+    searchQuery: state.manager.searchQuery,
   }
 }
 
@@ -45,11 +61,26 @@ function mapDispatchToProps(dispatch) {
     getSelectionDetail (id) {
       dispatch(getSelectionDetail(id))
     },
+    setSelectionDetailid (id) {
+      dispatch(setSelectionDetailid(id))
+    },
+    setSelectionDetail (detail) {
+      dispatch(setSelectionDetail(detail))
+    },
     getSelectionLike () {
       dispatch(getSelectionLike())
     },
     sendSelectionLike (selectionid) {
       dispatch(sendSelectionLike(selectionid))
+    },
+    getSelectionList () {
+      dispatch(getSelectionList())
+    },
+    getSelectionListSearch (query) {
+      dispatch(getSelectionListSearch(query))
+    },
+    changeSearchQuery (query) {
+      dispatch(changeSearchQuery(query))
     }
   }
 }
@@ -68,6 +99,16 @@ class Detail extends Component {
     this.props.setBackNavigation(true, '/manager/selection')
     this.props.getSelectionPhase()
     this.props.getSelectionLike()
+    if (!this.props.selectionList) this.props.searchQuery ? this.props.changeSearchQuery(this.props.searchQuery) : this.props.getSelectionList()
+  }
+
+  componentWillReceiveProps (nextProps, nextContext) {
+    const { params } = nextProps.match
+    if (params.id !== this.props.concertid) {
+      if (!this.props.selectionList) return
+      this.props.setSelectionDetailid(params.id)
+      this.props.setSelectionDetail(libManager.getDetail(params.id, this.props.selectionList))
+    }
   }
 
   renderDetail () {
@@ -209,9 +250,45 @@ class Detail extends Component {
     }
   }
 
+  renderConcertNavigation () {
+    if (this.props.loadingArchive || !this.props.concertList || !this.props.concertid) return
+    const item = libArchive.getConcert(this.props.concertid, this.props.concertList).detail
+    const concertList = this.props.concertList
+    const concertid = this.props.concertid
+    // reverse()していないので逆になってる
+    const prevClass = 'prev ' + libArchive.getPrevConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
+    const prevLink = libArchive.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getPrevConcert(concertid, concertList)} className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></span>
+    const nextClass = 'next ' + libArchive.getNextConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
+    const nextLink = libArchive.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</span>
+    return (
+      <div className={'title' + lib.pcClass(this.props.pc)}>
+        {nextLink}
+        <h2>{item.title}</h2>
+        {prevLink}
+      </div>
+    )
+  }
+
+  renderDetailNavigation () {
+    if (this.props.loadingSelectionList || this.props.loadingSelectionListSearch || !this.props.selectionList || !this.props.selectionDetailid) return
+    const item = libManager.getDetail(this.props.selectionDetailid, this.props.selectionList)
+    console.log(this.props.selectionDetailid, this.props.selectionList,item)
+    const prevClass = 'prev ' + libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)
+    const prevLink = libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList) ? <Link to={'/manager/selection/detail/' + libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)} className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</Link> : <span className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</span>
+    const nextClass = 'next ' + libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList)
+    const nextLink = libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList) ? <Link to={'/manager/selection/detail/' + libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList)} className={nextClass}>次<i className='fas fa-chevron-circle-right'></i></Link> : <span className={nextClass}>次<i className='fas fa-chevron-circle-right'></i></span>
+    return (
+      <div className={'box selection-detail-navigation' + lib.pcClass(this.props.pc)}>
+        {prevLink}
+        {nextLink}
+      </div>
+    )
+  }
+
   render () {
 
     const showBreadNavigation = this.renderBreadNavigation()
+    const showDetailNavigation = this.renderDetailNavigation()
     const showDetail = this.renderDetail()
     const showLike = this.renderLike()
     const showEditDetailLink = this.renderEditDetailLink()
@@ -222,6 +299,8 @@ class Detail extends Component {
           {showBreadNavigation}
           <h2>候補曲詳細</h2>
         </div>
+
+        {showDetailNavigation}
 
         <div className={'box selection-detail' + lib.pcClass(this.props.pc)}>
           <div className='title-frame'>

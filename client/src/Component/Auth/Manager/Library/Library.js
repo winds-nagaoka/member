@@ -40,6 +40,36 @@ export function countLike (list, id) {
   return like
 }
 
+export function getDetail (id, list) {
+  return list.filter((e) => {return e._id === id})[0]
+}
+
+export function getNextDetail (id, list) {
+  let next = undefined
+  list.forEach((e, i) => {
+    if (e._id === id) next = i + 1
+    return
+  })
+  if (next > (list.length - 1) || !next) {
+    return false
+  } else {
+    return list[next]._id
+  }
+}
+
+export function getPrevDetail (id, list) {
+  let prev = undefined
+  list.forEach((e, i) => {
+    if (e._id === id) prev = i - 1
+    return
+  })
+  if (prev < 0 || !prev) {
+    return false
+  } else {
+    return list[prev]._id
+  }
+}
+
 export function admin (user) {
   return user.admin ? true : false
 }
