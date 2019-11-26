@@ -278,7 +278,6 @@ class Detail extends Component {
         </div>
       )
     }
-    const item = libManager.getDetail(this.props.selectionDetailid, this.props.selectionList)
     const prevClass = 'prev ' + libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)
     const prevLink = libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList) ? <Link to={'/manager/selection/detail/' + libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)} className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</Link> : <span className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</span>
     const nextClass = 'next ' + libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList)
