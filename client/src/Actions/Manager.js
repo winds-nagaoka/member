@@ -72,7 +72,6 @@ const setSelectionPhase = (selectionPhase) => ({
 // Selection List
 export const getSelectionList = () => {
   return async (dispatch, getState) => {
-    console.log('getSelectionList')
     dispatch(loadingSelectionList(true))
     dispatch(getSelectionListSearch(''))
   }
