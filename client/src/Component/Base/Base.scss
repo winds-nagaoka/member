@@ -32,8 +32,17 @@
     flex-direction: column;
 
     // background: rgba(220,220,220,.2);
-    background: #efeff4;
+    // background: #efeff4;
     // background: rgb(230, 236, 240);
+
+    & {
+      background: #efeff4;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #000;
+      }
+    }
 
     &.pc {
       margin: 91px 0 0 0;
@@ -44,7 +53,17 @@
       max-width: 450px;
       margin: 12px 0 0;
       padding: 12px;
-      background: #fff;
+
+      & {
+        background: #fff;
+        color: #333;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background: #1c1c1e;
+          color: #fff;
+        }
+      }
 
       &.pc {
         margin: 36px 0 0;
@@ -63,7 +82,6 @@
         margin: 0 0 12px 0;
         font-size: 20px;
         font-weight: normal;
-        color: #333;
 
         &.pc {
           margin: 0 0 36px 0;
@@ -73,7 +91,6 @@
       .text {
         margin: 24px 0;
         font-size: 14px;
-        color: #333;
 
         p {
           margin: 0;
@@ -94,7 +111,6 @@
         display: block;
         margin: 12px 0 2px;
         font-size: 14px;
-        color: #333;
       }
 
       input {
@@ -119,7 +135,17 @@
         border-radius: 4px;
         font-size: 14px;
         color: #f0506e;
-        background: #fef4f6;
+
+        & {
+          color: #f0506e;
+          background: #fef4f6;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: hsl(349,84%,43%);
+            background: #333;
+          }
+        }
       }
 
       .links {
@@ -157,9 +183,18 @@
           }
 
           &:disabled {
-            color: #888;
-            background: #f8f8f8;
             cursor: default;
+
+            & {
+              color: #888;
+              background: #f8f8f8;
+            }
+            @media (prefers-color-scheme: dark) {
+              & {
+                color: #888;
+                background: #333;
+              }
+            }
           }
         }
 
@@ -168,13 +203,26 @@
           // text-align: center;
 
           a {
-            color: #666;
             text-decoration: none;
             font-size: 14px;
 
             &:hover {
-              color: #333;
               text-decoration: underline;
+            }
+
+            & {
+              color: #666;
+              &:hover {
+                color: #333;
+              }
+            }
+            @media (prefers-color-scheme: dark) {
+              & {
+                color: #aaa;
+                &:hover {
+                  color: #ccc;
+                }  
+              }
             }
           }
         }
@@ -187,12 +235,25 @@
 
     a {
       font-size: 13px;
-      color: #888;
       text-decoration: none;
 
       &:hover {
-        color: #333;
         text-decoration: underline;
+      }
+
+      & {
+        color: #888;
+        &:hover {
+          color: #333;
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #aaa;
+          &:hover {
+            color: #ccc;
+          }  
+        }
       }
     }
   }
@@ -204,12 +265,25 @@
     color: #888;
 
     a {
-      color: #888;
       text-decoration: none;
 
       &:hover {
-        color: #333;
         text-decoration: underline;
+      }
+
+      & {
+        color: #888;
+        &:hover {
+          color: #333;
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #aaa;
+          &:hover {
+            color: #ccc;
+          }  
+        }
       }
     }
   }
