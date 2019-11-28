@@ -138,21 +138,45 @@
     .top-notice {
       // max-height: 130px;
       padding: 0;
-      background: #f8f8f8;
       // overflow: hidden;
+
+      & {
+        background: #f8f8f8;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background: #333;
+        }
+      }
 
       .top-notice-title {
         padding: 8px 12px;
         font-size: .9rem;
-        background: #eee;
+
+        & {
+          background: #eee;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            background: #383838;
+          }
+        }
 
         display: flex;
         align-items: center;
 
         .date {
           margin-left: auto;
-          color: #aaa;
           font-size: 12px;
+
+          & {
+            color: #aaa;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #666;
+            }
+          }
         }
       }
 
@@ -173,8 +197,16 @@
     .home-bbs-item {
       // max-height: 130px;
       padding: 12px;
-      background: #f8f8f8;
       // overflow: hidden;
+
+      & {
+        background: #f8f8f8;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background: #333;
+        }
+      }
 
       &:not(:first-child){
         margin-top: 12px;
@@ -193,14 +225,32 @@
           line-height: 20px;
           font-size: 1em;
           font-weight: bold;
-          background: #ccc;
-          color: #fff;
+
+          & {
+            background: #ccc;
+            color: #fff;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              background: #666;
+              color: #ccc;
+            }
+          }
         }
 
         .name {
           padding-left: 8px;
           font-size: .8rem;
           color: #666;
+
+          & {
+            color: #666;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #999;
+            }
+          }
         }
 
         .time {
@@ -213,14 +263,21 @@
       .home-bbs-text {
         margin-top: 8px;
         font-size: 14px;
-        color: #666;
+
+        & {
+          color: #666;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #999;
+          }
+        }
 
         p {
           margin: 0;
           padding: 0;
         }
       }
-
     }
   }
 }

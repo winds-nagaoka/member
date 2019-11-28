@@ -7,10 +7,19 @@
     width: 100%;
     // max-width: 920px;
     // border-bottom: 1px solid #ccc;
-    border-bottom: .5px solid #d3d3d3;
-    background: #fff;
+    border-bottom: .5px solid #cbcbcd;
     text-align: center;
     z-index: 20;
+
+    & {
+      background: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #1c1c1e;
+        border-color: #2d2d2f;
+      }
+    }
 
     &.pc {
       height: 60px;
