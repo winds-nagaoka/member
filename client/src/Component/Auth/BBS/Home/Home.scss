@@ -30,7 +30,14 @@
 
     .bbs-item {
       padding: 12px;
-      background: #f6f6f6;
+      & {
+        background: #f6f6f6;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background: #333;
+        }
+      }
 
       &:not(:first-child){
         margin-top: 12px;
@@ -49,14 +56,22 @@
           line-height: 20px;
           font-size: 1em;
           font-weight: bold;
-          background: rgba(150,150,150,1);
-          color: rgba(255,255,255,1);
+
+          & {
+            background: rgba(150,150,150,1);
+            color: rgba(255,255,255,1);
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              background: rgba(80,80,80,1);
+              color: rgba(150,150,150,1);
+            }
+          }
         }
 
         .name {
           padding-left: 8px;
           font-size: .8rem;
-          color: #333;
         }
 
         .time {
@@ -82,22 +97,40 @@
       margin: 12px 0 0;
       padding: 12px 0;
       font-size: 13px;
-      color: #333;
       text-align: center;
       text-transform: uppercase;
       cursor: pointer;
 
-      &:hover {
-        color: #888;
-
+      & {
+        color: #333;
+        &:hover {
+          color: #666;
+          i {
+            color: #666;
+          }
+        }
         i {
-          color: #888;
+          color: #666;
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #ccc;
+          &:hover {
+            color: #eee;
+            i {
+              color: #eee;
+            }
+          }
+          i {
+            color: #aaa;
+          }
         }
       }
 
       i {
         display: block;
-        color: #666;
+
         font-size: 18px;
       }
     }

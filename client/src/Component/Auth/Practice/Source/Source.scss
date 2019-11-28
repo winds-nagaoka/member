@@ -26,11 +26,20 @@
       padding: 8px 0 8px 12px;
       // border-bottom: .55px solid #d3d3d3;
       // background: #fff;
-      background: #f0f0f0;
-      color: #333;
       font-size: 16px;
       // font-family: "kan48typos-std",sans-serif;
       // font-weight: 200;
+
+      & {
+        color: #333;
+        background: #f0f0f0;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #ccc;
+          background: #383838;
+        }
+      }
 
       &.pc {
         // top: 44px;
@@ -42,7 +51,6 @@
     ol {
       margin: 0;
       padding: 0;
-      color: #333;
       list-style: none;
     }
 
@@ -72,15 +80,21 @@
         align-items: center;
 
         &.has-audio {
-          background: #fff;
           cursor: pointer;
 
           &:hover {
-            background: #eee;
+            background: #e6e5eb;
           }
-
           &:active {
-            background: #e3e3e3;
+            background: #e6e5eb;
+          }
+          @media (prefers-color-scheme: dark) {
+            &:hover {
+              background: #2c2c2e;
+            }
+            &:active {
+              background: #2c2c2e;
+            }
           }
 
           // no Audio icon

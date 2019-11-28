@@ -111,7 +111,14 @@
   .schedule-list {
 
     .month-title {
-      border-bottom: .55px solid #c8c7cc;
+      & {
+        border-bottom: .55px solid #cbcbcd;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          border-bottom: .55px solid #2d2d2f;
+        }
+      }
 
       .year {
         font-size: 1rem;
@@ -137,8 +144,16 @@
 
       .each {
         padding: 4px 0;
-        border-bottom: .55px solid #c8c7cc;
         vertical-align: baseline;
+
+        & {
+          border-bottom: .55px solid #cbcbcd;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            border-bottom: .55px solid #2d2d2f;
+          }
+        }
 
         .labels {
           display: inline-block;
@@ -243,30 +258,47 @@
       margin: 0 auto;
       padding: 0;
       border: none;
-      background: #fff;
       color: rgba(182,0,5,1);
       font-size: 16px;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
       transition: all ease-in-out .2s;
-  
-      &:hover, &:focus {
-        background: #eee;
-      }
-  
-      &:active {
-        background: #e3e3e3;
-      }
-  
+
+
       i {
         margin-right: .2em;
       }
-  
+
       &.disabled {
         color: #888;
         background: #fff;
         cursor: default;
+      }
+
+      & {
+        background: #fff;
+
+        &:hover, &:focus {
+          background: #e6e5eb;
+        }
+
+        &:active {
+          background: #e6e5eb;
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background: #1c1c1e;
+
+          &:hover, &:focus {
+            background: #2c2c2e;
+          }
+
+          &:active {
+            background: #2c2c2e;
+          }
+        }
       }
     }
   }

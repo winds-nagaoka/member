@@ -3,7 +3,15 @@
   z-index: 52;
   max-width: 240px;
   height: 100%;
-  background: #fff;
+
+  & {
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    & {
+      background: #1c1c1e;
+    }
+  }
 
   padding-top: constant(safe-area-inset-top);
   padding-bottom: constant(safe-area-inset-bottom);
@@ -31,7 +39,15 @@
     top: 0;
     width: calc(100% - 8px);
     padding: 4px;
-    background: #fff;
+
+    & {
+      background: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #1c1c1e;
+      }
+    }
 
     display: flex;
     align-items: center;
@@ -51,6 +67,15 @@
       color: #333;
       font-size: 20px;
       // font-family: "ten-mincho",serif;
+
+      & {
+        color: #333;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #fff;
+        }
+      }
     }
   }
 
@@ -61,8 +86,16 @@
     line-height: 48px;
 
     a {
-      color: #333;
       text-decoration: none;
+
+      & {
+        color: #333;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #fff;
+        }
+      }
 
       div {
         padding: 0 0 0 1em;
@@ -79,16 +112,31 @@
 
     .link {
       padding: 0;
-      color: #333;
       text-decoration: none;
       cursor: pointer;
+
+      & {
+        color: #333;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #fff;
+        }
+      }
 
       &:hover {
         background: #eee;
       }
-
       &:active {
         background: #e3e3e3;
+      }
+      @media (prefers-color-scheme: dark) {
+        &:hover {
+          background: #383838;
+        }
+        &:active {
+          background: #3c3c3c;
+        }
       }
 
       div {
@@ -97,15 +145,30 @@
         i {
           display: inline-block;
           width: 40px;
-          color: #666;
           font-size: 1.2em;
           text-align: center;
+
+          & {
+            color: #666;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #aaa;
+            }
+          }
         }
       }
     }
 
     .active {
-      background: #eee;
+      & {
+        background: #eee;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background: #333;
+        }
+      }
 
       a {
 

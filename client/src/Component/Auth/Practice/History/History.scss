@@ -7,11 +7,19 @@
 
     li.each-history {
       padding: 8px 12px;
-      border-bottom: .55px solid #c8c7cc;
       font-size: 16px;
       cursor: pointer;
 
       display: flex;
+
+      & {
+        border-bottom: .55px solid #cbcbcd;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          border-bottom: .55px solid #2d2d2f;
+        }
+      }
 
       &.pc {
         padding: 8px 16px;
@@ -27,11 +35,20 @@
       }
 
       &.has-audio:hover {
-        background: #eee;
+        background: #e6e5eb;
       }
 
       &.has-audio:active {
-        background: #e3e3e3;
+        background: #e6e5eb;
+      }
+      @media (prefers-color-scheme: dark) {
+        &.has-audio:hover {
+          background: #2c2c2e;
+        }
+
+        &.has-audio:active {
+          background: #2c2c2e;
+        }
       }
 
       .icon {
@@ -92,20 +109,32 @@
       // border-bottom: .55px solid #d0d0d0;
       cursor: pointer;
       line-height: 1.6;
-  
+
       display: flex;
       flex-direction: row;
       align-items: center;
-  
+
       color: #3880ff;
-  
+
       &:hover {
-        background: #eee;
+        background: #e6e5eb;
       }
-  
+      &:active {
+        background: #e6e5eb;
+      }
+      @media (prefers-color-scheme: dark) {
+        &:hover {
+          background: #2c2c2e;
+        }
+
+        &:active {
+          background: #2c2c2e;
+        }
+      }
+
       span {
         margin: 11px 8px 11px 11px;
-  
+
         display: flex;
         flex-direction: column;
       }
