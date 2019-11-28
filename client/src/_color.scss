@@ -20,13 +20,17 @@ $main-play-color: #ea5505;
 $mini-play-color: rgba(0,191,255,1);
 $other-play-color: #888;
 
-$main-play-color-dark: hsl(21,96%,42%);
-$mini-play-color-dark: hsl(195,100%,45%);
-$other-play-color-dark: hsl(0,0%,48%);
+// $main-play-color-dark: hsl(21,96%,42%);
+// $mini-play-color-dark: hsl(195,100%,45%);
+// $other-play-color-dark: hsl(0,0%,48%);
 
 $main-play-color-light: #fdeee6;
 $mini-play-color-light: #e5f8ff;
 $other-play-color-light: #eee;
+
+$main-play-color-dark: hsl(21, 96%, 20%);
+$mini-play-color-dark: hsl(195, 100%, 23%);
+$other-play-color-dark: hsl(0, 0%, 26%);
 
 $main-play-color-half-light: hsl(21,96%,60%);
 $mini-play-color-half-light: hsl(195,100%,60%);

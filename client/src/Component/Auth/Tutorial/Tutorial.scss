@@ -6,8 +6,16 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: #fff;
     z-index: 51;
+
+    & {
+      background: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #1c1c1e;
+      }
+    }
 
     // transition: transform .3s ease-in-out;
     transition: transform .2s ease-in-out;
@@ -38,9 +46,18 @@
       position: fixed;
       height: 44px;
       width: 100%;
-      border-bottom: .55px solid #d3d3d3;
-      background: #fff;
       text-align: center;
+
+      & {
+        background: #fff;
+        border-bottom: .55px solid #cbcbcd;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background: #1c1c1e;
+          border-bottom: .55px solid #2d2d2f;
+        }
+      }
 
       display: flex;
       justify-content: center;
@@ -183,7 +200,15 @@
       .tutorial-each-page {
         width: 100%;
         height: calc(100vh - 45px);
-        background: #fff;
+
+        & {
+          background: #fff;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            background: #1c1c1e;
+          }
+        }
 
         display: flex;
         align-items: center;

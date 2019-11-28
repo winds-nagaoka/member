@@ -21,6 +21,7 @@
       align-items: center;
       border: .55px solid #eee;
       border-radius: 20px;
+      background: #fff;
 
       svg {
         width: 60px;
@@ -98,7 +99,6 @@
 
     h2 {
       margin: 18px 0 6px;
-      color: #333;
       font-size: 14px;
       font-weight: bold;
       // font-style: italic;
@@ -107,7 +107,6 @@
     p {
       margin: 0 0 4px;
       padding: 0;
-      color: #333;
 
       display: flex;
       align-items: center;
@@ -121,6 +120,17 @@
         font-size: 24px;
         background: #333;
         color: #eee;
+
+        & {
+          background: #333;
+          color: #eee;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            background: #666;
+            color: #fff;
+          }
+        }
       }
 
       i.fa-react {
@@ -147,13 +157,27 @@
       span:nth-child(2) {
         margin: 0 2px 0 4px;
         padding: 4px 0;
-        color: #ccc;
+        & {
+          color: #ccc;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #333;
+          }
+        }
         font-size: 10px;
       }
       span:last-child {
         margin: 0 0 0 2px;
         padding: 4px 0;
-        color: #ccc;
+        & {
+          color: #ccc;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #333;
+          }
+        }
         font-size: 11px;
       }
       span.react {

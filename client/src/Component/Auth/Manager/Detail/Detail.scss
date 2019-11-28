@@ -8,15 +8,22 @@
     min-width: 32px;
     margin: 8px 8px;
     padding: 6px 8px;
-    border: .55px solid #888;
-    color: #888;
     border-radius: 14px;
     font-size: 14px;
     line-height: 14px;
     text-align: center;
-
     text-decoration: none;
-    color: #888;
+
+    & {
+      color: #888;
+      border: 1px solid #888;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        color: #888;
+        border: 1px solid #888;
+      }
+    }
 
     &:hover {
       background: #888;
@@ -47,15 +54,26 @@
     min-width: 32px;
     margin: 8px 8px;
     padding: 6px 8px;
-    border: .55px solid #eee;
-    color: #eee;
     border-radius: 14px;
     font-size: 14px;
     line-height: 14px;
     text-align: center;
 
-    i {
+    & {
+      border: .55px solid #eee;
       color: #eee;
+      i {
+        color: #eee;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        color: #333;
+        border: 1px solid #333;
+        i {
+          color: #333;
+        }
+      }
     }
   }
 }
@@ -73,8 +91,16 @@
       }
 
       label {
-        color: #888;
         font-size: 13px;
+
+        & {
+          color: #666;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #999;
+          }
+        }
       }
 
       p {
@@ -84,7 +110,14 @@
         word-break: break-all;
 
         .no-data {
-          color: #ccc;
+          & {
+            color: #ccc;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #666;
+            }
+          }
         }
       }
 
@@ -104,17 +137,30 @@
             height: 50px;
             padding: 0;
             border-radius: 50%;
-            background: #eee;
             text-decoration: none;
-            color: #333;
             font-size: .9rem;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            &:hover {
-              background: #ccc;
+            & {
+              color: #333;
+              background: #eee;
+
+              &:hover {
+                background: #ccc;
+              }
+            }
+            @media (prefers-color-scheme: dark) {
+              & {
+                color: #fff;
+                background: #333;
+
+                &:hover {
+                  background: #666;
+                }
+              }
             }
 
             &.youtube {
@@ -141,7 +187,14 @@
         }
 
         .no-data {
-          color: #ccc;
+          & {
+            color: #ccc;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #666;
+            }
+          }
         }
       }
     }
@@ -150,9 +203,17 @@
   .removed {
     margin: 0;
     padding: 24px 0;
-    color: #ccc;
     text-align: center;
     font-size: .9rem;
+
+    & {
+      color: #ccc;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        color: #666;
+      }
+    }
   }
 }
 
@@ -163,12 +224,28 @@
     .count {
       display: flex;
       align-items: center;
-      color: #666;
+
+      & {
+        color: #666;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #999;
+        }
+      }
 
       span {
         margin-right: 2px;
-        color: #333;
         font-size: 1rem;
+
+        & {
+          color: #333;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #fff;
+          }
+        }
       }
     }
 
@@ -179,27 +256,53 @@
         display: inline-block;
         padding: 6px 12px;
         border-radius: .25rem;
-        background: #eee;
         cursor: pointer;
 
-        &:hover {
-          background: #ccc;
-        }
+        & {
+          background: #eee;
 
-        &:active, &:focus {
-          box-shadow: 0 0 0 0.2rem rgba(0,0,0,.25);
+          &:hover {
+            background: #ccc;
+          }
+          &:active, &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0,0,0,.25);
+          }
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            background: #333;
+
+            &:hover {
+              background: #555;
+            }
+            &:active, &:focus {
+              box-shadow: 0 0 0 0.2rem rgba(255,255,255,.25);
+            }
+          }
         }
 
         &.not-use {
-          color: #aaa;
           cursor: default;
 
-          i {
+          & {
             color: #aaa;
+            i {
+              color: #aaa;
+            }
+            &:hover {
+              background: #eee;
+            }
           }
-
-          &:hover {
-            background: #eee;
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #666;
+              i {
+                color: #666;
+              }
+              &:hover {
+                background: #333;
+              }
+            }
           }
 
           &:active, &:focus {

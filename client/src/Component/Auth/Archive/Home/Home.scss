@@ -15,8 +15,17 @@
     top: 48px;
     margin: 0;
     padding: 0px 12px 6px;
-    border-bottom: .55px solid #d3d3d3;
-    background: #fff;
+
+    & {
+      border-bottom: .55px solid #cbcbcd;
+      background: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        border-bottom: .55px solid #2d2d2f;
+        background: #1c1c1e;
+      }
+    }
 
     display: flex;
 
@@ -24,12 +33,21 @@
       margin: 0 8px 0 0;
       padding: 6px;
       border-radius: 2px;
-      background-color: #f7f7f7;
-      color: #888;
       font-size: 14px;
       // font-family: "tbchibirgothicplusk-pro",sans-serif;
       // transition: background-color .2s linear 0;
       cursor: pointer;
+
+      & {
+        background-color: #f7f7f7;
+        color: #888;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          background-color: #333;
+          color: #eee;
+        }
+      }
 
       &.on {
         background: #888;
@@ -56,11 +74,26 @@
     margin: 0;
     width: 100%;
     // height: 40px;
-    background: #fff;
     z-index: 9;
 
+    & {
+      background: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #1c1c1e;
+      }
+    }
+
     &.search-mode {
-      border-bottom: .55px solid #d3d3d3;
+      & {
+        border-bottom: .55px solid #cbcbcd;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          border-bottom: .55px solid #2d2d2f;
+        }
+      }
     }
 
     .search-frame {
@@ -70,7 +103,15 @@
         // margin: 7px 12px;
         margin: 0;
         border-radius: 10px;
-        background: #ededed;
+
+        & {
+          background: #ebebed;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            background: #2a292e;
+          }
+        }
 
         display: flex;
         flex-direction: row;
@@ -92,7 +133,6 @@
           padding: 0;
           border: 0;
           background: rgba(0,0,0,0);
-          color: #000;
           font-size: 1.4rem;
           font-size: 14px;
           font-weight: 400;
@@ -128,10 +168,16 @@
       min-height: 44px;
       margin: 0;
       padding: 8px;
-      border-bottom: .55px solid #d3d3d3;
-      background: #fff;
-      color: #333;
       font-size: 13px;
+
+      & {
+        border-bottom: .55px solid #cbcbcd;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          border-bottom: .55px solid #2d2d2f;
+        }
+      }
 
       display: flex;
       justify-content: space-between;
@@ -195,8 +241,17 @@
           width: 44px;
           height: 44px;
           border-radius: 50%;
-          color: #eee;
+
           cursor: pointer;
+
+          & {
+            color: #eee;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #333;
+            }
+          }
 
           display: flex;
           justify-content: center;
@@ -207,6 +262,11 @@
 
             &:hover {
               background: #f7f7f7;
+            }
+            @media (prefers-color-scheme: dark) {
+              &:hover {
+                background: #2c2c2e;
+              }
             }
 
             &.main {
@@ -231,9 +291,16 @@
   .concert-item {
     padding: 8px;
     // padding: 8px 12px;
-    border-bottom: .55px solid #c8c7cc;
-    color: #333;
     text-decoration: none;
+
+    & {
+      border-bottom: .55px solid #cbcbcd;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        border-bottom: .55px solid #2d2d2f;
+      }
+    }
 
     // animation 設定は index.scss
     -webkit-animation: fadein .2s 1 ease-out;
@@ -245,12 +312,29 @@
       border-bottom: none;
     }
 
-    &:hover {
-      background: #eee;
-    }
+    & {
+      color: #333;
 
-    &:active {
-      background: #e3e3e3;
+      &:hover {
+        background: #e6e5eb;
+      }
+
+      &:active {
+        background: #e6e5eb;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        color: #ccc;
+
+        &:hover {
+          background: #2c2c2e;
+        }
+
+        &:active {
+          background: #2c2c2e;
+        }
+      }
     }
 
     .info {
