@@ -156,7 +156,6 @@ export function getPrevConcert (id, concertList) {
   }
 }
 
-
 // Audio.jsより
 export function getMediaData (id, number, concertList) {
   return (getConcertList(id, concertList)[number])
@@ -173,7 +172,6 @@ export function getAlbum (id, playlist) {
 export function getAudioTitle (id, number, concertList) {
   return (getConcertList(id, concertList)[number]).title
 }
-
 
 export function getAudioComposer (id, number, concertList) {
   var list = getConcertList(id, concertList)[number]

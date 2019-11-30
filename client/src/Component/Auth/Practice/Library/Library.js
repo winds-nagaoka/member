@@ -89,7 +89,6 @@ export function getPracticeAlbum (id, playlist) {
 //   return (getConcertList(id, concertList)[number]).title
 // }
 
-
 // export function getAudioComposer (id, number, concertList) {
 //   var list = getConcertList(id, concertList)[number]
 //   const composer = 'composer' in list ? 'arranger' in list ? <span className='composer'>{list.composer}{list.composer.match(/民謡/) ? '' : '作曲'}<span>/</span>{list.arranger}編曲</span> : <span className='composer'>{list.composer}</span> : 'arranger' in list ? <span className='composer'>{list.arranger}編曲</span> : ''

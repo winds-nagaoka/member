@@ -209,7 +209,7 @@ class Selection extends Component {
           <p>投票数の制限は設けておりません。</p>
           <p>投票数の多い曲から優先的に選曲される予定です。</p>
           <h2>投稿および投票締め切り</h2>
-          <p>11月30日(土)</p>
+          <p>12月1日(日)</p>
           <h2>{this.props.searchQuery ? '検索結果' : '投稿数'}</h2>
           <p>{this.props.selectionList ? this.props.selectionList.length : '読み込み中'}{this.props.selectionList ? <span>件</span> : false}</p>
         </div>
