@@ -74,7 +74,6 @@ class SessionList extends Component {
     }
   }
 
-
   renderList () {
     if (this.props.user) {
       const clientList = this.props.user.clientList.sort((n, m) => n.lastLogin < m.lastLogin ? 1 : -1).map((each, i) => {

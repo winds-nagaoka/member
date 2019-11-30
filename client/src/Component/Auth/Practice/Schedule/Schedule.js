@@ -189,8 +189,6 @@ class Schedule extends Component {
 
           {showScheduleSync}
 
-
-
           {showSource}
 
           <div className={'box' + lib.pcClass(pc)}>
