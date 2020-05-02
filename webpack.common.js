@@ -1,5 +1,4 @@
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: ['@babel/polyfill', path.join(__dirname, 'client/src/index.js')],
