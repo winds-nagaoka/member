@@ -77,6 +77,7 @@ class SessionList extends Component {
   renderList () {
     if (this.props.user) {
       const clientList = this.props.user.clientList.sort((n, m) => n.lastLogin < m.lastLogin ? 1 : -1).map((each, i) => {
+        if (!each.agent) return <div key={'client-' + i}></div>
         const lastLogin = each.id === lib.getClientid() ? '今' : this.lastLogin((new Date()).getTime() - each.lastLogin)
         const selfLabel = each.id === lib.getClientid() ? <span className='self'>現在の端末</span> : false
         const icon = each.agent.match(/(iPhone|iPad|iPod|Android)/i) ? (each.agent.match(/iPad/i) ? <i className='fas fa-tablet-alt'></i> : <i className='fas fa-mobile-alt'></i>) : <i className='fas fa-desktop'></i>
