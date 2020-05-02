@@ -1,5 +1,5 @@
 export const appName = 'member'
-export const version = '0.5.3'
+export const version = '0.5.4'
 // mode を prod 以外にするとローカルのAPIを使う
 const mode = 'prod' // dev or prod
 import uuidv1 from 'uuid/v1'
