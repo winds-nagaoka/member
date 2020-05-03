@@ -102,7 +102,7 @@ class Detail extends Component {
     if (!this.props.selectionList) this.props.searchQuery ? this.props.changeSearchQuery(this.props.searchQuery) : this.props.getSelectionList()
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { params } = nextProps.match
     if (params.id !== this.props.concertid) {
       if (!this.props.selectionList) return
@@ -250,24 +250,24 @@ class Detail extends Component {
     }
   }
 
-  renderConcertNavigation () {
-    if (this.props.loadingArchive || !this.props.concertList || !this.props.concertid) return
-    const item = libArchive.getConcert(this.props.concertid, this.props.concertList).detail
-    const concertList = this.props.concertList
-    const concertid = this.props.concertid
-    // reverse()していないので逆になってる
-    const prevClass = 'prev ' + libArchive.getPrevConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
-    const prevLink = libArchive.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getPrevConcert(concertid, concertList)} className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></span>
-    const nextClass = 'next ' + libArchive.getNextConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
-    const nextLink = libArchive.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</span>
-    return (
-      <div className={'title' + lib.pcClass(this.props.pc)}>
-        {nextLink}
-        <h2>{item.title}</h2>
-        {prevLink}
-      </div>
-    )
-  }
+  // renderConcertNavigation () {
+  //   if (this.props.loadingArchive || !this.props.concertList || !this.props.concertid) return
+  //   const item = libArchive.getConcert(this.props.concertid, this.props.concertList).detail
+  //   const concertList = this.props.concertList
+  //   const concertid = this.props.concertid
+  //   // reverse()していないので逆になってる
+  //   const prevClass = 'prev ' + libArchive.getPrevConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
+  //   const prevLink = libArchive.getPrevConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getPrevConcert(concertid, concertList)} className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></Link> : <span className={prevClass}>次<i className='fas fa-chevron-circle-right'></i></span>
+  //   const nextClass = 'next ' + libArchive.getNextConcert(concertid, concertList) + ' ' + libArchive.getConcertType(concertid, concertList)
+  //   const nextLink = libArchive.getNextConcert(concertid, concertList) ? <Link to={'/archive/overview/' + libArchive.getNextConcert(concertid, concertList)} className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</Link> : <span className={nextClass}><i className='fas fa-chevron-circle-left'></i>前</span>
+  //   return (
+  //     <div className={'title' + lib.pcClass(this.props.pc)}>
+  //       {nextLink}
+  //       <h2>{item.title}</h2>
+  //       {prevLink}
+  //     </div>
+  //   )
+  // }
 
   renderDetailNavigation () {
     if (this.props.loadingSelectionList || this.props.loadingSelectionListSearch || !this.props.selectionList || !this.props.selectionDetailid) {

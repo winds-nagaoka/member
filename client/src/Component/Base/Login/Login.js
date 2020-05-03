@@ -57,7 +57,7 @@ class Login extends Component {
 
   render () {
     const { windsid, password, errorMessage, loading } = this.props
-    const { changeWindsid, changePassword, login } = this.props
+    const { changeWindsid, changePassword } = this.props
     const buttonLabel = loading ? '読み込み中' : '送信'
     const disabled = (windsid && password) ? (loading ? true : false) : true
     const showError = errorMessage ? <div className='error'>{errorMessage}</div> : false

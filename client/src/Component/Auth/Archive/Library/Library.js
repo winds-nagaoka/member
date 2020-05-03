@@ -1,5 +1,4 @@
 import React from 'react'
-import { __esModule } from 'react-router-dom'
 
 export function escapeReg (string) {
   const reRegExp = /[\\^$.*+?()[\]{}|]/g

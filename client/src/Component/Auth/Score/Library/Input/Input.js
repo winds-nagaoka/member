@@ -55,13 +55,13 @@ export default class Input extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     this.setState({value: nextProps.value})
   }
 
   render () {
     var correctArray = []
-    const autoCorrect = this.state.list.map((each, i) => {
+    const autoCorrect = this.state.list.map((each) => {
       const text = each[this.props.target]
       if (Array.isArray(text)) {
         return text.map((e, i) => {

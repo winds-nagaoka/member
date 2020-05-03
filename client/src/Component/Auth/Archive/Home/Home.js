@@ -170,9 +170,8 @@ class Home extends Component {
         </div>
       )
     } else {
-      if (this.state.queryText) {
-
-      }
+      // if (this.state.queryText) {
+      // }
     }
   }
 

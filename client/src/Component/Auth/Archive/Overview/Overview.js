@@ -74,7 +74,7 @@ class Overview extends Component {
     this.props.getVideoList()
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { params } = nextProps.match
     if (params.id !== this.props.concertid) {
       this.props.setConcertid(params.id)

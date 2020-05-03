@@ -57,10 +57,10 @@ class Detail extends Component {
     this.props.setBackNavigation(true, '/score')
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
-    // const { params } = nextProps.match
-    // params.id ? this.props.setScoreid(params.id) : false
-  }
+  // componentWillReceiveProps (nextProps, nextContext) {
+  //   const { params } = nextProps.match
+  //   params.id ? this.props.setScoreid(params.id) : false
+  // }
 
   renderDetail () {
     if (this.props.detailLoading || !this.props.scoreDetail || !this.props.scoreid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
@@ -107,12 +107,13 @@ class Detail extends Component {
 
   renderScoreLack (score) {
     if (score.scoreLack) {
+      let scoreLack = 'なし'
       if (score.scoreLack === '1') {
-        var scoreLack = 'あり'
+        scoreLack = 'あり'
       } else if (score.scoreLack === '2') {
-        var scoreLack = '未確認'
+        scoreLack = '未確認'
       } else {
-        var scoreLack = 'なし'
+        scoreLack = 'なし'
       }
       return (
         <li>

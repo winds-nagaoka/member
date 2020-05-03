@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Home extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.getUser()
   }
 
@@ -62,7 +62,7 @@ class Home extends Component {
   }
 
   render () {
-    const showUserStatus = this.renderUserStatus()
+    // const showUserStatus = this.renderUserStatus()
 
     return (
       <React.Fragment>

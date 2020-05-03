@@ -55,7 +55,7 @@ class NavigationMenuContents extends Component {
   }
 
   render () {
-    const { pc, mobile, path } = this.props
+    const { pc, path } = this.props
     const { navigationMenu } = this.props
     return (
       <div className={'navigation-menu-contents' + lib.pcClass(pc)}>
@@ -81,7 +81,7 @@ class NavigationMenuContents extends Component {
   }
 }
 
-const CustomLink = ({ label, icon, to, path, activeOnlyWhenExact, onClick }) => {
+const CustomLink = ({ label, to, path, activeOnlyWhenExact, onClick }) => {
   const match = activeOnlyWhenExact ? (to === path ? ' active' : '') : (path.indexOf(to) === 0 ? ' active' : '')
   return (
     <div className={'link' + match}>

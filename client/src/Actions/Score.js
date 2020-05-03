@@ -55,14 +55,14 @@ const loadingSearch = (loadingSearch) => ({
 
 // 検索と全体読み込みのエントリーは別
 export const getScoreListAll = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(loading(true))
     dispatch(getScoreList(''))
   }
 }
 
 export const changeSearchText = (searchQuery) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(loadingSearch(true))
     dispatch(getScoreList(searchQuery))
     dispatch(loadMoreLoading(false))
@@ -83,7 +83,7 @@ export const resetSearchQuery = () => {
 }
 
 export const getScoreList = (query) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     const requestTime = String((new Date()).getTime())
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
@@ -122,7 +122,7 @@ export const loadMore = () => {
 }
 
 export const resetShowList = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(loadMoreLoading(false))
     dispatch(showListUpdate([]))
   }
@@ -155,7 +155,7 @@ const detailLoading = (detailLoading) => ({
 })
 
 export const getScoreDetail = (scoreid) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(detailLoading(true))
     if (!window.localStorage.token) return false
     const path = lib.getScorePath() + '/api/member/detail'
@@ -230,7 +230,7 @@ const loadScoreEdit = (editMode) => {
       } else if (res.body.status) {
         // 箱が未作成のときはBoxManagementComponentへ
         if (res.body.boxList.length === 0) return // 確認 これはエラー処理する this.redirectBoxManagement()
-        let boxList = [], each
+        let boxList = []
         for (let i=0;i<res.body.boxList.length;i++) {
           if (res.body.boxList[i].status) boxList.push(res.body.boxList[i])
         }

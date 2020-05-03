@@ -4,7 +4,7 @@ import {
   applyMiddleware
 } from 'redux'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
-import logger from 'redux-logger'
+// import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 // import authenticateReducer from '../Reducers/Authenticate'
 import statusReducer from '../Reducers/Status'

@@ -9,7 +9,6 @@ import { sourcePlayRequest } from '../../../../Actions/Audio'
 
 import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
-import * as libSource from './Library/Library'
 
 import './Source.css'
 

@@ -52,7 +52,7 @@ export const logout = () => {
     const send = {
       session: lib.getSession()
     }
-    request.post(path, send, (err, res) => {
+    request.post(path, send, (err) => {
       if (err) {
         dispatch(showToast('ネットワークエラー'))
         dispatch(replace('/login'))

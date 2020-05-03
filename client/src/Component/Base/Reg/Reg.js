@@ -61,7 +61,7 @@ class Reg extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (this.inputWindsidRef && this.inputWindsidRefFlag && this.props.mode) {
       this.inputWindsidRef.focus()
       this.inputWindsidRefFlag = false

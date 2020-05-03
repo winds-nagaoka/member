@@ -78,7 +78,7 @@ class Cast extends Component {
     // State List
     const { mobile, loadingList, castList, playStatus } = this.props
     // Dispatch List
-    const { requestPlayAudio, requestStopAudio } = this.props
+    // const { requestPlayAudio, requestStopAudio } = this.props
 
     const mobileMode = mobile ? ' mobile' : ''
 

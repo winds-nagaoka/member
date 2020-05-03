@@ -49,7 +49,7 @@ export function getSession () {
 }
 
 export function getToken (user) {
-  if (!'clientList' in user) return false
+  if (!('clientList' in user)) return false
   const client = user.clientList.filter((e) => {return e.id === getClientid()})
   if (client.length === 0) return false
   return client[0].token

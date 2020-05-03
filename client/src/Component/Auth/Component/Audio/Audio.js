@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
@@ -214,7 +213,7 @@ class Audio extends Component {
     this.props.audioStop()
   }
 
-  onLoadStart (e) {
+  onLoadStart () {
     if (this.props.audioRef.src) {
       this.props.setLoadingAudio(true)
     }
@@ -258,11 +257,11 @@ class Audio extends Component {
     }
   }
 
-  onCanPlayThrough (e) {
+  onCanPlayThrough () {
     this.props.setLoadingAudio(false)
   }
 
-  onError (e) {
+  onError () {
     this.props.setLoadingAudio(true)
   }
 
@@ -277,7 +276,7 @@ class Audio extends Component {
     }
   }
 
-  onEnded (e) {
+  onEnded () {
     this.playNext()
   }
 
@@ -632,22 +631,22 @@ class Audio extends Component {
       pc,
 
       // アーカイブプレイリスト
-      loadingArchivePlaylist,
+      // loadingArchivePlaylist,
       archivePlaylist,
-      archiveBaseUrl,
+      // archiveBaseUrl,
 
       // オーディオタグ本体
-      audioRef,
+      // audioRef,
 
       // 要素の表示状態
       displayPlayer,
       displayPlaylist,
-      playlistLoad,
+      // playlistLoad,
       playStatus,
       current,
-      currentTime,
+      // currentTime,
       duration,
-      durationTime,
+      // durationTime,
       playPercent,
 
       // オーディオタグの情報
@@ -656,8 +655,8 @@ class Audio extends Component {
 
       // 曲情報
       playmode,
-      concertid,
-      number,
+      // concertid,
+      // number,
       // album,
       // track
      } = this.props
@@ -694,15 +693,15 @@ class Audio extends Component {
         </div>
         <audio
           ref={(i) => {!this.props.audioRef ? this.props.setAudioRef(i) : false}}
-          onLoadStart={(e) => this.onLoadStart(e)}
+          onLoadStart={() => this.onLoadStart()}
           onLoadedMetadata={(e) => this.onLoadedMetadata(e)}
           onLoadedData={(e) => this.onLoadedData(e)}
           onDurationChange={(e) => this.onDurationChange(e)}
           onProgress={(e) => this.onProgress(e)}
-          onCanPlayThrough={(e) => this.onCanPlayThrough(e)}
-          onError={(e) => this.onError(e)}
+          onCanPlayThrough={() => this.onCanPlayThrough()}
+          onError={() => this.onError()}
           onTimeUpdate={(e) => this.onTimeUpdate(e)}
-          onEnded={(e) => this.onEnded(e)}
+          onEnded={() => this.onEnded()}
           controls={false}
         ></audio>
         {showPlaylist}

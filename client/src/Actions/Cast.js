@@ -34,7 +34,7 @@ export const listUpdate = (list) => ({
 })
 
 export const createPC = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     // if (getState().bbs.acquired) return false
     dispatch(loading(true))

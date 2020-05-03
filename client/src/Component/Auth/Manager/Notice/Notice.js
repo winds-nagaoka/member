@@ -75,7 +75,7 @@ class Notice extends Component {
     return manager.contents.map((each, i) => {
       const attachment = each.attachment ? each.attachment.map((attach, i) => {
         const size = Math.round(attach.size * 0.01) / 10
-        return <div key={'attachment' + i} className='notice-attachment'><a href={'https://winds-n.com/member/data/' + attach.filename} target='_blank' className='attachment'><span>{attach.title}</span><span className='size'>{size}KB</span></a></div>
+        return <div key={'attachment' + i} className='notice-attachment'><a href={'https://winds-n.com/member/data/' + attach.filename} target='_blank' rel="noopener noreferrer" className='attachment'><span>{attach.title}</span><span className='size'>{size}KB</span></a></div>
       }) : ''
       const date = each.time[0].date === '1970/01/01' ? false : each.time[0].date
       return (

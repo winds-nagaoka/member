@@ -3,10 +3,10 @@ import * as lib from '../Library/Library'
 
 const prefix = 'SCOREBOX_'
 
-const loading = (loading) => ({
-  type: prefix + 'LOADING',
-  payload: { loading }
-})
+// const loading = (loading) => ({
+//   type: prefix + 'LOADING',
+//   payload: { loading }
+// })
 
 export const getBoxList = () => {
   return async (dispatch, getState) => {
@@ -93,7 +93,7 @@ const loadingAddBox = (loadingAddBox) => ({
 })
 
 export const addBox = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loadingAddBox(true))
     const path = lib.getScorePath() + '/api/member/box/add'

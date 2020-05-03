@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
 import Swiper from 'react-id-swiper'
 // import Swiper from 'swiper'
 
-import { setBackNavigation } from '../../../../Actions/Navigation'
 import { setDisplayPhotoSlideModal } from '../../../../Actions/Archive'
 
-import * as libArchive from '../Library/Library'
 import * as lib from '../../../../Library/Library'
 
 import './PhotoSlide.css'

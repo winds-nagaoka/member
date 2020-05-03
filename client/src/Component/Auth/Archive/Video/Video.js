@@ -119,7 +119,7 @@ class Video extends Component {
     track ? this.props.videoPlayRequest(track, false) : false
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.getVideoList()
   }
 
@@ -130,7 +130,7 @@ class Video extends Component {
     this.props.getConcertList()
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { params } = nextProps.match
     params.id ? this.props.setConcertid(params.id) : false
   }
@@ -141,7 +141,7 @@ class Video extends Component {
     this.props.setVideoRef(undefined)
   }
 
-  onLoadStart (e) {
+  onLoadStart () {
     // console.log('読み込み開始', e)
     if (this.props.videoRef.src) {
       this.props.setLoadingVideoSource(true)
@@ -180,11 +180,11 @@ class Video extends Component {
     }
   }
 
-  onCanPlayThrough (e) {
+  onCanPlayThrough () {
     this.props.setLoadingVideoSource(false)
   }
 
-  onError (e) {
+  onError () {
     this.props.setLoadingVideoSource(true)
   }
 
@@ -199,7 +199,7 @@ class Video extends Component {
     }
   }
 
-  onEnded (e) {
+  onEnded () {
     this.playNext()
   }
 
@@ -295,15 +295,15 @@ class Video extends Component {
             <div className={'video-frame' + aspectClass}>
               <video
                 ref={(i) => {!this.props.videoRef ? this.props.setVideoRef(i) : false}}
-                onLoadStart={(e) => this.onLoadStart(e)}
+                onLoadStart={() => this.onLoadStart()}
                 onLoadedMetadata={(e) => this.onLoadedMetadata(e)}
                 onLoadedData={(e) => this.onLoadedData(e)}
                 onDurationChange={(e) => this.onDurationChange(e)}
                 onProgress={(e) => this.onProgress(e)}
-                onCanPlayThrough={(e) => this.onCanPlayThrough(e)}
-                onError={(e) => this.onError(e)}
+                onCanPlayThrough={() => this.onCanPlayThrough()}
+                onError={() => this.onError()}
                 onTimeUpdate={(e) => this.onTimeUpdate(e)}
-                onEnded={(e) => this.onEnded(e)}
+                onEnded={() => this.onEnded()}
                 onClick={(e) => this.onClick(e)}
                 poster={poster}
                 playsInline

@@ -4,7 +4,6 @@ import { confirmAlert } from 'react-confirm-alert'
 
 import { connect } from 'react-redux'
 
-import Back from '../../../../../Library/Icons/Back'
 import * as lib from '../../../../../Library/Library'
 
 import { redirect, setNavigationTitle, setBackNavigation } from '../../../../../Actions/Navigation'

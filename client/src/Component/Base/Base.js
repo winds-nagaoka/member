@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { loginAuth, windowWidthChange } from '../../Actions/Status'
@@ -33,7 +33,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Base extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.loginAuth(false)
   }
 
@@ -49,7 +49,7 @@ class Base extends Component {
   }
 
   render () {
-    const { login, loading } = this.props
+    const { loading } = this.props
     // if (login) return <Redirect to='/' />
     if (loading) return <Loading />
     return (

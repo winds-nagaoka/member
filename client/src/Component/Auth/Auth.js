@@ -65,12 +65,12 @@ class Auth extends Component {
     this.contentsRef = React.createRef()
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     // 過去のlocation情報が存在する場合はそのページへRedirect
     this.props.loginAuth(window.localStorage.location ? window.localStorage.location : false)
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
+  UNSAFE_componentWillReceiveProps () {
     if (this.contentsRef) {
       if (this.contentsRef.scrollTop) {
         this.contentsRef.scrollTop = 0

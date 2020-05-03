@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
@@ -10,7 +9,6 @@ import {
 } from '../../../../Actions/ScoreBox'
 
 import * as lib from '../../../../Library/Library'
-import * as libScore from '../Library/Library'
 
 import './BoxModal.css'
 
