@@ -17,7 +17,7 @@
     "dev-start": "npm run build-dev; DEBUG=express:* node app.js",
     "lint": "npm run lint-client && npm run lint-server",
     "lint-client": "eslint ./client/src --config .eslintrc-client.json",
-    "lint-server": "eslint ./app.js --config .eslintrc-server.json && eslint ./server --config .eslintrc-server.json"
+    "lint-server": "eslint ./app.js --config .eslintrc-server.json"
   },
   "author": "",
   "license": "ISC",
