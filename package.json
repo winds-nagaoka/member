@@ -1,6 +1,6 @@
 {
   "name": "member",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,10 @@
     "build": "npm run build-css && npm run build-js",
     "build-prod": "npm run build-css && npm run build-production",
     "build-dev": "npm run build-css && npm run build-js -- --devtool source-map",
-    "dev-start": "npm run build-dev; DEBUG=express:* node app.js"
+    "dev-start": "npm run build-dev; DEBUG=express:* node app.js",
+    "lint": "npm run lint-client && npm run lint-server",
+    "lint-client": "eslint ./client/src --config .eslintrc-client.json",
+    "lint-server": "eslint ./app.js --config .eslintrc-server.json"
   },
   "author": "",
   "license": "ISC",
@@ -52,6 +55,8 @@
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
     "node-sass": "^4.14.0",
     "style-loader": "^0.20.2",
     "svg-react-loader": "^0.4.5",

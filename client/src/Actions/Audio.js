@@ -1,6 +1,6 @@
 import * as request from '../Library/Request'
 import * as lib from '../Library/Library'
-import { playTime, version } from '../Library/Library'
+import { playTime } from '../Library/Library'
 
 import * as libArchive from '../Component/Auth/Archive/Library/Library'
 import * as libPractice from '../Component/Auth/Practice/Library/Library'
@@ -396,7 +396,7 @@ export const audioForward = () => {
 }
 
 export const closePlayer = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(audioStop())
     dispatch(setDisplayPlayer(false))
     dispatch(removeArchiveStorage())

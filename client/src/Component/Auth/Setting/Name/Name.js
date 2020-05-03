@@ -7,7 +7,6 @@ import Back from '../../../../Library/Icons/Back'
 import * as lib from '../../../../Library/Library'
 
 import { redirect, setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
-import { closePlayer } from '../../../../Actions/Audio'
 
 import Modify from '../Component/Modify/Modify'
 

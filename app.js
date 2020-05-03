@@ -1,17 +1,8 @@
 const express = require('express')
 const app = express()
 
-const version = require('project-version')
-
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true}))
-
-// ライブラリの読み込み
-const lib = require('./server/lib')
-
-// HTTPを使用する(公開用)
-const http = require('http')
-// app.listen(3001)
 app.listen(3006)
 
 const compression = require('compression')

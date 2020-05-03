@@ -1,5 +1,5 @@
 export const appName = 'member'
-export const version = '0.5.5'
+export const version = '0.5.6'
 // mode を prod 以外にするとローカルのAPIを使う
 const mode = 'prod' // dev or prod
 import uuidv1 from 'uuid/v1'
@@ -49,7 +49,7 @@ export function getSession () {
 }
 
 export function getToken (user) {
-  if (!'clientList' in user) return false
+  if (!('clientList' in user)) return false
   const client = user.clientList.filter((e) => {return e.id === getClientid()})
   if (client.length === 0) return false
   return client[0].token

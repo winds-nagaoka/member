@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect, Link } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
@@ -18,9 +18,8 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-  }
+function mapDispatchToProps() {
+  return {}
 }
 
 class Score extends Component {

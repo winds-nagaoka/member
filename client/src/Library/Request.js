@@ -13,7 +13,7 @@ export function countUp (send) {
   request.post('https://app.winds-n.com/api/count')
     .type('form')
     .send(send)
-    .end((error, response) => {
+    .end(() => {
       return
     })
 }
@@ -22,7 +22,7 @@ export function sendSeek (send) {
   request.post('https://app.winds-n.com/api/seek')
   .type('form')
   .send(send)
-  .end((error, response) => {
+  .end(() => {
     return
   })
 }
@@ -31,7 +31,7 @@ export function sendPath (send) {
   request.post('https://app.winds-n.com/api/path')
     .type('form')
     .send(send)
-    .end((error, response) => {
+    .end(() => {
       return
     })
 }

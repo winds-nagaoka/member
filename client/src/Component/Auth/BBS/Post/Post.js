@@ -9,8 +9,6 @@ import * as lib from '../../../../Library/Library'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { setPostName, setPostText, setPostPass, sendPost, resetPost } from '../../../../Actions/BBS'
 
-import { showToast } from '../../../../Actions/Toast'
-
 import './Post.css'
 
 function mapStateToProps(state) {

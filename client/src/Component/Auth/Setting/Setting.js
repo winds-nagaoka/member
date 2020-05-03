@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect, Link } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { scrollToTop } from '../../../Actions/Status'
@@ -38,7 +38,7 @@ function mapDispatchToProps(dispatch) {
 
 class Setting extends Component {
 
-  componentWillReceiveProps () {
+  UNSAFE_componentWillReceiveProps () {
     this.props.scrollToTop()
   }
 

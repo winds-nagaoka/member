@@ -77,7 +77,7 @@ class Record extends Component {
     // State List
     const { mobile, playStatus, loadingCastList, castList } = this.props
     // Dispatch List
-    const { requestPlayAudio, requestStopAudio } = this.props
+    const { requestStopAudio } = this.props
 
     const mobileMode = mobile ? ' mobile' : ''
 

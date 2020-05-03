@@ -1,5 +1,4 @@
 import React from 'react'
-import { __esModule } from 'react-router-dom'
 
 function getSourceList (id, sourceList) {
   const source = getSource(id, sourceList)

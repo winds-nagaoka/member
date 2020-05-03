@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 
-import * as lib from '../../Library/Library'
-
 import Header from '../Base/Component/Header/Header'
 
 // import WindsLogo from '../../../Asset/logo.svg'
@@ -14,9 +12,8 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-  }
+function mapDispatchToProps() {
+  return {}
 }
 
 class Loading extends Component {

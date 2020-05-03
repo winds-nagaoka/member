@@ -41,7 +41,7 @@ export const loading = (loading) => ({
 
 // Selection Components
 export const getSelectionPhase = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loadingSelectionPhase(true))
     const path = lib.getSurveyPath() + '/api/selection/phase'
@@ -71,14 +71,14 @@ const setSelectionPhase = (selectionPhase) => ({
 
 // Selection List
 export const getSelectionList = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(loadingSelectionList(true))
     dispatch(getSelectionListSearch(''))
   }
 }
 
 export const changeSearchQuery = (searchQuery) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingSelectionListSearch(true))
     dispatch(getSelectionListSearch(searchQuery))
     dispatch(setSearchQuery(searchQuery))
@@ -93,7 +93,7 @@ export const resetSearchQuery = () => {
 }
 
 export const getSelectionListSearch = (query) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     const requestTime = String((new Date()).getTime())
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
@@ -146,7 +146,7 @@ export const setSearchBoxRef = (searchBoxRef) => ({
 
 // Selection Like
 export const getSelectionLike = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loadingSelectionLike(true))
     const path = lib.getSurveyPath() + '/api/selection/like/get'
@@ -205,7 +205,7 @@ const loadingSelectionSendLike = (loadingSelectionSendLike) => ({
 
 // Selection Post
 export const getSelectionPost = (id) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loadingSelectionPostDetail(true))
     const path = lib.getSurveyPath() + '/api/selection/detail'
@@ -290,7 +290,7 @@ const loadingSelectionRemovePost = (loadingSelectionRemovePost) => ({
 
 // Selection Detail
 export const getSelectionDetail = (id) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loadingSelectionDetail(true))
     dispatch(setSelectionDetailid(id))

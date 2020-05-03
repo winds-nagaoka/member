@@ -14,17 +14,13 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    // showToast (string) {
-    //   dispatch(showToast(string))
-    // }
-  }
+function mapDispatchToProps() {
+  return {}
 }
 
 class Toast extends Component {
   render () {
-    const { string, status, hide, end } = this.props
+    const { string, status, hide } = this.props
     if (status) {
       var className = 'toast'
       if (hide) {

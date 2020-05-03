@@ -1,7 +1,7 @@
 import React from 'react'
 
 export function makeLine (array) {
-  var s = ''
+  let s = ''
   for (var i = 0; i<array.length; i++) {
     s += array[i] + ', '
   }
@@ -10,13 +10,13 @@ export function makeLine (array) {
 }
 
 export function makeLineUrl (array) {
-  var s = ''
   let newArray = []
   for (var i = 0; i<array.length; i++) {
+    /* eslint no-useless-escape: 0 */
     if (array[i].match(/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/g)) {
       const label = array[i].match(/youtu\.?be/) ? <i className='fab fa-youtube'></i> : <i className='fas fa-external-link-square-alt'></i>
       const className = array[i].match(/youtu\.?be/) ? 'youtube' : 'other'
-      const link = <a href={array[i]} target='_blank' className={className}>{label}</a>
+      const link = <a href={array[i]} target='_blank' rel="noopener noreferrer" className={className}>{label}</a>
       newArray[i] = link
     } else {
       newArray[i] = array[i]
@@ -32,7 +32,7 @@ export function makeLineUrl (array) {
 
 export function countLike (list, id) {
   let like = 0
-  list.forEach((item, i) => {
+  list.forEach((item) => {
     if (item.like.find(item => item === id)) {
       like++
     }

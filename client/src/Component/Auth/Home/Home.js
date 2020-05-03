@@ -176,10 +176,10 @@ class Home extends Component {
 
   render () {
     // State List
-    const { socketid, pc, loadingCastList, castList, loadingSchedule, schedule, loadingSource, source, loadingManager, manager, loadingBBS, BBSList } = this.props
+    const { pc, loadingSchedule, schedule, loadingManager, manager, loadingBBS, BBSList } = this.props
     // Dispatch List
     // const { logout } = this.props
-    const socketStatus = socketid ? 'OK' : 'NG'
+    // const socketStatus = socketid ? 'OK' : 'NG'
 
     // const showCastList = this.renderCast(loadingCastList, castList)
     const showScheduleNext = this.renderSchedule(loadingSchedule, schedule)

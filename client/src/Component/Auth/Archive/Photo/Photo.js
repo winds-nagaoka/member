@@ -62,7 +62,7 @@ class Photo extends Component {
     id !== '' ? this.props.setBackNavigation(true, ('/archive/overview/' + id)) : this.props.setBackNavigation(true, ('/archive'))
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.getPhotoList()
   }
 
@@ -73,7 +73,7 @@ class Photo extends Component {
     this.props.getConcertList()
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { params } = nextProps.match
     params.id ? this.props.setConcertid(params.id) : false
   }

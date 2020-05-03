@@ -1,6 +1,6 @@
 import * as request from '../Library/Request'
 import * as lib from '../Library/Library'
-import { playTime, version } from '../Library/Library'
+import { playTime } from '../Library/Library'
 import { escapeReg } from '../Component/Auth/Archive/Library/Library'
 
 import { setDisplayPlayer, audioPause } from './Audio'
@@ -44,7 +44,7 @@ const setConcertList = (concertList) => ({
 // })
 
 export const toggleDisplayMain = (displayMain) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     window.localStorage.displayMain = displayMain
     dispatch(setDisplayMain(displayMain))
   }
@@ -56,7 +56,7 @@ const setDisplayMain = (displayMain) => ({
 })
 
 export const toggleDisplayMini = (displayMini) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     window.localStorage.displayMini = displayMini
     dispatch(setDisplayMini(displayMini))
   }
@@ -68,7 +68,7 @@ const setDisplayMini = (displayMini) => ({
 })
 
 export const toggleDisplayOther = (displayOther) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     window.localStorage.displayOther = displayOther
     dispatch(setDisplayOther(displayOther))
   }
@@ -168,7 +168,7 @@ export const getPhotoList = () => {
 }
 
 export const resetPhotoList = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(setPhotoList(undefined, undefined, undefined, undefined, undefined))
   }
 }

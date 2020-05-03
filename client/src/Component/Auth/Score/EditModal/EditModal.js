@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
@@ -16,7 +15,6 @@ import {
 
 import Input from '../Library/Input/Input'
 
-import * as libScore from '../Library/Library'
 import * as lib from '../../../../Library/Library'
 
 import './EditModal.css'
@@ -72,7 +70,7 @@ class EditModal extends Component {
     // const { params } = this.props.match
     // const id = params.id ? params.id : ''
     // this.props.setBackNavigation(true, '/score/detail/' + id)
-    // // id と　scoreid があってないとき(確認する)
+    // // id と scoreid があってないとき(確認する)
     // if (id !== this.props.scoreid) this.props.getScoreDetail(id)
     // id ? this.props.setEditMode('edit') : this.props.setEditMode('new')
   }
@@ -82,10 +80,10 @@ class EditModal extends Component {
     // this.props.setBackNavigation(true, '/score')
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
-    // const { params } = nextProps.match
-    // params.id ? this.props.setScoreid(params.id) : false
-  }
+  // componentWillReceiveProps (nextProps, nextContext) {
+  //   const { params } = nextProps.match
+  //   params.id ? this.props.setScoreid(params.id) : false
+  // }
 
   componentWillUnmount () {
   }
@@ -135,7 +133,7 @@ class EditModal extends Component {
   }
 
   renderBoxSelect () {
-    const options = this.props.boxList.map((each, i) => {
+    const options = this.props.boxList.map((each) => {
       return <option key={each._id} value={each.label}>{each.label} - {!each.locate ? '未設定' : each.locate}</option>
     })
     return (

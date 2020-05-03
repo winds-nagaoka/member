@@ -15,7 +15,7 @@ const loading = (loading) => ({
 
 // 確認 ここにUserdataの読み込み書けばよいのでは
 export const getUser = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/auth'
@@ -75,7 +75,7 @@ const loadingDeleteEmailRequest = (loadingDeleteEmailRequest) => ({
 })
 
 export const deleteEmailRequest = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loadingDeleteEmailRequest(true))
     const path = lib.getAuthPath() + '/api/setting/email'
@@ -145,7 +145,7 @@ export const updatePassword = () => {
 
 // Session Management
 export const requestDeleteSession = (clientid) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loading('update'))
     const path = lib.getAuthPath() + '/api/setting/deletesession'
     const send = {
@@ -295,7 +295,7 @@ const loadingScoreCount = (loadingScoreCount) => ({
 })
 
 export const getScoreCount = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     if (!window.localStorage.token) return false
     dispatch(loadingScoreCount(true))
     const path = lib.getScorePath() + '/api/member/count'

@@ -11,8 +11,6 @@ import * as libManager from '../Library/Library'
 import { setNavigationTitle, setBackNavigation } from '../../../../Actions/Navigation'
 import { getSelectionPhase, getSelectionPost, setSelectionPostid, setSelectionPost, sendPost } from '../../../../Actions/Manager'
 
-import { showToast } from '../../../../Actions/Toast'
-
 import './Post.css'
 
 function mapStateToProps(state) {
@@ -53,9 +51,9 @@ function mapDispatchToProps(dispatch) {
     sendPost (removeRequest) {
       dispatch(sendPost(removeRequest))
     },
-    resetPost () {
-      dispatch(resetPost())
-    }
+    // resetPost () {
+    //   dispatch(resetPost())
+    // }
   }
 }
 

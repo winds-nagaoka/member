@@ -3,7 +3,7 @@ import { replace } from 'react-router-redux'
 import * as Status from './Status'
 import * as request from '../Library/Request'
 import * as lib from '../Library/Library'
-import { requestFirstTutorial } from './Tutorial'
+// import { requestFirstTutorial } from './Tutorial'
 
 export const register = () => {
   return async (dispatch, getState) => {
@@ -58,7 +58,7 @@ export const loading = (loading) => ({
 })
 
 export const updateMode = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(loading(true))
     setTimeout(() => {
       dispatch(loading(false))

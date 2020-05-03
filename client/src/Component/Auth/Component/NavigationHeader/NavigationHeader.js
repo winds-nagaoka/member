@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 
@@ -82,18 +82,18 @@ class NavigationHeader extends Component {
   }
 }
 
-const CustomLink = ({ label, icon, to, activeOnlyWhenExact, onClick }) => {
-  return (
-    <Route
-      path={to}
-      exact={activeOnlyWhenExact}
-      children={({ match }) => (
-        <div className={'link ' + (match ? 'active' : '')}>
-          <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}><div>{/* <i className={icon}></i> */}{label}</div></Link>
-        </div>
-      )}
-    />
-  )
-}
+// const CustomLink = ({ label, to, activeOnlyWhenExact, onClick }) => {
+//   return (
+//     <Route
+//       path={to}
+//       exact={activeOnlyWhenExact}
+//       children={({ match }) => (
+//         <div className={'link ' + (match ? 'active' : '')}>
+//           <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}><div>{/* <i className={icon}></i> */}{label}</div></Link>
+//         </div>
+//       )}
+//     />
+//   )
+// }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationHeader)
