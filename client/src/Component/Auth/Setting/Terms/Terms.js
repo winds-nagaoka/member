@@ -105,7 +105,7 @@ class About extends Component {
               <div className='list-number'><h2>第六条</h2></div>
               <div><p>役員の任期は一年とし、毎年総会にて決定する。ただし再任を妨げない。</p></div>
               <div className='list-number-second'><h2>二</h2></div>
-              <div><p>役員に欠員が生じた場合は、14日以内に前任者の指名もしくは会員の選出で補充する。</p></div>
+              <div><p>役員に欠員が生じた場合は、十四日以内に前任者の指名もしくは会員の選出で補充する。</p></div>
             </div>
             <div className='provision'>
               <div className='sub-title'><h3>役員の任務</h3></div>
