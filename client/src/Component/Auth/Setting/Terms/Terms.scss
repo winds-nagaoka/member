@@ -142,23 +142,6 @@
           content: none;
         }
       }
-
-      ol {
-
-        li {
-          span {
-            margin-right: .5em;
-
-            &:before {
-              content: none;
-            }
-
-            &:after {
-              content: '.';
-            }
-          }
-        }
-      }
     }
 
     h3 {
