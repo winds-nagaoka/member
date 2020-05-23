@@ -60,7 +60,7 @@ class NavigationMenuContents extends Component {
     return (
       <div className={'navigation-menu-contents' + lib.pcClass(pc)}>
         <div className='app-info'>
-          <img src='https://winds-n.com/img/apple-icon-archive.png' alt='logo' />
+          <img src='https://winds-n.com/image/icon/apple-icon.png' alt='logo' />
           <span>会員専用ページ</span>
         </div>
         <ol>
