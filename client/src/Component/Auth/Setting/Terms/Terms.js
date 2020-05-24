@@ -81,12 +81,12 @@ class About extends Component {
                 <p>ウィンズに次の役員を置く。</p>
                 <table>
                   <tbody>
-                    <tr><th>代表</th><td>1名</td></tr>
-                    <tr><th>代表代行</th><td>1名</td></tr>
-                    <tr><th>事務局長</th><td>1名</td></tr>
-                    <tr><th>ステージマネージャー(演奏会総括)</th><td>1名</td></tr>
-                    <tr><th>会計</th><td>1名</td></tr>
-                    <tr><th>トレーナー</th><td>1名</td></tr>
+                    <tr><th>代表</th><td>１名</td></tr>
+                    <tr><th>代表代行</th><td>１名</td></tr>
+                    <tr><th>事務局長</th><td>１名</td></tr>
+                    <tr><th>ステージマネージャー(演奏会総括)</th><td>１名</td></tr>
+                    <tr><th>会計</th><td>１名</td></tr>
+                    <tr><th>トレーナー</th><td>１名</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -166,7 +166,7 @@ class About extends Component {
               <div className='list-number'><h2>第十四条</h2></div>
               <div><p>ウィンズの運営資金は会費から徴収する運営資金と演奏活動収益金をもってこれに充てる。</p></div>
               <div className='list-number-second'><h2>二</h2></div>
-              <div><p>運営資金の会計年度は毎年3月1日から翌年2月末までとし、総会にて決算報告をするものとする。</p></div>
+              <div><p>運営資金の会計年度は毎年３月１日から翌年２月末までとし、総会にて決算報告をするものとする。</p></div>
               <div className='list-number-third'><h2>三</h2></div>
               <div><p>会計監査を設置し、会計の実施した出納に関して監査を行うものとする。</p></div>
             </div>
@@ -239,11 +239,11 @@ class About extends Component {
             <div className='supplementary-provision'>
               <h2>付則</h2>
               <ol>
-                <li>この規約は、昭和62年11月1日より施行する。</li>
-                <li>この規約は、平成23年3月21日より改制する。</li>
-                <li>この規約は、平成30年3月17日より改制する。</li>
-                <li>この規約は、平成31年3月9日より改制する。</li>
-                <li>この規約は、令和元年12月9日より改制する。</li>
+                <li>この規約は、昭和６２年１１月１日より施行する。</li>
+                <li>この規約は、平成２３年３月２１日より改制する。</li>
+                <li>この規約は、平成３０年３月１７日より改制する。</li>
+                <li>この規約は、平成３１年３月９日より改制する。</li>
+                <li>この規約は、令和元年１２月９日より改制する。</li>
               </ol>
             </div>
 
