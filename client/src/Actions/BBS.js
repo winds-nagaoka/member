@@ -5,7 +5,21 @@ import * as lib from '../Library/Library'
 import { showToast } from './Toast'
 
 const prefix = 'BBS_'
-const api = 'Wct5RRmoRwL8mysm4yChUcfkXGcm0fwPJSTrJPqbLGJnFDe9kSQuvPMNKa0rgky9pKukd7mMmZVds3RtimrXZ48UcfiVlvKq699OK662f2uOjP1B99jqJjMCIRrE9QdF'
+
+const getApi = () => {
+  return new Promise(resolve => {
+    const path = lib.getAppPath() + '/api/bbs'
+    const send = { session: lib.getSession() }
+    request.post(path, send, (err, res) => {
+      console.log(res)
+      if (err) {
+        resolve(false)
+      } else {
+        resolve(res.body.api)
+      }
+    })
+  })
+}
 
 export const getBBSList = () => {
   return async (dispatch, getState) => {
@@ -15,6 +29,7 @@ export const getBBSList = () => {
     // 既に読み込んでるデータをリセット
     dispatch(updateList(undefined))
     dispatch(showListUpdate([], 0, true))
+    const api = await getApi()
     const path = lib.getApiPath() + '/bbs/' // スラッシュ必須
     const send = { api }
     request.post(path, send, (err, res) => {
@@ -90,6 +105,7 @@ export const sendPost = () => {
       return false
     }
     dispatch(loadingPost(true))
+    const api = await getApi()
     const path = lib.getApiPath() + '/bbs/' // スラッシュ必須
     const send = {
       api,
