@@ -8,6 +8,7 @@ import { navigationMenu } from '../../../../Actions/Navigation'
 import { logout } from '../../../../Actions/Status'
 
 import * as lib from '../../../../Library/Library'
+import Logo from '../../../../Asset/hr.svg'
 
 import './NavigationMenuContents.css'
 
@@ -60,7 +61,8 @@ class NavigationMenuContents extends Component {
     return (
       <div className={'navigation-menu-contents' + lib.pcClass(pc)}>
         <div className='app-info'>
-          <img src='https://winds-n.com/image/icon/apple-icon.png' alt='logo' />
+          <div className='light'><Logo /></div>
+          <img src='https://winds-n.com/image/icon/apple-icon.png' alt='logo' className='dark' />
           <span>会員専用ページ</span>
         </div>
         <ol>

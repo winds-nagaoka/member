@@ -52,12 +52,40 @@
     display: flex;
     align-items: center;
 
-    img {
-      display: block;
+    div.light {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: .55px solid #eee;
+      border-radius: 50%;
+      background: #fff;
+
+      svg {
+        width: 60px;
+        height: 60px;
+        padding: 4px;
+        fill: #B60005;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        & {
+          display: none;
+        }
+      }
+    }
+
+    img.dark {
+      display: none;
       width: 60px;
       height: 60px;
       // margin: 5px 0 0 5px;
       border-radius: 50%;
+
+      @media (prefers-color-scheme: dark) {
+        & {
+          display: block;
+        }
+      }
     }
 
     span {
