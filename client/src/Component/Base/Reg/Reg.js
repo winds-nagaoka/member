@@ -111,7 +111,6 @@ class Reg extends Component {
               </div>
             </div>
           </div>
-          <div className='old'><a href='https://winds-n.com/member'>旧会員専用ページはこちら</a></div>
           <Footer />
         </div>
       )

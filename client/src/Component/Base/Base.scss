@@ -229,34 +229,6 @@
     }
   }
 
-  .old {
-    margin: 48px 0 0;
-
-    a {
-      font-size: 13px;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      & {
-        color: #888;
-        &:hover {
-          color: #333;
-        }
-      }
-      @media (prefers-color-scheme: dark) {
-        & {
-          color: #aaa;
-          &:hover {
-            color: #ccc;
-          }  
-        }
-      }
-    }
-  }
-
   footer {
     width: 100%;
     margin: 48px 0;
