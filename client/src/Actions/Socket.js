@@ -16,13 +16,11 @@ export const connectSocket = () => {
   //     // })
   //     dispatch(updateSocket(true, socket.id))
   //   })
-
   //   // Presenterがcastした場合
   //   socket.on('cast_start', async () => {
   //     // console.log('放送開始')
   //     dispatch(Cast.getList())
   //   })
-
   //   // Presenterがcastを終了した場合
   //   socket.on('cast_end', async (obj) => {
   //     // console.log('放送終了')
@@ -46,5 +44,5 @@ export const updateSocket = (connectStatus, id) => ({
   payload: {
     status: connectStatus,
     id,
-  }
+  },
 })

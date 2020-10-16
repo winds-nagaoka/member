@@ -26,25 +26,25 @@ export const requestFirstTutorial = () => {
 
 const setUserAgent = () => ({
   type: prefix + 'SET_USER_AGENT',
-  payload: { userAgent: getUserAgent() }
+  payload: { userAgent: getUserAgent() },
 })
 
-function getUserAgent () {
+function getUserAgent() {
   let ua = ['iPod', 'iPad', 'iPhone', 'Android']
   let result = false
-	for (let i = 0; i < ua.length; i++) {
-		if (navigator.userAgent.indexOf(ua[i]) > 0) result = ua[i]
-	}
-	return result ? result : 'other'
+  for (let i = 0; i < ua.length; i++) {
+    if (navigator.userAgent.indexOf(ua[i]) > 0) result = ua[i]
+  }
+  return result ? result : 'other'
 }
 
 const setStandalone = () => ({
   type: prefix + 'SET_STANDALONE',
-  payload: { standalone: window.matchMedia('(display-mode: standalone)').matches ? true : false }
+  payload: { standalone: window.matchMedia('(display-mode: standalone)').matches ? true : false },
 })
 
 // 閉じるときに使う
 export const setDisplayTutorial = (displayTutorial, tutorialMode) => ({
   type: prefix + 'SET_DISPLAY_TUTORIAL',
-  payload: { displayTutorial, tutorialMode }
+  payload: { displayTutorial, tutorialMode },
 })

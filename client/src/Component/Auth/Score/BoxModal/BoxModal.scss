@@ -1,5 +1,4 @@
 .score-box-modal {
-
   .score-box-info {
     position: fixed;
     top: auto;
@@ -21,9 +20,9 @@
     padding-bottom: env(safe-area-inset-bottom);
 
     // transition: transform .3s ease-in-out;
-    transition: transform .2s ease-in-out;
-    -webkit-transform: translate3d(0,105%,0);
-    transform: translate3d(0,105%,0);
+    transition: transform 0.2s ease-in-out;
+    -webkit-transform: translate3d(0, 105%, 0);
+    transform: translate3d(0, 105%, 0);
     -webkit-overflow-scrolling: touch;
 
     &.pc {
@@ -32,10 +31,10 @@
     }
 
     &.open {
-      transition: transform .2s ease;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
-      box-shadow: 6px 0 25px rgba(0,0,0,.15);
+      transition: transform 0.2s ease;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
+      box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
 
       &.pc {
         // -webkit-transform: translateY(20%);
@@ -120,7 +119,6 @@
           }
 
           .score-box-label {
-
             span {
               display: inline-block;
               padding: 2px 8px;
@@ -150,7 +148,7 @@
         }
 
         .input-box-locate {
-          input[type="text"] {
+          input[type='text'] {
             -webkit-appearance: none;
             display: block;
             width: calc(100% - 20px - 2px);
@@ -160,16 +158,16 @@
             font-size: 16px;
 
             & {
-              border: .55px solid #cbcbcd;
+              border: 0.55px solid #cbcbcd;
             }
             @media (prefers-color-scheme: dark) {
               & {
-                border: .55px solid #2d2d2f;
+                border: 0.55px solid #2d2d2f;
               }
             }
 
             &:focus {
-              border: solid .55px rgba(182,0,5,.6);
+              border: solid 0.55px rgba(182, 0, 5, 0.6);
               outline: 0;
             }
           }
@@ -190,7 +188,7 @@
             text-align: center;
             text-decoration: none;
             cursor: pointer;
-            transition: all ease-in-out .1s;
+            transition: all ease-in-out 0.1s;
 
             & {
               color: #333;
@@ -223,7 +221,7 @@
               transition: all ease-in-out 0s;
             }
             &:active {
-              transition: all ease-in-out .1s;
+              transition: all ease-in-out 0.1s;
             }
           }
         }
@@ -242,10 +240,10 @@
     background: black;
 
     &.open {
-      display: block;/*カバーを表示*/
-      opacity: .35;
+      display: block; /*カバーを表示*/
+      opacity: 0.35;
       // transition: all 3s ease-in-out;
-      animation: menu-background-show .3s ease-in-out 0s;
+      animation: menu-background-show 0.3s ease-in-out 0s;
     }
   }
 }

@@ -16,66 +16,136 @@ function mapStateToProps(state) {
   return {
     pc: state.status.pc,
     mobile: state.status.mobile,
-    path: state.router.location.pathname
+    path: state.router.location.pathname,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    navigationMenu (open) {
+    navigationMenu(open) {
       dispatch(navigationMenu(open))
     },
-    logout () {
+    logout() {
       dispatch(logout())
-    }
+    },
   }
 }
 
 class NavigationMenuContents extends Component {
-
-  logout () {
+  logout() {
     this.props.navigationMenu(false)
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className='alert'>
+          <div className="alert">
             <h1>ログアウトしますか？</h1>
             <p>ユーザー情報は端末に残りません。</p>
-            <div className='button-group'>
+            <div className="button-group">
               <button onClick={onClose}>キャンセル</button>
-              <button onClick={() => {
-                this.props.logout()
-                // Actions.toastShow('ログアウトしました')
-                onClose()
-              }}>ログアウト</button>
+              <button
+                onClick={() => {
+                  this.props.logout()
+                  // Actions.toastShow('ログアウトしました')
+                  onClose()
+                }}
+              >
+                ログアウト
+              </button>
             </div>
           </div>
         )
-      }
+      },
     })
   }
 
-  render () {
+  render() {
     const { pc, path } = this.props
     const { navigationMenu } = this.props
     return (
       <div className={'navigation-menu-contents' + lib.pcClass(pc)}>
-        <div className='app-info'>
-          <div className='light'><Logo /></div>
-          <img src='https://winds-n.com/image/icon/apple-icon.png' alt='logo' className='dark' />
+        <div className="app-info">
+          <div className="light">
+            <Logo />
+          </div>
+          <img src="https://winds-n.com/image/icon/apple-icon.png" alt="logo" className="dark" />
           <span>会員専用ページ</span>
         </div>
         <ol>
-          <li><CustomLink path={path} activeOnlyWhenExact={true} to='/' label='ホーム' icon='fas fa-home' onClick={() => {navigationMenu(false)}} /></li>
-          <li><CustomLink path={path} to='/practice' label='練習について' icon='far fa-calendar-check' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/manager' label='お知らせ' icon='fas fa-bullhorn' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/bbs' label='掲示板' icon='fas fa-comments' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/archive' label='アーカイブ' icon='fas fa-archive' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/score' label='ウィンズスコア' icon='far fa-sticky-note' onClick={() => navigationMenu(false)} /></li>
-          <li><CustomLink path={path} to='/setting' label='設定' icon='fas fa-cog' onClick={() => navigationMenu(false)} /></li>
+          <li>
+            <CustomLink
+              path={path}
+              activeOnlyWhenExact={true}
+              to="/"
+              label="ホーム"
+              icon="fas fa-home"
+              onClick={() => {
+                navigationMenu(false)
+              }}
+            />
+          </li>
+          <li>
+            <CustomLink
+              path={path}
+              to="/practice"
+              label="練習について"
+              icon="far fa-calendar-check"
+              onClick={() => navigationMenu(false)}
+            />
+          </li>
+          <li>
+            <CustomLink
+              path={path}
+              to="/manager"
+              label="お知らせ"
+              icon="fas fa-bullhorn"
+              onClick={() => navigationMenu(false)}
+            />
+          </li>
+          <li>
+            <CustomLink
+              path={path}
+              to="/bbs"
+              label="掲示板"
+              icon="fas fa-comments"
+              onClick={() => navigationMenu(false)}
+            />
+          </li>
+          <li>
+            <CustomLink
+              path={path}
+              to="/archive"
+              label="アーカイブ"
+              icon="fas fa-archive"
+              onClick={() => navigationMenu(false)}
+            />
+          </li>
+          <li>
+            <CustomLink
+              path={path}
+              to="/score"
+              label="ウィンズスコア"
+              icon="far fa-sticky-note"
+              onClick={() => navigationMenu(false)}
+            />
+          </li>
+          <li>
+            <CustomLink
+              path={path}
+              to="/setting"
+              label="設定"
+              icon="fas fa-cog"
+              onClick={() => navigationMenu(false)}
+            />
+          </li>
         </ol>
         <ol>
-          <li><div className='link' onClick={() => this.logout()}><div><i className='fas fa-sign-out-alt'></i>ログアウト</div></div></li>
+          <li>
+            <div className="link" onClick={() => this.logout()}>
+              <div>
+                <i className="fas fa-sign-out-alt"></i>ログアウト
+              </div>
+            </div>
+          </li>
           {/* <CustomLink to='/score/logout' label='ログアウト' icon='fas fa-sign-out-alt' onClick={() => this.logout()} /> */}
         </ol>
       </div>
@@ -84,10 +154,15 @@ class NavigationMenuContents extends Component {
 }
 
 const CustomLink = ({ label, to, path, activeOnlyWhenExact, onClick }) => {
-  const match = activeOnlyWhenExact ? (to === path ? ' active' : '') : (path.indexOf(to) === 0 ? ' active' : '')
+  const match = activeOnlyWhenExact ? (to === path ? ' active' : '') : path.indexOf(to) === 0 ? ' active' : ''
   return (
     <div className={'link' + match}>
-      <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}><div>{/* <i className={icon}></i> */}{label}</div></Link>
+      <Link to={to} onClick={() => onClick()} onTouchStart={() => {}}>
+        <div>
+          {/* <i className={icon}></i> */}
+          {label}
+        </div>
+      </Link>
     </div>
   )
 }

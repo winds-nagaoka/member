@@ -7,8 +7,8 @@ const prefix = 'SCORE_'
 
 // 新しい楽譜を追加するときはこれをコピーする
 const newScoreObject = Object.freeze({
-// const newScoreObject = {
-    // 楽譜番号(初期値)
+  // const newScoreObject = {
+  // 楽譜番号(初期値)
   number: 1,
   // タイトル(日本語)
   titleJa: '',
@@ -45,12 +45,12 @@ const newScoreObject = Object.freeze({
 
 const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 const loadingSearch = (loadingSearch) => ({
   type: prefix + 'LOADING_SEARCH',
-  payload: { loadingSearch }
+  payload: { loadingSearch },
 })
 
 // 検索と全体読み込みのエントリーは別
@@ -72,7 +72,7 @@ export const changeSearchText = (searchQuery) => {
 
 const setSearchQuery = (searchQuery) => ({
   type: prefix + 'SET_SEARCH_QUERY',
-  payload: { searchQuery }
+  payload: { searchQuery },
 })
 
 export const resetSearchQuery = () => {
@@ -85,13 +85,13 @@ export const resetSearchQuery = () => {
 export const getScoreList = (query) => {
   return async (dispatch) => {
     if (!window.localStorage.token) return false
-    const requestTime = String((new Date()).getTime())
+    const requestTime = String(new Date().getTime())
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
     const path = lib.getScorePath() + '/api/member/score'
     const send = {
       session: lib.getSession(),
-      query: query === undefined ? '' : query
+      query: query === undefined ? '' : query,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -110,7 +110,7 @@ export const getScoreList = (query) => {
 
 const setScoreList = (scoreList) => ({
   type: prefix + 'SET_SCORE_LIST',
-  payload: { scoreList }
+  payload: { scoreList },
 })
 
 export const loadMore = () => {
@@ -130,28 +130,28 @@ export const resetShowList = () => {
 
 const loadMoreLoading = (loadMoreLoading) => ({
   type: prefix + 'LOAD_MORE_LOADING',
-  payload: { loadMoreLoading }
+  payload: { loadMoreLoading },
 })
 
 const showListUpdate = (showList) => ({
   type: prefix + 'SHOW_LIST_UPDATE',
-  payload: { showList }
+  payload: { showList },
 })
 
 export const setSearchBoxRef = (searchBoxRef) => ({
   type: prefix + 'SET_SEARCH_BOX_REF',
-  payload: { searchBoxRef }
+  payload: { searchBoxRef },
 })
 
 export const setDisplayScoreModal = (displayScoreModal, modalContent) => ({
   type: prefix + 'SET_DISPLAY_SCORE_MODAL',
-  payload: { displayScoreModal, modalContent }
+  payload: { displayScoreModal, modalContent },
 })
 
 // detail, edit 共用
 const detailLoading = (detailLoading) => ({
   type: prefix + 'DETAIL_LOADING',
-  payload: { detailLoading }
+  payload: { detailLoading },
 })
 
 export const getScoreDetail = (scoreid) => {
@@ -161,15 +161,16 @@ export const getScoreDetail = (scoreid) => {
     const path = lib.getScorePath() + '/api/member/detail'
     const send = {
       session: lib.getSession(),
-      id: scoreid
+      id: scoreid,
     }
     request.post(path, send, (err, res) => {
       if (err) {
         return false
       } else if (res.body.status) {
         // boxUseは使用中の箱情報が入る
-        let boxList = [], boxUse
-        for (let i=0;i<res.body.boxList.length;i++) {
+        let boxList = [],
+          boxUse
+        for (let i = 0; i < res.body.boxList.length; i++) {
           if (res.body.boxList[i].status) boxList.push(res.body.boxList[i])
           if (res.body.data.boxLabel === res.body.boxList[i].label) boxUse = res.body.boxList[i]
         }
@@ -183,18 +184,18 @@ export const getScoreDetail = (scoreid) => {
 
 const setScoreDetail = (scoreid, scoreDetail, boxUse) => ({
   type: prefix + 'SET_SCORE_DETAIL',
-  payload: { scoreid, scoreDetail, boxUse }
+  payload: { scoreid, scoreDetail, boxUse },
 })
 
 const setBoxList = (boxList) => ({
   type: prefix + 'SET_BOX_LIST',
-  payload: { boxList }
+  payload: { boxList },
 })
 
 // score edit
 export const setEditModalRef = (editModalRef) => ({
   type: prefix + 'SET_EDIT_MODAL_REF',
-  payload: { editModalRef }
+  payload: { editModalRef },
 })
 
 export const setDisplayEditScoreModal = (displayEditScoreModal, editMode, scoreEdit) => {
@@ -210,7 +211,7 @@ export const setDisplayEditScoreModal = (displayEditScoreModal, editMode, scoreE
 
 const editPreLoading = (editPreLoading) => ({
   type: prefix + 'EDIT_PRE_LOADING',
-  payload: { editPreLoading }
+  payload: { editPreLoading },
 })
 
 const loadScoreEdit = (editMode) => {
@@ -222,7 +223,7 @@ const loadScoreEdit = (editMode) => {
     const send = {
       session: lib.getSession(),
       mode: editMode,
-      id: (editMode !== 'new' ? getState().score.scoreid : false)
+      id: editMode !== 'new' ? getState().score.scoreid : false,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -231,7 +232,7 @@ const loadScoreEdit = (editMode) => {
         // 箱が未作成のときはBoxManagementComponentへ
         if (res.body.boxList.length === 0) return // 確認 これはエラー処理する this.redirectBoxManagement()
         let boxList = []
-        for (let i=0;i<res.body.boxList.length;i++) {
+        for (let i = 0; i < res.body.boxList.length; i++) {
           if (res.body.boxList[i].status) boxList.push(res.body.boxList[i])
         }
         // 使用可能な箱がない
@@ -262,29 +263,31 @@ const loadScoreEdit = (editMode) => {
       }
       dispatch(updateDisplayEditScoreModal(true))
       // Modal が開くのを待つ
-      setTimeout(() => { dispatch(editPreLoading(false)) }, 100)
+      setTimeout(() => {
+        dispatch(editPreLoading(false))
+      }, 100)
     })
   }
 }
 
 const updateDisplayEditScoreModal = (displayEditScoreModal) => ({
   type: prefix + 'UPDATE_DISPLAY_EDIT_SCORE_MODAL',
-  payload: { displayEditScoreModal }
+  payload: { displayEditScoreModal },
 })
 
 const setEditMode = (editMode) => ({
   type: prefix + 'SET_EDIT_MODE',
-  payload: { editMode }
+  payload: { editMode },
 })
 
 export const setScoreEdit = (scoreEdit) => ({
   type: prefix + 'SET_SCORE_EDIT',
-  payload: { scoreEdit }
+  payload: { scoreEdit },
 })
 
 const editLoading = (editLoading) => ({
   type: prefix + 'EDIT_LOADING',
-  payload: { editLoading }
+  payload: { editLoading },
 })
 
 export const updateScoreEdit = () => {
@@ -297,7 +300,7 @@ export const updateScoreEdit = () => {
       session: lib.getSession(),
       mode: getState().score.editMode,
       id: getState().score.scoreid,
-      data: getState().score.scoreEdit
+      data: getState().score.scoreEdit,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -314,10 +317,9 @@ export const updateScoreEdit = () => {
         }
         dispatch(setDisplayEditScoreModal(false, undefined, undefined))
         // mobileの場合はスクロールする
-        if(getState().status.mobile) dispatch(scrollToTop())
+        if (getState().status.mobile) dispatch(scrollToTop())
       }
       dispatch(editLoading(false))
     })
   }
 }
-

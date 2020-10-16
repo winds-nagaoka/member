@@ -10,7 +10,7 @@ import './Header.css'
 
 function mapStateToProps(state) {
   return {
-    pc: state.status.pc
+    pc: state.status.pc,
   }
 }
 
@@ -19,16 +19,19 @@ function mapDispatchToProps() {
 }
 
 class Header extends Component {
-  render () {
+  render() {
     const { pc } = this.props
     return (
-      <div className='navigation-header'>
+      <div className="navigation-header">
         <div className={'header' + lib.pcClass(pc)}>
-          <div className='logo'><a href='https://winds-n.com'><WindsLogo /></a></div>
+          <div className="logo">
+            <a href="https://winds-n.com">
+              <WindsLogo />
+            </a>
+          </div>
         </div>
       </div>
     )
-
   }
 }
 

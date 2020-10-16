@@ -15,7 +15,7 @@ import './Manager.css'
 
 function mapStateToProps(state) {
   return {
-    pc: state.status.pc
+    pc: state.status.pc,
   }
 }
 
@@ -24,28 +24,33 @@ function mapDispatchToProps() {
 }
 
 class Manager extends Component {
-  render () {
+  render() {
     const { pc } = this.props
 
     return (
       <div className={'manager' + lib.pcClass(pc)}>
-
         <Switch>
-          <Route exact path='/manager' component={Notice} />
-          <Route exact path='/manager/selection' component={Selection} />
-          <Route exact path='/manager/selection/add' component={Post} />
-          <Route exact path='/manager/selection/edit/:id' component={Post} />
-          <Route exact path='/manager/selection/detail/:id' component={Detail} />
+          <Route exact path="/manager" component={Notice} />
+          <Route exact path="/manager/selection" component={Selection} />
+          <Route exact path="/manager/selection/add" component={Post} />
+          <Route exact path="/manager/selection/edit/:id" component={Post} />
+          <Route exact path="/manager/selection/detail/:id" component={Detail} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(pc)}>
-          <div className='back-link'>
+          <div className="back-link">
             <ul>
-              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
+              <li>
+                <Link to="/">
+                  <div className="inner">
+                    <Back />
+                    <span>ホーム</span>
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-
       </div>
     )
   }

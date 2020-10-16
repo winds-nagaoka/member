@@ -5,7 +5,7 @@ const prefix = 'HISTORY_'
 
 const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 export const getHistory = () => {
@@ -15,7 +15,7 @@ export const getHistory = () => {
     dispatch(loading(true))
     const path = lib.getAppPath() + '/api/practice'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -33,7 +33,7 @@ export const getHistory = () => {
 
 const setList = (list) => ({
   type: prefix + 'SET_LIST',
-  payload: { list }
+  payload: { list },
 })
 
 export const loadMore = () => {
@@ -45,10 +45,10 @@ export const loadMore = () => {
 
 const showListUpdate = (showList) => ({
   type: prefix + 'SHOW_LIST_UPDATE',
-  payload: { showList }
+  payload: { showList },
 })
 
 const acquired = (acquired) => ({
   type: prefix + 'ACQUIRED',
-  payload: { acquired }
+  payload: { acquired },
 })

@@ -6,7 +6,7 @@ import './Footer.css'
 
 function mapStateToProps(state) {
   return {
-    pc: state.status.pc
+    pc: state.status.pc,
   }
 }
 
@@ -15,13 +15,14 @@ function mapDispatchToProps() {
 }
 
 class Footer extends Component {
-  render () {
+  render() {
     return (
       <footer>
-        <small>&copy;&nbsp;<a href='https://winds-n.com'>The Wind Ensemble</a></small>
+        <small>
+          &copy;&nbsp;<a href="https://winds-n.com">The Wind Ensemble</a>
+        </small>
       </footer>
     )
-
   }
 }
 

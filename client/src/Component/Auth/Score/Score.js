@@ -23,20 +23,26 @@ function mapDispatchToProps() {
 }
 
 class Score extends Component {
-  render () {
+  render() {
     return (
-      <div className={'score' + (lib.pcClass(this.props.pc))}>
-
+      <div className={'score' + lib.pcClass(this.props.pc)}>
         <Switch>
-          <Route exact path='/score' component={Home} />
-          <Route path='/score/detail/:id' component={Detail} />
-          <Route exact path='/score/box' component={Box} />
+          <Route exact path="/score" component={Home} />
+          <Route path="/score/detail/:id" component={Detail} />
+          <Route exact path="/score/box" component={Box} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(this.props.pc)}>
-          <div className='back-link'>
+          <div className="back-link">
             <ul>
-              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
+              <li>
+                <Link to="/">
+                  <div className="inner">
+                    <Back />
+                    <span>ホーム</span>
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

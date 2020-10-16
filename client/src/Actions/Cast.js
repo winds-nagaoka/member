@@ -6,7 +6,7 @@ export const getList = () => {
     dispatch(listLoading(true))
     const path = 'https://cast.winds-n.com/api/presenter'
     const send = {
-      id: getState().socket.id
+      id: getState().socket.id,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -22,15 +22,15 @@ export const getList = () => {
 export const listLoading = (loadingList) => ({
   type: 'CAST_LIST_LOADING',
   payload: {
-    loadingList
-  }
+    loadingList,
+  },
 })
 
 export const listUpdate = (list) => ({
   type: 'CAST_LIST_UPDATE',
   payload: {
-    list
-  }
+    list,
+  },
 })
 
 export const createPC = () => {
@@ -38,20 +38,19 @@ export const createPC = () => {
     if (!window.localStorage.token) return false
     // if (getState().bbs.acquired) return false
     dispatch(loading(true))
-
   }
 }
 
 export const update = (status) => ({
   type: 'CAST_UPDATE',
   payload: {
-    status
-  }
+    status,
+  },
 })
 
 export const loading = (loading) => ({
   type: 'CAST_LOADING',
   payload: {
-    loading: loading
-  }
+    loading: loading,
+  },
 })

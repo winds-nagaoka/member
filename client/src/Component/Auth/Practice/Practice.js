@@ -25,7 +25,7 @@ function mapDispatchToProps() {
 }
 
 class Practice extends Component {
-  render () {
+  render() {
     // State List
     const { pc } = this.props
     // Dispatch List
@@ -33,21 +33,26 @@ class Practice extends Component {
 
     return (
       <div className={'practice' + lib.pcClass(pc)}>
-
         <Switch>
-          <Route exact path='/practice' component={Schedule} />
-          <Route exact path='/practice/source' component={Source} />
-          <Route exact path='/practice/history' component={History} />
+          <Route exact path="/practice" component={Schedule} />
+          <Route exact path="/practice/source" component={Source} />
+          <Route exact path="/practice/history" component={History} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(pc)}>
-          <div className='back-link'>
+          <div className="back-link">
             <ul>
-              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
+              <li>
+                <Link to="/">
+                  <div className="inner">
+                    <Back />
+                    <span>ホーム</span>
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-
       </div>
     )
   }

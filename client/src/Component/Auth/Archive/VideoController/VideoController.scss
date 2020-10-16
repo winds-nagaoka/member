@@ -1,7 +1,6 @@
 @import '../../../../_color.scss';
 
 .video-controller {
-
   .player {
     position: fixed;
     left: 0;
@@ -10,12 +9,12 @@
     width: 100%;
 
     & {
-      border-top: .55px solid #cbcbcd;
+      border-top: 0.55px solid #cbcbcd;
       background: #fff;
     }
     @media (prefers-color-scheme: dark) {
       & {
-        border-top: .55px solid #2d2d2f;
+        border-top: 0.55px solid #2d2d2f;
         background: #333;
       }
     }
@@ -23,16 +22,16 @@
     padding-bottom: constant(safe-area-inset-bottom);
     padding-bottom: env(safe-area-inset-bottom);
 
-    transition: transform .2s linear;
-    -webkit-transform: translate3d(0,100px,0);
-    transform: translate3d(0,100px,0);
+    transition: transform 0.2s linear;
+    -webkit-transform: translate3d(0, 100px, 0);
+    transform: translate3d(0, 100px, 0);
     z-index: 45;
     // -webkit-overflow-scrolling: touch;
 
     &.open {
-      transition: transform .3s linear;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
+      transition: transform 0.3s linear;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
       // box-shadow: 6px 0 25px rgba(0,0,0,.15);
     }
 
@@ -47,7 +46,7 @@
       border-radius: 50%;
       font-size: 13px;
       cursor: pointer;
-      transition: all ease-in-out .1s;
+      transition: all ease-in-out 0.1s;
 
       color: #fff;
 
@@ -137,33 +136,39 @@
       //   background: linear-gradient(rgba(200,200,200,.8),rgba(200,200,200,.8)) no-repeat rgba(255,255,255,0.8);
       // }
       & {
-        background: linear-gradient(rgba(200,200,200,.8),rgba(200,200,200,.8)) no-repeat rgba(255,255,255,0.8);
+        background: linear-gradient(rgba(200, 200, 200, 0.8), rgba(200, 200, 200, 0.8)) no-repeat
+          rgba(255, 255, 255, 0.8);
         // background: linear-gradient(rgba(160,160,160,1),rgba(160,160,160,1)) no-repeat rgba(255,255,255,0.7);
         @media (prefers-color-scheme: dark) {
-          background: linear-gradient(rgba(50,50,50,.8),rgba(50,50,50,.8)) no-repeat rgba(0,0,0,0.8); }
+          background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(50, 50, 50, 0.8)) no-repeat rgba(0, 0, 0, 0.8);
+        }
       }
       // &.playing {
       //   background: linear-gradient(rgba(234,203,203,1),rgba(234,203,203,1)) no-repeat rgba(255,255,255,0.8);
       // }
       &.playing {
-        background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(255,255,255,0.8);
+        background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(255, 255, 255, 0.8);
         @media (prefers-color-scheme: dark) {
-          background: linear-gradient($base-play-color,$base-play-color) no-repeat rgba(0,0,0,0.8); }
+          background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(0, 0, 0, 0.8);
+        }
 
         &.main {
-          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.mini {
-          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.other {
-          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
       }
 
@@ -199,33 +204,38 @@
       //   background: linear-gradient(rgba(200,200,200,.9),rgba(200,200,200,.9)) no-repeat rgba(255,255,255,1);
       // }
       & {
-        background: linear-gradient(rgba(200,200,200,.9),rgba(200,200,200,.9)) no-repeat rgba(255,255,255,1);
+        background: linear-gradient(rgba(200, 200, 200, 0.9), rgba(200, 200, 200, 0.9)) no-repeat rgba(255, 255, 255, 1);
         // background: linear-gradient(rgba(120,120,120,1),rgba(120,120,120,1)) no-repeat rgba(180,180,180,1);
         @media (prefers-color-scheme: dark) {
-          background: linear-gradient(rgba(50,50,50,.9),rgba(50,50,50,.9)) no-repeat rgba(0,0,0,1); }
+          background: linear-gradient(rgba(50, 50, 50, 0.9), rgba(50, 50, 50, 0.9)) no-repeat rgba(0, 0, 0, 1);
+        }
       }
       // &.playing {
       //   background: linear-gradient(rgba(234,203,203,1),rgba(234,203,203,1)) no-repeat rgba(255,255,255,1);
       // }
       &.playing {
-        background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(180,180,180,1);
+        background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(180, 180, 180, 1);
         @media (prefers-color-scheme: dark) {
-          background: linear-gradient($base-play-color,$base-play-color) no-repeat rgba(0,0,0,0.8); }
+          background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(0, 0, 0, 0.8);
+        }
 
         &.main {
-          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.mini {
-          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.other {
-          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
       }
     }
@@ -254,13 +264,12 @@
       flex-direction: column;
 
       &.playing {
-
         span {
-          color: #B60005;
+          color: #b60005;
         }
 
         i {
-          color: #B60005;
+          color: #b60005;
         }
 
         &.main {
@@ -313,7 +322,7 @@
           }
 
           i {
-            margin-right: .2em;
+            margin-right: 0.2em;
             // font-size: 16px;
           }
         }

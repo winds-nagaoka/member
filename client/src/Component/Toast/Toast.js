@@ -10,7 +10,7 @@ function mapStateToProps(state) {
     string: state.toast.string,
     status: state.toast.status,
     hide: state.toast.hide,
-    end: state.toast.end
+    end: state.toast.end,
   }
 }
 
@@ -19,7 +19,7 @@ function mapDispatchToProps() {
 }
 
 class Toast extends Component {
-  render () {
+  render() {
     const { string, status, hide } = this.props
     if (status) {
       var className = 'toast'
@@ -28,9 +28,7 @@ class Toast extends Component {
       }
       return (
         <div className={className}>
-          <div>
-            {string}
-          </div>
+          <div>{string}</div>
         </div>
       )
     } else {

@@ -17,12 +17,12 @@
     padding: 0px 12px 6px;
 
     & {
-      border-bottom: .55px solid #cbcbcd;
+      border-bottom: 0.55px solid #cbcbcd;
       background: #fff;
     }
     @media (prefers-color-scheme: dark) {
       & {
-        border-bottom: .55px solid #2d2d2f;
+        border-bottom: 0.55px solid #2d2d2f;
         background: #1c1c1e;
       }
     }
@@ -87,11 +87,11 @@
 
     &.search-mode {
       & {
-        border-bottom: .55px solid #cbcbcd;
+        border-bottom: 0.55px solid #cbcbcd;
       }
       @media (prefers-color-scheme: dark) {
         & {
-          border-bottom: .55px solid #2d2d2f;
+          border-bottom: 0.55px solid #2d2d2f;
         }
       }
     }
@@ -132,14 +132,14 @@
           width: 100%;
           padding: 0;
           border: 0;
-          background: rgba(0,0,0,0);
+          background: rgba(0, 0, 0, 0);
           font-size: 1.4rem;
           font-size: 14px;
           font-weight: 400;
           font-family: inherit;
 
           &:focus {
-            border: 0!important;
+            border: 0 !important;
             box-shadow: none;
             outline: 0;
           }
@@ -163,7 +163,6 @@
   }
 
   .search-result {
-
     .search-result-item {
       min-height: 44px;
       margin: 0;
@@ -171,11 +170,11 @@
       font-size: 13px;
 
       & {
-        border-bottom: .55px solid #cbcbcd;
+        border-bottom: 0.55px solid #cbcbcd;
       }
       @media (prefers-color-scheme: dark) {
         & {
-          border-bottom: .55px solid #2d2d2f;
+          border-bottom: 0.55px solid #2d2d2f;
         }
       }
 
@@ -224,7 +223,7 @@
 
             span {
               display: inline-block;
-              margin: 0 .2em;
+              margin: 0 0.2em;
             }
           }
         }
@@ -294,17 +293,17 @@
     text-decoration: none;
 
     & {
-      border-bottom: .55px solid #cbcbcd;
+      border-bottom: 0.55px solid #cbcbcd;
     }
     @media (prefers-color-scheme: dark) {
       & {
-        border-bottom: .55px solid #2d2d2f;
+        border-bottom: 0.55px solid #2d2d2f;
       }
     }
 
     // animation 設定は index.scss
-    -webkit-animation: fadein .2s 1 ease-out;
-    animation: fadein .2s 1 ease-out;
+    -webkit-animation: fadein 0.2s 1 ease-out;
+    animation: fadein 0.2s 1 ease-out;
 
     display: flex;
 

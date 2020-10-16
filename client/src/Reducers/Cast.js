@@ -5,27 +5,27 @@ const initialState = {
   status: false,
 }
 
-export default function bbsReducer (state = initialState, action) {
+export default function bbsReducer(state = initialState, action) {
   switch (action.type) {
     case 'CAST_LIST_LOADING':
       return {
         ...state,
-        loadingList: action.payload.loadingList
+        loadingList: action.payload.loadingList,
       }
     case 'CAST_LIST_UPDATE':
       return {
         ...state,
-        list: action.payload.list
+        list: action.payload.list,
       }
     case 'CAST_UPDATE':
       return {
         ...state,
-        status: action.payload.status
+        status: action.payload.status,
       }
     case 'CAST_LOADING':
       return {
         ...state,
-        loading: action.payload.loading
+        loading: action.payload.loading,
       }
     default:
       return state

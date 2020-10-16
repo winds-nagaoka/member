@@ -19,52 +19,60 @@ function mapStateToProps(state) {
 
     oldPassword: state.setting.oldPassword,
     newPassword: state.setting.newPassword,
-    loadingUpdatePassword: state.setting.loadingUpdatePassword
+    loadingUpdatePassword: state.setting.loadingUpdatePassword,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    redirect (location) {
+    redirect(location) {
       dispatch(redirect(location))
     },
-    setNavigationTitle (title) {
+    setNavigationTitle(title) {
       dispatch(setNavigationTitle(title))
     },
-    setBackNavigation (backNavigation, backNavigationPath) {
+    setBackNavigation(backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
-    setOldPassword (oldPassword) {
+    setOldPassword(oldPassword) {
       dispatch(setOldPassword(oldPassword))
     },
-    setNewPassword (newPassword) {
+    setNewPassword(newPassword) {
       dispatch(setNewPassword(newPassword))
     },
-    updatePassword () {
+    updatePassword() {
       dispatch(updatePassword())
-    }
+    },
   }
 }
 
 class Password extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.setNavigationTitle('パスワードの変更')
     this.props.setBackNavigation(true, '/setting')
   }
 
-  componentWillUnmount () {
-  }
+  componentWillUnmount() {}
 
-  render () {
+  render() {
     const buttonText = this.props.loadingScoreMailRequest ? '読み込み中...' : '送信'
-    const disabledClass = (!this.props.newPassword && !this.props.oldPassword) || this.props.loadingUpdatePassword ? ' disabled' : ''
-    const buttonHandler = (!this.props.newPassword && !this.props.oldPassword) || this.props.loadingUpdatePassword ? () => {} : () => this.props.updatePassword()
+    const disabledClass =
+      (!this.props.newPassword && !this.props.oldPassword) || this.props.loadingUpdatePassword ? ' disabled' : ''
+    const buttonHandler =
+      (!this.props.newPassword && !this.props.oldPassword) || this.props.loadingUpdatePassword
+        ? () => {}
+        : () => this.props.updatePassword()
 
     return (
       <React.Fragment>
-
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/password'>パスワードの変更</Link></div>
+          <div className="bread-navigation">
+            <Link to="/">ホーム</Link>
+            <i className="fas fa-chevron-right"></i>
+            <Link to="/setting">設定</Link>
+            <i className="fas fa-chevron-right"></i>
+            <Link to="/setting/password">パスワードの変更</Link>
+          </div>
           <h2>パスワードの変更</h2>
           <p>定期的に変えるよりは長くて強固なパスワードがよいとされています</p>
         </div>
@@ -72,24 +80,40 @@ class Password extends Component {
         <div className={'box setting-text' + lib.pcClass(this.props.pc)}>
           <div>
             <label>古いパスワード</label>
-            <input type='password' value={this.props.oldPassword} onChange={(e) => this.props.setOldPassword(e.target.value)} />
+            <input
+              type="password"
+              value={this.props.oldPassword}
+              onChange={(e) => this.props.setOldPassword(e.target.value)}
+            />
             <label>新しいパスワード</label>
-            <input type='password' value={this.props.newPassword} onChange={(e) => this.props.setNewPassword(e.target.value)} />
+            <input
+              type="password"
+              value={this.props.newPassword}
+              onChange={(e) => this.props.setNewPassword(e.target.value)}
+            />
           </div>
         </div>
 
         <div className={'box setting-button' + lib.pcClass(this.props.pc)}>
-          <div onClick={buttonHandler} className={'button save' + disabledClass}>{buttonText}</div>
-        </div>
-
-        <div className={'box' + lib.pcClass(this.props.pc)}>
-          <div className='back-link'>
-            <ul>
-              <li><Link to='/setting'><div className='inner'><Back /><span>戻る</span></div></Link></li>
-            </ul>
+          <div onClick={buttonHandler} className={'button save' + disabledClass}>
+            {buttonText}
           </div>
         </div>
 
+        <div className={'box' + lib.pcClass(this.props.pc)}>
+          <div className="back-link">
+            <ul>
+              <li>
+                <Link to="/setting">
+                  <div className="inner">
+                    <Back />
+                    <span>戻る</span>
+                  </div>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </React.Fragment>
     )
   }

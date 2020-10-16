@@ -9,7 +9,7 @@ const prefix = 'ARCHIVE_'
 
 const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 export const getConcertList = () => {
@@ -20,7 +20,7 @@ export const getConcertList = () => {
     dispatch(loading(true))
     const path = lib.getAppPath() + '/api/concert'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -35,7 +35,7 @@ export const getConcertList = () => {
 
 const setConcertList = (concertList) => ({
   type: prefix + 'SET_CONCERT_LIST',
-  payload: { concertList }
+  payload: { concertList },
 })
 
 // const setConcertListLoad = (concertListLoad) => ({
@@ -52,7 +52,7 @@ export const toggleDisplayMain = (displayMain) => {
 
 const setDisplayMain = (displayMain) => ({
   type: prefix + 'SET_DISPLAY_MAIN',
-  payload: { displayMain }
+  payload: { displayMain },
 })
 
 export const toggleDisplayMini = (displayMini) => {
@@ -64,7 +64,7 @@ export const toggleDisplayMini = (displayMini) => {
 
 const setDisplayMini = (displayMini) => ({
   type: prefix + 'SET_DISPLAY_MINI',
-  payload: { displayMini }
+  payload: { displayMini },
 })
 
 export const toggleDisplayOther = (displayOther) => {
@@ -76,23 +76,23 @@ export const toggleDisplayOther = (displayOther) => {
 
 const setDisplayOther = (displayOther) => ({
   type: prefix + 'SET_DISPLAY_OTHER',
-  payload: { displayOther }
+  payload: { displayOther },
 })
 
 export const setConcertid = (concertid) => ({
   type: prefix + 'SET_OVERVIEW_ID',
-  payload: { concertid }
+  payload: { concertid },
 })
 
 // Search
 const loadingSearch = (loadingSearch) => ({
   type: prefix + 'LOADING_SEARCH',
-  payload: { loadingSearch }
+  payload: { loadingSearch },
 })
 
 export const setSearchRef = (searchRef) => ({
   type: prefix + 'SET_SEARCH_REF',
-  payload: { searchRef }
+  payload: { searchRef },
 })
 
 export const search = (value) => {
@@ -105,15 +105,15 @@ export const search = (value) => {
       return concert.data.map((track) => {
         const s = new RegExp(escapeReg(value), 'i')
         // 演奏会名で一致
-        if (concert.title.search(s) >= 0) return {concert, track}
+        if (concert.title.search(s) >= 0) return { concert, track }
         // タイトルで一致
-        if (track.title.search(s) >= 0) return {concert, track}
+        if (track.title.search(s) >= 0) return { concert, track }
         // サブタイトルで一致
         // if (track.addtitle.search(s) >= 0) return {concert: concert, track}
         // 作曲者名で一致
-        if ((track.composer ? track.composer : '').search(s) >= 0) return {concert, track}
+        if ((track.composer ? track.composer : '').search(s) >= 0) return { concert, track }
         // 編曲者名で一致
-        if ((track.arranger ? track.arranger : '').search(s) >= 0) return {concert, track}
+        if ((track.arranger ? track.arranger : '').search(s) >= 0) return { concert, track }
       })
     })
     dispatch(loadingSearch(false))
@@ -123,12 +123,12 @@ export const search = (value) => {
 
 const setSearchQuery = (searchQuery) => ({
   type: prefix + 'SET_SEARCH_QUERY',
-  payload: { searchQuery }
+  payload: { searchQuery },
 })
 
 const setSearchResult = (searchResult) => ({
   type: prefix + 'SET_SEARCH_RESULT',
-  payload: { searchResult }
+  payload: { searchResult },
 })
 
 export const resetSearch = () => {
@@ -142,7 +142,7 @@ export const resetSearch = () => {
 // Photo
 const loadingPhoto = (loadingPhoto) => ({
   type: prefix + 'LOADING_PHOTO',
-  payload: { loadingPhoto }
+  payload: { loadingPhoto },
 })
 
 export const getPhotoList = () => {
@@ -160,7 +160,15 @@ export const getPhotoList = () => {
       if (err) {
         return false
       } else {
-        dispatch(setPhotoList(getState().archive.concertid, res.body.list, res.body.baseSrcThumbnail, res.body.baseSrcOriginal, res.body.url))
+        dispatch(
+          setPhotoList(
+            getState().archive.concertid,
+            res.body.list,
+            res.body.baseSrcThumbnail,
+            res.body.baseSrcOriginal,
+            res.body.url
+          )
+        )
       }
       dispatch(loadingPhoto(false))
     })
@@ -175,18 +183,18 @@ export const resetPhotoList = () => {
 
 const setPhotoList = (photoConcertid, photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl) => ({
   type: prefix + 'SET_PHOTO_LIST',
-  payload: { photoConcertid, photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl }
+  payload: { photoConcertid, photoList, photoBaseSrcThumbnail, photoBaseSrcOriginal, photoUrl },
 })
 
 export const setDisplayPhotoSlideModal = (displayPhotoSlideModal, photoNumber) => ({
   type: prefix + 'SET_DISPLAY_PHOTO_SLIDE_MODAL',
-  payload: { displayPhotoSlideModal, photoNumber }
+  payload: { displayPhotoSlideModal, photoNumber },
 })
 
 // Video
 const loadingVideo = (loadingVideo) => ({
   type: prefix + 'LOADING_VIDEO',
-  payload: { loadingVideo }
+  payload: { loadingVideo },
 })
 
 export const getVideoList = () => {
@@ -198,13 +206,15 @@ export const getVideoList = () => {
     const path = lib.getAppPath() + '/api/video'
     const send = {
       session: lib.getSession(),
-      id: getState().archive.concertid
+      id: getState().archive.concertid,
     }
     request.post(path, send, (err, res) => {
       if (err) {
         return false
       } else {
-        dispatch(setVideoList(getState().archive.concertid, res.body.list, res.body.baseSrc, res.body.url, res.body.poster))
+        dispatch(
+          setVideoList(getState().archive.concertid, res.body.list, res.body.baseSrc, res.body.url, res.body.poster)
+        )
         getState().archive.videoPlayTrack ? dispatch(videoPlayRequest(getState().archive.videoPlayTrack, true)) : false
       }
       dispatch(loadingVideo(false))
@@ -224,28 +234,28 @@ export const getVideoList = () => {
 
 const setVideoList = (videoConcertid, videoList, videoBaseSrc, videoUrl, videoPoster) => ({
   type: prefix + 'SET_VIDEO_LIST',
-  payload: { videoConcertid, videoList, videoBaseSrc, videoUrl, videoPoster }
+  payload: { videoConcertid, videoList, videoBaseSrc, videoUrl, videoPoster },
 })
 
 // プレイヤー操作
 export const setVideoRef = (videoRef) => ({
   type: prefix + 'SET_VIDEO_REF',
-  payload: { videoRef }
+  payload: { videoRef },
 })
 
 export const setDisplayVideoController = (displayVideoController, audioPlayerDisplay) => ({
   type: prefix + 'SET_DISPLAY_VIDEO_CONTROLLER',
-  payload: { displayVideoController, audioPlayerDisplay }
+  payload: { displayVideoController, audioPlayerDisplay },
 })
 
 export const setLoadingVideoSource = (status) => ({
   type: prefix + 'SET_LOADING_VIDEO_SOURCE',
-  payload: { loadingVideoSource: status }
+  payload: { loadingVideoSource: status },
 })
 
 export const videoLoadPercentUpdate = (percent) => ({
   type: prefix + 'VIDEO_LOAD_PERCENT_UPDATE',
-  payload: { videoLoadPercent: percent }
+  payload: { videoLoadPercent: percent },
 })
 
 export const videoPlayUpdate = (videoCurrent, videoDuration) => {
@@ -254,7 +264,8 @@ export const videoPlayUpdate = (videoCurrent, videoDuration) => {
       const audioPlayerDisplay = getState().audio.displayPlayer || getState().archive.audioPlayerDisplay ? true : false
       dispatch(setDisplayVideoController(true, audioPlayerDisplay))
     }
-    const videoPlayPercent = (videoDuration && videoCurrent) ? Math.round((videoCurrent / videoDuration) * 1000) / 10 : undefined
+    const videoPlayPercent =
+      videoDuration && videoCurrent ? Math.round((videoCurrent / videoDuration) * 1000) / 10 : undefined
     const videoCurrentTime = videoCurrent ? playTime(Math.floor(videoCurrent)) : undefined
     const videoDurationTime = videoDuration ? playTime(Math.round(videoDuration)) : undefined
     dispatch(setVideoPlayUpdate(videoCurrent, videoCurrentTime, videoDuration, videoDurationTime, videoPlayPercent))
@@ -268,13 +279,13 @@ const setVideoPlayUpdate = (videoCurrent, videoCurrentTime, videoDuration, video
     videoCurrentTime,
     videoDuration,
     videoDurationTime,
-    videoPlayPercent
-  }
+    videoPlayPercent,
+  },
 })
 
 const setVideoPlayStatus = (videoPlayStatus, videoPlayTrack) => ({
   type: prefix + 'SET_VIDEO_PLAY_STATUS',
-  payload: { videoPlayStatus, videoPlayTrack }
+  payload: { videoPlayStatus, videoPlayTrack },
 })
 
 export const videoPlayRequest = (number, request) => {
@@ -346,7 +357,7 @@ export const countUp = () => {
   return async (dispatch, getState) => {
     const play = {
       session: lib.getSession(),
-      play: getState().archive.videoRef.src + '(' + getState().archive.videoCurrentTime + ')'
+      play: getState().archive.videoRef.src + '(' + getState().archive.videoCurrentTime + ')',
     }
     request.countUp(play)
     dispatch(setCountFlag(false))
@@ -355,5 +366,5 @@ export const countUp = () => {
 
 const setCountFlag = (countFlag) => ({
   type: prefix + 'SET_COUNT_FLAG',
-  payload: { countFlag }
+  payload: { countFlag },
 })

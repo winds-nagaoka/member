@@ -20,26 +20,26 @@ const store = createStore(history)
 
 // react-router-redux の Action をフック
 // リンク移動先を保存
-history.listen(location => {
+history.listen((location) => {
   window.localStorage.setItem('location', location.pathname)
   request.sendPath({
     session: lib.getSession(),
-    path: location.pathname
+    path: location.pathname,
   })
 })
 
 export default class App extends Component {
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <React.Fragment>
             <Toast />
             <Switch>
-              <Route path='/login' component={Base} />
-              <Route path='/reg' component={Base} />
-              <Route path='/valid' component={Base} />
-              <Route path='/' component={Auth} />
+              <Route path="/login" component={Base} />
+              <Route path="/reg" component={Base} />
+              <Route path="/valid" component={Base} />
+              <Route path="/" component={Auth} />
             </Switch>
           </React.Fragment>
         </ConnectedRouter>

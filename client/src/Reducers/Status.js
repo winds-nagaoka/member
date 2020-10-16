@@ -6,44 +6,44 @@ const initialState = {
   loading: false,
   width: 0,
   pc: true,
-  mobile: false
+  mobile: false,
 }
 
 const prefix = 'STATUS_'
 
-export default function statusReducer (state = initialState, action) {
+export default function statusReducer(state = initialState, action) {
   switch (action.type) {
     case prefix + 'LOGIN':
       return {
         ...state,
-        login: action.payload.login
+        login: action.payload.login,
       }
     case prefix + 'SET_USER':
       return {
         ...state,
-        user: action.payload.user
+        user: action.payload.user,
       }
     case prefix + 'WINDSID':
       return {
         ...state,
-        windsid: action.payload.windsid
+        windsid: action.payload.windsid,
       }
     case prefix + 'TOKEN':
       return {
         ...state,
-        token: action.payload.token
+        token: action.payload.token,
       }
     case prefix + 'LOADING':
       return {
         ...state,
-        loading: action.payload.loading
+        loading: action.payload.loading,
       }
     case prefix + 'WINDOW_WIDTH':
       return {
         ...state,
         width: action.payload.width,
         pc: action.payload.pc,
-        mobile: action.payload.mobile
+        mobile: action.payload.mobile,
       }
     // react-router-redux の Action をフック
     // リンク移動先を保存

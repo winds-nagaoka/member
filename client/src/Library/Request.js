@@ -1,7 +1,8 @@
 import request from 'superagent'
 
-export function post (url, send, callback) {
-  request.post(url)
+export function post(url, send, callback) {
+  request
+    .post(url)
     .type('form')
     .send(send)
     .end((error, response) => {
@@ -9,8 +10,9 @@ export function post (url, send, callback) {
     })
 }
 
-export function countUp (send) {
-  request.post('https://app.winds-n.com/api/count')
+export function countUp(send) {
+  request
+    .post('https://app.winds-n.com/api/count')
     .type('form')
     .send(send)
     .end(() => {
@@ -18,17 +20,19 @@ export function countUp (send) {
     })
 }
 
-export function sendSeek (send) {
-  request.post('https://app.winds-n.com/api/seek')
-  .type('form')
-  .send(send)
-  .end(() => {
-    return
-  })
+export function sendSeek(send) {
+  request
+    .post('https://app.winds-n.com/api/seek')
+    .type('form')
+    .send(send)
+    .end(() => {
+      return
+    })
 }
 
-export function sendPath (send) {
-  request.post('https://app.winds-n.com/api/path')
+export function sendPath(send) {
+  request
+    .post('https://app.winds-n.com/api/path')
     .type('form')
     .send(send)
     .end(() => {

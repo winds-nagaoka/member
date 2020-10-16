@@ -16,7 +16,7 @@ export const loadArchivePlaylist = () => {
     dispatch(loadingArchivePlaylist(true))
     const path = lib.getAppPath() + '/api/audio'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -33,12 +33,12 @@ export const loadArchivePlaylist = () => {
 
 const loadingArchivePlaylist = (loadingArchivePlaylist) => ({
   type: prefix + 'LOADING_ARCHIVE_PLAYLIST',
-  payload: { loadingArchivePlaylist }
+  payload: { loadingArchivePlaylist },
 })
 
 const setArchivePlaylist = (archivePlaylist, archiveBaseUrl) => ({
   type: prefix + 'SET_ARCHIVE_PLAYLIST',
-  payload: { archivePlaylist, archiveBaseUrl }
+  payload: { archivePlaylist, archiveBaseUrl },
 })
 
 // 練習記録プレイリストの読み込み
@@ -49,7 +49,7 @@ export const loadPracticePlaylist = () => {
     dispatch(loadingPracticePlaylist(true))
     const path = lib.getAppPath() + '/api/record'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -66,12 +66,12 @@ export const loadPracticePlaylist = () => {
 
 const loadingPracticePlaylist = (loadingPracticePlaylist) => ({
   type: prefix + 'LOADING_PRACTICE_PLAYLIST',
-  payload: { loadingPracticePlaylist }
+  payload: { loadingPracticePlaylist },
 })
 
 const setPracticePlaylist = (practicePlaylist, practiceBaseUrl) => ({
   type: prefix + 'SET_PRACTICE_PLAYLIST',
-  payload: { practicePlaylist, practiceBaseUrl }
+  payload: { practicePlaylist, practiceBaseUrl },
 })
 
 // 参考音源プレイリストの読み込み
@@ -82,7 +82,7 @@ export const loadSourcePlaylist = () => {
     dispatch(loadingSourcePlaylist(true))
     const path = lib.getAppPath() + '/api/reference'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -103,35 +103,37 @@ export const loadSourcePlaylist = () => {
 
 const loadingSourcePlaylist = (loadingSourcePlaylist) => ({
   type: prefix + 'LOADING_SOURCE_PLAYLIST',
-  payload: { loadingSourcePlaylist }
+  payload: { loadingSourcePlaylist },
 })
 
 const setSourcePlaylist = (sourcePlaylist, sourceBaseUrl) => ({
   type: prefix + 'SET_SOURCE_PLAYLIST',
-  payload: { sourcePlaylist, sourceBaseUrl }
+  payload: { sourcePlaylist, sourceBaseUrl },
 })
 
 // オーディオタグ本体
 export const setAudioRef = (audioRef) => ({
   type: prefix + 'SET_AUDIO_REF',
-  payload: { audioRef }
+  payload: { audioRef },
 })
 
 // 要素の表示状態
 
 // プレイヤーの表示設定
 export const setDisplayPlayer = (displayPlayer) => {
-  displayPlayer ? window.localStorage.setItem('displayPlayer', displayPlayer) : window.localStorage.removeItem('displayPlayer')
-  return ({
+  displayPlayer
+    ? window.localStorage.setItem('displayPlayer', displayPlayer)
+    : window.localStorage.removeItem('displayPlayer')
+  return {
     type: prefix + 'SET_DISPLAY_PLAYER',
-    payload: { displayPlayer }
-  })
+    payload: { displayPlayer },
+  }
 }
 
 // プレイリストを開く
 export const setDisplayPlaylist = (displayPlaylist) => ({
   type: prefix + 'SET_DISPLAY_PLAYLIST',
-  payload: { displayPlaylist }
+  payload: { displayPlaylist },
 })
 
 // オーディオタグの情報
@@ -139,35 +141,35 @@ export const setDisplayPlaylist = (displayPlaylist) => ({
 // ファイルの読み込みフラグ
 export const setLoadingAudio = (status) => ({
   type: prefix + 'LOADING_AUDIO',
-  payload: { loadingAudio: status }
+  payload: { loadingAudio: status },
 })
 
 // ファイルの読み込み量更新
 export const loadPercentUpdate = (percent) => ({
   type: prefix + 'LOADING_UPDATE',
-  payload: { loadPercent: percent }
+  payload: { loadPercent: percent },
 })
 
 const setPlayStatus = (playStatus) => ({
   type: prefix + 'SET_PLAY_STATUS',
-  payload: { playStatus }
+  payload: { playStatus },
 })
 
 // 再生時間の更新
 export const playUpdate = (current, duration) => {
-  const playPercent = (duration && current) ? Math.round((current / duration) * 1000) / 10 : undefined
+  const playPercent = duration && current ? Math.round((current / duration) * 1000) / 10 : undefined
   const currentTime = current ? playTime(Math.floor(current)) : undefined
   const durationTime = duration ? playTime(Math.round(duration)) : undefined
-  return ({
+  return {
     type: prefix + 'PLAY_UPDATE',
     payload: {
       current,
       currentTime,
       duration,
       durationTime,
-      playPercent
-    }
-  })
+      playPercent,
+    },
+  }
 }
 
 // 曲情報
@@ -195,10 +197,10 @@ export const archivePlayRequest = (concertid, number, playRequest) => {
 
 // 再生する曲情報を設定
 const archiveSetPlayBase = (concertid, number) => {
-  return ({
+  return {
     type: prefix + 'ARCHIVE_SET_PLAY_BASE',
-    payload: { playmode: 'archive', concertid, number }
-  })
+    payload: { playmode: 'archive', concertid, number },
+  }
 }
 
 // 練習記録から曲を選択
@@ -225,10 +227,10 @@ export const practicePlayRequest = (practiceid, fileNumber, requestTimeString, p
 
 // 再生する曲情報を設定
 const practiceSetPlayBase = (practiceid, fileNumber, requestTime) => {
-  return ({
+  return {
     type: prefix + 'PRACTICE_SET_PLAY_BASE',
-    payload: { playmode: 'practice', practiceid, fileNumber, requestTime }
-  })
+    payload: { playmode: 'practice', practiceid, fileNumber, requestTime },
+  }
 }
 
 // 参考音源から曲を選択
@@ -254,10 +256,10 @@ export const sourcePlayRequest = (sourceid, sourceNumber, playRequest) => {
 
 // 再生する曲情報を設定
 const sourceSetPlayBase = (sourceid, sourceNumber) => {
-  return ({
+  return {
     type: prefix + 'SOURCE_SET_PLAY_BASE',
-    payload: { playmode: 'source', sourceid, sourceNumber }
-  })
+    payload: { playmode: 'source', sourceid, sourceNumber },
+  }
 }
 
 const removeArchiveStorage = () => {
@@ -291,7 +293,10 @@ export const audioPlay = (requestTime) => {
       const track = album.list[getState().audio.number]
       // dispatch(archiveSetPlay(album, track, true))
       // タグに反映
-      if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.archiveBaseUrl + album.baseSrc + track.path) {
+      if (
+        !getState().audio.audioRef.src ||
+        getState().audio.audioRef.src !== getState().audio.archiveBaseUrl + album.baseSrc + track.path
+      ) {
         getState().audio.audioRef.src = getState().audio.archiveBaseUrl + album.baseSrc + track.path
       }
       // 曲が指定されていないとき
@@ -313,7 +318,10 @@ export const audioPlay = (requestTime) => {
       const file = practiceAlbum.file[getState().audio.fileNumber]
       // dispatch(practiceSetPlay(practiceAlbum, file, true))
       // タグに反映
-      if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path) {
+      if (
+        !getState().audio.audioRef.src ||
+        getState().audio.audioRef.src !== getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path
+      ) {
         getState().audio.audioRef.src = getState().audio.practiceBaseUrl + practiceAlbum.directory + file.path
       }
       if (isFinite(requestTime)) getState().audio.audioRef.currentTime = requestTime
@@ -323,7 +331,10 @@ export const audioPlay = (requestTime) => {
       const album = libSource.getAlbum(getState().audio.sourceid, getState().audio.sourcePlaylist)
       const track = album.list[getState().audio.sourceNumber]
       // タグに反映
-      if (!getState().audio.audioRef.src || getState().audio.audioRef.src !== getState().audio.sourceBaseUrl + album.baseSrc + track.path) {
+      if (
+        !getState().audio.audioRef.src ||
+        getState().audio.audioRef.src !== getState().audio.sourceBaseUrl + album.baseSrc + track.path
+      ) {
         getState().audio.audioRef.src = getState().audio.sourceBaseUrl + album.baseSrc + track.path
       }
       // 曲が指定されていないとき
@@ -428,5 +439,5 @@ export const countPlay = (time) => {
 
 const setCountFlag = (countFlag) => ({
   type: prefix + 'SET_COUNT_FLAG',
-  payload: { countFlag }
+  payload: { countFlag },
 })

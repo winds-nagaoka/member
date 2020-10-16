@@ -26,17 +26,17 @@ export const getManager = () => {
 
 export const update = (data) => ({
   type: prefix + 'UPDATE',
-  payload: { data }
+  payload: { data },
 })
 
 export const acquired = (acquired) => ({
   type: prefix + 'ACQUIRED',
-  payload: { acquired }
+  payload: { acquired },
 })
 
 export const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 // Selection Components
@@ -46,7 +46,7 @@ export const getSelectionPhase = () => {
     dispatch(loadingSelectionPhase(true))
     const path = lib.getSurveyPath() + '/api/selection/phase'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -61,12 +61,12 @@ export const getSelectionPhase = () => {
 
 const loadingSelectionPhase = (loadingSelectionPhase) => ({
   type: prefix + 'LOADING_SELECTION_PHASE',
-  payload: { loadingSelectionPhase }
+  payload: { loadingSelectionPhase },
 })
 
 const setSelectionPhase = (selectionPhase) => ({
   type: prefix + 'SET_SELECTION_PHASE',
-  payload: { selectionPhase }
+  payload: { selectionPhase },
 })
 
 // Selection List
@@ -95,7 +95,7 @@ export const resetSearchQuery = () => {
 export const getSelectionListSearch = (query) => {
   return async (dispatch) => {
     if (!window.localStorage.token) return false
-    const requestTime = String((new Date()).getTime())
+    const requestTime = String(new Date().getTime())
     !window.localStorage.scoreLoadList ? window.localStorage.setItem('scoreLoadList', requestTime) : false
     if (requestTime > window.localStorage.scoreLoadList) window.localStorage.setItem('scoreLoadList', requestTime)
     const path = lib.getSurveyPath() + '/api/selection/list'
@@ -103,7 +103,7 @@ export const getSelectionListSearch = (query) => {
       session: lib.getSession(),
       query,
       sort: localStorage.getItem('selectionSort') ? localStorage.getItem('selectionSort') : 'createdAt',
-      order: localStorage.getItem('selectionOrder') ? localStorage.getItem('selectionOrder') : '1'
+      order: localStorage.getItem('selectionOrder') ? localStorage.getItem('selectionOrder') : '1',
     }
     request.post(path, send, (err, res) => {
       dispatch(loadingSelectionList(false))
@@ -121,27 +121,27 @@ export const getSelectionListSearch = (query) => {
 
 const loadingSelectionList = (loadingSelectionList) => ({
   type: prefix + 'LOADING_SELECTION_LIST',
-  payload: { loadingSelectionList }
+  payload: { loadingSelectionList },
 })
 
 const loadingSelectionListSearch = (loadingSelectionListSearch) => ({
   type: prefix + 'LOADING_SELECTION_LIST_SEARCH',
-  payload: { loadingSelectionListSearch }
+  payload: { loadingSelectionListSearch },
 })
 
 export const setSearchQuery = (searchQuery) => ({
   type: prefix + 'SET_SEARCH_QUERY',
-  payload: { searchQuery }
+  payload: { searchQuery },
 })
 
 const setSelectionList = (selectionList) => ({
   type: prefix + 'SET_SELECTION_LIST',
-  payload: { selectionList }
+  payload: { selectionList },
 })
 
 export const setSearchBoxRef = (searchBoxRef) => ({
   type: prefix + 'SET_SEARCH_BOX_REF',
-  payload: { searchBoxRef }
+  payload: { searchBoxRef },
 })
 
 // Selection Like
@@ -151,7 +151,7 @@ export const getSelectionLike = () => {
     dispatch(loadingSelectionLike(true))
     const path = lib.getSurveyPath() + '/api/selection/like/get'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -166,12 +166,12 @@ export const getSelectionLike = () => {
 
 const loadingSelectionLike = (loadingSelectionLike) => ({
   type: prefix + 'LOADING_SELECTION_LIKE',
-  payload: { loadingSelectionLike }
+  payload: { loadingSelectionLike },
 })
 
 const setSelectionLike = (selectionLike) => ({
   type: prefix + 'SET_SELECTION_LIKE',
-  payload: { selectionLike }
+  payload: { selectionLike },
 })
 
 export const sendSelectionLike = (selectionid) => {
@@ -200,7 +200,7 @@ export const sendSelectionLike = (selectionid) => {
 
 const loadingSelectionSendLike = (loadingSelectionSendLike) => ({
   type: prefix + 'LOADING_SELECTION_SEND_LIKE',
-  payload: { loadingSelectionSendLike }
+  payload: { loadingSelectionSendLike },
 })
 
 // Selection Post
@@ -211,7 +211,7 @@ export const getSelectionPost = (id) => {
     const path = lib.getSurveyPath() + '/api/selection/detail'
     const send = {
       session: lib.getSession(),
-      id
+      id,
     }
     request.post(path, send, (err, res) => {
       dispatch(loadingSelectionPostDetail(false))
@@ -226,17 +226,17 @@ export const getSelectionPost = (id) => {
 
 const loadingSelectionPostDetail = (loadingSelectionPostDetail) => ({
   type: prefix + 'LOADING_SELECTION_POST_DETAIL',
-  payload: { loadingSelectionPostDetail }
+  payload: { loadingSelectionPostDetail },
 })
 
 export const setSelectionPostid = (selectionPostid) => ({
   type: prefix + 'SET_SELECTION_POSTID',
-  payload: { selectionPostid }
+  payload: { selectionPostid },
 })
 
 export const setSelectionPost = (selectionPost) => ({
   type: prefix + 'SET_SELECTION_POST',
-  payload: { selectionPost }
+  payload: { selectionPost },
 })
 
 export const sendPost = (removeRequest) => {
@@ -252,7 +252,7 @@ export const sendPost = (removeRequest) => {
       id: getState().manager.selectionPostid,
       postUserid: getState().status.user._id,
       selection: getState().manager.selectionPost,
-      remove: removeRequest ? true : false
+      remove: removeRequest ? true : false,
     }
     request.post(path, send, (err, res) => {
       removeRequest ? dispatch(loadingSelectionRemovePost(false)) : dispatch(loadingSelectionPost(false))
@@ -280,12 +280,12 @@ export const sendPost = (removeRequest) => {
 
 const loadingSelectionPost = (loadingSelectionPost) => ({
   type: prefix + 'LOADING_SELECTION_POST',
-  payload: { loadingSelectionPost }
+  payload: { loadingSelectionPost },
 })
 
 const loadingSelectionRemovePost = (loadingSelectionRemovePost) => ({
   type: prefix + 'LOADING_SELECTION_REMOVE_POST',
-  payload: { loadingSelectionRemovePost }
+  payload: { loadingSelectionRemovePost },
 })
 
 // Selection Detail
@@ -297,7 +297,7 @@ export const getSelectionDetail = (id) => {
     const path = lib.getSurveyPath() + '/api/selection/detail'
     const send = {
       session: lib.getSession(),
-      id
+      id,
     }
     request.post(path, send, (err, res) => {
       dispatch(loadingSelectionDetail(false))
@@ -307,7 +307,7 @@ export const getSelectionDetail = (id) => {
         if (res.body.status) {
           dispatch(setSelectionDetail(res.body.selection))
         } else {
-          dispatch(setSelectionDetail({removed: true}))
+          dispatch(setSelectionDetail({ removed: true }))
         }
       }
     })
@@ -316,15 +316,15 @@ export const getSelectionDetail = (id) => {
 
 const loadingSelectionDetail = (loadingSelectionDetail) => ({
   type: prefix + 'LOADING_SELECTION_DETAIL',
-  payload: { loadingSelectionDetail }
+  payload: { loadingSelectionDetail },
 })
 
 export const setSelectionDetailid = (selectionDetailid) => ({
   type: prefix + 'SET_SELECTION_DETAILID',
-  payload: { selectionDetailid }
+  payload: { selectionDetailid },
 })
 
 export const setSelectionDetail = (selectionDetail) => ({
   type: prefix + 'SET_SELECTION_DETAIL',
-  payload: { selectionDetail }
+  payload: { selectionDetail },
 })

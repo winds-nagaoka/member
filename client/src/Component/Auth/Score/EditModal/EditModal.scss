@@ -1,5 +1,4 @@
 .score-edit-modal {
-
   .score-edit-modal-contents {
     position: fixed;
     top: 0;
@@ -28,9 +27,9 @@
     padding-right: env(safe-area-inset-right);
 
     // transition: transform .3s ease-in-out;
-    transition: transform .2s ease-in-out;
-    -webkit-transform: translate3d(0,105%,0);
-    transform: translate3d(0,105%,0);
+    transition: transform 0.2s ease-in-out;
+    -webkit-transform: translate3d(0, 105%, 0);
+    transform: translate3d(0, 105%, 0);
     -webkit-overflow-scrolling: touch;
 
     &.pc {
@@ -41,10 +40,10 @@
     }
 
     &.open {
-      transition: transform .4s ease;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
-      box-shadow: 6px 0 25px rgba(0,0,0,.15);
+      transition: transform 0.4s ease;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
+      box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
 
       &.pc {
         // -webkit-transform: translateY(20%);
@@ -61,12 +60,12 @@
 
       & {
         background: #fff;
-        border-bottom: .55px solid #cbcbcd;
+        border-bottom: 0.55px solid #cbcbcd;
       }
       @media (prefers-color-scheme: dark) {
         & {
           background: #1c1c1e;
-          border-bottom: .55px solid #2d2d2f;
+          border-bottom: 0.55px solid #2d2d2f;
         }
       }
 
@@ -84,12 +83,13 @@
         font-weight: bold;
       }
 
-      .cancel, .save {
+      .cancel,
+      .save {
         position: fixed;
         // top: 0;
         width: auto;
         height: 44px;
-        color: #B60005;
+        color: #b60005;
         font-size: 16px;
         cursor: pointer;
 
@@ -98,10 +98,10 @@
         align-items: center;
 
         &:hover {
-          color: rgba(182,0,5,.8);
+          color: rgba(182, 0, 5, 0.8);
         }
         &:active {
-          color: rgba(182,0,5,.6);
+          color: rgba(182, 0, 5, 0.6);
         }
       }
 
@@ -141,10 +141,10 @@
     padding-right: env(safe-area-inset-right);
 
     &.open {
-      display: block;/*カバーを表示*/
-      opacity: .35;
+      display: block; /*カバーを表示*/
+      opacity: 0.35;
       // transition: all 3s ease-in-out;
-      animation: menu-background-show .3s ease-in-out 0s;
+      animation: menu-background-show 0.3s ease-in-out 0s;
     }
   }
 
@@ -191,7 +191,7 @@
       cursor: pointer;
 
       &:hover {
-        background: rgba(180,180,180,.2);
+        background: rgba(180, 180, 180, 0.2);
       }
     }
 
@@ -212,7 +212,7 @@
       width: 100%;
       max-width: 450px;
 
-      input[type="radio"] {
+      input[type='radio'] {
         display: none;
         margin: 0;
         padding: 0;
@@ -226,7 +226,7 @@
           text-align: center;
           line-height: 1;
           flex-grow: 1;
-          transition: .1s;
+          transition: 0.1s;
           cursor: pointer;
 
           color: #888;
@@ -251,11 +251,11 @@
           color: #fff;
 
           &.highlight-high {
-            background-color: #B60005;
+            background-color: #b60005;
           }
 
           &.highlight-low {
-            background-color: #B60005;
+            background-color: #b60005;
           }
         }
       }
@@ -264,12 +264,12 @@
     .score-number {
       display: block;
       font-size: 30px;
-      font-family: Consolas,monaco,monospace;
+      font-family: Consolas, monaco, monospace;
       line-height: 30px;
     }
 
     select {
-      outline:none;
+      outline: none;
       text-indent: 0.01px;
       text-overflow: '';
       background: none transparent;
@@ -282,16 +282,16 @@
 
       width: 100%;
       margin: 0;
-      padding: 8px .5rem;
+      padding: 8px 0.5rem;
       border: 1px solid #ccc;
-      border-radius: .25rem;
+      border-radius: 0.25rem;
       font-size: 14px;
       line-height: 1.6;
-      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
       &:focus {
-        border: solid 1px rgba(182,0,5,1);
-        box-shadow: 0 0 0 0.2rem rgba(182,0,5,.25);
+        border: solid 1px rgba(182, 0, 5, 1);
+        box-shadow: 0 0 0 0.2rem rgba(182, 0, 5, 0.25);
         outline: 0;
       }
 
@@ -307,7 +307,6 @@
             color: #fff;
           }
         }
-
       }
       &::-ms-expand {
         display: none;

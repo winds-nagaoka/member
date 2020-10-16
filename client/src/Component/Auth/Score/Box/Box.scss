@@ -16,7 +16,7 @@
     cursor: pointer;
 
     & {
-      border: .55px solid #cbcbcd;
+      border: 0.55px solid #cbcbcd;
       background: #fff;
 
       &:hover {
@@ -25,7 +25,7 @@
     }
     @media (prefers-color-scheme: dark) {
       & {
-        border: .55px solid #2d2d2f;
+        border: 0.55px solid #2d2d2f;
         background: #333;
 
         &:hover {

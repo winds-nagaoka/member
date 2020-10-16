@@ -25,59 +25,59 @@ const initialState = {
   // editMode: undefined,
   editMode: undefined,
 
-  displayEditScoreModal: false
+  displayEditScoreModal: false,
 }
 
 const prefix = 'SCORE_'
 
-export default function scoreReducer (state = initialState, action) {
+export default function scoreReducer(state = initialState, action) {
   switch (action.type) {
     case prefix + 'LOADING':
       return {
         ...state,
-        loading: action.payload.loading
+        loading: action.payload.loading,
       }
     case prefix + 'SET_SCORE_LIST':
       return {
         ...state,
-        scoreList: action.payload.scoreList
+        scoreList: action.payload.scoreList,
       }
     case prefix + 'SHOW_LIST_UPDATE':
       return {
         ...state,
-        showList: action.payload.showList
+        showList: action.payload.showList,
       }
     case prefix + 'LOAD_MORE_LOADING':
       return {
         ...state,
-        loadMoreLoading: action.payload.loadMoreLoading
+        loadMoreLoading: action.payload.loadMoreLoading,
       }
 
     case prefix + 'SET_SEARCH_QUERY':
       return {
         ...state,
-        searchQuery: action.payload.searchQuery
+        searchQuery: action.payload.searchQuery,
       }
     case prefix + 'LOADING_SEARCH':
       return {
         ...state,
-        loadingSearch: action.payload.loadingSearch
+        loadingSearch: action.payload.loadingSearch,
       }
     case prefix + 'SET_SEARCH_BOX_REF':
       return {
         ...state,
-        searchBoxRef: action.payload.searchBoxRef
+        searchBoxRef: action.payload.searchBoxRef,
       }
     case prefix + 'SET_DISPLAY_SCORE_MODAL':
       return {
         ...state,
         displayScoreModal: action.payload.displayScoreModal,
-        modalContent: action.payload.modalContent
+        modalContent: action.payload.modalContent,
       }
     case prefix + 'DETAIL_LOADING':
       return {
         ...state,
-        detailLoading: action.payload.detailLoading
+        detailLoading: action.payload.detailLoading,
       }
     case prefix + 'SET_SCORE_DETAIL':
       return {
@@ -89,34 +89,34 @@ export default function scoreReducer (state = initialState, action) {
     case prefix + 'SET_BOX_LIST':
       return {
         ...state,
-        boxList: action.payload.boxList
+        boxList: action.payload.boxList,
       }
 
     // score edit
     case prefix + 'SET_EDIT_MODAL_REF':
       return {
         ...state,
-        editModalRef: action.payload.editModalRef
+        editModalRef: action.payload.editModalRef,
       }
     case prefix + 'EDIT_PRE_LOADING':
       return {
         ...state,
-        editPreLoading: action.payload.editPreLoading
+        editPreLoading: action.payload.editPreLoading,
       }
     case prefix + 'EDIT_LOADING':
       return {
         ...state,
-        editLoading: action.payload.editLoading
+        editLoading: action.payload.editLoading,
       }
     case prefix + 'SET_EDIT_MODE':
       return {
         ...state,
-        editMode: action.payload.editMode
+        editMode: action.payload.editMode,
       }
     case prefix + 'SET_SCORE_EDIT':
       return {
         ...state,
-        scoreEdit: action.payload.scoreEdit
+        scoreEdit: action.payload.scoreEdit,
       }
     case prefix + 'UPDATE_DISPLAY_EDIT_SCORE_MODAL':
       return {

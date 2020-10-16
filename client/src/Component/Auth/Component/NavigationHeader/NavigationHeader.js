@@ -27,18 +27,18 @@ function mapStateToProps(state) {
     backNavigationPath: state.navigation.backNavigationPath,
     menuOpen: state.navigation.menuOpen,
 
-    archiveConcertList: state.archive.concertList
+    archiveConcertList: state.archive.concertList,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    navigationMenuToggle () {
+    navigationMenuToggle() {
       dispatch(navigationMenuToggle())
     },
-    scrollToTopSmooth () {
+    scrollToTopSmooth() {
       dispatch(scrollToTopSmooth())
-    }
+    },
     // navigationMenu (open) {
     //   dispatch(navigationMenu(open))
     // }
@@ -46,28 +46,67 @@ function mapDispatchToProps(dispatch) {
 }
 
 class NavigationHeader extends Component {
-
-  render () {
+  render() {
     const { pc, mobile, menuOpen, title, titleConcertid } = this.props
     const { navigationMenuToggle } = this.props
 
-    const titleText = titleConcertid && this.props.archiveConcertList ? libArchive.getConcertTitle(titleConcertid, this.props.archiveConcertList) : (title ? title : false)
-    const showTitle = title && !pc ? <div className='title-text' onClick={() => this.props.scrollToTopSmooth()}>{titleText}</div> : <div className='logo' onClick={() => this.props.scrollToTopSmooth()}><WindsLogo /></div>
+    const titleText =
+      titleConcertid && this.props.archiveConcertList
+        ? libArchive.getConcertTitle(titleConcertid, this.props.archiveConcertList)
+        : title
+        ? title
+        : false
+    const showTitle =
+      title && !pc ? (
+        <div className="title-text" onClick={() => this.props.scrollToTopSmooth()}>
+          {titleText}
+        </div>
+      ) : (
+        <div className="logo" onClick={() => this.props.scrollToTopSmooth()}>
+          <WindsLogo />
+        </div>
+      )
 
     // const backNavAndMenuToggle = this.props.backNavigation ? <div className='label back'><Link to={this.state.backTo}><i className='fas fa-chevron-left'></i>戻る</Link></div> : <div className='label' onClick={() => this.menuToggle()}><i className='fas fa-bars fa-lg'></i></div>
     // const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><i className='fas fa-chevron-left'></i><span>戻る</span></Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
-    const backNavAndMenuToggle = mobile ? (this.props.backNavigation ? <div className='label back'><Link to={this.props.backNavigationPath}><div className='back-icon'><Back /></div><span>戻る</span></Link></div> : <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div>) : false
+    const backNavAndMenuToggle = mobile ? (
+      this.props.backNavigation ? (
+        <div className="label back">
+          <Link to={this.props.backNavigationPath}>
+            <div className="back-icon">
+              <Back />
+            </div>
+            <span>戻る</span>
+          </Link>
+        </div>
+      ) : (
+        <div className="label" onClick={() => navigationMenuToggle()}>
+          <i className="fas fa-bars fa-lg"></i>
+        </div>
+      )
+    ) : (
+      false
+    )
     // const backNavAndMenuToggle = mobile ? <div className='label' onClick={() => navigationMenuToggle()}><i className='fas fa-bars fa-lg'></i></div> : <div></div>
 
     // const headerClass = ((this.state.titleBar) || (this.state.titleSearchStatus) ? 'header no-border' : 'header') + (this.state.titleFont ? ' font' : '')
     // const titleHeaderClass = 'title'
-    const homeIcon = title && !pc ? <div className='label home-navigation'><Link to={'/'}><i className='fas fa-home'></i></Link></div> : false
+    const homeIcon =
+      title && !pc ? (
+        <div className="label home-navigation">
+          <Link to={'/'}>
+            <i className="fas fa-home"></i>
+          </Link>
+        </div>
+      ) : (
+        false
+      )
 
     return (
-      <div className='navigation-header'>
+      <div className="navigation-header">
         <div className={'header' + lib.pcClass(pc)}>
           {/* <div className={'title'}> */}
-            {showTitle}
+          {showTitle}
           {/* </div> */}
           {backNavAndMenuToggle}
           {homeIcon}
@@ -78,7 +117,6 @@ class NavigationHeader extends Component {
         </div>
       </div>
     )
-
   }
 }
 

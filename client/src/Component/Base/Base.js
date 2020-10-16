@@ -17,48 +17,48 @@ import './Base.css'
 function mapStateToProps(state) {
   return {
     login: state.status.login,
-    loading: state.status.loading
+    loading: state.status.loading,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loginAuth (location) {
+    loginAuth(location) {
       dispatch(loginAuth(location))
     },
-    windowWidthChange () {
+    windowWidthChange() {
       dispatch(windowWidthChange())
-    }
+    },
   }
 }
 
 class Base extends Component {
-  UNSAFE_componentWillMount () {
+  UNSAFE_componentWillMount() {
     this.props.loginAuth(false)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.windowWidthChange()
     window.addEventListener('resize', () => {
       this.props.windowWidthChange()
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', () => {})
   }
 
-  render () {
+  render() {
     const { loading } = this.props
     // if (login) return <Redirect to='/' />
     if (loading) return <Loading />
     return (
-      <div className='base'>
+      <div className="base">
         <Header />
         <Switch>
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/reg' component={Reg} />
-          <Route path='/valid/:key' component={EmailValidation} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/reg" component={Reg} />
+          <Route path="/valid/:key" component={EmailValidation} />
         </Switch>
       </div>
     )

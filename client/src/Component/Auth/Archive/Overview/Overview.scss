@@ -31,18 +31,18 @@
 
       &.pc {
         height: 44px;
-        line-height:44px;
+        line-height: 44px;
       }
 
       &.mobile {
         & {
-          border-top: .55px solid #cbcbcd;
-          border-bottom: .55px solid #cbcbcd;
+          border-top: 0.55px solid #cbcbcd;
+          border-bottom: 0.55px solid #cbcbcd;
         }
         @media (prefers-color-scheme: dark) {
           & {
-            border-top: .55px solid #2d2d2f;
-            border-bottom: .55px solid #2d2d2f;
+            border-top: 0.55px solid #2d2d2f;
+            border-bottom: 0.55px solid #2d2d2f;
           }
         }
       }
@@ -87,20 +87,20 @@
         }
 
         &:active {
-          border: .55px solid #888;
+          border: 0.55px solid #888;
           color: #fff;
         }
       }
 
       .prev {
         i {
-          margin-left: .2em
+          margin-left: 0.2em;
         }
       }
 
       .next {
         i {
-          margin-right: .2em
+          margin-right: 0.2em;
         }
       }
 
@@ -116,7 +116,7 @@
         text-align: center;
 
         & {
-          border: .55px solid #eee;
+          border: 0.55px solid #eee;
           color: #eee;
           i {
             color: #eee;
@@ -139,14 +139,13 @@
       line-height: 1.6;
 
       .navigation-link {
-
         li:first-child {
           & {
-            border-bottom: .55px solid #cbcbcd;
+            border-bottom: 0.55px solid #cbcbcd;
           }
           @media (prefers-color-scheme: dark) {
             & {
-              border-bottom: .55px solid #2d2d2f;
+              border-bottom: 0.55px solid #2d2d2f;
             }
           }
         }
@@ -198,7 +197,7 @@
         img {
           width: calc(100% - 6px);
           padding: 2px;
-          border: .55px solid rgba(180,180,180,1);
+          border: 0.55px solid rgba(180, 180, 180, 1);
 
           @media (max-width: 767px) {
             & {
@@ -265,7 +264,7 @@
             // font-family: "source-han-sans-japanese",sans-serif;
             font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: .1em;
+            letter-spacing: 0.1em;
 
             & {
               color: #ccc;
@@ -355,7 +354,7 @@
           // margin-bottom: .5em;
 
           label.sticky-label {
-            letter-spacing: .25em;
+            letter-spacing: 0.25em;
 
             &.other {
               letter-spacing: 0;
@@ -439,7 +438,7 @@
 
                   span {
                     display: inline-block;
-                    margin: 0 .2em;
+                    margin: 0 0.2em;
                   }
                 }
               }

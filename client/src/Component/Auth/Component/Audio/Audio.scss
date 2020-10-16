@@ -15,12 +15,12 @@
     width: 100%;
 
     & {
-      border-top: .55px solid #cbcbcd;
+      border-top: 0.55px solid #cbcbcd;
       background: #fff;
     }
     @media (prefers-color-scheme: dark) {
       & {
-        border-top: .55px solid #2d2d2f;
+        border-top: 0.55px solid #2d2d2f;
         background: #333;
       }
     }
@@ -28,16 +28,16 @@
     padding-bottom: constant(safe-area-inset-bottom);
     padding-bottom: env(safe-area-inset-bottom);
 
-    transition: transform .2s linear;
-    -webkit-transform: translate3d(0,150%,0);
-    transform: translate3d(0,150%,0);
+    transition: transform 0.2s linear;
+    -webkit-transform: translate3d(0, 150%, 0);
+    transform: translate3d(0, 150%, 0);
     z-index: 35;
     // -webkit-overflow-scrolling: touch;
 
     &.open {
-      transition: transform .3s linear;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
+      transition: transform 0.3s linear;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
       // box-shadow: 6px 0 25px rgba(0,0,0,.15);
     }
 
@@ -52,7 +52,7 @@
       border-radius: 50%;
       font-size: 13px;
       cursor: pointer;
-      transition: all ease-in-out .1s;
+      transition: all ease-in-out 0.1s;
 
       color: #fff;
 
@@ -122,7 +122,7 @@
         left: 10px;
         // bottom: 10px;
         z-index: 39;
-        transition: transform .2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
 
         &.playing {
           background: $base-play-color;
@@ -138,9 +138,9 @@
           }
         }
         &.list-open {
-          transition: transform .3s ease-in-out;
-          -webkit-transform: translate3d(-5px,-40px,0);
-          transform: translate3d(-5px,-40px,0);
+          transition: transform 0.3s ease-in-out;
+          -webkit-transform: translate3d(-5px, -40px, 0);
+          transform: translate3d(-5px, -40px, 0);
         }
       }
 
@@ -149,7 +149,7 @@
         left: 10px;
         // bottom: 10px;
         z-index: 38;
-        transition: transform .2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
 
         &.playing {
           background: $base-play-color;
@@ -165,10 +165,10 @@
           }
         }
         &.list-open {
-          transition: transform .3s ease-in-out;
+          transition: transform 0.3s ease-in-out;
           // left: 70px;
-          -webkit-transform: translate3d(55px,-40px,0);
-          transform: translate3d(55px,-40px,0);
+          -webkit-transform: translate3d(55px, -40px, 0);
+          transform: translate3d(55px, -40px, 0);
         }
       }
 
@@ -181,10 +181,10 @@
           background: $base-play-color;
         }
         &.list-open {
-          transition: transform .3s ease-in-out;
+          transition: transform 0.3s ease-in-out;
           // left: 70px;
-          -webkit-transform: translate3d(115px,-40px,0);
-          transform: translate3d(115px,-40px,0);
+          -webkit-transform: translate3d(115px, -40px, 0);
+          transform: translate3d(115px, -40px, 0);
         }
       }
 
@@ -197,10 +197,10 @@
           background: $base-play-color;
         }
         &.list-open {
-          transition: transform .3s ease-in-out;
+          transition: transform 0.3s ease-in-out;
           // left: 70px;
-          -webkit-transform: translate3d(175px,-40px,0);
-          transform: translate3d(175px,-40px,0);
+          -webkit-transform: translate3d(175px, -40px, 0);
+          transform: translate3d(175px, -40px, 0);
         }
       }
     }
@@ -215,55 +215,68 @@
       z-index: 37;
 
       & {
-        background: linear-gradient(rgba(200,200,200,.8),rgba(200,200,200,.8)) no-repeat rgba(255,255,255,0.8);
+        background: linear-gradient(rgba(200, 200, 200, 0.8), rgba(200, 200, 200, 0.8)) no-repeat
+          rgba(255, 255, 255, 0.8);
         @media (prefers-color-scheme: dark) {
-        background: linear-gradient(rgba(50,50,50,.8),rgba(50,50,50,.8)) no-repeat rgba(0,0,0,0.8); }
+          background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(50, 50, 50, 0.8)) no-repeat rgba(0, 0, 0, 0.8);
+        }
       }
       &.list-open {
-        background: linear-gradient(rgba(200,200,200,.8),rgba(200,200,200,.8)) no-repeat rgba(255,255,255,0.8);
+        background: linear-gradient(rgba(200, 200, 200, 0.8), rgba(200, 200, 200, 0.8)) no-repeat
+          rgba(255, 255, 255, 0.8);
         @media (prefers-color-scheme: dark) {
-          background: linear-gradient(rgba(50,50,50,.8),rgba(50,50,50,.8)) no-repeat rgba(0,0,0,0.8); }
+          background: linear-gradient(rgba(50, 50, 50, 0.8), rgba(50, 50, 50, 0.8)) no-repeat rgba(0, 0, 0, 0.8);
+        }
       }
       &.playing {
-        background: linear-gradient(rgba(234,203,203,1),rgba(234,203,203,1)) no-repeat rgba(255,255,255,0.8);
+        background: linear-gradient(rgba(234, 203, 203, 1), rgba(234, 203, 203, 1)) no-repeat rgba(255, 255, 255, 0.8);
         @media (prefers-color-scheme: dark) {
-          background: linear-gradient(rgba(80,80,80,.8),rgba(80,80,80,.8)) no-repeat rgba(0,0,0,0.8); }
+          background: linear-gradient(rgba(80, 80, 80, 0.8), rgba(80, 80, 80, 0.8)) no-repeat rgba(0, 0, 0, 0.8);
+        }
 
         &.main {
-          background: linear-gradient($main-play-color-light, $main-play-color-light) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($main-play-color-light, $main-play-color-light) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($main-play-color-dark, $main-play-color-dark) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($main-play-color-dark, $main-play-color-dark) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.mini {
-          background: linear-gradient($mini-play-color-light, $mini-play-color-light) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($mini-play-color-light, $mini-play-color-light) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($mini-play-color-dark, $mini-play-color-dark) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($mini-play-color-dark, $mini-play-color-dark) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.other {
-          background: linear-gradient($other-play-color-light, $other-play-color-light) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($other-play-color-light, $other-play-color-light) no-repeat
+            rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($other-play-color-dark, $other-play-color-dark) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($other-play-color-dark, $other-play-color-dark) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
       }
       &.list-open.playing {
-        background: linear-gradient($base-play-color,$base-play-color) no-repeat rgba(255,255,255,0.8);
+        background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(255, 255, 255, 0.8);
         @media (prefers-color-scheme: dark) {
-          background: linear-gradient($base-play-color,$base-play-color) no-repeat rgba(0,0,0,0.8); }
+          background: linear-gradient($base-play-color, $base-play-color) no-repeat rgba(0, 0, 0, 0.8);
+        }
 
         &.main {
-          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.mini {
-          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
         &.other {
-          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255, 255, 255, 0.8);
           @media (prefers-color-scheme: dark) {
-            background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(0,0,0,0.8); }
+            background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(0, 0, 0, 0.8);
+          }
         }
       }
 
@@ -300,36 +313,37 @@
       z-index: 36;
 
       & {
-        background: linear-gradient(rgba(200,200,200,.9),rgba(200,200,200,.9)) no-repeat rgba(255,255,255,1);
+        background: linear-gradient(rgba(200, 200, 200, 0.9), rgba(200, 200, 200, 0.9)) no-repeat rgba(255, 255, 255, 1);
       }
       &.list-open {
-        background: linear-gradient(rgba(200,200,200,.9),rgba(200,200,200,.9)) no-repeat rgba(255,255,255,1);
+        background: linear-gradient(rgba(200, 200, 200, 0.9), rgba(200, 200, 200, 0.9)) no-repeat rgba(255, 255, 255, 1);
         // background: linear-gradient(rgba(120,120,120,1),rgba(120,120,120,1)) no-repeat rgba(180,180,180,1);
       }
       &.playing {
-        background: linear-gradient(rgba(234,203,203,1),rgba(234,203,203,1)) no-repeat rgba(255,255,255,1);
+        background: linear-gradient(rgba(234, 203, 203, 1), rgba(234, 203, 203, 1)) no-repeat rgba(255, 255, 255, 1);
 
         &.main {
-          background: linear-gradient($main-play-color-light, $main-play-color-light) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($main-play-color-light, $main-play-color-light) no-repeat rgba(255, 255, 255, 0.8);
         }
         &.mini {
-          background: linear-gradient($mini-play-color-light, $mini-play-color-light) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($mini-play-color-light, $mini-play-color-light) no-repeat rgba(255, 255, 255, 0.8);
         }
         &.other {
-          background: linear-gradient($other-play-color-light, $other-play-color-light) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($other-play-color-light, $other-play-color-light) no-repeat
+            rgba(255, 255, 255, 0.8);
         }
       }
       &.list-open.playing {
-        background: linear-gradient(rgba(182,0,5,1),rgba(182,0,5,1)) no-repeat rgba(180,180,180,1);
+        background: linear-gradient(rgba(182, 0, 5, 1), rgba(182, 0, 5, 1)) no-repeat rgba(180, 180, 180, 1);
 
         &.main {
-          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($main-play-color, $main-play-color) no-repeat rgba(255, 255, 255, 0.8);
         }
         &.mini {
-          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($mini-play-color, $mini-play-color) no-repeat rgba(255, 255, 255, 0.8);
         }
         &.other {
-          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255,255,255,0.8);
+          background: linear-gradient($other-play-color, $other-play-color) no-repeat rgba(255, 255, 255, 0.8);
         }
       }
     }
@@ -367,24 +381,28 @@
 
       &.playing {
         span:first-child {
-          color: #888!important;
+          color: #888 !important;
         }
 
-        span, i {
-          color: #B60005;
+        span,
+        i {
+          color: #b60005;
         }
         &.main {
-          span, i {
+          span,
+          i {
             color: $main-play-color;
           }
         }
         &.mini {
-          span, i {
+          span,
+          i {
             color: $mini-play-color;
           }
         }
         &.other {
-          span, i {
+          span,
+          i {
             color: $other-play-color;
           }
         }
@@ -424,7 +442,7 @@
           }
 
           i {
-            margin-right: .2em;
+            margin-right: 0.2em;
             // font-size: 16px;
           }
         }
@@ -437,7 +455,7 @@
       right: 0;
       width: 44px;
       height: 44px;
-      color: #B60005;
+      color: #b60005;
       z-index: 37;
       cursor: pointer;
 
@@ -498,9 +516,9 @@
     padding-right: env(safe-area-inset-right);
 
     // transition: transform .3s ease-in-out;
-    transition: transform .2s linear;
-    -webkit-transform: translate3d(0,105%,0);
-    transform: translate3d(0,105%,0);
+    transition: transform 0.2s linear;
+    -webkit-transform: translate3d(0, 105%, 0);
+    transform: translate3d(0, 105%, 0);
     -webkit-overflow-scrolling: touch;
 
     &.pc {
@@ -511,10 +529,10 @@
     }
 
     &.open {
-      transition: transform .4s linear;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
-      box-shadow: 6px 0 25px rgba(0,0,0,.15);
+      transition: transform 0.4s linear;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
+      box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
 
       &.pc {
         // -webkit-transform: translateY(20%);
@@ -532,12 +550,12 @@
 
       & {
         background: #fff;
-        border-bottom: .55px solid #cbcbcd;
+        border-bottom: 0.55px solid #cbcbcd;
       }
       @media (prefers-color-scheme: dark) {
         & {
           background: #1c1c1e;
-          border-bottom: .55px solid #2d2d2f;
+          border-bottom: 0.55px solid #2d2d2f;
         }
       }
 
@@ -566,24 +584,28 @@
 
       &.playing {
         span:first-child {
-          color: #888!important;
+          color: #888 !important;
         }
 
-        span, i {
-          color: #B60005;
+        span,
+        i {
+          color: #b60005;
         }
         &.main {
-          span, i {
+          span,
+          i {
             color: $main-play-color;
           }
         }
         &.mini {
-          span, i {
+          span,
+          i {
             color: $mini-play-color;
           }
         }
         &.other {
-          span, i {
+          span,
+          i {
             & {
               color: $other-play-color;
             }
@@ -623,7 +645,7 @@
           }
 
           i {
-            margin-right: .2em;
+            margin-right: 0.2em;
           }
         }
       }
@@ -635,7 +657,7 @@
       right: 0;
       width: 44px;
       height: 44px;
-      color: #B60005;
+      color: #b60005;
       cursor: pointer;
       z-index: 34;
 
@@ -644,7 +666,6 @@
       align-items: center;
 
       &.close {
-
         &.main {
           color: $main-play-color;
         }
@@ -725,36 +746,35 @@
       // }
 
       .album {
-
         &.archive {
           & {
-            border-bottom: .55px solid #cbcbcd;
+            border-bottom: 0.55px solid #cbcbcd;
           }
           @media (prefers-color-scheme: dark) {
             & {
-              border-bottom: .55px solid #2d2d2f;
+              border-bottom: 0.55px solid #2d2d2f;
             }
           }
         }
 
         &.practice {
           & {
-            border-top: .55px solid #cbcbcd;
+            border-top: 0.55px solid #cbcbcd;
           }
           @media (prefers-color-scheme: dark) {
             & {
-              border-top: .55px solid #2d2d2f;
+              border-top: 0.55px solid #2d2d2f;
             }
           }
         }
 
         &.source {
           & {
-            border-top: .55px solid #cbcbcd;
+            border-top: 0.55px solid #cbcbcd;
           }
           @media (prefers-color-scheme: dark) {
             & {
-              border-top: .55px solid #2d2d2f;
+              border-top: 0.55px solid #2d2d2f;
             }
           }
         }
@@ -792,7 +812,6 @@
         }
 
         &.playing {
-
           h2 {
             // background: rgba(248,229,230,1);
             color: $base-play-color;
@@ -834,12 +853,12 @@
           flex-direction: row;
 
           & {
-            border-bottom: .55px solid #cbcbcd;
+            border-bottom: 0.55px solid #cbcbcd;
             background: #fff;
           }
           @media (prefers-color-scheme: dark) {
             & {
-              border-bottom: .55px solid #2d2d2f;
+              border-bottom: 0.55px solid #2d2d2f;
               background: #1c1c1e;
             }
           }
@@ -907,7 +926,6 @@
           }
 
           &.playing {
-
             .icon i {
               color: $base-play-color;
             }
@@ -944,7 +962,7 @@
 
               span {
                 display: inline-block;
-                margin: 0 .2em;
+                margin: 0 0.2em;
               }
             }
           }
@@ -959,12 +977,12 @@
           cursor: pointer;
 
           & {
-            border-bottom: .55px solid #cbcbcd;
+            border-bottom: 0.55px solid #cbcbcd;
             background: #fff;
           }
           @media (prefers-color-scheme: dark) {
             & {
-              border-bottom: .55px solid #2d2d2f;
+              border-bottom: 0.55px solid #2d2d2f;
               background: #333;
             }
           }
@@ -1037,7 +1055,6 @@
               color: $base-play-color;
             }
             & ~ .add {
-
               & {
                 background: $base-play-color-very-light;
               }
@@ -1063,7 +1080,6 @@
               }
 
               &.playing {
-
                 & {
                   background: $base-play-color-light;
                 }
@@ -1114,7 +1130,6 @@
           }
 
           &.playing {
-
             .icon i {
               color: $base-play-color;
             }
@@ -1135,11 +1150,10 @@
           overflow: hidden;
           max-height: 0;
           transition: max-height 0s linear;
-
         }
         &.open > div {
           max-height: 999px;
-          transition: max-height .1s linear;
+          transition: max-height 0.1s linear;
         }
       }
 
@@ -1196,9 +1210,9 @@
     padding-right: env(safe-area-inset-right);
 
     &.list-open {
-      display: block;/*カバーを表示*/
-      opacity: .35;
-      animation: menu-background-show .3s ease-in-out 0s;
+      display: block; /*カバーを表示*/
+      opacity: 0.35;
+      animation: menu-background-show 0.3s ease-in-out 0s;
     }
   }
 }

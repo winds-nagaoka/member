@@ -17,13 +17,19 @@ function mapDispatchToProps() {
 }
 
 class Loading extends Component {
-  render () {
+  render() {
     const { pc } = this.props
     return (
-      <div className='auth'>
+      <div className="auth">
         <Header />
         <div className={'contents' + (pc ? ' pc' : ' mobile')}>
-          <div className='full-loading'><div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div></div>
+          <div className="full-loading">
+            <div className="loading">
+              <div className="loading1"></div>
+              <div className="loading2"></div>
+              <div className="loading3"></div>
+            </div>
+          </div>
         </div>
       </div>
     )

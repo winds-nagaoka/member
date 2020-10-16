@@ -21,33 +21,33 @@ function mapStateToProps(state) {
     loading: state.bbs.loading,
     list: state.bbs.list,
     showList: state.bbs.showList,
-    showMore: state.bbs.showMore
+    showMore: state.bbs.showMore,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setNavigationTitle (title) {
+    setNavigationTitle(title) {
       dispatch(setNavigationTitle(title))
     },
-    setBackNavigation (backNavigation, backNavigationPath) {
+    setBackNavigation(backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
-    getBBSList () {
+    getBBSList() {
       dispatch(getBBSList())
     },
 
-    showToast (string) {
+    showToast(string) {
       dispatch(showToast(string))
     },
-    loadMore () {
+    loadMore() {
       dispatch(loadMore())
-    }
+    },
   }
 }
 
 class Home extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.setNavigationTitle('会員専用掲示板')
     this.props.setBackNavigation(true, '/')
     this.props.getBBSList()
@@ -63,48 +63,82 @@ class Home extends Component {
   //   }, 100)
   // }
 
-  renderContents () {
-    if (this.props.loading || !this.props.list) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    return this.props.showList.map((each, i) => {
-      const text = each.text.replace(/(<br>|<br \/>)/gi, '\n').replace(/&gt;/gi, '>').replace(/&lt;/gi, '<')
+  renderContents() {
+    if (this.props.loading || !this.props.list)
       return (
-        <div key={'bbs' + i} className='bbs-item'>
-          <div className='bbs-title'><span className='number'>{each.number}</span><span className='name'>{each.name}</span><span className='time'>{each.time}</span></div>
+        <div className="loading">
+          <div className="loading1"></div>
+          <div className="loading2"></div>
+          <div className="loading3"></div>
+        </div>
+      )
+    return this.props.showList.map((each, i) => {
+      const text = each.text
+        .replace(/(<br>|<br \/>)/gi, '\n')
+        .replace(/&gt;/gi, '>')
+        .replace(/&lt;/gi, '<')
+      return (
+        <div key={'bbs' + i} className="bbs-item">
+          <div className="bbs-title">
+            <span className="number">{each.number}</span>
+            <span className="name">{each.name}</span>
+            <span className="time">{each.time}</span>
+          </div>
           {/* <div className='bbs-text' dangerouslySetInnerHTML={{__html: each.text}}></div> */}
-          <div className='bbs-text'>{text.split('\n').map((m,j) => {return (<p key={'text' + i + j}>{m}</p>)})}</div>
+          <div className="bbs-text">
+            {text.split('\n').map((m, j) => {
+              return <p key={'text' + i + j}>{m}</p>
+            })}
+          </div>
         </div>
       )
     })
   }
 
-  renderMore () {
+  renderMore() {
     if (this.props.loading || !this.props.list) return false
-    return this.props.showMore ? <div onClick={() => this.props.loadMore()} className='more'><i className="fas fa-plus-circle"></i>More</div> : false
+    return this.props.showMore ? (
+      <div onClick={() => this.props.loadMore()} className="more">
+        <i className="fas fa-plus-circle"></i>More
+      </div>
+    ) : (
+      false
+    )
   }
 
-  render () {
+  render() {
     const showList = this.renderContents()
     const showMore = this.renderMore()
 
     return (
       <React.Fragment>
-
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/bbs'>掲示板</Link></div>
+          <div className="bread-navigation">
+            <Link to="/">ホーム</Link>
+            <i className="fas fa-chevron-right"></i>
+            <Link to="/bbs">掲示板</Link>
+          </div>
           <h2>会員専用掲示板</h2>
         </div>
 
         <div className={'box bbs-post' + lib.pcClass(this.props.pc)}>
-          <div className='link'>
+          <div className="link">
             <ul>
-              <li><Link to='/bbs/post'><div className='inner'><span>書き込む</span><Forward /></div></Link></li>
+              <li>
+                <Link to="/bbs/post">
+                  <div className="inner">
+                    <span>書き込む</span>
+                    <Forward />
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
         <div className={'box bbs-list' + lib.pcClass(this.props.pc)}>
-          <div className='text'>
-            <div className='bbs-list'>
+          <div className="text">
+            <div className="bbs-list">
               {showList}
               {showMore}
             </div>
@@ -112,9 +146,16 @@ class Home extends Component {
         </div>
 
         <div className={'box bbs-post' + lib.pcClass(this.props.pc)}>
-          <div className='link'>
+          <div className="link">
             <ul>
-              <li><Link to='/bbs/post'><div className='inner'><span>書き込む</span><Forward /></div></Link></li>
+              <li>
+                <Link to="/bbs/post">
+                  <div className="inner">
+                    <span>書き込む</span>
+                    <Forward />
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

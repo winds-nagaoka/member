@@ -30,41 +30,46 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    scrollToTop () {
+    scrollToTop() {
       dispatch(scrollToTop())
-    }
+    },
   }
 }
 
 class Setting extends Component {
-
-  UNSAFE_componentWillReceiveProps () {
+  UNSAFE_componentWillReceiveProps() {
     this.props.scrollToTop()
   }
 
-  render () {
+  render() {
     return (
-      <div className={'setting' + (lib.pcClass(this.props.pc))}>
-
+      <div className={'setting' + lib.pcClass(this.props.pc)}>
         <Switch>
-          <Route exact path='/setting' component={Home} />
-          <Route exact path='/setting/name' component={Name} />
-          <Route exact path='/setting/email' component={Email} />
-          <Route exact path='/setting/valid/:key' component={EmailValidation} />
-          <Route exact path='/setting/password' component={Password} />
-          <Route exact path='/setting/session' component={SessionList} />
-          <Route exact path='/setting/admin' component={Admin} />
-          <Route exact path='/setting/delete' component={AccountDelete} />
-          <Route exact path='/setting/terms' component={Terms} />
-          <Route exact path='/setting/about' component={About} />
-          <Route exact path='/setting/license' component={License} />
-          <Route path='/setting/score' component={Score} />
+          <Route exact path="/setting" component={Home} />
+          <Route exact path="/setting/name" component={Name} />
+          <Route exact path="/setting/email" component={Email} />
+          <Route exact path="/setting/valid/:key" component={EmailValidation} />
+          <Route exact path="/setting/password" component={Password} />
+          <Route exact path="/setting/session" component={SessionList} />
+          <Route exact path="/setting/admin" component={Admin} />
+          <Route exact path="/setting/delete" component={AccountDelete} />
+          <Route exact path="/setting/terms" component={Terms} />
+          <Route exact path="/setting/about" component={About} />
+          <Route exact path="/setting/license" component={License} />
+          <Route path="/setting/score" component={Score} />
         </Switch>
 
-        <div className='box back-to-home'>
-          <div className='back-link'>
+        <div className="box back-to-home">
+          <div className="back-link">
             <ul>
-              <li className={'border-top-mobile border-bottom-mobile' + lib.pcClass(this.props.pc)}><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
+              <li className={'border-top-mobile border-bottom-mobile' + lib.pcClass(this.props.pc)}>
+                <Link to="/">
+                  <div className="inner">
+                    <Back />
+                    <span>ホーム</span>
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

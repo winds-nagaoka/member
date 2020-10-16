@@ -9,7 +9,7 @@
     padding: 0;
     background: #f8f8f8;
 
-    &:not(:first-child){
+    &:not(:first-child) {
       margin-top: 12px;
     }
 
@@ -36,11 +36,11 @@
 
     .notice-attachment {
       & {
-        border-top: .55px solid #cbcbcd;
+        border-top: 0.55px solid #cbcbcd;
       }
       @media (prefers-color-scheme: dark) {
         & {
-          border-top: .55px solid #2d2d2f;
+          border-top: 0.55px solid #2d2d2f;
         }
       }
 

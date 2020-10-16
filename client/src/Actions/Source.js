@@ -5,7 +5,7 @@ const prefix = 'SOURCE_'
 
 const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 export const getSource = () => {
@@ -15,7 +15,7 @@ export const getSource = () => {
     dispatch(loading(true))
     const path = lib.getAppPath() + '/api/source'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -31,10 +31,10 @@ export const getSource = () => {
 
 const setList = (list) => ({
   type: prefix + 'SET_LIST',
-  payload: { list }
+  payload: { list },
 })
 
 const acquired = (acquired) => ({
   type: prefix + 'ACQUIRED',
-  payload: { acquired }
+  payload: { acquired },
 })
