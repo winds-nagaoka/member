@@ -16,8 +16,6 @@ import historyReducer from '../Reducers/History'
 import bbsReducer from '../Reducers/BBS'
 import sourceReducer from '../Reducers/Source'
 
-import castReducer from '../Reducers/Cast'
-
 import archiveReducer from '../Reducers/Archive'
 import scoreReducer from '../Reducers/Score'
 import scoreBoxReducer from '../Reducers/ScoreBox'
@@ -48,8 +46,6 @@ export default function createStore(history) {
       manager: managerReducer,
       bbs: bbsReducer,
       source: sourceReducer,
-
-      cast: castReducer,
 
       archive: archiveReducer,
       score: scoreReducer,
