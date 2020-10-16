@@ -2,14 +2,12 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { connectSocket, disconnectSocket } from '../../../Actions/Socket'
 
 import { setNavigationTitle, releaseBackNavigation } from '../../../Actions/Navigation'
 import { getSchedule } from '../../../Actions/Schedule'
 import { getSource } from '../../../Actions/Source'
 import { getManager } from '../../../Actions/Manager'
 import { getBBSList } from '../../../Actions/BBS'
-import { getList } from '../../../Actions/Cast'
 
 import { showToast } from '../../../Actions/Toast'
 
@@ -20,11 +18,7 @@ import './Home.css'
 
 function mapStateToProps(state) {
   return {
-    socketid: state.socket.id,
     pc: state.status.pc,
-
-    loadingCastList: state.cast.loadingList,
-    castList: state.cast.list,
 
     loadingSchedule: state.schedule.loading,
     schedule: state.schedule.data,
@@ -44,15 +38,6 @@ function mapDispatchToProps(dispatch) {
     },
     releaseBackNavigation() {
       dispatch(releaseBackNavigation())
-    },
-    connectSocket() {
-      dispatch(connectSocket())
-    },
-    disconnectSocket() {
-      dispatch(disconnectSocket())
-    },
-    getCastList() {
-      dispatch(getList())
     },
     getSchedule() {
       dispatch(getSchedule())
@@ -77,55 +62,11 @@ class Home extends Component {
   componentDidMount() {
     this.props.setNavigationTitle(undefined)
     this.props.releaseBackNavigation()
-    // this.props.connectSocket()
 
     this.props.getSchedule()
     this.props.getSource()
     this.props.getManager()
     this.props.getBBSList()
-    // this.props.getCastList()
-  }
-
-  componentWillUnmount() {
-    // this.props.disconnectSocket()
-  }
-
-  renderCast(loading, cast) {
-    if (loading || !cast)
-      return (
-        <div className="loading">
-          <div className="loading1"></div>
-          <div className="loading2"></div>
-          <div className="loading3"></div>
-        </div>
-      )
-    // console.log(cast)
-    if (cast.length === 0) return false
-    return (
-      <div className="box home-manager">
-        <div className="title-frame">
-          <label>キャスト</label>
-          <div className="text">
-            放送中です。
-            {cast.map((each, i) => {
-              return <p key={'id' + i}>{each.id}</p>
-            })}
-          </div>
-        </div>
-        <div className="link">
-          <ul>
-            <li>
-              <Link to="/cast">
-                <div className="inner">
-                  <span>More</span>
-                  <Forward />
-                </div>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    )
   }
 
   renderSchedule(loading, schedule) {
@@ -242,11 +183,6 @@ class Home extends Component {
   render() {
     // State List
     const { pc, loadingSchedule, schedule, loadingManager, manager, loadingBBS, BBSList } = this.props
-    // Dispatch List
-    // const { logout } = this.props
-    // const socketStatus = socketid ? 'OK' : 'NG'
-
-    // const showCastList = this.renderCast(loadingCastList, castList)
     const showScheduleNext = this.renderSchedule(loadingSchedule, schedule)
     const showManager = this.renderManager(loadingManager, manager)
     const showBBS = this.renderBBS(loadingBBS, BBSList)
@@ -258,8 +194,6 @@ class Home extends Component {
           </div>
           <h2>会員専用ページ</h2>
         </div>
-
-        {/* {showCastList} */}
 
         <div className={'box home-schedule' + lib.pcClass(pc)}>
           <div className="title-frame">

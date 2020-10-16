@@ -4,7 +4,6 @@ import { routerReducer, routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 // import authenticateReducer from '../Reducers/Authenticate'
 import statusReducer from '../Reducers/Status'
-import socketReducer from '../Reducers/Socket'
 
 import audioReducer from '../Reducers/Audio'
 import navigationReducer from '../Reducers/Navigation'
@@ -15,8 +14,6 @@ import scheduleReducer from '../Reducers/Schedule'
 import historyReducer from '../Reducers/History'
 import bbsReducer from '../Reducers/BBS'
 import sourceReducer from '../Reducers/Source'
-
-import castReducer from '../Reducers/Cast'
 
 import archiveReducer from '../Reducers/Archive'
 import scoreReducer from '../Reducers/Score'
@@ -37,7 +34,6 @@ export default function createStore(history) {
     combineReducers({
       // authenticate: authenticateReducer,
       status: statusReducer,
-      socket: socketReducer,
 
       audio: audioReducer,
       navigation: navigationReducer,
@@ -48,8 +44,6 @@ export default function createStore(history) {
       manager: managerReducer,
       bbs: bbsReducer,
       source: sourceReducer,
-
-      cast: castReducer,
 
       archive: archiveReducer,
       score: scoreReducer,
