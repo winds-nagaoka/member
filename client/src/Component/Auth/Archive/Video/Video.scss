@@ -1,7 +1,6 @@
 @import '../../../../_color.scss';
 
 .archive-video-list {
-
   .video-player {
     position: -webkit-sticky;
     position: sticky;
@@ -13,13 +12,13 @@
       width: 100%;
 
       &.aspect-16-9:before {
-        content:"";
+        content: '';
         display: block;
         padding-top: 56.25%; /* 高さを幅の16:9に固定 */
       }
 
       &.aspect-4-3:before {
-        content:"";
+        content: '';
         display: block;
         padding-top: 75%; /* 高さを幅の4:3に固定 */
       }
@@ -46,7 +45,6 @@
   }
 
   .video-list {
-
     label {
       display: block;
       width: calc(100% - 12px);
@@ -79,11 +77,11 @@
       flex-direction: row;
 
       & {
-        border-bottom: .55px solid #cbcbcd;
+        border-bottom: 0.55px solid #cbcbcd;
       }
       @media (prefers-color-scheme: dark) {
         & {
-          border-bottom: .55px solid #2d2d2f;
+          border-bottom: 0.55px solid #2d2d2f;
         }
       }
 
@@ -192,7 +190,7 @@
 
           span {
             display: inline-block;
-            margin: 0 .2em;
+            margin: 0 0.2em;
           }
         }
       }

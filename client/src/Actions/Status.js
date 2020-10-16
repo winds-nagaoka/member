@@ -12,11 +12,11 @@ const prefix = 'STATUS_'
 export const loginAuth = (location) => {
   return async (dispatch, getState) => {
     if (!window.localStorage.token) return dispatch(loginUpdate(false))
-    if(getState().status.loading) return false
+    if (getState().status.loading) return false
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/auth'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -46,11 +46,11 @@ export const loginAuth = (location) => {
 
 export const logout = () => {
   return async (dispatch, getState) => {
-    if(getState().status.loading) return false
+    if (getState().status.loading) return false
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/logout'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err) => {
       if (err) {
@@ -71,33 +71,33 @@ export const logout = () => {
 
 export const loginUpdate = (login) => ({
   type: prefix + 'LOGIN',
-  payload: { login }
+  payload: { login },
 })
 
 export const setUser = (user) => ({
   type: prefix + 'SET_USER',
-  payload: { user }
+  payload: { user },
 })
 
 export const windsidUpdate = (windsid) => {
   windsid ? window.localStorage.setItem('windsid', windsid) : false
-  return({
+  return {
     type: prefix + 'WINDSID',
-    payload: { windsid }
-  })
+    payload: { windsid },
+  }
 }
 
 export const tokenUpdate = (token) => {
   token ? window.localStorage.setItem('token', token) : false
-  return({
+  return {
     type: prefix + 'TOKEN',
-    payload: { token }
-  })
+    payload: { token },
+  }
 }
 
 export const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 // export const windowWidthChange = () => {
@@ -134,7 +134,7 @@ export const windowWidthChange = () => {
 
 export const setWidth = (width, pc, mobile) => ({
   type: prefix + 'WINDOW_WIDTH',
-  payload: { width, pc, mobile }
+  payload: { width, pc, mobile },
 })
 
 export const scrollToTop = () => {
@@ -151,7 +151,7 @@ export const scrollToTopSmooth = () => {
       getState().status.contentsRef.scroll({
         top: 0,
         left: 0,
-        behavior: 'smooth'
+        behavior: 'smooth',
       })
     }
   }

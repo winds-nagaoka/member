@@ -7,7 +7,9 @@ import * as lib from '../Library/Library'
 
 export const register = () => {
   return async (dispatch, getState) => {
-    const { reg: {windsid, password, approvalKey} } = getState()
+    const {
+      reg: { windsid, password, approvalKey },
+    } = getState()
     if (windsid === '' || password === '' || approvalKey === '') {
       dispatch(resetMode())
       return dispatch(setErrorMessage('入力を確認してください'))
@@ -20,7 +22,7 @@ export const register = () => {
       key: approvalKey,
       clientid: lib.getClientid(),
       useragent: window.navigator.userAgent,
-      version: lib.version
+      version: lib.version,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -53,8 +55,8 @@ export const register = () => {
 export const loading = (loading) => ({
   type: 'REG_LOADING',
   payload: {
-    loading: loading
-  }
+    loading: loading,
+  },
 })
 
 export const updateMode = () => {
@@ -69,38 +71,38 @@ export const updateMode = () => {
 
 const setMode = (mode) => ({
   type: 'REG_SET_MODE',
-  payload: { mode }
+  payload: { mode },
 })
 
 export const resetMode = () => ({
   type: 'REG_SET_MODE',
-  payload: { mode: false }
+  payload: { mode: false },
 })
 
 export const changeWindsid = (windsid) => ({
   type: 'REG_INPUT_WINDSID',
   payload: {
-    windsid
-  }
+    windsid,
+  },
 })
 
 export const changePassword = (password) => ({
   type: 'REG_INPUT_PASSWORD',
   payload: {
-    password
-  }
+    password,
+  },
 })
 
 export const changeKey = (approvalKey) => ({
   type: 'REG_INPUT_KEY',
   payload: {
-    approvalKey
-  }
+    approvalKey,
+  },
 })
 
 export const setErrorMessage = (str) => ({
   type: 'REG_ERROR',
   payload: {
-    errorMessage: str
-  }
+    errorMessage: str,
+  },
 })

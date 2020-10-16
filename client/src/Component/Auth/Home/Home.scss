@@ -32,21 +32,20 @@
 
   .home-schedule {
     .next {
-
       .today {
-        margin: 0 .5em 0 0;
-        padding: .2em .5em;
+        margin: 0 0.5em 0 0;
+        padding: 0.2em 0.5em;
         border-radius: 5px;
         color: #fff;
-        background: #B60005;
-        font-size: .9rem;
+        background: #b60005;
+        font-size: 0.9rem;
       }
       .memo {
-        padding: .2em .5em;
+        padding: 0.2em 0.5em;
         border-radius: 5px;
         color: #fff;
         background: #3396ff;
-        font-size: .9rem;
+        font-size: 0.9rem;
       }
 
       .next-day {
@@ -60,16 +59,16 @@
           font-size: 2rem;
 
           span {
-            padding-left: .2em;
+            padding-left: 0.2em;
             font-size: 1.2rem;
           }
         }
         .day {
-          padding-left: .2em;
+          padding-left: 0.2em;
           font-size: 2rem;
 
           span {
-            padding-left: .2em;
+            padding-left: 0.2em;
             font-size: 1.2rem;
           }
         }
@@ -79,20 +78,20 @@
           width: 1.5em;
           height: 1.5em;
           border-radius: 5px;
-          margin-left: .2em;
+          margin-left: 0.2em;
           text-align: center;
           vertical-align: text-bottom;
           font-size: 1.2em;
           font-weight: bold;
-          background: rgba(150,150,150,1);
-          color: rgba(255,255,255,1);
+          background: rgba(150, 150, 150, 1);
+          color: rgba(255, 255, 255, 1);
 
           &.saturday {
-            background: rgba(0,103,192,.8);
+            background: rgba(0, 103, 192, 0.8);
           }
 
           &.sunday {
-            background: rgba(237,26,61,.8);
+            background: rgba(237, 26, 61, 0.8);
           }
         }
       }
@@ -151,7 +150,7 @@
 
       .top-notice-title {
         padding: 8px 12px;
-        font-size: .9rem;
+        font-size: 0.9rem;
 
         & {
           background: #eee;
@@ -193,7 +192,6 @@
   }
 
   .home-bbs-list {
-
     .home-bbs-item {
       // max-height: 130px;
       padding: 12px;
@@ -208,7 +206,7 @@
         }
       }
 
-      &:not(:first-child){
+      &:not(:first-child) {
         margin-top: 12px;
       }
 
@@ -240,7 +238,7 @@
 
         .name {
           padding-left: 8px;
-          font-size: .8rem;
+          font-size: 0.8rem;
           color: #666;
 
           & {

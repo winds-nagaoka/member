@@ -13,23 +13,24 @@ export const showToast = (string) => {
 }
 
 export const display = (string) => {
-  return ({
-  type: 'TOAST_DISPLAY',
-  payload: {
-    string,
-    status: true,
-    hide: false,
-    end: false
+  return {
+    type: 'TOAST_DISPLAY',
+    payload: {
+      string,
+      status: true,
+      hide: false,
+      end: false,
+    },
   }
-})}
+}
 
 export const hide = () => ({
   type: 'TOAST_HIDE',
   payload: {
     status: true,
     hide: true,
-    end: false
-  }
+    end: false,
+  },
 })
 
 export const end = () => ({
@@ -38,6 +39,6 @@ export const end = () => ({
     string: '',
     status: false,
     hide: true,
-    end: true
-  }
+    end: true,
+  },
 })

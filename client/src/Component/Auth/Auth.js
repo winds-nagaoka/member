@@ -38,39 +38,39 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     contentsRef: state.status.contentsRef,
     displayPlayer: state.audio.displayPlayer,
-    playStatus: state.audio.playStatus
+    playStatus: state.audio.playStatus,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loginAuth (location) {
+    loginAuth(location) {
       dispatch(loginAuth(location))
     },
-    windowWidthChange () {
+    windowWidthChange() {
       dispatch(windowWidthChange())
     },
-    audioPlay () {
+    audioPlay() {
       dispatch(audioPlay())
     },
-    audioPause () {
+    audioPause() {
       dispatch(audioPause())
-    }
+    },
   }
 }
 
 class Auth extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.contentsRef = React.createRef()
   }
 
-  UNSAFE_componentWillMount () {
+  UNSAFE_componentWillMount() {
     // 過去のlocation情報が存在する場合はそのページへRedirect
     this.props.loginAuth(window.localStorage.location ? window.localStorage.location : false)
   }
 
-  UNSAFE_componentWillReceiveProps () {
+  UNSAFE_componentWillReceiveProps() {
     if (this.contentsRef) {
       if (this.contentsRef.scrollTop) {
         this.contentsRef.scrollTop = 0
@@ -78,46 +78,51 @@ class Auth extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.windowWidthChange()
     window.addEventListener('resize', () => {
       this.props.windowWidthChange()
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', () => {})
   }
 
-  onKeyPress (e) {
+  onKeyPress(e) {
     if (!this.props.displayPlayer) return false
     if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.which === 32) {
       this.props.playStatus ? this.props.audioPause() : this.props.audioPlay()
     }
   }
 
-  render () {
+  render() {
     const { login, loading, pc, displayPlayer } = this.props
     if (loading) return <Loading />
-    if (!login) return <Redirect to='/login' />
-    const gap = displayPlayer ? <div className='gap'></div> : false
+    if (!login) return <Redirect to="/login" />
+    const gap = displayPlayer ? <div className="gap"></div> : false
     return (
-      <div className='auth' onKeyPress={(e) => this.onKeyPress(e)} tabIndex='0'>
+      <div className="auth" onKeyPress={(e) => this.onKeyPress(e)} tabIndex="0">
         {/* <Toast /> */}
         <NavigationHeader />
         <div className={'contents' + (pc ? ' pc' : ' mobile')}>
-          <div className={'contents-inner' + (pc ? ' pc' : ' mobile')} ref={(i) => {this.contentsRef = i}}>
-            <div className={pc ? 'flex-frame': ''}>
+          <div
+            className={'contents-inner' + (pc ? ' pc' : ' mobile')}
+            ref={(i) => {
+              this.contentsRef = i
+            }}
+          >
+            <div className={pc ? 'flex-frame' : ''}>
               <NavigationInline />
               <div className={pc ? 'inline-contents' : 'full-contents'}>
                 <Switch>
-                  <Route exact path='/' component={Home} />
-                  <Route path='/practice' component={Practice} />
-                  <Route path='/manager' component={Manager} />
-                  <Route path='/bbs' component={BBS} />
-                  <Route path='/archive' component={Archive} />
-                  <Route path='/score' component={Score} />
-                  <Route path='/setting' component={Setting} />
+                  <Route exact path="/" component={Home} />
+                  <Route path="/practice" component={Practice} />
+                  <Route path="/manager" component={Manager} />
+                  <Route path="/bbs" component={BBS} />
+                  <Route path="/archive" component={Archive} />
+                  <Route path="/score" component={Score} />
+                  <Route path="/setting" component={Setting} />
                 </Switch>
               </div>
             </div>

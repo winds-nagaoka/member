@@ -18,84 +18,109 @@ function mapStateToProps(state) {
 
     loading: state.history.loading,
     list: state.history.list,
-    showList: state.history.showList
+    showList: state.history.showList,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setNavigationTitle (title) {
+    setNavigationTitle(title) {
       dispatch(setNavigationTitle(title))
     },
-    setBackNavigation (backNavigation, backNavigationPath) {
+    setBackNavigation(backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
     practicePlayRequest(practiceid, fileNumber, requestTimeString, playRequest) {
       dispatch(practicePlayRequest(practiceid, fileNumber, requestTimeString, playRequest))
     },
-    getHistory () {
+    getHistory() {
       dispatch(getHistory())
     },
-    loadMore () {
+    loadMore() {
       dispatch(loadMore())
-    }
+    },
   }
 }
 
 class History extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.setNavigationTitle('練習の記録')
     this.props.setBackNavigation(true, '/practice')
     this.props.getHistory()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {}
 
-  }
-
-  renderHistoryList () {
-    if (this.props.loading || !this.props.list || this.props.showList.length === 0) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
+  renderHistoryList() {
+    if (this.props.loading || !this.props.list || this.props.showList.length === 0)
+      return (
+        <div className="loading">
+          <div className="loading1"></div>
+          <div className="loading2"></div>
+          <div className="loading3"></div>
+        </div>
+      )
     return this.props.showList.map((each, i) => {
       const practice = each.detail
       const audio = practice.recordStatus ? ' has-audio' : ' no-audio'
-      const playRequest = practice.recordStatus ? () => this.props.practicePlayRequest(practice.id, 0, 0, true) : () => {}
-      const icon = practice.recordStatus ? <i className='fas fa-play-circle'></i> : <i className='far fa-times-circle'></i>
-      const date = 'date' in practice.time ? <div className='date'>{practice.time.date}</div> : false
-      const place = 'place' in practice ? <div className='place'>{practice.place}</div> : false
+      const playRequest = practice.recordStatus
+        ? () => this.props.practicePlayRequest(practice.id, 0, 0, true)
+        : () => {}
+      const icon = practice.recordStatus ? (
+        <i className="fas fa-play-circle"></i>
+      ) : (
+        <i className="far fa-times-circle"></i>
+      )
+      const date = 'date' in practice.time ? <div className="date">{practice.time.date}</div> : false
+      const place = 'place' in practice ? <div className="place">{practice.place}</div> : false
       const label = 'label' in practice ? <label>{practice.label}</label> : false
       return (
         <li key={'history' + i} className={'each-history' + audio + lib.pcClass(this.props.pc)} onClick={playRequest}>
-          <div className='icon'>{icon}</div>
-          <div className='info'>
+          <div className="icon">{icon}</div>
+          <div className="info">
             {place}
             {date}
           </div>
-          <div className='label'>{label}</div>
+          <div className="label">{label}</div>
         </li>
       )
     })
   }
 
-  renderLoadMore () {
+  renderLoadMore() {
     if (this.props.loading || !this.props.list) return
     if (this.props.list.length > 10 && this.props.list.length !== this.props.showList.length) {
-      return <div onClick={() => this.props.loadMore()} className='load-more'><span>すべて表示</span></div>
+      return (
+        <div onClick={() => this.props.loadMore()} className="load-more">
+          <span>すべて表示</span>
+        </div>
+      )
     }
   }
 
-  render () {
+  render() {
     // State List
     const { pc } = this.props
 
     const showHistoryList = this.renderHistoryList()
     const showLoadMore = this.renderLoadMore()
-    const historyClass = this.props.loading || !this.props.list ? '' : (this.props.list.length > 10 && this.props.list.length !== this.props.showList.length ? '' : ' no-border-bottom')
+    const historyClass =
+      this.props.loading || !this.props.list
+        ? ''
+        : this.props.list.length > 10 && this.props.list.length !== this.props.showList.length
+        ? ''
+        : ' no-border-bottom'
 
     return (
       <React.Fragment>
-
         <div className={'contents-header' + lib.pcClass(pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/practice'>練習について</Link><i className="fas fa-chevron-right"></i><Link to='/practice/history'>練習の記録</Link></div>
+          <div className="bread-navigation">
+            <Link to="/">ホーム</Link>
+            <i className="fas fa-chevron-right"></i>
+            <Link to="/practice">練習について</Link>
+            <i className="fas fa-chevron-right"></i>
+            <Link to="/practice/history">練習の記録</Link>
+          </div>
           <h2>練習の記録</h2>
           <p>練習の録音を掲載しています</p>
           <p>合奏前から録音しているため適宜早送りしてご利用ください</p>
@@ -109,13 +134,19 @@ class History extends Component {
         </div>
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
-          <div className='back-link'>
+          <div className="back-link">
             <ul>
-              <li><Link to='/practice'><div className='inner'><Back /><span>戻る</span></div></Link></li>
+              <li>
+                <Link to="/practice">
+                  <div className="inner">
+                    <Back />
+                    <span>戻る</span>
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-
       </React.Fragment>
     )
   }

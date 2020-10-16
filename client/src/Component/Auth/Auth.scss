@@ -125,13 +125,13 @@
 
       &.mobile {
         & {
-          border-top: .55px solid #cbcbcd;
-          border-bottom: .55px solid #cbcbcd;
+          border-top: 0.55px solid #cbcbcd;
+          border-bottom: 0.55px solid #cbcbcd;
         }
         @media (prefers-color-scheme: dark) {
           & {
-            border-top: .55px solid #2d2d2f;
-            border-bottom: .55px solid #2d2d2f;
+            border-top: 0.55px solid #2d2d2f;
+            border-bottom: 0.55px solid #2d2d2f;
           }
         }
       }
@@ -168,7 +168,7 @@
         }
 
         i {
-          padding: 0 .6em;
+          padding: 0 0.6em;
           font-size: 10px;
         }
 
@@ -194,7 +194,7 @@
       p {
         margin: 0;
         padding: 0 12px;
-        font-size: .9rem;
+        font-size: 0.9rem;
       }
     }
 
@@ -270,13 +270,13 @@
 
       &.mobile {
         & {
-          border-top: .55px solid #cbcbcd;
-          border-bottom: .55px solid #cbcbcd;
+          border-top: 0.55px solid #cbcbcd;
+          border-bottom: 0.55px solid #cbcbcd;
         }
         @media (prefers-color-scheme: dark) {
           & {
-            border-top: .55px solid #2d2d2f;
-            border-bottom: .55px solid #2d2d2f;
+            border-top: 0.55px solid #2d2d2f;
+            border-bottom: 0.55px solid #2d2d2f;
           }
         }
       }
@@ -295,16 +295,16 @@
           padding: 0 12px;
           // border-bottom: .55px dotted #c8c7cc;
           font-size: 18px;
-          letter-spacing: .1rem;
+          letter-spacing: 0.1rem;
 
           & {
             background: #fff;
-            border-bottom: .55px solid #cbcbcd;
+            border-bottom: 0.55px solid #cbcbcd;
           }
           @media (prefers-color-scheme: dark) {
             & {
               background: #1c1c1e;
-              border-bottom: .55px solid #2d2d2f;
+              border-bottom: 0.55px solid #2d2d2f;
             }
           }
 
@@ -327,7 +327,7 @@
       .text {
         // padding: 13px 16px 14px;
         padding: 12px;
-        font-size: .9rem;
+        font-size: 0.9rem;
 
         p {
           margin: 0;
@@ -578,63 +578,63 @@
 
 .border-top {
   & {
-    border-top: .55px solid #cbcbcd;
+    border-top: 0.55px solid #cbcbcd;
   }
   @media (prefers-color-scheme: dark) {
     & {
-      border-top: .55px solid #2d2d2f;
+      border-top: 0.55px solid #2d2d2f;
     }
   }
 }
 
 .border-bottom {
   & {
-    border-bottom: .55px solid #cbcbcd;
+    border-bottom: 0.55px solid #cbcbcd;
   }
   @media (prefers-color-scheme: dark) {
     & {
-      border-bottom: .55px solid #2d2d2f;
+      border-bottom: 0.55px solid #2d2d2f;
     }
   }
 }
 
 .no-border-top {
-  border-top: 0!important;
+  border-top: 0 !important;
 }
 
 .no-border-bottom {
-  border-bottom: 0!important;
+  border-bottom: 0 !important;
 }
 
 .mobile {
   &.border-top-mobile {
     & {
-      border-top: .55px solid #cbcbcd;
+      border-top: 0.55px solid #cbcbcd;
     }
     @media (prefers-color-scheme: dark) {
       & {
-        border-top: .55px solid #2d2d2f;
+        border-top: 0.55px solid #2d2d2f;
       }
     }
   }
 
   &.border-bottom-mobile {
     & {
-      border-bottom: .55px solid #cbcbcd;
+      border-bottom: 0.55px solid #cbcbcd;
     }
     @media (prefers-color-scheme: dark) {
       & {
-        border-bottom: .55px solid #2d2d2f;
+        border-bottom: 0.55px solid #2d2d2f;
       }
     }
   }
 
   &.no-border-top-mobile {
-    border-top: 0!important;
+    border-top: 0 !important;
   }
 
   &.no-border-bottom-mobile {
-    border-bottom: 0!important;
+    border-bottom: 0 !important;
   }
 }
 
@@ -646,16 +646,17 @@
   margin: 0 auto;
   padding: 0;
   border: none;
-  color: rgba(182,0,5,1);
+  color: rgba(182, 0, 5, 1);
   font-size: 16px;
   text-align: center;
   cursor: pointer;
-  transition: all ease-in-out .2s;
+  transition: all ease-in-out 0.2s;
 
   & {
     background: #fff;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background: #e6e5eb;
     }
 
@@ -667,7 +668,8 @@
     & {
       background: #1c1c1e;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background: #2c2c2e;
       }
 
@@ -678,6 +680,6 @@
   }
 
   i {
-    margin-right: .2em;
+    margin-right: 0.2em;
   }
 }

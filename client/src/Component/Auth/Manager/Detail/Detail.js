@@ -13,7 +13,7 @@ import {
   sendSelectionLike,
   getSelectionList,
   getSelectionListSearch,
-  changeSearchQuery
+  changeSearchQuery,
 } from '../../../../Actions/Manager'
 
 import Forward from '../../../../Library/Icons/Forward'
@@ -49,44 +49,44 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setNavigationTitle (title) {
+    setNavigationTitle(title) {
       dispatch(setNavigationTitle(title))
     },
-    setBackNavigation (backNavigation, backNavigationPath) {
+    setBackNavigation(backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
     },
-    getSelectionPhase () {
+    getSelectionPhase() {
       dispatch(getSelectionPhase())
     },
-    getSelectionDetail (id) {
+    getSelectionDetail(id) {
       dispatch(getSelectionDetail(id))
     },
-    setSelectionDetailid (id) {
+    setSelectionDetailid(id) {
       dispatch(setSelectionDetailid(id))
     },
-    setSelectionDetail (detail) {
+    setSelectionDetail(detail) {
       dispatch(setSelectionDetail(detail))
     },
-    getSelectionLike () {
+    getSelectionLike() {
       dispatch(getSelectionLike())
     },
-    sendSelectionLike (selectionid) {
+    sendSelectionLike(selectionid) {
       dispatch(sendSelectionLike(selectionid))
     },
-    getSelectionList () {
+    getSelectionList() {
       dispatch(getSelectionList())
     },
-    getSelectionListSearch (query) {
+    getSelectionListSearch(query) {
       dispatch(getSelectionListSearch(query))
     },
-    changeSearchQuery (query) {
+    changeSearchQuery(query) {
       dispatch(changeSearchQuery(query))
-    }
+    },
   }
 }
 
 class Detail extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     const { params } = this.props.match
     const id = params.id ? params.id : ''
@@ -94,15 +94,16 @@ class Detail extends Component {
   }
 
   // 直接アクセスしたときに必要
-  componentDidMount () {
+  componentDidMount() {
     this.props.setNavigationTitle('候補曲詳細')
     this.props.setBackNavigation(true, '/manager/selection')
     this.props.getSelectionPhase()
     this.props.getSelectionLike()
-    if (!this.props.selectionList) this.props.searchQuery ? this.props.changeSearchQuery(this.props.searchQuery) : this.props.getSelectionList()
+    if (!this.props.selectionList)
+      this.props.searchQuery ? this.props.changeSearchQuery(this.props.searchQuery) : this.props.getSelectionList()
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { params } = nextProps.match
     if (params.id !== this.props.concertid) {
       if (!this.props.selectionList) return
@@ -111,75 +112,132 @@ class Detail extends Component {
     }
   }
 
-  renderDetail () {
-    if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    if ('removed' in this.props.selectionDetail) return <div className='removed'>データがありません</div>
+  renderDetail() {
+    if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid)
+      return (
+        <div className="loading">
+          <div className="loading1"></div>
+          <div className="loading2"></div>
+          <div className="loading3"></div>
+        </div>
+      )
+    if ('removed' in this.props.selectionDetail) return <div className="removed">データがありません</div>
     const selection = this.props.selectionDetail
-    const titleJa = libManager.admin(this.props.user) && selection.titleJa ? (
-      <li>
-        <label>タイトル(日本語)[管理者のみ]</label>
-        <p><span className='title-ja'>{selection.titleJa}</span></p>
-      </li>
-    ) : false
-    const titleEn = libManager.admin(this.props.user) && selection.titleEn ? (
-      <li>
-        <label>タイトル(原語)[管理者のみ]</label>
-        <p><span className='title-en'>{selection.titleEn}</span></p>
-      </li>
-    ) : false
-    const composer = selection.composer.length !== 0 && libManager.makeLine(selection.composer) !== '' ? (
-      <li>
-        <label>作曲者</label>
-        <p><span>{libManager.makeLine(selection.composer)}</span></p>
-      </li>
-    ) : false
-    const arranger = selection.arranger.length !== 0 && libManager.makeLine(selection.arranger) !== '' ? (
-      <li>
-        <label>編曲者</label>
-        <p><span>{libManager.makeLine(selection.arranger)}</span></p>
-      </li>
-    ) : false
+    const titleJa =
+      libManager.admin(this.props.user) && selection.titleJa ? (
+        <li>
+          <label>タイトル(日本語)[管理者のみ]</label>
+          <p>
+            <span className="title-ja">{selection.titleJa}</span>
+          </p>
+        </li>
+      ) : (
+        false
+      )
+    const titleEn =
+      libManager.admin(this.props.user) && selection.titleEn ? (
+        <li>
+          <label>タイトル(原語)[管理者のみ]</label>
+          <p>
+            <span className="title-en">{selection.titleEn}</span>
+          </p>
+        </li>
+      ) : (
+        false
+      )
+    const composer =
+      selection.composer.length !== 0 && libManager.makeLine(selection.composer) !== '' ? (
+        <li>
+          <label>作曲者</label>
+          <p>
+            <span>{libManager.makeLine(selection.composer)}</span>
+          </p>
+        </li>
+      ) : (
+        false
+      )
+    const arranger =
+      selection.arranger.length !== 0 && libManager.makeLine(selection.arranger) !== '' ? (
+        <li>
+          <label>編曲者</label>
+          <p>
+            <span>{libManager.makeLine(selection.arranger)}</span>
+          </p>
+        </li>
+      ) : (
+        false
+      )
     const duration = selection.duration ? (
       <li>
         <label>演奏時間</label>
-        <p><span className='duration'>{selection.duration}</span></p>
+        <p>
+          <span className="duration">{selection.duration}</span>
+        </p>
       </li>
-    ) : false
-    const time = libManager.admin(this.props.user) && selection.time ? (
-      <li>
-        <label>演奏時間(秒)[管理者のみ]</label>
-        <p><span className='time'>{selection.time}</span></p>
-      </li>
-    ) : false
-    const url = selection.url.length !== 0 && libManager.makeLine(selection.url) !== '' ? (
-      <li>
-        <label>参考音源</label>
-        <div className='link'>{libManager.makeLineUrl(selection.url)}</div>
-      </li>
-    ) : false
+    ) : (
+      false
+    )
+    const time =
+      libManager.admin(this.props.user) && selection.time ? (
+        <li>
+          <label>演奏時間(秒)[管理者のみ]</label>
+          <p>
+            <span className="time">{selection.time}</span>
+          </p>
+        </li>
+      ) : (
+        false
+      )
+    const url =
+      selection.url.length !== 0 && libManager.makeLine(selection.url) !== '' ? (
+        <li>
+          <label>参考音源</label>
+          <div className="link">{libManager.makeLineUrl(selection.url)}</div>
+        </li>
+      ) : (
+        false
+      )
     const memo = selection.memo ? (
       <li>
         <label>メモ</label>
-        <p><span className='memo'>{selection.memo}</span></p>
+        <p>
+          <span className="memo">{selection.memo}</span>
+        </p>
       </li>
-    ) : false
+    ) : (
+      false
+    )
     const createdAt = libManager.admin(this.props.user) ? (
       <li>
         <label>投稿日時[管理者のみ]</label>
-        <p><span>{selection.createdAt}</span></p>
+        <p>
+          <span>{selection.createdAt}</span>
+        </p>
       </li>
-    ) : false
+    ) : (
+      false
+    )
     const updatedAt = libManager.admin(this.props.user) ? (
       <li>
         <label>更新日時[管理者のみ]</label>
-        <p><span>{selection.updatedAt}</span></p>
+        <p>
+          <span>{selection.updatedAt}</span>
+        </p>
       </li>
-    ) : false
+    ) : (
+      false
+    )
     return (
-      <ul className='selection-detail-list'>
+      <ul className="selection-detail-list">
         <li>
           <label>曲名</label>
-          <p>{selection.title ? <span className='title'>{selection.title}</span> : <span className='no-data'>記載なし</span>}</p>
+          <p>
+            {selection.title ? (
+              <span className="title">{selection.title}</span>
+            ) : (
+              <span className="no-data">記載なし</span>
+            )}
+          </p>
         </li>
         {titleJa}
         {titleEn}
@@ -195,31 +253,54 @@ class Detail extends Component {
     )
   }
 
-  renderLike () {
-    if (!this.props.selectionLike || this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return false
+  renderLike() {
+    if (
+      !this.props.selectionLike ||
+      this.props.loadingSelectionDetail ||
+      !this.props.selectionDetail ||
+      !this.props.selectionDetailid
+    )
+      return false
     if ('removed' in this.props.selectionDetail) return false
-    const likeList = this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) ? this.props.selectionLike.find(item => item.likeUserid === this.props.user._id) : {like: []}
+    const likeList = this.props.selectionLike.find((item) => item.likeUserid === this.props.user._id)
+      ? this.props.selectionLike.find((item) => item.likeUserid === this.props.user._id)
+      : { like: [] }
     // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <i className='fas fa-thumbs-up'></i> : <i className='far fa-thumbs-up'></i>
     // const icon = likeList.like.find(item => item === this.props.selectionDetailid) ? <span className='like-true'><i className='fas fa-heart'></i></span> : <span><i className='far fa-heart'></i></span>
-    const icon = this.props.loadingSelectionSendLike ? <span className='icon'><i className='fas fa-spinner fa-pulse'></i></span> : (
-      likeList.like.find(item => item === this.props.selectionDetailid) ? (
-        <span className='icon like-true'><i className='fas fa-vote-yea'></i></span>
-      ) : (
-        <span className='icon'><i className='fas fa-vote-yea'></i></span>
-      )
+    const icon = this.props.loadingSelectionSendLike ? (
+      <span className="icon">
+        <i className="fas fa-spinner fa-pulse"></i>
+      </span>
+    ) : likeList.like.find((item) => item === this.props.selectionDetailid) ? (
+      <span className="icon like-true">
+        <i className="fas fa-vote-yea"></i>
+      </span>
+    ) : (
+      <span className="icon">
+        <i className="fas fa-vote-yea"></i>
+      </span>
     )
-    const buttonClass = likeList.like.find(item => item === this.props.selectionDetailid) ? ' true' : ' false'
-    const disableClass = this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user) ? ' use' : ' not-use'
-    const buttonLabel = likeList.like.find(item => item === this.props.selectionDetailid) ? '投票済み' : '投票する'
+    const buttonClass = likeList.like.find((item) => item === this.props.selectionDetailid) ? ' true' : ' false'
+    const disableClass =
+      this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user) ? ' use' : ' not-use'
+    const buttonLabel = likeList.like.find((item) => item === this.props.selectionDetailid) ? '投票済み' : '投票する'
     const count = libManager.countLike(this.props.selectionLike, this.props.selectionDetailid)
     return (
       <div className={'box selection-like' + lib.pcClass(this.props.pc)}>
-        <div className='title-frame'>
-          <div className='text'>
-            <div className='like'>
-              <div className='count'><span>{count}</span>票</div>
-              <div className='button-frame'>
-                <div onClick={() => this.props.sendSelectionLike(this.props.selectionDetailid)} className={'button' + buttonClass + disableClass}>{icon}{buttonLabel}</div>
+        <div className="title-frame">
+          <div className="text">
+            <div className="like">
+              <div className="count">
+                <span>{count}</span>票
+              </div>
+              <div className="button-frame">
+                <div
+                  onClick={() => this.props.sendSelectionLike(this.props.selectionDetailid)}
+                  className={'button' + buttonClass + disableClass}
+                >
+                  {icon}
+                  {buttonLabel}
+                </div>
               </div>
             </div>
           </div>
@@ -228,25 +309,41 @@ class Detail extends Component {
     )
   }
 
-  renderBreadNavigation () {
+  renderBreadNavigation() {
     return (
-      <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/manager'>お知らせ</Link><i className="fas fa-chevron-right"></i><Link to='/manager/selection'>選曲アンケート</Link><i className="fas fa-chevron-right"></i><Link to={'/manager/selection/detail/' + this.props.selectionDetailid}>候補曲詳細</Link></div>
+      <div className="bread-navigation">
+        <Link to="/">ホーム</Link>
+        <i className="fas fa-chevron-right"></i>
+        <Link to="/manager">お知らせ</Link>
+        <i className="fas fa-chevron-right"></i>
+        <Link to="/manager/selection">選曲アンケート</Link>
+        <i className="fas fa-chevron-right"></i>
+        <Link to={'/manager/selection/detail/' + this.props.selectionDetailid}>候補曲詳細</Link>
+      </div>
     )
   }
 
-  renderEditDetailLink () {
+  renderEditDetailLink() {
     if (this.props.loadingSelectionDetail || !this.props.selectionDetail || !this.props.selectionDetailid) return false
-    if (!(this.props.selectionDetail.postUserid === this.props.user._id || libManager.admin(this.props.user))) return false
+    if (!(this.props.selectionDetail.postUserid === this.props.user._id || libManager.admin(this.props.user)))
+      return false
     if (this.props.selectionPhase === 'getmusic' || libManager.admin(this.props.user)) {
       return (
         <div className={'box selection-edit-link' + lib.pcClass(this.props.pc)}>
-          <div className='link'>
+          <div className="link">
             <ul>
-              <li><Link to={'/manager/selection/edit/' + this.props.selectionDetailid}><div className='inner'><span>編集する</span><Forward /></div></Link></li>
+              <li>
+                <Link to={'/manager/selection/edit/' + this.props.selectionDetailid}>
+                  <div className="inner">
+                    <span>編集する</span>
+                    <Forward />
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-      )  
+      )
     }
   }
 
@@ -269,19 +366,56 @@ class Detail extends Component {
   //   )
   // }
 
-  renderDetailNavigation () {
-    if (this.props.loadingSelectionList || this.props.loadingSelectionListSearch || !this.props.selectionList || !this.props.selectionDetailid) {
+  renderDetailNavigation() {
+    if (
+      this.props.loadingSelectionList ||
+      this.props.loadingSelectionListSearch ||
+      !this.props.selectionList ||
+      !this.props.selectionDetailid
+    ) {
       return (
         <div className={'box selection-detail-navigation' + lib.pcClass(this.props.pc)}>
-          <span className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</span>
-          <span className={nextClass}>次<i className='fas fa-chevron-circle-right'></i></span>
+          <span className={prevClass}>
+            <i className="fas fa-chevron-circle-left"></i>前
+          </span>
+          <span className={nextClass}>
+            次<i className="fas fa-chevron-circle-right"></i>
+          </span>
         </div>
       )
     }
     const prevClass = 'prev ' + libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)
-    const prevLink = libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList) ? <Link to={'/manager/selection/detail/' + libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)} className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</Link> : <span className={prevClass}><i className='fas fa-chevron-circle-left'></i>前</span>
+    const prevLink = libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList) ? (
+      <Link
+        to={
+          '/manager/selection/detail/' +
+          libManager.getPrevDetail(this.props.selectionDetailid, this.props.selectionList)
+        }
+        className={prevClass}
+      >
+        <i className="fas fa-chevron-circle-left"></i>前
+      </Link>
+    ) : (
+      <span className={prevClass}>
+        <i className="fas fa-chevron-circle-left"></i>前
+      </span>
+    )
     const nextClass = 'next ' + libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList)
-    const nextLink = libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList) ? <Link to={'/manager/selection/detail/' + libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList)} className={nextClass}>次<i className='fas fa-chevron-circle-right'></i></Link> : <span className={nextClass}>次<i className='fas fa-chevron-circle-right'></i></span>
+    const nextLink = libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList) ? (
+      <Link
+        to={
+          '/manager/selection/detail/' +
+          libManager.getNextDetail(this.props.selectionDetailid, this.props.selectionList)
+        }
+        className={nextClass}
+      >
+        次<i className="fas fa-chevron-circle-right"></i>
+      </Link>
+    ) : (
+      <span className={nextClass}>
+        次<i className="fas fa-chevron-circle-right"></i>
+      </span>
+    )
     return (
       <div className={'box selection-detail-navigation' + lib.pcClass(this.props.pc)}>
         {prevLink}
@@ -290,8 +424,7 @@ class Detail extends Component {
     )
   }
 
-  render () {
-
+  render() {
     const showBreadNavigation = this.renderBreadNavigation()
     const showDetailNavigation = this.renderDetailNavigation()
     const showDetail = this.renderDetail()
@@ -308,10 +441,8 @@ class Detail extends Component {
         {showDetailNavigation}
 
         <div className={'box selection-detail' + lib.pcClass(this.props.pc)}>
-          <div className='title-frame'>
-            <div className='text'>
-              {showDetail}
-            </div>
+          <div className="title-frame">
+            <div className="text">{showDetail}</div>
           </div>
         </div>
 
@@ -320,9 +451,16 @@ class Detail extends Component {
         {showEditDetailLink}
 
         <div className={'box' + lib.pcClass(this.props.pc)}>
-          <div className='back-link'>
+          <div className="back-link">
             <ul>
-              <li><Link to='/manager/selection'><div className='inner'><Back /><span>候補曲一覧へ</span></div></Link></li>
+              <li>
+                <Link to="/manager/selection">
+                  <div className="inner">
+                    <Back />
+                    <span>候補曲一覧へ</span>
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

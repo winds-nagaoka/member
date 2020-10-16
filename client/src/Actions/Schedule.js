@@ -22,20 +22,20 @@ export const getSchedule = () => {
 export const update = (data) => ({
   type: 'SCHEDULE_UPDATE',
   payload: {
-    data
-  }
+    data,
+  },
 })
 
 export const acquired = (acquired) => ({
   type: 'SCHEDULE_ACQUIRED',
   payload: {
-    acquired
-  }
+    acquired,
+  },
 })
 
 export const loading = (loading) => ({
   type: 'SCHEDULE_LOADING',
   payload: {
-    loading: loading
-  }
+    loading: loading,
+  },
 })

@@ -17,7 +17,8 @@
     "dev-start": "yarn run build-dev; DEBUG=express:* node app.js",
     "lint": "yarn run lint-client && yarn run lint-server",
     "lint-client": "eslint ./client/src --config .eslintrc-client.json",
-    "lint-server": "eslint ./app.js --config .eslintrc-server.json"
+    "lint-server": "eslint ./app.js --config .eslintrc-server.json",
+    "fmt": "prettier --write 'client/src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "author": "",
   "license": "ISC",
@@ -58,6 +59,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
     "node-sass": "^4.14.0",
+    "prettier": "^2.1.2",
     "style-loader": "^0.20.2",
     "svg-react-loader": "^0.4.5",
     "webpack": "^4.43.0",

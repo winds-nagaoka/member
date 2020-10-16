@@ -2,9 +2,12 @@ const initialState = {
   loading: false,
   concertList: undefined,
   // concertListLoad: false,
-  displayMain: 'displayMain' in window.localStorage ? (window.localStorage.displayMain === 'true' ? true : false) : true,
-  displayMini: 'displayMini' in window.localStorage ? (window.localStorage.displayMini === 'true' ? true : false) : true,
-  displayOther: 'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true,
+  displayMain:
+    'displayMain' in window.localStorage ? (window.localStorage.displayMain === 'true' ? true : false) : true,
+  displayMini:
+    'displayMini' in window.localStorage ? (window.localStorage.displayMini === 'true' ? true : false) : true,
+  displayOther:
+    'displayOther' in window.localStorage ? (window.localStorage.displayOther === 'true' ? true : false) : true,
   concertid: undefined,
 
   // Search
@@ -48,22 +51,22 @@ const initialState = {
   videoPlayStatus: undefined,
   videoPlayTrack: undefined,
 
-  countFlag: true
+  countFlag: true,
 }
 
 const prefix = 'ARCHIVE_'
 
-export default function archiveReducer (state = initialState, action) {
+export default function archiveReducer(state = initialState, action) {
   switch (action.type) {
     case prefix + 'LOADING':
       return {
         ...state,
-        loading: action.payload.loading
+        loading: action.payload.loading,
       }
     case prefix + 'SET_CONCERT_LIST':
       return {
         ...state,
-        concertList: action.payload.concertList
+        concertList: action.payload.concertList,
       }
     // case prefix + 'SET_CONCERT_LIST_LOAD':
     //   return {
@@ -73,51 +76,51 @@ export default function archiveReducer (state = initialState, action) {
     case prefix + 'SET_DISPLAY_MAIN':
       return {
         ...state,
-        displayMain: action.payload.displayMain
+        displayMain: action.payload.displayMain,
       }
     case prefix + 'SET_DISPLAY_MINI':
       return {
         ...state,
-        displayMini: action.payload.displayMini
+        displayMini: action.payload.displayMini,
       }
     case prefix + 'SET_DISPLAY_OTHER':
       return {
         ...state,
-        displayOther: action.payload.displayOther
+        displayOther: action.payload.displayOther,
       }
     case prefix + 'SET_OVERVIEW_ID':
       return {
         ...state,
-        concertid: action.payload.concertid
+        concertid: action.payload.concertid,
       }
 
     // Search
     case prefix + 'LOADING_SEARCH':
       return {
         ...state,
-        loadingSearch: action.payload.loadingSearch
+        loadingSearch: action.payload.loadingSearch,
       }
     case prefix + 'SET_SEARCH_REF':
       return {
         ...state,
-        searchRef: action.payload.searchRef
+        searchRef: action.payload.searchRef,
       }
     case prefix + 'SET_SEARCH_QUERY':
       return {
         ...state,
-        searchQuery: action.payload.searchQuery
+        searchQuery: action.payload.searchQuery,
       }
     case prefix + 'SET_SEARCH_RESULT':
       return {
         ...state,
-        searchResult: action.payload.searchResult
+        searchResult: action.payload.searchResult,
       }
 
     // Photo and PhotoSlide Component
     case prefix + 'LOADING_PHOTO':
       return {
         ...state,
-        loadingPhoto: action.payload.loadingPhoto
+        loadingPhoto: action.payload.loadingPhoto,
       }
     case prefix + 'SET_PHOTO_LIST':
       return {
@@ -126,20 +129,20 @@ export default function archiveReducer (state = initialState, action) {
         photoList: action.payload.photoList,
         photoBaseSrcThumbnail: action.payload.photoBaseSrcThumbnail,
         photoBaseSrcOriginal: action.payload.photoBaseSrcOriginal,
-        photoUrl: action.payload.photoUrl
+        photoUrl: action.payload.photoUrl,
       }
     case prefix + 'SET_DISPLAY_PHOTO_SLIDE_MODAL':
       return {
         ...state,
         displayPhotoSlideModal: action.payload.displayPhotoSlideModal,
-        photoNumber: action.payload.photoNumber
+        photoNumber: action.payload.photoNumber,
       }
 
     // Video and VideoController Component
     case prefix + 'LOADING_VIDEO':
       return {
         ...state,
-        loadingVideo: action.payload.loadingVideo
+        loadingVideo: action.payload.loadingVideo,
       }
     case prefix + 'SET_VIDEO_LIST':
       return {
@@ -148,30 +151,30 @@ export default function archiveReducer (state = initialState, action) {
         videoList: action.payload.videoList,
         videoBaseSrc: action.payload.videoBaseSrc,
         videoUrl: action.payload.videoUrl,
-        videoPoster: action.payload.videoPoster
+        videoPoster: action.payload.videoPoster,
       }
 
-      // プレイヤー操作
+    // プレイヤー操作
     case prefix + 'SET_VIDEO_REF':
       return {
         ...state,
-        videoRef: action.payload.videoRef
+        videoRef: action.payload.videoRef,
       }
     case prefix + 'SET_DISPLAY_VIDEO_CONTROLLER':
       return {
         ...state,
         displayVideoController: action.payload.displayVideoController,
-        audioPlayerDisplay: action.payload.audioPlayerDisplay
+        audioPlayerDisplay: action.payload.audioPlayerDisplay,
       }
     case prefix + 'SET_LOADING_VIDEO_SOURCE':
       return {
         ...state,
-        loadingVideoSource: action.payload.loadingVideoSource
+        loadingVideoSource: action.payload.loadingVideoSource,
       }
     case prefix + 'VIDEO_LOAD_PERCENT_UPDATE':
       return {
         ...state,
-        videoLoadPercent: action.payload.videoLoadPercent
+        videoLoadPercent: action.payload.videoLoadPercent,
       }
     case prefix + 'VIDEO_PLAY_UPDATE':
       return {
@@ -180,19 +183,19 @@ export default function archiveReducer (state = initialState, action) {
         videoCurrentTime: action.payload.videoCurrentTime,
         videoDuration: action.payload.videoDuration,
         videoDurationTime: action.payload.videoDurationTime,
-        videoPlayPercent: action.payload.videoPlayPercent
+        videoPlayPercent: action.payload.videoPlayPercent,
       }
     case prefix + 'SET_VIDEO_PLAY_STATUS':
       return {
         ...state,
         videoPlayStatus: action.payload.videoPlayStatus,
-        videoPlayTrack: action.payload.videoPlayTrack
+        videoPlayTrack: action.payload.videoPlayTrack,
       }
 
     case prefix + 'SET_COUNT_FLAG':
       return {
         ...state,
-        countFlag: action.payload.countFlag
+        countFlag: action.payload.countFlag,
       }
 
     default:

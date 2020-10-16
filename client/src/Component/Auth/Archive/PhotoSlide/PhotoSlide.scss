@@ -1,5 +1,4 @@
 .photo-slide-modal {
-
   .photo-slide-modal-contents {
     position: fixed;
     top: 0;
@@ -8,12 +7,12 @@
     bottom: 0;
     background: #fff;
     z-index: 51;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
 
     // transition: transform .3s ease-in-out;
-    transition: transform .2s ease-in-out;
-    -webkit-transform: translate3d(0,105%,0);
-    transform: translate3d(0,105%,0);
+    transition: transform 0.2s ease-in-out;
+    -webkit-transform: translate3d(0, 105%, 0);
+    transform: translate3d(0, 105%, 0);
     -webkit-overflow-scrolling: touch;
 
     // &.pc {
@@ -22,9 +21,9 @@
     // }
 
     &.open {
-      transition: transform .4s ease;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
+      transition: transform 0.4s ease;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
       // box-shadow: 6px 0 25px rgba(0,0,0,.15);
 
       &.pc {
@@ -46,8 +45,9 @@
         cursor: pointer;
         z-index: 52;
 
-        &:hover, &:active {
-          background: rgba(255,255,255,.2);
+        &:hover,
+        &:active {
+          background: rgba(255, 255, 255, 0.2);
         }
       }
     }
@@ -95,14 +95,14 @@
     }
 
     .archive-photo-slide {
-      background: rgba(0,0,0,0);
+      background: rgba(0, 0, 0, 0);
 
       .swiper-container {
-        background: rgba(0,0,0,0);
+        background: rgba(0, 0, 0, 0);
         .swiper-wrapper {
-          background: rgba(0,0,0,0);
+          background: rgba(0, 0, 0, 0);
           .swiper-slide {
-            background: rgba(0,0,0,0);
+            background: rgba(0, 0, 0, 0);
           }
         }
       }
@@ -113,7 +113,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(0,0,0,0);
+        background: rgba(0, 0, 0, 0);
 
         img {
           display: block;
@@ -162,8 +162,8 @@
     background: black;
 
     &.open {
-      display: block;/*カバーを表示*/
-      opacity: .95;
+      display: block; /*カバーを表示*/
+      opacity: 0.95;
       // transition: all 3s ease-in-out;
       // animation: menu-background-show .3s ease-in-out 0s;
     }

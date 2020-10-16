@@ -1,5 +1,4 @@
 .score-modal {
-
   .score-info {
     position: fixed;
     top: auto;
@@ -21,9 +20,9 @@
     padding-bottom: env(safe-area-inset-bottom);
 
     // transition: transform .3s ease-in-out;
-    transition: transform .2s ease-in-out;
-    -webkit-transform: translate3d(0,105%,0);
-    transform: translate3d(0,105%,0);
+    transition: transform 0.2s ease-in-out;
+    -webkit-transform: translate3d(0, 105%, 0);
+    transform: translate3d(0, 105%, 0);
     -webkit-overflow-scrolling: touch;
 
     &.pc {
@@ -33,10 +32,10 @@
     }
 
     &.open {
-      transition: transform .2s ease;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
-      box-shadow: 6px 0 25px rgba(0,0,0,.15);
+      transition: transform 0.2s ease;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
+      box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
 
       &.pc {
         // -webkit-transform: translateY(20%);
@@ -133,10 +132,10 @@
               // font-family: "source-han-sans-japanese", sans-serif;
 
               &.lend {
-                background: #B60005;
+                background: #b60005;
               }
               &.use {
-                background: #B60005;
+                background: #b60005;
               }
               &.storage {
                 background: #488aff;
@@ -239,7 +238,6 @@
               }
             }
           }
-
         }
 
         .links {
@@ -257,7 +255,7 @@
             text-align: center;
             text-decoration: none;
             cursor: pointer;
-            transition: all ease-in-out .1s;
+            transition: all ease-in-out 0.1s;
 
             & {
               color: #333;
@@ -291,7 +289,7 @@
             }
 
             &:active {
-              transition: all ease-in-out .1s;
+              transition: all ease-in-out 0.1s;
             }
 
             // &:first-child {
@@ -303,9 +301,9 @@
             // }
 
             i {
-              margin-right: .2em;
+              margin-right: 0.2em;
               color: #555;
-              transition: all ease-in-out .1s;
+              transition: all ease-in-out 0.1s;
 
               & {
                 color: #555;
@@ -338,10 +336,10 @@
     background: black;
 
     &.open {
-      display: block;/*カバーを表示*/
-      opacity: .35;
+      display: block; /*カバーを表示*/
+      opacity: 0.35;
       // transition: all 3s ease-in-out;
-      animation: menu-background-show .3s ease-in-out 0s;
+      animation: menu-background-show 0.3s ease-in-out 0s;
     }
   }
 }

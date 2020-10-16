@@ -7,7 +7,9 @@ import { showToast } from './Toast'
 
 export const login = () => {
   return async (dispatch, getState) => {
-    const { login: {windsid, password} } = getState()
+    const {
+      login: { windsid, password },
+    } = getState()
     if (windsid === '' || password === '') return dispatch(setErrorMessage('入力を確認してください'))
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/login'
@@ -16,7 +18,7 @@ export const login = () => {
       passwd: password,
       clientid: lib.getClientid(),
       useragent: window.navigator.userAgent,
-      version: lib.version
+      version: lib.version,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -46,27 +48,27 @@ export const login = () => {
 export const loading = (loading) => ({
   type: 'LOGIN_LOADING',
   payload: {
-    loading: loading
-  }
+    loading: loading,
+  },
 })
 
 export const changeWindsid = (windsid) => ({
   type: 'LOGIN_INPUT_WINDSID',
   payload: {
-    windsid
-  }
+    windsid,
+  },
 })
 
 export const changePassword = (password) => ({
   type: 'LOGIN_INPUT_PASSWORD',
   payload: {
-    password
-  }
+    password,
+  },
 })
 
 export const setErrorMessage = (str) => ({
   type: 'LOGIN_ERROR',
   payload: {
-    errorMessage: str
-  }
+    errorMessage: str,
+  },
 })

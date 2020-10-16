@@ -15,7 +15,7 @@ export const getBoxList = () => {
     // dispatch(loading(true))
     const path = lib.getScorePath() + '/api/member/box'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -33,30 +33,30 @@ export const getBoxList = () => {
 
 const setBoxList = (boxList) => ({
   type: prefix + 'SET_BOX_LIST',
-  payload: { boxList }
+  payload: { boxList },
 })
 
 export const setDisplayBoxModal = (displayBoxModal, modalContent) => {
   const inputBoxLocate = !modalContent.locate ? '' : modalContent.locate
   return {
     type: prefix + 'SET_DISPLAY_BOX_MODAL',
-    payload: { displayBoxModal, modalContent, inputBoxLocate }
+    payload: { displayBoxModal, modalContent, inputBoxLocate },
   }
 }
 
 const acquired = (acquired) => ({
   type: prefix + 'ACQUIRED',
-  payload: { acquired }
+  payload: { acquired },
 })
 
 export const changeInputBoxLocate = (inputBoxLocate) => ({
   type: prefix + 'CHANGE_INPUT_BOX_LOCATE',
-  payload: { inputBoxLocate }
+  payload: { inputBoxLocate },
 })
 
 const loadingUpdateBoxLocate = (loadingUpdateBoxLocate) => ({
   type: prefix + 'LOADING_UPDATE_BOX_LOCATE',
-  payload: { loadingUpdateBoxLocate }
+  payload: { loadingUpdateBoxLocate },
 })
 
 export const updateBoxLocate = () => {
@@ -67,7 +67,7 @@ export const updateBoxLocate = () => {
     const send = {
       session: lib.getSession(),
       id: getState().scoreBox.modalContent._id,
-      locate: getState().scoreBox.inputBoxLocate
+      locate: getState().scoreBox.inputBoxLocate,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -75,7 +75,8 @@ export const updateBoxLocate = () => {
       } else {
         if (res.body.status) {
           const boxList = JSON.parse(JSON.stringify(getState().scoreBox.boxList))
-          boxList[getState().scoreBox.boxList.findIndex(item => item === getState().scoreBox.modalContent)].locate = '読み込み中'
+          boxList[getState().scoreBox.boxList.findIndex((item) => item === getState().scoreBox.modalContent)].locate =
+            '読み込み中'
           dispatch(setBoxList(boxList))
           dispatch(acquired(false))
           dispatch(setDisplayBoxModal(false, getState().scoreBox.modalContent))
@@ -89,7 +90,7 @@ export const updateBoxLocate = () => {
 
 const loadingAddBox = (loadingAddBox) => ({
   type: prefix + 'LOADING_ADD_BOX',
-  payload: { loadingAddBox }
+  payload: { loadingAddBox },
 })
 
 export const addBox = () => {
@@ -98,7 +99,7 @@ export const addBox = () => {
     dispatch(loadingAddBox(true))
     const path = lib.getScorePath() + '/api/member/box/add'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {

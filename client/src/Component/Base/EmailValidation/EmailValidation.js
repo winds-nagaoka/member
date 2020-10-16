@@ -21,26 +21,26 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setKey (key) {
+    setKey(key) {
       dispatch(setKey(key))
     },
-    checkAuth (key) {
+    checkAuth(key) {
       dispatch(checkAuth(key))
     },
-    requestLogin () {
+    requestLogin() {
       dispatch(requestLogin())
     },
-    changeWindsid (windsid) {
+    changeWindsid(windsid) {
       dispatch(changeWindsid(windsid))
     },
-    changePassword (password) {
+    changePassword(password) {
       dispatch(changePassword(password))
-    }
+    },
   }
 }
 
 class EmailValidation extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     const { params } = this.props.match
     const key = params.key ? params.key : ''
@@ -49,33 +49,46 @@ class EmailValidation extends Component {
     this.inputRef = React.createRef()
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.inputRef) this.inputRef.focus()
   }
 
-  keyPress (e) {
+  keyPress(e) {
     if (e.which === 13) this.props.requestLogin()
   }
 
-  render () {
+  render() {
     // if (this.props.loading) return <div>読み込み中</div>
     const { windsid, password, errorMessage, loading } = this.props
     const { changeWindsid, changePassword } = this.props
     const buttonLabel = loading ? '読み込み中' : '送信'
-    const disabled = (windsid && password) ? (loading ? true : false) : true
-    const showError = errorMessage ? <div className='error'>{errorMessage}</div> : false
+    const disabled = windsid && password ? (loading ? true : false) : true
+    const showError = errorMessage ? <div className="error">{errorMessage}</div> : false
     return (
       <div className={'contents' + lib.pcClass(this.props.pc)}>
         <div className={'form-base login' + lib.pcClass(this.props.pc)}>
           <div className={'form login' + lib.pcClass(this.props.pc)}>
             <h2 className={lib.pcClass(this.props.pc)}>ログイン</h2>
             <label>ユーザー名</label>
-            <input type='text' tabIndex='1' onChange={(e) => changeWindsid(e.target.value)} onKeyPress={(e) => this.keyPress(e)} ref={(i) => this.inputRef = i} />
+            <input
+              type="text"
+              tabIndex="1"
+              onChange={(e) => changeWindsid(e.target.value)}
+              onKeyPress={(e) => this.keyPress(e)}
+              ref={(i) => (this.inputRef = i)}
+            />
             <label>パスワード</label>
-            <input type='password' tabIndex='2' onChange={(e) => changePassword(e.target.value)} onKeyPress={(e) => this.keyPress(e)} />
+            <input
+              type="password"
+              tabIndex="2"
+              onChange={(e) => changePassword(e.target.value)}
+              onKeyPress={(e) => this.keyPress(e)}
+            />
             {showError}
-            <div className='links'>
-              <button tabIndex='3' onClick={() => this.props.requestLogin()} disabled={disabled}>{buttonLabel}</button>
+            <div className="links">
+              <button tabIndex="3" onClick={() => this.props.requestLogin()} disabled={disabled}>
+                {buttonLabel}
+              </button>
             </div>
           </div>
         </div>

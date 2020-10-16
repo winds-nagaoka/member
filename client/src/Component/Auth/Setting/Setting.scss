@@ -86,16 +86,17 @@
     margin: 0 auto;
     padding: 0;
     border: none;
-    color: rgba(182,0,5,1);
+    color: rgba(182, 0, 5, 1);
     font-size: 16px;
     text-align: center;
     cursor: pointer;
-    transition: all ease-in-out .2s;
+    transition: all ease-in-out 0.2s;
 
     & {
       background: #fff;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background: #e6e5eb;
       }
 
@@ -107,7 +108,8 @@
       & {
         background: #1c1c1e;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           background: #2c2c2e;
         }
 
@@ -118,7 +120,7 @@
     }
 
     i {
-      margin-right: .2em;
+      margin-right: 0.2em;
     }
 
     &.disabled {

@@ -10,12 +10,12 @@ const prefix = 'EMAIL_VALIDATION_'
 
 const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 export const setKey = (key) => ({
   type: prefix + 'SET_KEY',
-  payload: { key }
+  payload: { key },
 })
 
 export const checkAuth = (key) => {
@@ -28,7 +28,9 @@ export const requestLogin = () => {
   return async (dispatch, getState) => {
     // 送信済みの場合キャンセル
     if (getState().emailValidation.loading) return
-    const { emailValidation: {windsid, password} } = getState()
+    const {
+      emailValidation: { windsid, password },
+    } = getState()
     if (windsid === '' || password === '') return dispatch(setErrorMessage('入力を確認してください'))
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/login'
@@ -37,7 +39,7 @@ export const requestLogin = () => {
       passwd: password,
       clientid: lib.getClientid(),
       useragent: window.navigator.userAgent,
-      version: lib.version
+      version: lib.version,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -72,7 +74,7 @@ export const requestValid = (key) => {
     const path = lib.getAuthPath() + '/user/valid'
     const send = {
       session: lib.getSession(),
-      key
+      key,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -109,7 +111,7 @@ export const requestEmail = () => {
     const path = lib.getAuthPath() + '/api/setting/email'
     const send = {
       session: lib.getSession(),
-      text: getState().status.user.email
+      text: getState().status.user.email,
     }
     request.post(path, send, (err, res) => {
       dispatch(loading(false))
@@ -126,31 +128,31 @@ export const requestEmail = () => {
 
 const setValid = (valid) => ({
   type: prefix + 'SET_VALID',
-  payload: { valid }
+  payload: { valid },
 })
 
 export const changeWindsid = (windsid) => ({
   type: 'LOGIN_INPUT_WINDSID',
   payload: {
-    windsid
-  }
+    windsid,
+  },
 })
 
 export const changePassword = (password) => ({
   type: 'LOGIN_INPUT_PASSWORD',
   payload: {
-    password
-  }
+    password,
+  },
 })
 
 const setError = (err) => ({
   type: prefix + 'SET_ERROR',
-  payload: { err }
+  payload: { err },
 })
 
 const setErrorMessage = (str) => ({
   type: prefix + 'SET_ERROR_MESSAGE',
   payload: {
-    errorMessage: str
-  }
+    errorMessage: str,
+  },
 })

@@ -10,42 +10,42 @@ const initialState = {
 
 const prefix = 'EMAIL_VALIDATION_'
 
-export default function emailValidationReducer (state = initialState, action) {
+export default function emailValidationReducer(state = initialState, action) {
   switch (action.type) {
     case prefix + 'LOADING':
       return {
         ...state,
-        loading: action.payload.loading
+        loading: action.payload.loading,
       }
     case prefix + 'SET_KEY':
       return {
         ...state,
-        key: action.payload.key
+        key: action.payload.key,
       }
     case prefix + 'SET_VALID':
       return {
         ...state,
-        valid: action.payload.valid
+        valid: action.payload.valid,
       }
     case 'LOGIN_INPUT_WINDSID':
       return {
         ...state,
-        windsid: action.payload.windsid
+        windsid: action.payload.windsid,
       }
     case 'LOGIN_INPUT_PASSWORD':
       return {
         ...state,
-        password: action.payload.password
+        password: action.payload.password,
       }
     case prefix + 'SET_ERROR':
       return {
         ...state,
-        err: action.payload.err
+        err: action.payload.err,
       }
     case prefix + 'SET_ERROR_MESSAGE':
       return {
         ...state,
-        errorMessage: action.payload.errorMessage
+        errorMessage: action.payload.errorMessage,
       }
     default:
       return state

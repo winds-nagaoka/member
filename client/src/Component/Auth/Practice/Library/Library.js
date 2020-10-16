@@ -10,16 +10,18 @@
 // }
 
 // // 演奏会のタイトルを取得する
-export function getPracticeTitle (id, practiceList) {
-  return (getPractice(id, practiceList)).detail.time.date
+export function getPracticeTitle(id, practiceList) {
+  return getPractice(id, practiceList).detail.time.date
 }
 
 // export function getConcertType (id, concertList) {
 //   return (getConcert(id, concertList)).type
 // }
 
-export function getPractice (id, practiceList) {
-  return practiceList.filter((e) => {return e.id === id})[0]
+export function getPractice(id, practiceList) {
+  return practiceList.filter((e) => {
+    return e.id === id
+  })[0]
 }
 
 // export function labeling (label, contents) {
@@ -65,7 +67,7 @@ export function getPractice (id, practiceList) {
 // }
 
 // Stringをsecにする
-export function timeSecond (string) {
+export function timeSecond(string) {
   if (!isNaN(string)) return string
   const time = string.split(':').reverse()
   const sec = time[0] ? Number(time[0]) : 0
@@ -74,9 +76,9 @@ export function timeSecond (string) {
   return hour + min + sec
 }
 
-export function getPracticeAlbum (id, playlist) {
+export function getPracticeAlbum(id, playlist) {
   let album
-  for (var i=0;i<playlist.length;i++) {
+  for (var i = 0; i < playlist.length; i++) {
     if (playlist[i].id === id) album = playlist[i]
   }
   return JSON.parse(JSON.stringify(album.detail))

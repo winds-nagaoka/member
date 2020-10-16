@@ -1,5 +1,4 @@
 .tutorial-modal {
-
   .tutorial-modal-contents {
     position: fixed;
     top: 0;
@@ -18,9 +17,9 @@
     }
 
     // transition: transform .3s ease-in-out;
-    transition: transform .2s ease-in-out;
-    -webkit-transform: translate3d(0,105%,0);
-    transform: translate3d(0,105%,0);
+    transition: transform 0.2s ease-in-out;
+    -webkit-transform: translate3d(0, 105%, 0);
+    transform: translate3d(0, 105%, 0);
     -webkit-overflow-scrolling: touch;
 
     &.pc {
@@ -31,10 +30,10 @@
     }
 
     &.open {
-      transition: transform .4s ease;
-      -webkit-transform: translate3d(0,0%,0);
-      transform: translate3d(0,0%,0);
-      box-shadow: 6px 0 25px rgba(0,0,0,.15);
+      transition: transform 0.4s ease;
+      -webkit-transform: translate3d(0, 0%, 0);
+      transform: translate3d(0, 0%, 0);
+      box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
 
       &.pc {
         // -webkit-transform: translateY(20%);
@@ -50,12 +49,12 @@
 
       & {
         background: #fff;
-        border-bottom: .55px solid #cbcbcd;
+        border-bottom: 0.55px solid #cbcbcd;
       }
       @media (prefers-color-scheme: dark) {
         & {
           background: #1c1c1e;
-          border-bottom: .55px solid #2d2d2f;
+          border-bottom: 0.55px solid #2d2d2f;
         }
       }
 
@@ -74,7 +73,7 @@
         overflow: hidden;
 
         svg {
-          fill: #B60005;
+          fill: #b60005;
         }
       }
 
@@ -83,7 +82,7 @@
         top: 0;
         width: auto;
         height: 44px;
-        color: #B60005;
+        color: #b60005;
         font-size: 16px;
         cursor: pointer;
 
@@ -92,10 +91,10 @@
         align-items: center;
 
         &:hover {
-          color: rgba(182,0,5,.8);
+          color: rgba(182, 0, 5, 0.8);
         }
         &:active {
-          color: rgba(182,0,5,.6);
+          color: rgba(182, 0, 5, 0.6);
         }
 
         &.pc {
@@ -110,7 +109,7 @@
     }
 
     .contents-inner {
-      overflow-y: hidden!important;
+      overflow-y: hidden !important;
     }
 
     .swiper-container {
@@ -180,19 +179,19 @@
 
       .swiper-pagination-bullet-active {
         opacity: 1;
-        background: #B60005!important;
+        background: #b60005 !important;
       }
     }
 
     .tutorial-slide {
-      background: rgba(0,0,0,0);
+      background: rgba(0, 0, 0, 0);
 
       .swiper-container {
-        background: rgba(0,0,0,0);
+        background: rgba(0, 0, 0, 0);
         .swiper-wrapper {
-          background: rgba(0,0,0,0);
+          background: rgba(0, 0, 0, 0);
           .swiper-slide {
-            background: rgba(0,0,0,0);
+            background: rgba(0, 0, 0, 0);
           }
         }
       }
@@ -233,15 +232,21 @@
             max-width: 100px;
             margin: 0 auto;
             // fill: hsl(358,100,36%);
-            fill: rgba(182,0,5,.8);
+            fill: rgba(182, 0, 5, 0.8);
             // filter: drop-shadow(0 0 10px rgba(0,0,0,.2));
             animation: grow 10s linear 0s infinite;
           }
 
           @keyframes grow {
-            0% { filter: drop-shadow(0 0 10px rgba(0,0,0,.2)); }
-            50% { filter: drop-shadow(0 0 10px rgba(0,0,0,.5)); }
-            100% { filter: drop-shadow(0 0 10px rgba(0,0,0,.2)); }
+            0% {
+              filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
+            }
+            50% {
+              filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+            }
+            100% {
+              filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
+            }
           }
         }
 
@@ -266,7 +271,7 @@
           }
 
           h3 {
-            margin: 8px 0 ;
+            margin: 8px 0;
             padding: 0;
             font-weight: normal;
             font-size: 14px;
@@ -283,12 +288,13 @@
           margin: 24px 0;
           padding: 10px 20px;
           border-radius: 45px;
-          background: rgba(182,0,5,1);
+          background: rgba(182, 0, 5, 1);
           color: #fff;
           cursor: pointer;
 
-          &:hover, &:active {
-            background: rgba(182,0,5,.8);
+          &:hover,
+          &:active {
+            background: rgba(182, 0, 5, 0.8);
           }
         }
 
@@ -305,7 +311,7 @@
             border-radius: 13px;
 
             &:before {
-              content: "";
+              content: '';
               position: absolute;
               bottom: -8px;
               left: calc(50% - 8px);
@@ -386,8 +392,8 @@
     background: #fff;
 
     &.open {
-      display: block;/*カバーを表示*/
-      opacity: .95;
+      display: block; /*カバーを表示*/
+      opacity: 0.95;
       // transition: all 3s ease-in-out;
       // animation: menu-background-show .3s ease-in-out 0s;
     }

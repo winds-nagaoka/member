@@ -22,19 +22,25 @@ function mapDispatchToProps() {
 }
 
 class Archive extends Component {
-  render () {
+  render() {
     return (
       <div className={'bbs' + lib.pcClass(this.props.pc)}>
-
         <Switch>
-          <Route exact path='/bbs' component={Home} />
-          <Route path='/bbs/post' component={Post} />
+          <Route exact path="/bbs" component={Home} />
+          <Route path="/bbs/post" component={Post} />
         </Switch>
 
         <div className={'box back-to-home' + lib.pcClass(this.props.pc)}>
-          <div className='back-link'>
+          <div className="back-link">
             <ul>
-              <li><Link to='/'><div className='inner'><Back /><span>ホーム</span></div></Link></li>
+              <li>
+                <Link to="/">
+                  <div className="inner">
+                    <Back />
+                    <span>ホーム</span>
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

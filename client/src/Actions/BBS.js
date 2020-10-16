@@ -7,7 +7,7 @@ import { showToast } from './Toast'
 const prefix = 'BBS_'
 
 const getApi = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const path = lib.getAppPath() + '/api/bbs'
     const send = { session: lib.getSession() }
     request.post(path, send, (err, res) => {
@@ -47,7 +47,7 @@ export const getBBSList = () => {
 
 const updateList = (list) => ({
   type: prefix + 'UPDATE',
-  payload: { list }
+  payload: { list },
 })
 
 export const loadMore = () => {
@@ -63,38 +63,38 @@ export const loadMore = () => {
 
 const showListUpdate = (showList, showCount, showMore) => ({
   type: prefix + 'SHOW_LIST_UPDATE',
-  payload: { showList, showCount, showMore }
+  payload: { showList, showCount, showMore },
 })
 
 const acquired = (acquired) => ({
   type: prefix + 'ACQUIRED',
-  payload: { acquired }
+  payload: { acquired },
 })
 
 const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 // Post
 const loadingPost = (loadingPost) => ({
   type: prefix + 'LOADING_POST',
-  payload: { loadingPost }
+  payload: { loadingPost },
 })
 
 export const setPostName = (postName) => ({
   type: prefix + 'SET_POST_NAME',
-  payload: { postName }
+  payload: { postName },
 })
 
 export const setPostText = (postText) => ({
   type: prefix + 'SET_POST_TEXT',
-  payload: { postText }
+  payload: { postText },
 })
 
 export const setPostPass = (postPass) => ({
   type: prefix + 'SET_POST_PASS',
-  payload: { postPass }
+  payload: { postPass },
 })
 
 export const sendPost = () => {
@@ -112,7 +112,7 @@ export const sendPost = () => {
       write: true,
       name: getState().bbs.postName,
       text: getState().bbs.postText,
-      delpass: getState().bbs.postPass
+      delpass: getState().bbs.postPass,
     }
     request.post(path, send, (err, res) => {
       if (err) {

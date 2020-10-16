@@ -10,7 +10,7 @@ const prefix = 'SETTING_'
 
 const loading = (loading) => ({
   type: prefix + 'LOADING',
-  payload: { loading }
+  payload: { loading },
 })
 
 // 確認 ここにUserdataの読み込み書けばよいのでは
@@ -20,7 +20,7 @@ export const getUser = () => {
     dispatch(loading(true))
     const path = lib.getAuthPath() + '/auth'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -37,12 +37,12 @@ export const getUser = () => {
 
 export const setModifyText = (modifyText) => ({
   type: prefix + 'SET_MODIFY_TEXT',
-  payload: { modifyText }
+  payload: { modifyText },
 })
 
 const loadingModify = (loadingModify) => ({
   type: prefix + 'LOADING_MODIFY',
-  payload: { loadingModify }
+  payload: { loadingModify },
 })
 
 export const updateModifyText = (apiPath, replacePath) => {
@@ -51,7 +51,7 @@ export const updateModifyText = (apiPath, replacePath) => {
     dispatch(loadingModify(true))
     const send = {
       session: lib.getSession(),
-      text: getState().setting.modifyText
+      text: getState().setting.modifyText,
     }
     request.post(apiPath, send, (err, res) => {
       if (err) {
@@ -71,7 +71,7 @@ export const updateModifyText = (apiPath, replacePath) => {
 
 const loadingDeleteEmailRequest = (loadingDeleteEmailRequest) => ({
   type: prefix + 'LOADING_DELETE_EMAIL_REQUEST',
-  payload: { loadingDeleteEmailRequest }
+  payload: { loadingDeleteEmailRequest },
 })
 
 export const deleteEmailRequest = () => {
@@ -83,7 +83,7 @@ export const deleteEmailRequest = () => {
       session: lib.getSession(),
       // ここで空にする(この値が保存される)
       text: '',
-      delMail: true
+      delMail: true,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -102,17 +102,17 @@ export const deleteEmailRequest = () => {
 // Password
 export const setOldPassword = (oldPassword) => ({
   type: prefix + 'SET_OLD_PASSWORD',
-  payload: { oldPassword }
+  payload: { oldPassword },
 })
 
 export const setNewPassword = (newPassword) => ({
   type: prefix + 'SET_NEW_PASSWORD',
-  payload: { newPassword }
+  payload: { newPassword },
 })
 
 const loadingUpdatePassword = (loadingUpdatePassword) => ({
   type: prefix + 'LOADING_UPDATE_PASSWORD',
-  payload: { loadingUpdatePassword }
+  payload: { loadingUpdatePassword },
 })
 
 export const updatePassword = () => {
@@ -123,7 +123,7 @@ export const updatePassword = () => {
     const send = {
       session: lib.getSession(),
       old: getState().setting.oldPassword,
-      new: getState().setting.newPassword
+      new: getState().setting.newPassword,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -150,7 +150,7 @@ export const requestDeleteSession = (clientid) => {
     const path = lib.getAuthPath() + '/api/setting/deletesession'
     const send = {
       session: lib.getSession(),
-      clientid
+      clientid,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -171,12 +171,12 @@ export const requestDeleteSession = (clientid) => {
 // Administrator
 export const setAdminRequestPass = (adminRequestPass) => ({
   type: prefix + 'SET_ADMIN_REQUEST_PASS',
-  payload: { adminRequestPass }
+  payload: { adminRequestPass },
 })
 
 const loadingAdminRequest = (loadingAdminRequest) => ({
   type: prefix + 'LOADING_ADMIN_REQUEST',
-  payload: { loadingAdminRequest }
+  payload: { loadingAdminRequest },
 })
 
 export const sendAdminRequest = () => {
@@ -188,7 +188,7 @@ export const sendAdminRequest = () => {
     const send = {
       session: lib.getSession(),
       admin: adminRequest,
-      pass: getState().setting.adminRequestPass
+      pass: getState().setting.adminRequestPass,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -212,12 +212,12 @@ export const sendAdminRequest = () => {
 // Delete Account
 export const setDeletePassword = (deletePassword) => ({
   type: prefix + 'SET_DELETE_PASSWORD',
-  payload: { deletePassword }
+  payload: { deletePassword },
 })
 
 const loadingDeleteAccount = (loadingDeleteAccount) => ({
   type: prefix + 'LOADING_DELETE_ACCOUNT',
-  payload: { loadingDeleteAccount }
+  payload: { loadingDeleteAccount },
 })
 
 export const sendDeleteRequest = () => {
@@ -227,7 +227,7 @@ export const sendDeleteRequest = () => {
     const path = lib.getAuthPath() + '/api/setting/delete'
     const send = {
       session: lib.getSession(),
-      pass: getState().setting.deletePassword
+      pass: getState().setting.deletePassword,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -250,12 +250,12 @@ export const sendDeleteRequest = () => {
 // Score Setting
 export const setScoreAdminRequestPass = (scoreAdminRequestPass) => ({
   type: prefix + 'SET_SCORE_ADMIN_REQUEST_PASS',
-  payload: { scoreAdminRequestPass }
+  payload: { scoreAdminRequestPass },
 })
 
 const loadingScoreAdminRequest = (loadingScoreAdminRequest) => ({
   type: prefix + 'LOADING_SCORE_ADMIN_REQUEST',
-  payload: { loadingScoreAdminRequest }
+  payload: { loadingScoreAdminRequest },
 })
 
 export const sendScoreAdminRequest = () => {
@@ -268,7 +268,7 @@ export const sendScoreAdminRequest = () => {
     const send = {
       session: lib.getSession(),
       admin: adminRequest,
-      pass: getState().setting.scoreAdminRequestPass
+      pass: getState().setting.scoreAdminRequestPass,
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -277,7 +277,9 @@ export const sendScoreAdminRequest = () => {
         if (res.body.status) {
           if (!res.body.error) {
             dispatch(replace('/setting'))
-            res.body.admin ? dispatch(showToast('楽譜管理者になりました')) : dispatch(showToast('楽譜管理者を辞めました'))
+            res.body.admin
+              ? dispatch(showToast('楽譜管理者になりました'))
+              : dispatch(showToast('楽譜管理者を辞めました'))
           } else {
             dispatch(showToast('管理者パスワードが違います'))
           }
@@ -291,7 +293,7 @@ export const sendScoreAdminRequest = () => {
 
 const loadingScoreCount = (loadingScoreCount) => ({
   type: prefix + 'LOADING_SCORE_COUNT',
-  payload: { loadingScoreCount }
+  payload: { loadingScoreCount },
 })
 
 export const getScoreCount = () => {
@@ -300,7 +302,7 @@ export const getScoreCount = () => {
     dispatch(loadingScoreCount(true))
     const path = lib.getScorePath() + '/api/member/count'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {
@@ -317,12 +319,12 @@ export const getScoreCount = () => {
 
 const setScoreCount = (scoreCount) => ({
   type: prefix + 'SET_SCORE_COUNT',
-  payload: { scoreCount }
+  payload: { scoreCount },
 })
 
 const loadingScoreMailRequest = (loadingScoreMailRequest) => ({
   type: prefix + 'LOADING_SCORE_MAIL_REQUEST',
-  payload: { loadingScoreMailRequest }
+  payload: { loadingScoreMailRequest },
 })
 
 export const scoreMailRequest = () => {
@@ -333,7 +335,7 @@ export const scoreMailRequest = () => {
     if (!email) return false
     const path = lib.getScorePath() + '/api/member/sendmail'
     const send = {
-      session: lib.getSession()
+      session: lib.getSession(),
     }
     request.post(path, send, (err, res) => {
       if (err) {

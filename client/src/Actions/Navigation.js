@@ -15,25 +15,25 @@ export const navigationMenuToggle = () => {
 
 export const navigationMenu = (menuOpen) => ({
   type: prefix + 'MENU',
-  payload: { menuOpen }
+  payload: { menuOpen },
 })
 
 export const setNavigationTitle = (title) => ({
   type: prefix + 'SET_NAVIGATION_TITLE',
-  payload: { title }
+  payload: { title },
 })
 
 export const setNavigationTitleArchiveConcertid = (titleConcertid) => ({
   type: prefix + 'SET_NAVIGATION_TITLE_ARCHIVE_CONCERT_ID',
-  payload: { titleConcertid }
+  payload: { titleConcertid },
 })
 
 export const setBackNavigation = (backNavigation, backNavigationPath) => ({
   type: prefix + 'SET_BACKLINK',
-  payload: { backNavigation, backNavigationPath}
+  payload: { backNavigation, backNavigationPath },
 })
 
 export const releaseBackNavigation = () => ({
   type: prefix + 'SET_BACKLINK',
-  payload: { backNavigation: false, backNavigationPath: undefined }
+  payload: { backNavigation: false, backNavigationPath: undefined },
 })

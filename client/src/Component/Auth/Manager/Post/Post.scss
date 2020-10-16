@@ -7,11 +7,10 @@
   }
 
   .form {
-
     & > div {
       margin: 8px 0 2px;
 
-      &:not(:first-child){
+      &:not(:first-child) {
         margin-top: 12px;
       }
 
@@ -31,7 +30,7 @@
 
       .multi {
         input {
-          &:not(:first-child){
+          &:not(:first-child) {
             margin-top: 8px;
           }
         }
@@ -53,7 +52,7 @@
 }
 
 .manager-selection-post-button {
-    margin-bottom: 32px;
+  margin-bottom: 32px;
 
-    // .send-button to Auth.scss
+  // .send-button to Auth.scss
 }

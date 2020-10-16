@@ -1,6 +1,6 @@
-export function makeLine (array) {
+export function makeLine(array) {
   var s = ''
-  for (var i = 0; i<array.length; i++) {
+  for (var i = 0; i < array.length; i++) {
     s += array[i] + ', '
   }
   s = s.slice(0, -2)
@@ -10,6 +10,6 @@ export function makeLine (array) {
   return s
 }
 
-export function admin (user) {
+export function admin(user) {
   return user.scoreAdmin ? true : false
 }

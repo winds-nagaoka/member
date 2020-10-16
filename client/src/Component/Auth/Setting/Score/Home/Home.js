@@ -16,59 +16,88 @@ function mapStateToProps(state) {
     pc: state.status.pc,
     loading: state.status.loading,
     user: state.status.user,
-    displayPlayer: state.audio.displayPlayer
+    displayPlayer: state.audio.displayPlayer,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUser () {
+    getUser() {
       dispatch(getUser())
     },
-    setNavigationTitle (title) {
+    setNavigationTitle(title) {
       dispatch(setNavigationTitle(title))
     },
-    setBackNavigation (backNavigation, backNavigationPath) {
+    setBackNavigation(backNavigation, backNavigationPath) {
       dispatch(setBackNavigation(backNavigation, backNavigationPath))
-    }
+    },
   }
 }
 
 class Home extends Component {
-  UNSAFE_componentWillMount () {
+  UNSAFE_componentWillMount() {
     this.props.getUser()
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.setNavigationTitle('ウィンズスコア設定')
     this.props.setBackNavigation(true, '/setting')
   }
 
-  componentWillUnmount () {
-  }
+  componentWillUnmount() {}
 
-  renderUserStatus () {
-    if (this.props.loading || !this.props.user) return <div className="loading"><div className="loading1"></div><div className="loading2"></div><div className="loading3"></div></div>
-    const secure = this.props.user.hash && this.props.user.token ? <span className='secure'><i className='fas fa-lock'></i></span> : <span className='non-secure'><i className="fas fa-ban"></i></span>
+  renderUserStatus() {
+    if (this.props.loading || !this.props.user)
+      return (
+        <div className="loading">
+          <div className="loading1"></div>
+          <div className="loading2"></div>
+          <div className="loading3"></div>
+        </div>
+      )
+    const secure =
+      this.props.user.hash && this.props.user.token ? (
+        <span className="secure">
+          <i className="fas fa-lock"></i>
+        </span>
+      ) : (
+        <span className="non-secure">
+          <i className="fas fa-ban"></i>
+        </span>
+      )
     const email = this.props.user.email ? this.props.user.email : '未設定'
     return (
       <div>
-        <div><label>WindsID&nbsp;{secure}</label><span>{this.props.user.userid}</span></div>
+        <div>
+          <label>WindsID&nbsp;{secure}</label>
+          <span>{this.props.user.userid}</span>
+        </div>
         {/* <div><label>登録日</label><span>{this.props.user.createdAt}</span></div> */}
-        <div><label>名前</label><span>{this.props.user.name}</span></div>
-        <div><label>メール</label><span>{email}</span></div>
+        <div>
+          <label>名前</label>
+          <span>{this.props.user.name}</span>
+        </div>
+        <div>
+          <label>メール</label>
+          <span>{email}</span>
+        </div>
       </div>
     )
   }
 
-  render () {
+  render() {
     // const showUserStatus = this.renderUserStatus()
 
     return (
       <React.Fragment>
-
         <div className={'contents-header' + lib.pcClass(this.props.pc)}>
-          <div className='bread-navigation'><Link to='/'>ホーム</Link><i className="fas fa-chevron-right"></i><Link to='/setting'>設定</Link><i className="fas fa-chevron-right"></i><Link to='/setting/score'>ウィンズスコア設定</Link></div>
+          <div className="bread-navigation">
+            <Link to="/">ホーム</Link>
+            <i className="fas fa-chevron-right"></i>
+            <Link to="/setting">設定</Link>
+            <i className="fas fa-chevron-right"></i>
+            <Link to="/setting/score">ウィンズスコア設定</Link>
+          </div>
           <h2>ウィンズスコア設定</h2>
           <p>各種設定はこちらから</p>
         </div>
@@ -80,14 +109,27 @@ class Home extends Component {
         </div> */}
 
         <div className={'box setting-list' + lib.pcClass(this.props.pc)}>
-          <div className='link'>
+          <div className="link">
             <ul>
-              <li><Link to='/setting/score/admin'><div className='inner'><span>管理者設定</span><Forward /></div></Link></li>
-              <li className='border-top'><Link to='/setting/score/mail'><div className='inner'><span>CSV出力</span><Forward /></div></Link></li>
+              <li>
+                <Link to="/setting/score/admin">
+                  <div className="inner">
+                    <span>管理者設定</span>
+                    <Forward />
+                  </div>
+                </Link>
+              </li>
+              <li className="border-top">
+                <Link to="/setting/score/mail">
+                  <div className="inner">
+                    <span>CSV出力</span>
+                    <Forward />
+                  </div>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
-
       </React.Fragment>
     )
   }

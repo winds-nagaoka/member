@@ -1,9 +1,9 @@
 import React from 'react'
 
-export function escapeReg (string) {
+export function escapeReg(string) {
   const reRegExp = /[\\^$.*+?()[\]{}|]/g
   const reHasRegExp = new RegExp(reRegExp.source)
-  return (string && reHasRegExp.test(string)) ? string.replace(reRegExp, '\\$&') : string
+  return string && reHasRegExp.test(string) ? string.replace(reRegExp, '\\$&') : string
 }
 
 // function unixTimeFull (intTime) {
@@ -69,7 +69,7 @@ export function escapeReg (string) {
 //   return hms
 // }
 
-function getConcertList (id, concertList) {
+function getConcertList(id, concertList) {
   const concert = getConcert(id, concertList)
   return concert.detail.data
 }
@@ -89,12 +89,12 @@ function getConcertList (id, concertList) {
 // }
 
 // 演奏会のタイトルを取得する
-export function getConcertTitle (id, concertList) {
-  return (getConcert(id, concertList)).detail.title
+export function getConcertTitle(id, concertList) {
+  return getConcert(id, concertList).detail.title
 }
 
-export function getConcertType (id, concertList) {
-  return (getConcert(id, concertList)).type
+export function getConcertType(id, concertList) {
+  return getConcert(id, concertList).type
 }
 
 // function getConcertMusicLabel (id, num) {
@@ -109,8 +109,10 @@ export function getConcertType (id, concertList) {
 //   }
 // }
 
-export function getConcert (id, concertList) {
-  return concertList.filter((e) => {return e.id === id})[0]
+export function getConcert(id, concertList) {
+  return concertList.filter((e) => {
+    return e.id === id
+  })[0]
 }
 
 // function listReverse (array, a) {
@@ -118,20 +120,27 @@ export function getConcert (id, concertList) {
 //   return a ? data.reverse() : data
 // }
 
-export function labeling (label, contents) {
-  return (<div><span>{label}</span><span>{contents}</span></div>)
+export function labeling(label, contents) {
+  return (
+    <div>
+      <span>{label}</span>
+      <span>{contents}</span>
+    </div>
+  )
 }
 
-export function getNextConcert (id, concertList) {
+export function getNextConcert(id, concertList) {
   const type = getConcert(id, concertList).type
-  const list = concertList.filter((e) => {return e.type === type})
+  const list = concertList.filter((e) => {
+    return e.type === type
+  })
   // console.log(list)
   var next = undefined
   list.forEach((e, i) => {
     if (e.id === id) next = i + 1
     return
   })
-  if (next > (list.length - 1)) {
+  if (next > list.length - 1) {
     return false
   } else {
     // console.log('next', list[next].id)
@@ -139,9 +148,11 @@ export function getNextConcert (id, concertList) {
   }
 }
 
-export function getPrevConcert (id, concertList) {
+export function getPrevConcert(id, concertList) {
   const type = getConcert(id, concertList).type
-  const list = concertList.filter((e) => {return e.type === type})
+  const list = concertList.filter((e) => {
+    return e.type === type
+  })
   var prev = undefined
   list.forEach((e, i) => {
     if (e.id === id) prev = i - 1
@@ -156,25 +167,41 @@ export function getPrevConcert (id, concertList) {
 }
 
 // Audio.jsより
-export function getMediaData (id, number, concertList) {
-  return (getConcertList(id, concertList)[number])
+export function getMediaData(id, number, concertList) {
+  return getConcertList(id, concertList)[number]
 }
 
-export function getAlbum (id, playlist) {
+export function getAlbum(id, playlist) {
   let album
-  for (var i=0;i<playlist.length;i++) {
+  for (var i = 0; i < playlist.length; i++) {
     if (playlist[i].id === id) album = playlist[i]
   }
   return JSON.parse(JSON.stringify(album))
 }
 
-export function getAudioTitle (id, number, concertList) {
-  return (getConcertList(id, concertList)[number]).title
+export function getAudioTitle(id, number, concertList) {
+  return getConcertList(id, concertList)[number].title
 }
 
-export function getAudioComposer (id, number, concertList) {
+export function getAudioComposer(id, number, concertList) {
   var list = getConcertList(id, concertList)[number]
-  const composer = 'composer' in list ? 'arranger' in list ? <span className='composer'>{list.composer}{list.composer.match(/民謡/) ? '' : '作曲'}<span>/</span>{list.arranger}編曲</span> : <span className='composer'>{list.composer}</span> : 'arranger' in list ? <span className='composer'>{list.arranger}編曲</span> : ''
+  const composer =
+    'composer' in list ? (
+      'arranger' in list ? (
+        <span className="composer">
+          {list.composer}
+          {list.composer.match(/民謡/) ? '' : '作曲'}
+          <span>/</span>
+          {list.arranger}編曲
+        </span>
+      ) : (
+        <span className="composer">{list.composer}</span>
+      )
+    ) : 'arranger' in list ? (
+      <span className="composer">{list.arranger}編曲</span>
+    ) : (
+      ''
+    )
   return composer
   // 'composer' in data[ml] ? 'arranger' in data[ml] ? <span className='composer'>{data[ml].composer}{data[ml].composer.match(/民謡/) ? '' : '作曲'}/{data[ml].arranger}編曲</span> : <span className='composer'>{data[ml].composer}</span> : ''
 }

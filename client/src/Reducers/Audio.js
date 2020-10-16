@@ -62,18 +62,18 @@ const initialState = {
   sourceid: undefined,
   sourceNumber: undefined,
 
-  countFlag: true
+  countFlag: true,
 }
 
 const prefix = 'AUDIO_'
 
-export default function audioReducer (state = initialState, action) {
+export default function audioReducer(state = initialState, action) {
   switch (action.type) {
     // アーカイブプレイリスト
     case prefix + 'LOADING_ARCHIVE_PLAYLIST':
       return {
         ...state,
-        loadingArchivePlaylist: action.payload.loadingArchivePlaylist
+        loadingArchivePlaylist: action.payload.loadingArchivePlaylist,
       }
     case prefix + 'SET_ARCHIVE_PLAYLIST':
       return {
@@ -86,7 +86,7 @@ export default function audioReducer (state = initialState, action) {
     case prefix + 'LOADING_PRACTICE_PLAYLIST':
       return {
         ...state,
-        loadingPracticePlaylist: action.payload.loadingPracticePlaylist
+        loadingPracticePlaylist: action.payload.loadingPracticePlaylist,
       }
     case prefix + 'SET_PRACTICE_PLAYLIST':
       return {
@@ -99,7 +99,7 @@ export default function audioReducer (state = initialState, action) {
     case prefix + 'LOADING_SOURCE_PLAYLIST':
       return {
         ...state,
-        loadingSourcePlaylist: action.payload.loadingSourcePlaylist
+        loadingSourcePlaylist: action.payload.loadingSourcePlaylist,
       }
     case prefix + 'SET_SOURCE_PLAYLIST':
       return {
@@ -112,36 +112,36 @@ export default function audioReducer (state = initialState, action) {
     case prefix + 'SET_AUDIO_REF':
       return {
         ...state,
-        audioRef: action.payload.audioRef
+        audioRef: action.payload.audioRef,
       }
 
     // 要素の表示状態
     case prefix + 'SET_DISPLAY_PLAYER':
       return {
         ...state,
-        displayPlayer: action.payload.displayPlayer
+        displayPlayer: action.payload.displayPlayer,
       }
     case prefix + 'SET_DISPLAY_PLAYLIST':
       return {
         ...state,
-        displayPlaylist: action.payload.displayPlaylist
+        displayPlaylist: action.payload.displayPlaylist,
       }
 
     // オーディオタグの情報
     case prefix + 'LOADING_AUDIO':
       return {
         ...state,
-        loadingAudio: action.payload.loadingAudio
+        loadingAudio: action.payload.loadingAudio,
       }
     case prefix + 'LOADING_UPDATE':
       return {
         ...state,
-        loadPercent: action.payload.loadPercent
+        loadPercent: action.payload.loadPercent,
       }
     case prefix + 'SET_PLAY_STATUS':
       return {
         ...state,
-        playStatus: action.payload.playStatus
+        playStatus: action.payload.playStatus,
       }
     case prefix + 'PLAY_UPDATE':
       return {
@@ -150,7 +150,7 @@ export default function audioReducer (state = initialState, action) {
         currentTime: action.payload.currentTime,
         duration: action.payload.duration,
         durationTime: action.payload.durationTime,
-        playPercent: action.payload.playPercent
+        playPercent: action.payload.playPercent,
       }
 
     // 曲情報
@@ -182,7 +182,7 @@ export default function audioReducer (state = initialState, action) {
         playmode: action.payload.playmode,
         practiceid: action.payload.practiceid,
         fileNumber: action.payload.fileNumber,
-        requestTime: action.payload.requestTime
+        requestTime: action.payload.requestTime,
       }
     // case prefix + 'PRACTICE_SET_PLAY':
     //   return {
@@ -201,13 +201,13 @@ export default function audioReducer (state = initialState, action) {
         ...state,
         playmode: action.payload.playmode,
         sourceid: action.payload.sourceid,
-        sourceNumber: action.payload.sourceNumber
+        sourceNumber: action.payload.sourceNumber,
       }
 
     case prefix + 'SET_COUNT_FLAG':
       return {
         ...state,
-        countFlag: action.payload.countFlag
+        countFlag: action.payload.countFlag,
       }
 
     default:
