@@ -11,7 +11,6 @@ const getApi = () => {
     const path = lib.getAppPath() + '/api/bbs'
     const send = { session: lib.getSession() }
     request.post(path, send, (err, res) => {
-      console.log(res)
       if (err) {
         resolve(false)
       } else {
