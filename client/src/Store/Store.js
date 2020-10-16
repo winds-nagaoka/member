@@ -4,7 +4,6 @@ import { routerReducer, routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 // import authenticateReducer from '../Reducers/Authenticate'
 import statusReducer from '../Reducers/Status'
-import socketReducer from '../Reducers/Socket'
 
 import audioReducer from '../Reducers/Audio'
 import navigationReducer from '../Reducers/Navigation'
@@ -35,7 +34,6 @@ export default function createStore(history) {
     combineReducers({
       // authenticate: authenticateReducer,
       status: statusReducer,
-      socket: socketReducer,
 
       audio: audioReducer,
       navigation: navigationReducer,

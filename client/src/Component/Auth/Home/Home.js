@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { connectSocket, disconnectSocket } from '../../../Actions/Socket'
 
 import { setNavigationTitle, releaseBackNavigation } from '../../../Actions/Navigation'
 import { getSchedule } from '../../../Actions/Schedule'
@@ -19,7 +18,6 @@ import './Home.css'
 
 function mapStateToProps(state) {
   return {
-    socketid: state.socket.id,
     pc: state.status.pc,
 
     loadingSchedule: state.schedule.loading,
@@ -40,12 +38,6 @@ function mapDispatchToProps(dispatch) {
     },
     releaseBackNavigation() {
       dispatch(releaseBackNavigation())
-    },
-    connectSocket() {
-      dispatch(connectSocket())
-    },
-    disconnectSocket() {
-      dispatch(disconnectSocket())
     },
     getSchedule() {
       dispatch(getSchedule())
@@ -70,16 +62,11 @@ class Home extends Component {
   componentDidMount() {
     this.props.setNavigationTitle(undefined)
     this.props.releaseBackNavigation()
-    // this.props.connectSocket()
 
     this.props.getSchedule()
     this.props.getSource()
     this.props.getManager()
     this.props.getBBSList()
-  }
-
-  componentWillUnmount() {
-    // this.props.disconnectSocket()
   }
 
   renderSchedule(loading, schedule) {
