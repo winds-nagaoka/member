@@ -85,6 +85,18 @@
 
     .notice-text {
       font-size: 14px;
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        &:visited {
+          color: #b60005;
+        }
+      }
     }
   }
 }
