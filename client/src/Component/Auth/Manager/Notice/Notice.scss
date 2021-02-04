@@ -87,14 +87,11 @@
       font-size: 14px;
 
       a {
+        color: #b60005;
         text-decoration: none;
 
         &:hover {
           text-decoration: underline;
-        }
-
-        &:visited {
-          color: #b60005;
         }
       }
     }
