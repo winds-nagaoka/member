@@ -52,7 +52,7 @@ class History extends Component {
   componentWillUnmount() {}
 
   renderHistoryList() {
-    if (this.props.loading || !this.props.list || this.props.showList.length === 0)
+    if (this.props.loading || !this.props.list) {
       return (
         <div className="loading">
           <div className="loading1"></div>
@@ -60,6 +60,14 @@ class History extends Component {
           <div className="loading3"></div>
         </div>
       )
+    }
+    if (this.props.showList.length === 0) {
+      return (
+        <div className="title-frame">
+          <div className="text">みつかりませんでした</div>
+        </div>
+      )
+    }
     return this.props.showList.map((each, i) => {
       const practice = each.detail
       const audio = practice.recordStatus ? ' has-audio' : ' no-audio'
