@@ -1,8 +1,13 @@
+import uuidv1 from 'uuid/v1'
+
+// constants
 export const appName = 'member'
 export const version = '0.6.3'
-// mode を prod 以外にするとローカルのAPIを使う
-const mode = 'prod' // dev or prod
-import uuidv1 from 'uuid/v1'
+// mode を true にするとローカルのAPIを使う
+const surveyProductionMode = true
+const authProductionMode = true
+const appProductionMode = true
+const scoreProductionMode = true
 
 export function getClientid() {
   if (window.localStorage.clientid) return window.localStorage.clientid
@@ -17,25 +22,24 @@ export function removeLocalStorage() {
   window.localStorage.setItem('clientid', clientid)
 }
 
-export function getAppPath() {
-  return mode === 'prod' ? 'https://app.winds-n.com' : 'http://192.168.1.22:3007'
+export function getSurveyPath() {
+  return surveyProductionMode ? 'https://survey.winds-n.com' : 'http://localhost:3002'
 }
 
 export function getAuthPath() {
-  return mode === 'prod' ? 'https://auth.winds-n.com' : 'http://192.168.1.22:3003'
+  return authProductionMode ? 'https://auth.winds-n.com' : 'http://localhost:3003'
+}
+
+export function getAppPath() {
+  return appProductionMode ? 'https://app.winds-n.com' : 'http://localhost:3007'
 }
 
 export function getScorePath() {
-  // return mode === 'prod' ? 'https://score.winds-n.com' : 'http://192.168.1.22:3011'
-  return 'https://score.winds-n.com'
+  return scoreProductionMode ? 'https://score.winds-n.com' : 'http://localhost:3011'
 }
 
 export function getApiPath() {
   return 'https://api.winds-n.com'
-}
-
-export function getSurveyPath() {
-  return mode === 'prod' ? 'https://survey.winds-n.com' : 'http://192.168.1.22:3002'
 }
 
 export function getSession() {
