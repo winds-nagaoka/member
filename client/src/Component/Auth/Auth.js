@@ -70,10 +70,12 @@ class Auth extends Component {
     this.props.loginAuth(window.localStorage.location ? window.localStorage.location : false)
   }
 
-  UNSAFE_componentWillReceiveProps() {
-    if (this.contentsRef) {
-      if (this.contentsRef.scrollTop) {
-        this.contentsRef.scrollTop = 0
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      if (this.contentsRef) {
+        if (this.contentsRef.scrollTop) {
+          this.contentsRef.scrollTop = 0
+        }
       }
     }
   }
