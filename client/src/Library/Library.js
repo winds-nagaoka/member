@@ -2,7 +2,7 @@ import uuidv1 from 'uuid/v1'
 
 // constants
 export const appName = 'member'
-export const version = '0.6.3'
+export const version = '0.6.4'
 // mode を true にするとローカルのAPIを使う
 const surveyProductionMode = true
 const authProductionMode = true
