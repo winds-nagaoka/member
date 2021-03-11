@@ -98,8 +98,9 @@ export const getScoreList = (query) => {
         return false
       } else {
         if (res.body.status && window.localStorage.scoreLoadList === requestTime) {
-          dispatch(setScoreList(res.body.list))
-          dispatch(showListUpdate(res.body.list.slice(0, 10)))
+          const list = res.body.list.filter((s) => s.scoreStatus !== '-1')
+          dispatch(setScoreList(list))
+          dispatch(showListUpdate(list.slice(0, 10)))
         }
       }
       dispatch(loading(false))
