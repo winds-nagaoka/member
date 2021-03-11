@@ -35,7 +35,7 @@ export function getAppPath() {
 }
 
 export function getScorePath() {
-  return scoreProductionMode ? 'https://score.winds-n.com' : 'http://localhost:3011'
+  return scoreProductionMode ? 'https://score.winds-n.com' : 'http://localhost:3000'
 }
 
 export function getApiPath() {
