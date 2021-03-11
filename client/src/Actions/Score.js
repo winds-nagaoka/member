@@ -248,13 +248,13 @@ const loadScoreEdit = (editMode) => {
             // 今まで楽譜登録なし
             dispatch(setScoreEdit(newScore))
             dispatch(setBoxList(boxList))
-            return
+          } else {
+            newScore['number'] = parseInt(res.body.latest.number) + 1
+            newScore['label'] = ('000000' + newScore.number).slice(-6)
+            // 新しい楽譜オブジェクトのプロパティで配列の値は
+            dispatch(setScoreEdit(newScore))
+            dispatch(setBoxList(boxList))
           }
-          newScore['number'] = parseInt(res.body.latest.number) + 1
-          newScore['label'] = ('000000' + newScore.number).slice(-6)
-          // 新しい楽譜オブジェクトのプロパティで配列の値は
-          dispatch(setScoreEdit(newScore))
-          dispatch(setBoxList(boxList))
         } else {
           // 編集
           // dispatch(setScoreEdit(res.body.data)) これはDetailと同じだと思うけど確認する
