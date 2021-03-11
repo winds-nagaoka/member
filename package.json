@@ -18,7 +18,7 @@
     "lint": "yarn run lint-client && yarn run lint-server",
     "lint-client": "eslint ./client/src --config .eslintrc-client.json",
     "lint-server": "eslint ./app.js --config .eslintrc-server.json",
-    "fmt": "prettier --write 'client/src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
+    "prettier": "prettier --write 'client/src/**/*.{js,jsx,ts,tsx,json,scss,md}'"
   },
   "author": "",
   "license": "ISC",
