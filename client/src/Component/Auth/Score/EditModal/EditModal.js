@@ -151,6 +151,21 @@ class EditModal extends Component {
         <label htmlFor="scoreStatusStrage">
           <span>保管</span>
         </label>
+        {this.props.editMode !== 'new' && (
+          <>
+            <input
+              type="radio"
+              name="scoreStatus"
+              id="scoreStatusRemove"
+              value={-1}
+              checked={this.props.scoreEdit.scoreStatus === '-1'}
+              onChange={(e) => this.selectChange('scoreStatus', e)}
+            />
+            <label htmlFor="scoreStatusRemove" className="highlight-high">
+              <span>削除</span>
+            </label>
+          </>
+        )}
       </div>
     )
   }
