@@ -188,13 +188,14 @@ class Detail extends Component {
         </div>
       )
     const scoreStatus = () => {
-      if (this.props.scoreDetail.scoreStatus === '0') {
-        return <label className="highlight-normal">保管</label>
+      if (this.props.scoreDetail.scoreStatus === '2') {
+        return <label className="highlight-high">貸出中</label>
       } else if (this.props.scoreDetail.scoreStatus === '1') {
         return <label className="highlight-low">使用中</label>
+      } else if (this.props.scoreDetail.scoreStatus === '0') {
+        return <label className="highlight-normal">保管</label>
       } else {
-        // this.props.scoreDetail.scoreStatus === '2'
-        return <label className="highlight-high">貸出中</label>
+        return <label className="highlight-high">削除</label>
       }
     }
     return (

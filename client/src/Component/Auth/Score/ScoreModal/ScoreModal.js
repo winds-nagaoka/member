@@ -58,8 +58,10 @@ class ScoreModal extends Component {
         return <span className="status lend">貸出中</span>
       } else if (this.props.modalContent.scoreStatus === '1') {
         return <span className="status use">使用中</span>
-      } else {
+      } else if (this.props.modalContent.scoreStatus === '0') {
         return <span className="status storage">保管</span>
+      } else {
+        return <span className="status remove">削除</span>
       }
     }
     // const displayScoreModalClass = this.props.displayScoreModal ? ' open' : ''
