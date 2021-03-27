@@ -48,7 +48,7 @@ export function getSession() {
     clientid: getClientid(),
     clientToken: window.localStorage.token,
     useragent: window.navigator.userAgent,
-    version,
+    version: version + '-web',
   }
 }
 
