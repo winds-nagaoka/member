@@ -489,8 +489,7 @@ class Audio extends Component {
             <div className="icon">
               <i className="fas fa-play-circle"></i>
             </div>
-            <div>録音開始</div>
-            <div className="time">00:00</div>
+            <div>{practiceAlbum.file[i].label || '録音開始'}</div>
           </div>
           {trackList}
         </div>
