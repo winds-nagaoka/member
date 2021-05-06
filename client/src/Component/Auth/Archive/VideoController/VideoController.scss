@@ -5,7 +5,8 @@
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 44px;
+    height: calc(constant(safe-area-inset-bottom) + 44px);
+    height: calc(env(safe-area-inset-bottom) + 44px);
     width: 100%;
 
     & {
@@ -19,12 +20,9 @@
       }
     }
 
-    padding-bottom: constant(safe-area-inset-bottom);
-    padding-bottom: env(safe-area-inset-bottom);
-
     transition: transform 0.2s linear;
-    -webkit-transform: translate3d(0, 100px, 0);
-    transform: translate3d(0, 100px, 0);
+    -webkit-transform: translate3d(0, 150%, 0);
+    transform: translate3d(0, 150%, 0);
     z-index: 45;
     // -webkit-overflow-scrolling: touch;
 
@@ -41,7 +39,7 @@
       width: 50px;
       height: 50px;
       margin: 0;
-      padding: 0 10px;
+      // padding: 0 10px;
       border: 0;
       border-radius: 50%;
       font-size: 13px;
@@ -96,22 +94,22 @@
       }
 
       &.play {
-        top: -55px;
-        left: 5px;
+        top: -15px;
+        left: 10px;
         // bottom: 10px;
         z-index: 49;
       }
 
       &.stop {
-        top: -55px;
-        left: 65px;
+        top: -15px;
+        left: 10px;
         // bottom: 10px;
         z-index: 48;
       }
 
       &.full {
-        top: -55px;
-        left: 125px;
+        top: -15px;
+        left: 10px;
         // bottom: 10px;
         z-index: 48;
 
@@ -128,7 +126,8 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 44px;
+      height: calc(constant(safe-area-inset-bottom) + 44px);
+      height: calc(env(safe-area-inset-bottom) + 44px);
       background-size: 0% 100%;
       z-index: 47;
 
@@ -196,7 +195,8 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 44px;
+      height: calc(constant(safe-area-inset-bottom) + 44px);
+      height: calc(env(safe-area-inset-bottom) + 44px);
       background-size: 0% 100%;
       z-index: 46;
 

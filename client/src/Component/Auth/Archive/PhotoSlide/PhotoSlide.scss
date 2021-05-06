@@ -33,8 +33,10 @@
 
       .photo-slide-modal-close {
         position: fixed;
-        top: 12px;
-        right: 12px;
+        top: calc(constant(safe-area-inset-top) + 12px);
+        top: calc(env(safe-area-inset-top) + 12px);
+        right: calc(constant(safe-area-inset-right) + 12px);
+        right: calc(env(safe-area-inset-right) + 12px);
         width: 24px;
         padding: 4px;
         border-radius: 16px;

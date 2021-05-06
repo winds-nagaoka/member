@@ -11,7 +11,8 @@
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 44px;
+    height: calc(constant(safe-area-inset-bottom) + 44px);
+    height: calc(env(safe-area-inset-bottom) + 44px);
     width: 100%;
 
     & {
@@ -24,9 +25,6 @@
         background: #333;
       }
     }
-
-    padding-bottom: constant(safe-area-inset-bottom);
-    padding-bottom: env(safe-area-inset-bottom);
 
     transition: transform 0.2s linear;
     -webkit-transform: translate3d(0, 150%, 0);
@@ -210,7 +208,8 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 44px;
+      height: calc(constant(safe-area-inset-bottom) + 44px);
+      height: calc(env(safe-area-inset-bottom) + 44px);
       background-size: 0% 100%;
       z-index: 37;
 
@@ -308,7 +307,8 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 44px;
+      height: calc(constant(safe-area-inset-bottom) + 44px);
+      height: calc(env(safe-area-inset-bottom) + 44px);
       background-size: 0% 100%;
       z-index: 36;
 
@@ -505,15 +505,15 @@
     bottom: 0;
     z-index: 33;
 
-    padding-top: constant(safe-area-inset-top);
-    padding-bottom: constant(safe-area-inset-bottom);
-    padding-left: constant(safe-area-inset-left);
-    padding-right: constant(safe-area-inset-right);
+    margin-top: calc(constant(safe-area-inset-top));
+    // margin-bottom: constant(safe-area-inset-bottom);
+    margin-left: constant(safe-area-inset-left);
+    margin-right: constant(safe-area-inset-right);
 
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+    margin-top: calc(env(safe-area-inset-top));
+    // margin-bottom: env(safe-area-inset-bottom);
+    margin-left: env(safe-area-inset-left);
+    margin-right: env(safe-area-inset-right);
 
     // transition: transform .3s ease-in-out;
     transition: transform 0.2s linear;
@@ -1182,7 +1182,8 @@
       // }
 
       .gap {
-        height: 80px;
+        height: calc(constant(safe-area-inset-bottom) + 80px);
+        height: calc(env(safe-area-inset-bottom) + 80px);
       }
     }
   }
