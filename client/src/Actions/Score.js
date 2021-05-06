@@ -157,8 +157,8 @@ const detailLoading = (detailLoading) => ({
 
 export const getScoreDetail = (scoreid) => {
   return async (dispatch) => {
-    dispatch(detailLoading(true))
     if (!window.localStorage.token) return false
+    dispatch(detailLoading(true))
     const path = lib.getScorePath() + '/api/member/detail'
     const send = {
       session: lib.getSession(),
@@ -217,8 +217,8 @@ const editPreLoading = (editPreLoading) => ({
 
 const loadScoreEdit = (editMode) => {
   return async (dispatch, getState) => {
-    dispatch(editPreLoading(true))
     if (!window.localStorage.token) return false
+    dispatch(editPreLoading(true))
     // URL
     const path = lib.getScorePath() + '/api/member/edit/pre'
     const send = {
@@ -293,8 +293,8 @@ const editLoading = (editLoading) => ({
 
 export const updateScoreEdit = () => {
   return async (dispatch, getState) => {
-    dispatch(editLoading(true))
     if (!window.localStorage.token) return false
+    dispatch(editLoading(true))
     // URL
     const path = lib.getScorePath() + '/api/member/edit'
     const send = {
