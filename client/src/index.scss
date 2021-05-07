@@ -170,6 +170,15 @@ div {
   justify-content: center;
   align-items: center;
   background: #efeff4;
+
+  & {
+    background: #efeff4;
+  }
+  @media (prefers-color-scheme: dark) {
+    & {
+      background: #1c1c1e;
+    }
+  }
 }
 
 .loading {
