@@ -1,5 +1,9 @@
 import create from 'zustand'
 
+const NOTIFICATION_DURATION = 3000
+// 以下はsrc/components/Notifications/Notification.module.scss と合わせる
+const HIDE_ANIMATION_DURATION = 500
+
 export type Notification = {
   timeId: number
   message: string
@@ -25,12 +29,12 @@ export const useNotificationStore = create<NotificationStore>((set) => ({
           return notification.timeId === timeId ? { ...notification, state: 'hide' } : notification
         }),
       }))
-    }, 5000 - 500)
+    }, NOTIFICATION_DURATION - HIDE_ANIMATION_DURATION)
     setTimeout(() => {
       set((state) => ({
         notifications: state.notifications.filter((notification) => notification.timeId !== timeId),
       }))
-    }, 5000)
+    }, NOTIFICATION_DURATION)
   },
   dismissNotification: (timeId) => {
     set((state) => ({
