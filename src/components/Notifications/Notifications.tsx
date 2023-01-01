@@ -1,14 +1,13 @@
 import { useNotificationStore } from '../../stores/notification'
+import { Notification } from './Notification'
+import styles from './Notifications.module.scss'
 
 export const Notifications = () => {
   const { notifications, dismissNotification } = useNotificationStore()
   return (
-    <div>
+    <div className={styles.notifications}>
       {notifications.map((notification) => (
-        <div key={notification.timeId}>
-          {notification.message}
-          <button onClick={() => dismissNotification(notification.timeId)}>close</button>
-        </div>
+        <Notification key={notification.timeId} notification={notification} onDismiss={dismissNotification} />
       ))}
     </div>
   )

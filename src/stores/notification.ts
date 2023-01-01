@@ -1,8 +1,9 @@
 import create from 'zustand'
 
-type Notification = {
+export type Notification = {
   timeId: number
   message: string
+  state: 'show' | 'hide' | 'close'
 }
 
 type NotificationStore = {
@@ -16,8 +17,15 @@ export const useNotificationStore = create<NotificationStore>((set) => ({
   addNotification: (message) => {
     const timeId = new Date().getTime()
     set((state) => ({
-      notifications: [{ timeId, message }, ...state.notifications],
+      notifications: [{ timeId, message, state: 'show' }, ...state.notifications],
     }))
+    setTimeout(() => {
+      set((state) => ({
+        notifications: state.notifications.map((notification) => {
+          return notification.timeId === timeId ? { ...notification, state: 'hide' } : notification
+        }),
+      }))
+    }, 5000 - 500)
     setTimeout(() => {
       set((state) => ({
         notifications: state.notifications.filter((notification) => notification.timeId !== timeId),
