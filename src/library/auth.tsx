@@ -78,6 +78,7 @@ const authConfig = {
   loginFn,
   registerFn,
   logoutFn,
+  LoaderComponent: () => <>読み込み中</>,
 }
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<User | null, Error, LoginInputs, RegisterInputs>(authConfig)
