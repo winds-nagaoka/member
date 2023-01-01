@@ -1,7 +1,8 @@
 import { initReactQueryAuth } from 'react-query-auth'
 import { VERSION } from '../config'
-import type { Session } from '../types'
+import type { LoginRequest, Session } from '../types'
 import { getUser, login, register, logout } from './authRequests'
+import { v1 as uuidv1 } from 'uuid'
 
 const setToken = (token: string) => {
   localStorage.setItem('token', token)
@@ -16,34 +17,90 @@ const setClientId = (clientId: string) => {
 }
 
 const getClientId = () => {
-  return localStorage.getItem('clientid')
+  const clientId = localStorage.getItem('clientid')
+  if (clientId) {
+    return clientId
+  }
+  const newClientId = uuidv1().split('-').join('')
+  setClientId(newClientId)
+  return newClientId
+}
+
+const setUserId = (userId: string) => {
+  localStorage.setItem('userid', userId)
+}
+
+const getUserId = () => {
+  return localStorage.getItem('userid')
+}
+
+const getUserAgent = () => {
+  return navigator.userAgent
 }
 
 const loadUser = async () => {
+  const userId = getUserId()
   const token = getToken()
-  if (!token) {
+  if (!userId || !token) {
     return null
   }
   const session: Session = {
-    userid: '',
-    clientid: '',
+    userid: userId,
+    clientid: getClientId(),
     clientToken: token,
-    useragent: '',
+    useragent: getUserAgent(),
     version: VERSION,
   }
   return getUser(session)
 }
 
 const loginFn = async (inputs: { userId: string; password: string }) => {
-  await login(inputs)
+  const requestBody: LoginRequest = {
+    userid: inputs.userId,
+    passwd: inputs.password,
+    clientid: getClientId(),
+    useragent: getUserAgent(),
+    version: VERSION,
+  }
+  const response = await login(requestBody)
+  if (response.status) {
+    setToken(response.token)
+    setUserId(response.user.userid)
+    return response.user
+  }
 }
 
-const registerFn = async (inputs: { userId: string; password: string }) => {
-  await register(inputs)
+const registerFn = async (inputs: { passKey: string; userId: string; password: string }) => {
+  const requestBody = {
+    userid: inputs.userId,
+    passwd: inputs.password,
+    key: inputs.passKey,
+    clientid: getClientId(),
+    useragent: getUserAgent(),
+    version: VERSION,
+  }
+  const response = await register(requestBody)
+  if (response.status) {
+    setToken(response.token)
+    setUserId(response.user.userid)
+    return response.user
+  }
 }
 
 const logoutFn = async () => {
-  await logout()
+  const userId = authStorage.getUserId()
+  const token = authStorage.getToken()
+  if (!userId || !token) {
+    return null
+  }
+  const session: Session = {
+    userid: userId,
+    clientid: authStorage.getClientId(),
+    clientToken: token,
+    useragent: getUserAgent(),
+    version: VERSION,
+  }
+  await logout(session)
 }
 
 const authConfig = {

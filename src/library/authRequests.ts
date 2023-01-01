@@ -1,5 +1,5 @@
 import { AUTH_API_URL } from '../config'
-import type { Session } from '../types'
+import type { LoginRequest, RegisterRequest, Session } from '../types'
 
 const handleApiResponse = async (response: Response) => {
   const data = await response.json()
@@ -10,29 +10,26 @@ const handleApiResponse = async (response: Response) => {
   }
 }
 
+const fetchApi = async (path: string, body: unknown = {}) => {
+  return await fetch(path, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+  }).then(handleApiResponse)
+}
+
 export const getUser = async (session: Session) => {
-  return await fetch(`${AUTH_API_URL}/auth`, {
-    method: 'POST',
-    body: JSON.stringify(session),
-  }).then(handleApiResponse)
+  return await fetchApi(`${AUTH_API_URL}/auth`, { session })
 }
 
-export const login = async (inputs: { userId: string; password: string }) => {
-  return await fetch(`${AUTH_API_URL}/login`, {
-    method: 'POST',
-    body: JSON.stringify(inputs),
-  }).then(handleApiResponse)
+export const login = async (loginRequest: LoginRequest) => {
+  return await fetchApi(`${AUTH_API_URL}/login`, loginRequest)
 }
 
-export const register = async (inputs: { userId: string; password: string }) => {
-  return await fetch(`${AUTH_API_URL}/adduser`, {
-    method: 'POST',
-    body: JSON.stringify(inputs),
-  }).then(handleApiResponse)
+export const register = async (registerRequest: RegisterRequest) => {
+  return await fetchApi(`${AUTH_API_URL}/adduser`, registerRequest)
 }
 
-export const logout = async () => {
-  return await fetch(`${AUTH_API_URL}/logout`, {
-    method: 'POST',
-  }).then(handleApiResponse)
+export const logout = async (session: Session) => {
+  return await fetchApi(`${AUTH_API_URL}/logout`, { session })
 }
