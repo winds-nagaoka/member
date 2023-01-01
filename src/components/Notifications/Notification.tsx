@@ -1,6 +1,7 @@
 import styles from './Notification.module.scss'
 import clsx from 'clsx'
 import type { Notification as NotificationType } from '../../stores/notification'
+import { ReactComponent as Close } from '../../assets/close.svg'
 
 export const Notification = ({
   notification,
@@ -11,8 +12,10 @@ export const Notification = ({
 }) => {
   return (
     <div key={notification.timeId} className={clsx(styles.notification, styles[notification.state])}>
-      <div>{notification.message}</div>
-      <button onClick={() => onDismiss(notification.timeId)}>close</button>
+      <div className={styles.message}>{notification.message}</div>
+      <div onClick={() => onDismiss(notification.timeId)} className={styles.close}>
+        <Close />
+      </div>
     </div>
   )
 }

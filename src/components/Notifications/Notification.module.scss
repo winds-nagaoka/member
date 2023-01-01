@@ -1,4 +1,6 @@
 .notification {
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.9);
@@ -7,14 +9,25 @@
   margin-top: constant(safe-area-inset-top);
   margin-top: env(safe-area-inset-top);
 
-  display: flex;
-
-  & > div {
-    padding: 16px;
+  .message {
+    margin: 16px;
     font-size: 13px;
 
     b {
       font-weight: 600;
+    }
+  }
+
+  .close {
+    width: 13px;
+    height: 13px;
+    margin-left: auto;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: #fff;
     }
   }
 
