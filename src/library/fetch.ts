@@ -1,8 +1,11 @@
+import { useNotificationStore } from '../stores/notification'
+
 const handleApiResponse = async (response: Response) => {
   const data = await response.json()
   if (response.ok) {
     return data
   } else {
+    useNotificationStore.getState().addNotification('通信エラー')
     return Promise.reject(data)
   }
 }
