@@ -68,6 +68,7 @@ const logoutFn = async () => {
     version: VERSION,
   }
   await logout(session)
+  authStorage.clearAllContents()
 }
 
 const authConfig = {

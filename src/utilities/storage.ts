@@ -30,10 +30,15 @@ const getUserId = () => {
   return localStorage.getItem('userid')
 }
 
+const clearAllContents = () => {
+  localStorage.clear()
+}
+
 export const authStorage = {
   setToken,
   getToken,
   getClientId,
   setUserId,
   getUserId,
+  clearAllContents,
 }
