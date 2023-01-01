@@ -31,7 +31,9 @@ const getUserId = () => {
 }
 
 const clearAllContents = () => {
+  const clientId = getClientId()
   localStorage.clear()
+  setClientId(clientId)
 }
 
 export const authStorage = {
