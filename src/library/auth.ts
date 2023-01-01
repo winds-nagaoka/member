@@ -1,6 +1,6 @@
 import { initReactQueryAuth } from 'react-query-auth'
 import { VERSION } from '../config'
-import type { LoginRequest, Session } from '../types'
+import type { LoginRequest, Session, User } from '../types'
 import { getUser, login, register, logout } from './authRequests'
 import { authStorage } from '../utilities/storage'
 import { getUserAgent } from '../utilities/userAgent'
@@ -21,7 +21,8 @@ const loadUser = async () => {
   return getUser(session)
 }
 
-const loginFn = async (inputs: { userId: string; password: string }) => {
+type LoginInputs = { userId: string; password: string }
+const loginFn = async (inputs: LoginInputs) => {
   const requestBody: LoginRequest = {
     userid: inputs.userId,
     passwd: inputs.password,
@@ -37,7 +38,8 @@ const loginFn = async (inputs: { userId: string; password: string }) => {
   }
 }
 
-const registerFn = async (inputs: { passKey: string; userId: string; password: string }) => {
+type RegisterInputs = { passKey: string; userId: string; password: string }
+const registerFn = async (inputs: RegisterInputs) => {
   const requestBody = {
     userid: inputs.userId,
     passwd: inputs.password,
@@ -78,4 +80,4 @@ const authConfig = {
   logoutFn,
 }
 
-export const { AuthProvider, useAuth } = initReactQueryAuth(authConfig)
+export const { AuthProvider, useAuth } = initReactQueryAuth<User | null, Error, LoginInputs, RegisterInputs>(authConfig)

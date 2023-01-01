@@ -3,7 +3,7 @@ import { Button, Form, Input } from '../../../components/Form'
 import { useAuth } from '../../../library/auth'
 
 type RegisterInput = {
-  passkey: string
+  passKey: string
   userId: string
   password: string
 }
@@ -22,7 +22,7 @@ export const Register = () => {
       >
         {({ register, formState }) => (
           <>
-            <Input type="text" label="passkey" registration={register('passkey')} error={formState.errors['passkey']} />
+            <Input type="text" label="passkey" registration={register('passKey')} error={formState.errors['passKey']} />
             <Input type="text" label="userid" registration={register('userId')} error={formState.errors['userId']} />
             <Input type="password" label="password" registration={register('password')} />
             <Button type="submit" isLoading={isLoading}>
