@@ -2,51 +2,18 @@ import { initReactQueryAuth } from 'react-query-auth'
 import { VERSION } from '../config'
 import type { LoginRequest, Session } from '../types'
 import { getUser, login, register, logout } from './authRequests'
-import { v1 as uuidv1 } from 'uuid'
-
-const setToken = (token: string) => {
-  localStorage.setItem('token', token)
-}
-
-const getToken = () => {
-  return localStorage.getItem('token')
-}
-
-const setClientId = (clientId: string) => {
-  localStorage.setItem('clientid', clientId)
-}
-
-const getClientId = () => {
-  const clientId = localStorage.getItem('clientid')
-  if (clientId) {
-    return clientId
-  }
-  const newClientId = uuidv1().split('-').join('')
-  setClientId(newClientId)
-  return newClientId
-}
-
-const setUserId = (userId: string) => {
-  localStorage.setItem('userid', userId)
-}
-
-const getUserId = () => {
-  return localStorage.getItem('userid')
-}
-
-const getUserAgent = () => {
-  return navigator.userAgent
-}
+import { authStorage } from '../utilities/storage'
+import { getUserAgent } from '../utilities/userAgent'
 
 const loadUser = async () => {
-  const userId = getUserId()
-  const token = getToken()
+  const userId = authStorage.getUserId()
+  const token = authStorage.getToken()
   if (!userId || !token) {
     return null
   }
   const session: Session = {
     userid: userId,
-    clientid: getClientId(),
+    clientid: authStorage.getClientId(),
     clientToken: token,
     useragent: getUserAgent(),
     version: VERSION,
@@ -58,14 +25,14 @@ const loginFn = async (inputs: { userId: string; password: string }) => {
   const requestBody: LoginRequest = {
     userid: inputs.userId,
     passwd: inputs.password,
-    clientid: getClientId(),
+    clientid: authStorage.getClientId(),
     useragent: getUserAgent(),
     version: VERSION,
   }
   const response = await login(requestBody)
   if (response.status) {
-    setToken(response.token)
-    setUserId(response.user.userid)
+    authStorage.setToken(response.token)
+    authStorage.setUserId(response.user.userid)
     return response.user
   }
 }
@@ -75,14 +42,14 @@ const registerFn = async (inputs: { passKey: string; userId: string; password: s
     userid: inputs.userId,
     passwd: inputs.password,
     key: inputs.passKey,
-    clientid: getClientId(),
+    clientid: authStorage.getClientId(),
     useragent: getUserAgent(),
     version: VERSION,
   }
   const response = await register(requestBody)
   if (response.status) {
-    setToken(response.token)
-    setUserId(response.user.userid)
+    authStorage.setToken(response.token)
+    authStorage.setUserId(response.user.userid)
     return response.user
   }
 }
