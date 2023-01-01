@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Button, Form, Input } from '../../../components/Form'
 import { useAuth } from '../../../library/auth'
+import { Layout } from '../components/Layout'
 
 type RegisterInput = {
   passKey: string
@@ -12,8 +13,8 @@ export const Register = () => {
   const navigate = useNavigate()
   const { register, isLoggingIn: isLoading } = useAuth()
   return (
-    <>
-      <h2>Register</h2>
+    <Layout>
+      <h2>新規登録</h2>
       <Form<RegisterInput>
         onSubmit={async (values) => {
           await register(values)
@@ -22,15 +23,25 @@ export const Register = () => {
       >
         {({ register, formState }) => (
           <>
-            <Input type="text" label="passkey" registration={register('passKey')} error={formState.errors['passKey']} />
-            <Input type="text" label="userid" registration={register('userId')} error={formState.errors['userId']} />
-            <Input type="password" label="password" registration={register('password')} />
+            <Input
+              type="text"
+              label="会員専用パスワード"
+              registration={register('passKey')}
+              error={formState.errors['passKey']}
+            />
+            <Input
+              type="text"
+              label="ユーザー名"
+              registration={register('userId')}
+              error={formState.errors['userId']}
+            />
+            <Input type="password" label="パスワード" registration={register('password')} />
             <Button type="submit" isLoading={isLoading}>
               登録
             </Button>
           </>
         )}
       </Form>
-    </>
+    </Layout>
   )
 }

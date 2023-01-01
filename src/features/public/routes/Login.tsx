@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Button, Form, Input } from '../../../components/Form'
 import { useAuth } from '../../../library/auth'
+import { Layout } from '../components/Layout'
 
 type LoginInput = {
   userId: string
@@ -11,8 +12,8 @@ export const Login = () => {
   const navigate = useNavigate()
   const { login, isLoggingIn: isLoading } = useAuth()
   return (
-    <>
-      <h2>Login</h2>
+    <Layout>
+      <h2>ログイン</h2>
       <Form<LoginInput>
         onSubmit={async (values) => {
           await login(values)
@@ -21,10 +22,15 @@ export const Login = () => {
       >
         {({ register, formState }) => (
           <>
-            <Input type="text" label="userid" registration={register('userId')} error={formState.errors['userId']} />
+            <Input
+              type="text"
+              label="ユーザー名"
+              registration={register('userId')}
+              error={formState.errors['userId']}
+            />
             <Input
               type="password"
-              label="password"
+              label="パスワード"
               registration={register('password')}
               error={formState.errors['password']}
             />
@@ -34,6 +40,6 @@ export const Login = () => {
           </>
         )}
       </Form>
-    </>
+    </Layout>
   )
 }
