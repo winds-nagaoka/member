@@ -4,6 +4,7 @@ import type { LoginRequest, Session, User } from '../types'
 import { getUser, login, register, logout } from './authRequests'
 import { authStorage } from '../utilities/storage'
 import { getUserAgent } from '../utilities/userAgent'
+import { useNotificationStore } from '../stores/notification'
 
 const loadUser = async () => {
   const userId = authStorage.getUserId()
@@ -34,7 +35,10 @@ const loginFn = async (inputs: LoginInputs) => {
   if (response.status) {
     authStorage.setToken(response.token)
     authStorage.setUserId(response.user.userid)
+    useNotificationStore.getState().addNotification('ログインしました')
     return response.user
+  } else {
+    useNotificationStore.getState().addNotification('ログインできませんでした')
   }
 }
 
@@ -52,7 +56,10 @@ const registerFn = async (inputs: RegisterInputs) => {
   if (response.status) {
     authStorage.setToken(response.token)
     authStorage.setUserId(response.user.userid)
+    useNotificationStore.getState().addNotification('登録しました')
     return response.user
+  } else {
+    useNotificationStore.getState().addNotification('登録できませんでした')
   }
 }
 
@@ -71,6 +78,7 @@ const logoutFn = async () => {
   }
   await logout(session)
   authStorage.clearAllContents()
+  useNotificationStore.getState().addNotification('ログアウトしました')
 }
 
 const authConfig = {
