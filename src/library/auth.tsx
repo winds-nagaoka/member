@@ -1,25 +1,15 @@
 import { initReactQueryAuth } from 'react-query-auth'
 import { VERSION } from '../config'
-import type { LoginRequest, Session, User } from '../types'
+import type { LoginRequest, User } from '../types'
 import { getUser, login, register, logout } from './authRequests'
 import { authStorage } from '../utilities/storage'
 import { getUserAgent } from '../utilities/userAgent'
 import { useNotificationStore } from '../stores/notification'
+import { getSession } from '../utilities/session'
 
 const loadUser = async (): Promise<User | null> => {
-  const userId = authStorage.getUserId()
-  const token = authStorage.getToken()
-  if (!userId || !token) {
-    return null
-  }
-  const session: Session = {
-    userid: userId,
-    clientid: authStorage.getClientId(),
-    clientToken: token,
-    useragent: getUserAgent(),
-    version: VERSION,
-  }
-  return getUser(session)
+  const session = getSession()
+  return session ? await getUser(session) : null
 }
 
 type LoginInputs = { userId: string; password: string }
@@ -66,19 +56,8 @@ const registerFn = async (inputs: RegisterInputs): Promise<User | null> => {
 }
 
 const logoutFn = async (): Promise<null> => {
-  const userId = authStorage.getUserId()
-  const token = authStorage.getToken()
-  if (!userId || !token) {
-    return null
-  }
-  const session: Session = {
-    userid: userId,
-    clientid: authStorage.getClientId(),
-    clientToken: token,
-    useragent: getUserAgent(),
-    version: VERSION,
-  }
-  await logout(session)
+  const session = getSession()
+  session && (await logout(session))
   authStorage.clearAllContents()
   useNotificationStore.getState().addNotification('ログアウトしました')
   return null
