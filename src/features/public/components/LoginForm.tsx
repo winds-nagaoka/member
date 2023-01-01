@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom'
+import z from 'zod'
 import { Button, Form, Input } from '../../../components/Form'
 import { useAuth } from '../../../library/auth'
 import styles from './LoginForm.module.scss'
+
+const validationScheme = z.object({
+  userId: z.string().min(1, '入力してください'),
+  password: z.string().min(1, '入力してください'),
+})
 
 type LoginInput = {
   userId: string
@@ -19,6 +25,7 @@ export const LoginForm = ({ onSuccess }: { onSuccess: () => void }) => {
           await login(values)
           onSuccess()
         }}
+        validationScheme={validationScheme}
       >
         {({ register, formState }) => (
           <>

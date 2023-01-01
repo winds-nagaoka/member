@@ -16,7 +16,7 @@ export const Input = ({ type, registration, label, error }: InputProps) => {
     <div className={styles.input}>
       <label>{label}</label>
       <input type={type} {...registration} />
-      {error?.message && <div>{error.message}</div>}
+      {error?.message && <div className={styles.error}>{error.message}</div>}
     </div>
   )
 }

@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom'
+import z from 'zod'
 import { Button, Form, Input } from '../../../components/Form'
 import { useAuth } from '../../../library/auth'
 import styles from './RegisterForm.module.scss'
+
+const validationScheme = z.object({
+  passKey: z.string().min(1, '入力してください'),
+  userId: z.string().min(1, '入力してください'),
+  password: z.string().min(1, '入力してください'),
+})
 
 type RegisterInput = {
   passKey: string
@@ -20,6 +27,7 @@ export const RegisterForm = ({ onSuccess }: { onSuccess: () => void }) => {
           await register(values)
           onSuccess()
         }}
+        validationScheme={validationScheme}
       >
         {({ register, formState }) => (
           <>
@@ -35,7 +43,12 @@ export const RegisterForm = ({ onSuccess }: { onSuccess: () => void }) => {
               registration={register('userId')}
               error={formState.errors['userId']}
             />
-            <Input type="password" label="パスワード" registration={register('password')} />
+            <Input
+              type="password"
+              label="パスワード"
+              registration={register('password')}
+              error={formState.errors['password']}
+            />
             <div className={styles.links}>
               <div className={styles.link}>
                 <Link to="/login">ログインはこちら</Link>
