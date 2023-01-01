@@ -1,7 +1,8 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, Form, Input } from '../../../components/Form'
 import { useAuth } from '../../../library/auth'
 import { Layout } from '../components/Layout'
+import styles from './Register.module.scss'
 
 type RegisterInput = {
   passKey: string
@@ -36,9 +37,16 @@ export const Register = () => {
               error={formState.errors['userId']}
             />
             <Input type="password" label="パスワード" registration={register('password')} />
-            <Button type="submit" isLoading={isLoading}>
-              登録
-            </Button>
+            <div className={styles.links}>
+              <div className={styles.link}>
+                <Link to="/login">ログインはこちら</Link>
+              </div>
+              <div className={styles.button}>
+                <Button type="submit" isLoading={isLoading}>
+                  登録
+                </Button>
+              </div>
+            </div>
           </>
         )}
       </Form>
