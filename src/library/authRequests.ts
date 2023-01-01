@@ -1,22 +1,6 @@
 import { AUTH_API_URL } from '../config'
 import type { LoginRequest, RegisterRequest, Session } from '../types'
-
-const handleApiResponse = async (response: Response) => {
-  const data = await response.json()
-  if (response.ok) {
-    return data
-  } else {
-    return Promise.reject(data)
-  }
-}
-
-const fetchApi = async (path: string, body: unknown = {}) => {
-  return await fetch(path, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: { 'Content-Type': 'application/json' },
-  }).then(handleApiResponse)
-}
+import { fetchApi } from './fetch'
 
 export const getUser = async (session: Session) => {
   return await fetchApi(`${AUTH_API_URL}/auth`, { session })
