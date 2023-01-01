@@ -5,6 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { AuthProvider } from '../library/auth'
 import { queryClient } from '../library/queryClient'
 import { Button } from '../components/Form'
+import { Notifications } from '../components/Notifications'
 
 const ErrorFallback = () => {
   return (
@@ -21,6 +22,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
+            <Notifications />
             <BrowserRouter>{children}</BrowserRouter>
           </AuthProvider>
         </QueryClientProvider>
