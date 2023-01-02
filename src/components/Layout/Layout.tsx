@@ -14,17 +14,14 @@ type BreadItem = {
   label: string
 }
 
-export const Layout = ({
-  breadList,
-  title,
-  subTitle,
-  children,
-}: {
+type LayoutProps = {
   breadList: BreadItem[]
   title: string
   subTitle?: string | ReactNode
   children: ReactNode
-}) => {
+}
+
+export const Layout = (props: LayoutProps) => {
   const pc = useStyle()
   return (
     <div className={styles.auth}>
@@ -34,33 +31,10 @@ export const Layout = ({
           <div className={clsx({ [styles['flex-frame']]: pc === 'pc' })}>
             <NavigationInline />
             <div className={styles[pc === 'pc' ? 'inline-contents' : 'full-contents']}>
-              <div className={clsx(styles['contents-layout'], styles[pc])}>
-                <div className={clsx(styles['contents-header'], styles[pc])}>
-                  <div className={styles['bread-navigation']}>
-                    {breadList.map((breadItem, index, array) => {
-                      return (
-                        <Fragment key={index}>
-                          <Link to={breadItem.path}>{breadItem.label}</Link>
-                          {array.length - 1 !== index && (
-                            <div className={styles.icon}>
-                              <RightIcon />
-                            </div>
-                          )}
-                        </Fragment>
-                      )
-                    })}
-                  </div>
-                  <h2>{title}</h2>
-                  {subTitle && typeof subTitle === 'string' && <p>{subTitle}</p>}
-                  {subTitle && typeof subTitle !== 'string' && subTitle}
-                </div>
-                {children}
-              </div>
+              <ContentsLayout {...props} />
             </div>
           </div>
-          <footer>
-            <small>&copy; The Wind Ensemble</small>
-          </footer>
+          <Footer />
         </div>
       </div>
     </div>
@@ -78,3 +52,37 @@ const NavigationInline = () => {
     </div>
   )
 }
+
+const ContentsLayout = ({ breadList, title, subTitle, children }: LayoutProps) => {
+  const pc = useStyle()
+  return (
+    <div className={clsx(styles['contents-layout'], styles[pc])}>
+      <div className={clsx(styles['contents-header'], styles[pc])}>
+        <div className={styles['bread-navigation']}>
+          {breadList.map((breadItem, index, array) => {
+            return (
+              <Fragment key={index}>
+                <Link to={breadItem.path}>{breadItem.label}</Link>
+                {array.length - 1 !== index && (
+                  <div className={styles.icon}>
+                    <RightIcon />
+                  </div>
+                )}
+              </Fragment>
+            )
+          })}
+        </div>
+        <h2>{title}</h2>
+        {subTitle && typeof subTitle === 'string' && <p>{subTitle}</p>}
+        {subTitle && typeof subTitle !== 'string' && subTitle}
+      </div>
+      {children}
+    </div>
+  )
+}
+
+const Footer = () => (
+  <footer>
+    <small>&copy; The Wind Ensemble</small>
+  </footer>
+)
