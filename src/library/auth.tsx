@@ -4,6 +4,7 @@ import { getUser, login, register, logout } from './authRequests'
 import { authStorage } from '../utilities/storage'
 import { useNotificationStore } from '../stores/notification'
 import { getLoginRequestBody, getRegisterRequestBody, getSession } from '../utilities/session'
+import { FullScreenLoading } from '../components/ContentsBox'
 
 type UserResponse = { status: boolean; token: string; user: User }
 const handleUserResponse = (response: UserResponse) => {
@@ -61,7 +62,7 @@ const authConfig = {
   loginFn,
   registerFn,
   logoutFn,
-  LoaderComponent: () => <>読み込み中</>,
+  LoaderComponent: () => <FullScreenLoading />,
 }
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<User | null, Error, LoginInputs, RegisterInputs>(authConfig)

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ContentsBox, Text, TitleFrame } from '../../../components/ContentsBox'
+import { ContentsBox, ContentsLoading, Text, TitleFrame } from '../../../components/ContentsBox'
 import { BackToHome, ContentsLinks } from '../../../components/Navigations'
 import { useStyle } from '../../../utilities/useStyle'
 import { ScheduleListApi, useScheduleList } from '../api/getScheduleList'
@@ -9,7 +9,7 @@ export const ScheduleList = () => {
   const pc = useStyle()
   const scheduleListQuery = useScheduleList()
   if (scheduleListQuery.isLoading) {
-    return <>読み込み中</>
+    return <ContentsLoading />
   }
   if (!scheduleListQuery.data) {
     return null

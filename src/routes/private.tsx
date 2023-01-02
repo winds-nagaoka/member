@@ -1,11 +1,12 @@
 import { Suspense } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
+import { FullScreenLoading } from '../components/ContentsBox'
 import { Home } from '../features/home'
 import { PracticeRoutes } from '../features/practice'
 
 const App = () => {
   return (
-    <Suspense fallback={<div>loading</div>}>
+    <Suspense fallback={<FullScreenLoading />}>
       <Outlet />
     </Suspense>
   )

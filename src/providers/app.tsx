@@ -6,6 +6,7 @@ import { AuthProvider } from '../library/auth'
 import { queryClient } from '../library/queryClient'
 import { Button } from '../components/Form'
 import { Notifications } from '../components/Notifications'
+import { FullScreenLoading } from '../components/ContentsBox'
 
 const ErrorFallback = () => {
   return (
@@ -18,7 +19,7 @@ const ErrorFallback = () => {
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   return (
-    <Suspense fallback={<div>Loading</div>}>
+    <Suspense fallback={<FullScreenLoading />}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
