@@ -1,5 +1,10 @@
 import { Layout } from '../../../components/Layout'
+import { ScheduleList } from '../components/ScheduleList'
 
 export const Schedule = () => {
-  return <Layout>schedule</Layout>
+  return (
+    <Layout>
+      <ScheduleList />
+    </Layout>
+  )
 }

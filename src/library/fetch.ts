@@ -17,3 +17,7 @@ export const fetchApi = async (path: string, body: unknown = {}) => {
     headers: { 'Content-Type': 'application/json' },
   }).then(handleApiResponse)
 }
+
+export const getApi = async (path: string) => {
+  return await fetch(path, { method: 'GET' }).then(handleApiResponse)
+}
