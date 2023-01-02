@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { ContentsBox, Text, TitleFrame } from '../../../components/ContentsBox'
-import { BackToHome } from '../../../components/Navigations'
+import { BackToHome, ContentsLinks } from '../../../components/Navigations'
 import { useStyle } from '../../../utilities/useStyle'
 import { ScheduleListApi, useScheduleList } from '../api/getScheduleList'
 import styles from './ScheduleList.module.scss'
@@ -34,6 +34,14 @@ export const ScheduleList = () => {
             </Text>
           </TitleFrame>
         </div>
+      </ContentsBox>
+
+      <ContentsBox>
+        <ContentsLinks list={[{ path: '/practice/source', label: '参考音源' }]} />
+      </ContentsBox>
+
+      <ContentsBox>
+        <ContentsLinks list={[{ path: '/practice/history', label: '練習の記録' }]} />
       </ContentsBox>
 
       <ContentsBox>
