@@ -22,8 +22,8 @@ export const LoginForm = ({ onSuccess }: { onSuccess: () => void }) => {
       <h2>ログイン</h2>
       <Form<LoginInput>
         onSubmit={async (values) => {
-          await login(values)
-          onSuccess()
+          const user = await login(values)
+          user && onSuccess()
         }}
         validationScheme={validationScheme}
       >

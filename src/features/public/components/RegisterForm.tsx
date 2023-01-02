@@ -24,8 +24,8 @@ export const RegisterForm = ({ onSuccess }: { onSuccess: () => void }) => {
       <h2>新規登録</h2>
       <Form<RegisterInput>
         onSubmit={async (values) => {
-          await register(values)
-          onSuccess()
+          const user = await register(values)
+          user && onSuccess()
         }}
         validationScheme={validationScheme}
       >
