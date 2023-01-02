@@ -1,0 +1,14 @@
+.text {
+  padding: 12px;
+  font-size: 0.9rem;
+
+  &.pc {
+    padding: 16px;
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
