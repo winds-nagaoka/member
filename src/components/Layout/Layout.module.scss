@@ -1,0 +1,88 @@
+.auth {
+  & {
+    color: #333;
+  }
+  @media (prefers-color-scheme: dark) {
+    & {
+      color: #eee;
+    }
+  }
+
+  .contents {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    margin: 44.5px 0 0 0;
+
+    z-index: 1;
+
+    transform: translateZ(0); // Retinaスクロール対策
+
+    margin-top: calc(constant(safe-area-inset-top) + 44.5px);
+    // margin-bottom: constant(safe-area-inset-bottom);
+    margin-left: constant(safe-area-inset-left);
+    margin-right: constant(safe-area-inset-right);
+
+    margin-top: calc(env(safe-area-inset-top) + 44.5px);
+    // margin-bottom: env(safe-area-inset-bottom);
+    margin-left: env(safe-area-inset-left);
+    margin-right: env(safe-area-inset-right);
+
+    // background: rgba(220,220,220,.2);
+    // background: #efeff4;
+    // background: #f3f2f8;
+    // background: rgb(230, 236, 240);
+
+    & {
+      background: #efeff4;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #000;
+      }
+    }
+
+    &.pc {
+      margin: 61px 0 0 0;
+    }
+  }
+
+  .contents-inner {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    // Chromeだけっぽい
+    // scroll-behavior: smooth;
+    will-change: scroll-position;
+    contain: size style layout;
+    transform: translateZ(0); // Retinaスクロール対策
+  }
+
+  .flex-frame {
+    // menu: 240px, contents: 900px, margin: 16px * 4
+    max-width: 1204px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  // pcモードのとき追加
+  .inline-contents {
+    width: 900px;
+    min-width: 0; // 長いテキストを表示したときに要素を可変にするため
+    margin: 36px 16px 36px;
+  }
+
+  // mobileモードのとき追加
+  .full-contents {
+    margin: 32px 0;
+  }
+}
