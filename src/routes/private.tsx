@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { Home } from '../features/home'
+import { PracticeRoutes } from '../features/practice'
 
 const App = () => {
   return (
@@ -12,8 +13,12 @@ const App = () => {
 
 export const privateRoutes = [
   {
-    path: '/*',
+    path: '/',
     element: <App />,
-    children: [{ path: '/*', element: <Home /> }],
+    children: [
+      { path: '/practice/*', element: <PracticeRoutes /> },
+      { path: '/', element: <Home /> },
+      { path: '*', element: <Navigate to="/" /> },
+    ],
   },
 ]
