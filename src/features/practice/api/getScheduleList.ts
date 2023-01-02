@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { getApi } from '../../../library/fetch'
 
-type ScheduleListApi = {
+export type ScheduleListApi = {
   timestamp: {
     date: string
     time: string

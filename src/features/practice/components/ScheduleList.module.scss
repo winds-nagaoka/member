@@ -1,0 +1,241 @@
+.schedule-next {
+  .next {
+    .today {
+      margin: 0 0.5em 0 0;
+      padding: 0.2em 0.5em;
+      border-radius: 5px;
+      color: #fff;
+      background: #b60005;
+      font-size: 0.9rem;
+    }
+    .memo {
+      padding: 0.2em 0.5em;
+      border-radius: 5px;
+      color: #fff;
+      background: #3396ff;
+      font-size: 0.9rem;
+    }
+
+    .next-day {
+      display: inline;
+
+      // .year {
+      //   display: none;
+      // }
+
+      .month {
+        font-size: 2rem;
+
+        span {
+          padding-left: 0.2em;
+          font-size: 1.2rem;
+        }
+      }
+      .day {
+        padding-left: 0.2em;
+        font-size: 2rem;
+
+        span {
+          padding-left: 0.2em;
+          font-size: 1.2rem;
+        }
+      }
+
+      .date {
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 5px;
+        margin-left: 0.2em;
+        text-align: center;
+        vertical-align: text-bottom;
+        font-size: 1.2em;
+        font-weight: bold;
+        background: rgba(150, 150, 150, 1);
+        color: rgba(255, 255, 255, 1);
+
+        &.saturday {
+          background: rgba(0, 103, 192, 0.8);
+        }
+
+        &.sunday {
+          background: rgba(237, 26, 61, 0.8);
+        }
+      }
+    }
+
+    .next-time {
+      display: inline;
+      padding-left: 8px;
+
+      .time {
+        font-size: 1.2rem;
+      }
+
+      .while {
+        padding: 0 2px;
+        font-size: 1rem;
+      }
+    }
+
+    .next-place {
+      display: block;
+
+      .studio {
+        padding-left: 16px;
+
+        span {
+          span {
+            padding: 0 6px;
+            font-size: 1.6em;
+          }
+        }
+      }
+    }
+
+    // article.card div.card-text p .time {
+    //   font-size: 1.2em;
+    //   padding-left: 1em;
+    //   color: #666;
+    // }
+  }
+}
+
+.schedule-list {
+  .month-title {
+    & {
+      border-bottom: 0.55px solid #cbcbcd;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        border-bottom: 0.55px solid #2d2d2f;
+      }
+    }
+
+    .year {
+      font-size: 1rem;
+
+      span {
+        padding-left: 0.2em;
+        font-size: 1rem;
+      }
+    }
+    .month {
+      padding-left: 0.2em;
+      font-size: 1.2rem;
+
+      span {
+        padding-left: 0.2em;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .list {
+    padding: 0 0 8px 0;
+
+    .each {
+      padding: 4px 0;
+      vertical-align: baseline;
+
+      & {
+        border-bottom: 0.55px solid #cbcbcd;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          border-bottom: 0.55px solid #2d2d2f;
+        }
+      }
+
+      .labels {
+        display: inline-block;
+      }
+
+      .memo {
+        margin: 0 0.2em;
+        padding: 0.1em 0.4em;
+        border-radius: 5px;
+        color: #fff;
+        background: #3396ff;
+        font-size: 1rem;
+      }
+
+      .days {
+        display: inline;
+
+        .day {
+          // 一覧では右揃えにする
+          display: inline-block;
+          min-width: 45px;
+          text-align: right;
+
+          padding-left: 0.2em;
+          font-size: 1.2rem;
+
+          span {
+            padding-left: 0.2em;
+            font-size: 1rem;
+          }
+        }
+
+        .date {
+          display: inline-block;
+          width: 1.5em;
+          height: 1.5em;
+          border-radius: 5px;
+          margin-left: 0.2em;
+          text-align: center;
+          vertical-align: text-bottom;
+          font-size: 1rem;
+          font-weight: bold;
+          background: rgba(150, 150, 150, 1);
+          color: rgba(255, 255, 255, 1);
+
+          &.saturday {
+            background: rgba(0, 103, 192, 0.6);
+          }
+
+          &.sunday {
+            background: rgba(237, 26, 61, 0.6);
+          }
+        }
+      }
+
+      .times {
+        display: inline;
+        padding-left: 4px;
+        color: #888;
+        font-size: 1rem;
+
+        .time {
+        }
+
+        .while {
+          padding: 0 2px;
+          font-size: 0.8em;
+        }
+      }
+
+      .places {
+        display: inline-block;
+
+        .place {
+          display: none;
+          padding-left: 6px;
+          font-size: 1rem;
+        }
+
+        .studio {
+          padding-left: 6px;
+
+          span {
+            span {
+              padding: 0 4px;
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
