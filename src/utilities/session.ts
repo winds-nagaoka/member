@@ -17,3 +17,22 @@ export const getSession = (): Session | null => {
     version: VERSION,
   }
 }
+
+type LoginInputs = { userId: string; password: string }
+export const getLoginRequestBody = (inputs: LoginInputs) => ({
+  userid: inputs.userId,
+  passwd: inputs.password,
+  clientid: authStorage.getClientId(),
+  useragent: getUserAgent(),
+  version: VERSION,
+})
+
+type RegisterInputs = { passKey: string; userId: string; password: string }
+export const getRegisterRequestBody = (inputs: RegisterInputs) => ({
+  userid: inputs.userId,
+  passwd: inputs.password,
+  key: inputs.passKey,
+  clientid: authStorage.getClientId(),
+  useragent: getUserAgent(),
+  version: VERSION,
+})

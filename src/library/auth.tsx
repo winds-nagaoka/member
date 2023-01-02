@@ -1,32 +1,32 @@
 import { initReactQueryAuth } from 'react-query-auth'
-import { VERSION } from '../config'
-import type { LoginRequest, User } from '../types'
+import type { User } from '../types'
 import { getUser, login, register, logout } from './authRequests'
 import { authStorage } from '../utilities/storage'
-import { getUserAgent } from '../utilities/userAgent'
 import { useNotificationStore } from '../stores/notification'
-import { getSession } from '../utilities/session'
+import { getLoginRequestBody, getRegisterRequestBody, getSession } from '../utilities/session'
+
+type UserResponse = { status: boolean; token: string; user: User }
+const handleUserResponse = (response: UserResponse) => {
+  authStorage.setToken(response.token)
+  authStorage.setUserId(response.user.userid)
+  return response.user
+}
 
 const loadUser = async (): Promise<User | null> => {
   const session = getSession()
-  return session ? await getUser(session) : null
+  if (!session) {
+    return null
+  }
+  return await getUser(session)
 }
 
 type LoginInputs = { userId: string; password: string }
 const loginFn = async (inputs: LoginInputs): Promise<User | null> => {
-  const requestBody: LoginRequest = {
-    userid: inputs.userId,
-    passwd: inputs.password,
-    clientid: authStorage.getClientId(),
-    useragent: getUserAgent(),
-    version: VERSION,
-  }
+  const requestBody = getLoginRequestBody(inputs)
   const response = await login(requestBody)
   if (response.status) {
-    authStorage.setToken(response.token)
-    authStorage.setUserId(response.user.userid)
     useNotificationStore.getState().addNotification('ログインしました')
-    return response.user
+    return handleUserResponse(response)
   } else {
     useNotificationStore.getState().addNotification('ログインできませんでした')
     return null
@@ -35,20 +35,11 @@ const loginFn = async (inputs: LoginInputs): Promise<User | null> => {
 
 type RegisterInputs = { passKey: string; userId: string; password: string }
 const registerFn = async (inputs: RegisterInputs): Promise<User | null> => {
-  const requestBody = {
-    userid: inputs.userId,
-    passwd: inputs.password,
-    key: inputs.passKey,
-    clientid: authStorage.getClientId(),
-    useragent: getUserAgent(),
-    version: VERSION,
-  }
+  const requestBody = getRegisterRequestBody(inputs)
   const response = await register(requestBody)
   if (response.status) {
-    authStorage.setToken(response.token)
-    authStorage.setUserId(response.user.userid)
     useNotificationStore.getState().addNotification('登録しました')
-    return response.user
+    return handleUserResponse(response)
   } else {
     useNotificationStore.getState().addNotification('登録できませんでした')
     return null
@@ -57,7 +48,9 @@ const registerFn = async (inputs: RegisterInputs): Promise<User | null> => {
 
 const logoutFn = async (): Promise<null> => {
   const session = getSession()
-  session && (await logout(session))
+  if (session) {
+    await logout(session)
+  }
   authStorage.clearAllContents()
   useNotificationStore.getState().addNotification('ログアウトしました')
   return null
