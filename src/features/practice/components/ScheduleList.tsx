@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { ContentsBox, Text, TitleFrame } from '../../../components/ContentsBox'
 import { ContentsLayout } from '../../../components/Layout'
 import { useStyle } from '../../../utilities/useStyle'
 import { ScheduleListApi, useScheduleList } from '../api/getScheduleList'
@@ -22,25 +23,25 @@ export const ScheduleList = () => {
       title="練習について"
       subTitle="今後の練習予定です"
     >
-      <div className={clsx(styles.schedule, styles[pc])}>
+      <ContentsBox>
         <div className={clsx(styles['schedule-next'], styles[pc])}>
-          <div className="title-frame">
-            <label>次回の練習日</label>
-            <div className="text">
+          <TitleFrame title="次回の練習日">
+            <Text>
               <ScheduleNext scheduleList={scheduleListQuery.data} />
-            </div>
-          </div>
+            </Text>
+          </TitleFrame>
         </div>
+      </ContentsBox>
 
+      <ContentsBox>
         <div className={clsx(styles['schedule-next'], styles[pc])}>
-          <div className="title-frame">
-            <label>今後の練習日程</label>
-            <div className="text">
+          <TitleFrame title="今後の練習日程">
+            <Text>
               <ScheduleAfter scheduleList={scheduleListQuery.data} />
-            </div>
-          </div>
+            </Text>
+          </TitleFrame>
         </div>
-      </div>
+      </ContentsBox>
     </ContentsLayout>
   )
 }
@@ -122,14 +123,11 @@ const ScheduleAfter = ({ scheduleList }: { scheduleList: ScheduleListApi }) => {
                 <span className={styles.while}>～</span>
                 <span className={styles.time}>{each.time.end}</span>
               </div>
-              <div className={styles.place}>
+              <div className={styles.places}>
                 <span className={styles.place}>{each.place}</span>
                 <span className={styles.studio}>{studio}</span>
               </div>
-              <div className={styles.labels}>
-                {/* {today} */}
-                {memo}
-              </div>
+              <div className={styles.labels}>{memo}</div>
             </div>
           )
         })
