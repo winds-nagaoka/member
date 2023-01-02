@@ -22,7 +22,7 @@ export const Layout = ({
 }: {
   breadList: BreadItem[]
   title: string
-  subTitle?: string
+  subTitle?: string | ReactNode
   children: ReactNode
 }) => {
   const pc = useStyle()
@@ -51,7 +51,8 @@ export const Layout = ({
                     })}
                   </div>
                   <h2>{title}</h2>
-                  {subTitle && <p>{subTitle}</p>}
+                  {subTitle && typeof subTitle === 'string' && <p>{subTitle}</p>}
+                  {subTitle && typeof subTitle !== 'string' && subTitle}
                 </div>
                 {children}
               </div>

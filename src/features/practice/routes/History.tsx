@@ -9,7 +9,12 @@ export const History = () => {
         { path: '/practice/history', label: '練習の記録' },
       ]}
       title="練習の記録"
-      subTitle="練習の録音を掲載しています合奏前から録音しているため適宜早送りしてご利用ください"
+      subTitle={
+        <>
+          <p>練習の録音を掲載しています</p>
+          <p>合奏前から録音しているため適宜早送りしてご利用ください</p>
+        </>
+      }
     >
       hisotry
     </Layout>
