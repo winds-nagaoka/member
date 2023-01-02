@@ -1,6 +1,6 @@
 import { Fragment, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import clsx from "clsx"
+import clsx from 'clsx'
 import { ReactComponent as RightIcon } from '../../assets/right.svg'
 import styles from './ContentsLayout.module.scss'
 import { useStyle } from '../../utilities/useStyle'
@@ -21,16 +21,16 @@ export const ContentsLayout = ({
   subTitle?: string
   children: ReactNode
 }) => {
-  const pc=useStyle()
+  const pc = useStyle()
   return (
-    <div className={clsx(styles['contents-layout'],styles[pc])}>
-      <div className={clsx(styles['contents-header'],styles[pc])}>
+    <div className={clsx(styles['contents-layout'], styles[pc])}>
+      <div className={clsx(styles['contents-header'], styles[pc])}>
         <div className={styles['bread-navigation']}>
           {breadList.map((breadItem, index, array) => {
             return (
               <Fragment key={index}>
                 <Link to={breadItem.path}>{breadItem.label}</Link>
-                {array.length-1 !== index && (
+                {array.length - 1 !== index && (
                   <div className={styles.icon}>
                     <RightIcon />
                   </div>

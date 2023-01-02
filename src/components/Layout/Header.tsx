@@ -23,10 +23,10 @@ export const Header = () => {
         <RightNavigations />
       </div>
       <div
-        className={clsx(styles['menu-background'], menuOpen ? styles.open : '')}
+        className={clsx(styles['menu-background'], { [styles.open]: menuOpen })}
         onClick={() => setMenuOpen(false)}
       ></div>
-      <div className={clsx(styles['menu-content'], menuOpen ? styles.open : '')}>
+      <div className={clsx(styles['menu-content'], { [styles.open]: menuOpen })}>
         <MenuContents onMenuClose={() => setMenuOpen(false)} />
       </div>
     </div>

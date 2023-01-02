@@ -13,7 +13,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       <Header />
       <div className={clsx(styles.contents, styles[pc])}>
         <div className={clsx(styles['contents-inner'], styles[pc])}>
-          <div className={styles['flex-frame']}>
+          <div className={clsx({ [styles['flex-frame']]: pc === 'pc' })}>
             <NavigationInline />
             <div className={styles[pc === 'pc' ? 'inline-contents' : 'full-contents']}>{children}</div>
           </div>
