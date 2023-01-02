@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { ContentsBox, Text, TitleFrame } from '../../../components/ContentsBox'
 import { ContentsLayout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { useStyle } from '../../../utilities/useStyle'
 import { ScheduleListApi, useScheduleList } from '../api/getScheduleList'
 import styles from './ScheduleList.module.scss'
@@ -41,6 +42,10 @@ export const ScheduleList = () => {
             </Text>
           </TitleFrame>
         </div>
+      </ContentsBox>
+
+      <ContentsBox>
+        <BackToHome />
       </ContentsBox>
     </ContentsLayout>
   )
