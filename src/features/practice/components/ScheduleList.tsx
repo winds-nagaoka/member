@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { ContentsBox, Text, TitleFrame } from '../../../components/ContentsBox'
-import { ContentsLayout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
 import { useStyle } from '../../../utilities/useStyle'
 import { ScheduleListApi, useScheduleList } from '../api/getScheduleList'
@@ -16,14 +15,7 @@ export const ScheduleList = () => {
     return null
   }
   return (
-    <ContentsLayout
-      breadList={[
-        { path: '/', label: 'ホーム' },
-        { path: '/practice', label: '練習について' },
-      ]}
-      title="練習について"
-      subTitle="今後の練習予定です"
-    >
+    <>
       <ContentsBox>
         <div className={clsx(styles['schedule-next'], styles[pc])}>
           <TitleFrame title="次回の練習日">
@@ -47,7 +39,7 @@ export const ScheduleList = () => {
       <ContentsBox>
         <BackToHome />
       </ContentsBox>
-    </ContentsLayout>
+    </>
   )
 }
 

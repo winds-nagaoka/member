@@ -3,7 +3,7 @@ import { Dashboard } from '../components/Dashboard'
 
 export const Home = () => {
   return (
-    <Layout>
+    <Layout breadList={[{ path: '/', label: 'ホーム' }]} title="会員専用ページ">
       <Dashboard />
     </Layout>
   )

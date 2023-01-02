@@ -1,12 +1,30 @@
-import type { ReactNode } from 'react'
-import { useStyle } from '../../utilities/useStyle'
-import { Header } from './Header'
+import { Fragment, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 
-import styles from './Layout.module.scss'
+import { useStyle } from '../../utilities/useStyle'
+import { Header } from './Header'
 import { MenuContents } from './MenuContents'
+import { ReactComponent as RightIcon } from '../../assets/right.svg'
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+import styles from './Layout.module.scss'
+
+type BreadItem = {
+  path: string
+  label: string
+}
+
+export const Layout = ({
+  breadList,
+  title,
+  subTitle,
+  children,
+}: {
+  breadList: BreadItem[]
+  title: string
+  subTitle?: string
+  children: ReactNode
+}) => {
   const pc = useStyle()
   return (
     <div className={styles.auth}>
@@ -15,7 +33,29 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         <div className={clsx(styles['contents-inner'], styles[pc])}>
           <div className={clsx({ [styles['flex-frame']]: pc === 'pc' })}>
             <NavigationInline />
-            <div className={styles[pc === 'pc' ? 'inline-contents' : 'full-contents']}>{children}</div>
+            <div className={styles[pc === 'pc' ? 'inline-contents' : 'full-contents']}>
+              <div className={clsx(styles['contents-layout'], styles[pc])}>
+                <div className={clsx(styles['contents-header'], styles[pc])}>
+                  <div className={styles['bread-navigation']}>
+                    {breadList.map((breadItem, index, array) => {
+                      return (
+                        <Fragment key={index}>
+                          <Link to={breadItem.path}>{breadItem.label}</Link>
+                          {array.length - 1 !== index && (
+                            <div className={styles.icon}>
+                              <RightIcon />
+                            </div>
+                          )}
+                        </Fragment>
+                      )
+                    })}
+                  </div>
+                  <h2>{title}</h2>
+                  {subTitle && <p>{subTitle}</p>}
+                </div>
+                {children}
+              </div>
+            </div>
           </div>
           <footer>
             <small>&copy; The Wind Ensemble</small>
