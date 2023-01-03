@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { SourceList } from '../components/SourceList'
 
 export const Source = () => {
   return (
@@ -11,7 +12,7 @@ export const Source = () => {
       title="参考音源"
       subTitle="直近の演奏会の参考音源です"
     >
-      source
+      <SourceList />
     </Layout>
   )
 }
