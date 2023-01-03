@@ -3,25 +3,25 @@ import { APP_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
 import { getSession } from '../../../utilities/session'
 
-export type ReferenceList = {
-  status: true
+export type AudioSource = {
+  id: string
+  time: number
+  status: boolean
+  baseSrc: string
   list: [
     {
-      id: string
-      time: number
-      status: boolean
-      baseSrc: string
-      list: [
-        {
-          available: boolean
-          data: number
-          path: string
-          addtitle?: string
-        }
-      ]
-      _id: string
+      available: boolean
+      data: number
+      path: string
+      addtitle?: string
     }
   ]
+  _id: string
+}
+
+export type ReferenceList = {
+  status: true
+  list: AudioSource[]
   url: string
 }
 

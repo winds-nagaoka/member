@@ -74,7 +74,7 @@ export const SourceList = () => {
                           ''
                         )
                       const clickHandler =
-                        'audio' in data[ml] ? () => onClickMusicItem(sourceItem.id, data[ml].audio || -1) : () => {}
+                        'audio' in data[ml] ? () => onClickMusicItem(sourceItem.id, data[ml].audio!) : () => {}
                       const hasAudio = 'audio' in data[ml] ? <PlayIcon /> : <NoPlayIcon />
                       return (
                         <li

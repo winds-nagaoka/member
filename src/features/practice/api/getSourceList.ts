@@ -3,25 +3,27 @@ import { getSession } from '../../../utilities/session'
 import { fetchApi } from '../../../library/fetch'
 import { APP_API_URL } from '../../../config'
 
+export type ConcertDetail = {
+  id: string
+  title: string
+  type: 'source'
+  time: { timestamp: number; date: string; time: string }
+  sourceStatus: true
+  contents: { label: string; music: number[] }[]
+  data: {
+    audio?: number
+    title: string
+    composer?: string
+    arranger?: string
+    movement?: string[]
+    addtitle?: string[]
+  }[]
+}
+
 type Source = {
   id: string
   time: number
-  detail: {
-    id: string
-    title: string
-    type: 'source'
-    time: { timestamp: number; date: string; time: string }
-    sourceStatus: true
-    contents: { label: string; music: number[] }[]
-    data: {
-      audio?: number
-      title: string
-      composer?: string
-      arranger?: string
-      movement?: string[]
-      addtitle?: string[]
-    }[]
-  }
+  detail: ConcertDetail
   _id: string
 }
 

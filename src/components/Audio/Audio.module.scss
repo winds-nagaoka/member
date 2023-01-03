@@ -680,7 +680,9 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
             // font-family: "tbchibirgothicplusk-pro",sans-serif;
           }
 
-          i {
+          svg {
+            width: 12px;
+            height: 12px;
             margin-right: 0.2em;
           }
         }
@@ -904,7 +906,7 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
             justify-content: center;
             align-items: center;
 
-            svg{
+            svg {
               width: 16px;
               height: 16px;
               fill: #ccc;

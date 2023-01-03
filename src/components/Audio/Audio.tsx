@@ -7,10 +7,11 @@ import { ReactComponent as StopIcon } from '../../assets/stop.svg'
 import { ReactComponent as OpenIcon } from '../../assets/up.svg'
 import { ReactComponent as CloseIcon } from '../../assets/down.svg'
 import { ReactComponent as PlayCircleIcon } from '../../assets/play-circle.svg'
+import { ReactComponent as MusicalNoteIcon } from '../../assets/musical-note.svg'
+import { useAudioStore } from '../../stores/audio'
+import { AudioSource, useReferenceList } from './api/getReferenceList'
+import { ConcertDetail, useSourceList } from '../../features/practice/api/getSourceList'
 import styles from './Audio.module.scss'
-import { PlayType, useAudioStore } from '../../stores/audio'
-import { useReferenceList } from './api/getReferenceList'
-import { useSourceList } from '../../features/practice/api/getSourceList'
 
 type AudioState = {
   src: string | null
@@ -221,7 +222,6 @@ export const Audio = () => {
       <audio ref={audioRef} {...audioFunctions} controls={false}></audio>
       <Playlist
         playing={state.playing}
-        playType={playType}
         displayPlaylist={displayPlaylist}
         apiQueries={apiQueries}
         toggleDisplayPlaylist={toggleDisplayPlaylist}
@@ -249,46 +249,17 @@ const Title = () => {
 
 const Playlist = ({
   playing,
-  playType,
   displayPlaylist,
   apiQueries,
   toggleDisplayPlaylist,
 }: {
   playing: boolean
-  playType: PlayType | null
   displayPlaylist: boolean
   apiQueries: ReturnType<typeof useAudioApiQuery>
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
 }) => {
   const pc = useStyle()
-  const playStatusClass = { [styles.playing]: playing }
-  const playTypeClass = styles[playType || '']
-  return (
-    <div className={clsx(styles['music-list'], { [styles.open]: displayPlaylist }, styles[pc])}>
-      <div
-        className={clsx(styles.header, playTypeClass, playStatusClass, styles[pc])}
-        onClick={() => toggleDisplayPlaylist(false)}
-      >
-        {/* {this.renderTitle(playTypeClass)} */}
-        タイトル
-      </div>
-      <div className={clsx(styles.label, styles.close, playTypeClass)} onClick={() => toggleDisplayPlaylist(false)}>
-        <CloseIcon />
-      </div>
-      <div className={styles.contents}>
-        <div className={styles['contents-inner']}>
-          <div className={clsx(styles.album, styles.source)}>
-            <TrackList apiQueries={apiQueries} />
-          </div>
-          <div className={styles.gap}></div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const TrackList = ({ apiQueries }: { apiQueries: ReturnType<typeof useAudioApiQuery> }) => {
-  const { playType, playId, playTrack } = useAudioStore()
+  const { playType, playId } = useAudioStore()
   const { referenceListQuery, sourceListQuery } = apiQueries
   if (!referenceListQuery.data || !sourceListQuery.data) {
     return null
@@ -299,6 +270,56 @@ const TrackList = ({ apiQueries }: { apiQueries: ReturnType<typeof useAudioApiQu
   if (!concertDetail || !audioSource) {
     return null
   }
+
+  const playStatusClass = { [styles.playing]: playing }
+  const playTypeClass = styles[playType || '']
+  return (
+    <div className={clsx(styles['music-list'], { [styles.open]: displayPlaylist }, styles[pc])}>
+      <div
+        className={clsx(styles.header, playTypeClass, playStatusClass, styles[pc])}
+        onClick={() => toggleDisplayPlaylist(false)}
+      >
+        <PlaylistTitle concertDetail={concertDetail} audioSource={audioSource} />
+      </div>
+      <div className={clsx(styles.label, styles.close, playTypeClass)} onClick={() => toggleDisplayPlaylist(false)}>
+        <CloseIcon />
+      </div>
+      <div className={styles.contents}>
+        <div className={styles['contents-inner']}>
+          <div className={clsx(styles.album, styles.source)}>
+            <TrackList concertDetail={concertDetail} audioSource={audioSource} />
+          </div>
+          <div className={styles.gap}></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const PlaylistTitle = ({ concertDetail, audioSource }: { concertDetail: ConcertDetail; audioSource: AudioSource }) => {
+  const { playTrack, playType } = useAudioStore()
+  if (playTrack === null) {
+    return null
+  }
+  const trackItem = audioSource.list[playTrack]
+  const track = concertDetail.data.find((item) => item.audio === trackItem.data)
+  return (
+    <div>
+      <span className={styles[playType || '']}>{playTrack !== 0 && '参考音源 - ' + concertDetail.title}</span>
+      <span>
+        <>
+          <MusicalNoteIcon />
+          {track?.title}
+          {trackItem.addtitle && ` ${trackItem.addtitle}`}
+        </>
+      </span>
+    </div>
+  )
+}
+
+const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetail; audioSource: AudioSource }) => {
+  const { playType, playTrack } = useAudioStore()
+
   return (
     <>
       {concertDetail.contents.map((part) => {
