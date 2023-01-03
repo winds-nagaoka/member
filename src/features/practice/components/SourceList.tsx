@@ -17,7 +17,7 @@ export const SourceList = () => {
   if (!sourceListQuery.data) {
     return null
   }
-  const onClickMusicItem = (id: string, track: number) => setTrack(id, track, 'source')
+  const onClickMusicItem = (playId: string, playTrack: number) => setTrack(playId, playTrack, 'source')
   return (
     <>
       {sourceListQuery.data.list.length === 0 && (
@@ -41,7 +41,7 @@ export const SourceList = () => {
                           'arranger' in data[ml] ? (
                             <span className={styles.composer}>
                               {data[ml].composer}
-                              {data[ml].composer.match(/民謡/) ? '' : '作曲'}
+                              {data[ml].composer?.match(/民謡/) ? '' : '作曲'}
                               <span>/</span>
                               {data[ml].arranger}編曲
                             </span>
@@ -56,7 +56,7 @@ export const SourceList = () => {
                       const additional =
                         'add' in data[ml] ? (
                           <ol>
-                            {data[ml].add.map((mv, k) => (
+                            {data[ml].addtitle?.map((mv, k) => (
                               <li key={'a' + sourceItem.id + k}>{mv}</li>
                             ))}
                           </ol>
@@ -66,7 +66,7 @@ export const SourceList = () => {
                       const movement =
                         'movement' in data[ml] ? (
                           <ol>
-                            {data[ml].movement.map((mv, k) => (
+                            {data[ml].movement?.map((mv, k) => (
                               <li key={'a' + sourceItem.id + k}>{mv}</li>
                             ))}
                           </ol>
@@ -74,7 +74,7 @@ export const SourceList = () => {
                           ''
                         )
                       const clickHandler =
-                        'audio' in data[ml] ? () => onClickMusicItem(sourceItem.id, data[ml].audio) : () => {}
+                        'audio' in data[ml] ? () => onClickMusicItem(sourceItem.id, data[ml].audio || -1) : () => {}
                       const hasAudio = 'audio' in data[ml] ? <PlayIcon /> : <NoPlayIcon />
                       return (
                         <li

@@ -3,7 +3,7 @@ import { APP_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
 import { getSession } from '../../../utilities/session'
 
-type ReferenceList = {
+export type ReferenceList = {
   status: true
   list: [
     {
@@ -16,6 +16,7 @@ type ReferenceList = {
           available: boolean
           data: number
           path: string
+          addtitle?: string
         }
       ]
       _id: string

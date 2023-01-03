@@ -13,7 +13,14 @@ type Source = {
     time: { timestamp: number; date: string; time: string }
     sourceStatus: true
     contents: { label: string; music: number[] }[]
-    data: { audio: number; title: string; composer: string; arranger: string; movement: string[]; add: string[] }[]
+    data: {
+      audio?: number
+      title: string
+      composer?: string
+      arranger?: string
+      movement?: string[]
+      addtitle?: string[]
+    }[]
   }
   _id: string
 }

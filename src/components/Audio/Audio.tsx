@@ -5,9 +5,12 @@ import { ReactComponent as PlayIcon } from '../../assets/play.svg'
 import { ReactComponent as PauseIcon } from '../../assets/pause.svg'
 import { ReactComponent as StopIcon } from '../../assets/stop.svg'
 import { ReactComponent as OpenIcon } from '../../assets/up.svg'
+import { ReactComponent as CloseIcon } from '../../assets/down.svg'
+import { ReactComponent as PlayCircleIcon } from '../../assets/play-circle.svg'
 import styles from './Audio.module.scss'
-import { useAudioStore } from '../../stores/audio'
+import { PlayType, useAudioStore } from '../../stores/audio'
 import { useReferenceList } from './api/getReferenceList'
+import { useSourceList } from '../../features/practice/api/getSourceList'
 
 type AudioState = {
   src: string | null
@@ -118,6 +121,18 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   }
 }
 
+const useAudioApiQuery = () => {
+  const referenceListQuery = useReferenceList()
+  const sourceListQuery = useSourceList()
+
+  return {
+    referenceListQuery,
+    sourceListQuery,
+    isLoading: referenceListQuery.isLoading || sourceListQuery.isLoading,
+    isDataBlank: !referenceListQuery.data || !sourceListQuery.data,
+  }
+}
+
 export const Audio = () => {
   const pc = useStyle()
   const { playType, displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
@@ -125,12 +140,12 @@ export const Audio = () => {
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
   const { state, playPercent, audioFunctions } = useAudio(audioRef)
+  const apiQueries = useAudioApiQuery()
 
-  const referenceListQuery = useReferenceList()
-  if (referenceListQuery.isLoading) {
+  if (apiQueries.isLoading) {
     return null
   }
-  if (!referenceListQuery.data) {
+  if (apiQueries.isDataBlank) {
     return null
   }
 
@@ -204,9 +219,15 @@ export const Audio = () => {
         </div>
       </div>
       <audio ref={audioRef} {...audioFunctions} controls={false}></audio>
-      {/* {showPlaylist} */}
+      <Playlist
+        playing={state.playing}
+        playType={playType}
+        displayPlaylist={displayPlaylist}
+        apiQueries={apiQueries}
+        toggleDisplayPlaylist={toggleDisplayPlaylist}
+      />
       <div
-        className={'music-list-background' + displayPlaylistClass}
+        className={clsx(styles['music-list-background'], displayPlaylistClass)}
         onClick={() => toggleDisplayPlaylist(false)}
       ></div>
     </div>
@@ -224,4 +245,113 @@ const PlayTime = ({ currentTime, duration }: { currentTime: number | null; durat
 
 const Title = () => {
   return <>ここにタイトル</>
+}
+
+const Playlist = ({
+  playing,
+  playType,
+  displayPlaylist,
+  apiQueries,
+  toggleDisplayPlaylist,
+}: {
+  playing: boolean
+  playType: PlayType | null
+  displayPlaylist: boolean
+  apiQueries: ReturnType<typeof useAudioApiQuery>
+  toggleDisplayPlaylist: (displayPlaylist: boolean) => void
+}) => {
+  const pc = useStyle()
+  const playStatusClass = { [styles.playing]: playing }
+  const playTypeClass = styles[playType || '']
+  return (
+    <div className={clsx(styles['music-list'], { [styles.open]: displayPlaylist }, styles[pc])}>
+      <div
+        className={clsx(styles.header, playTypeClass, playStatusClass, styles[pc])}
+        onClick={() => toggleDisplayPlaylist(false)}
+      >
+        {/* {this.renderTitle(playTypeClass)} */}
+        タイトル
+      </div>
+      <div className={clsx(styles.label, styles.close, playTypeClass)} onClick={() => toggleDisplayPlaylist(false)}>
+        <CloseIcon />
+      </div>
+      <div className={styles.contents}>
+        <div className={styles['contents-inner']}>
+          <div className={clsx(styles.album, styles.source)}>
+            <TrackList apiQueries={apiQueries} />
+          </div>
+          <div className={styles.gap}></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const TrackList = ({ apiQueries }: { apiQueries: ReturnType<typeof useAudioApiQuery> }) => {
+  const { playType, playId, playTrack } = useAudioStore()
+  const { referenceListQuery, sourceListQuery } = apiQueries
+  if (!referenceListQuery.data || !sourceListQuery.data) {
+    return null
+  }
+  const { data: referenceData } = referenceListQuery
+  const concertDetail = sourceListQuery.data.list.find((item) => item.id === playId)?.detail
+  const audioSource = referenceData?.list.find((item) => item.id === playId)
+  if (!concertDetail || !audioSource) {
+    return null
+  }
+  return (
+    <>
+      {concertDetail.contents.map((part) => {
+        return (
+          <div key={part.label}>
+            <label>{part.label}</label>
+            {part.music.map((musicKey, index) => {
+              const trackData = audioSource.list.filter((audio) => audio.data === musicKey)
+              return trackData.map((track, trackNumber) => {
+                const musicItem = concertDetail.data[musicKey]
+                const { title, composer, arranger } = musicItem
+                const { addtitle } = track
+                const playing = playTrack === musicKey
+                return (
+                  <div
+                    key={`track-${index}-${trackNumber}`}
+                    className={clsx(styles.track, { [styles.playing]: playing }, styles[playType || ''])}
+                    onClick={() => console.log(track.path)}
+                  >
+                    <div className={styles.icon}>
+                      <PlayCircleIcon />
+                    </div>
+                    <div className={styles.info}>
+                      <span className={styles.title}>
+                        {title}
+                        {addtitle && ` ${addtitle}`}
+                      </span>
+                      <Composer composer={composer || null} arranger={arranger || null} />
+                    </div>
+                  </div>
+                )
+              })
+            })}
+          </div>
+        )
+      })}
+    </>
+  )
+}
+
+const Composer = ({ composer, arranger }: { composer: string | null; arranger: string | null }) => {
+  return composer ? (
+    arranger ? (
+      <span className={styles.composer}>
+        {composer}
+        {composer.match(/民謡/) ? '' : '作曲'}
+        <span>/</span>
+        {arranger}編曲
+      </span>
+    ) : (
+      <span className={styles.composer}>{composer}</span>
+    )
+  ) : arranger ? (
+    <span className={styles.composer}>{arranger}編曲</span>
+  ) : null
 }
