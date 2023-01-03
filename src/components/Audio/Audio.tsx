@@ -7,6 +7,7 @@ import { ReactComponent as StopIcon } from '../../assets/stop.svg'
 import { ReactComponent as OpenIcon } from '../../assets/up.svg'
 import styles from './Audio.module.scss'
 import { useAudioStore } from '../../stores/audio'
+import { useReferenceList } from './api/getReferenceList'
 
 type AudioState = {
   src: string | null
@@ -119,11 +120,19 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
 
 export const Audio = () => {
   const pc = useStyle()
-  const { displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
+  const { playType, displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
   const { state, playPercent, audioFunctions } = useAudio(audioRef)
+
+  const referenceListQuery = useReferenceList()
+  if (referenceListQuery.isLoading) {
+    return null
+  }
+  if (!referenceListQuery.data) {
+    return null
+  }
 
   const play = () => {
     audioRef.current?.play()
@@ -136,7 +145,7 @@ export const Audio = () => {
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
   const playStatusClass = { [styles.playing]: state.playing }
-  const playTypeClass = styles['archive']
+  const playTypeClass = styles[playType || '']
   const playProgress = playPercent ? { backgroundSize: playPercent + '% 100%' } : { backgroundSize: '0% 100%' }
   const loadProgress = state.loadingPercent
     ? { backgroundSize: state.loadingPercent + '% 100%' }
@@ -153,6 +162,7 @@ export const Audio = () => {
       toggleDisplayPlaylist(true)
     }
   }
+
   return (
     <div className={clsx(styles.audio, styles[pc])}>
       <div className={clsx(styles.player, playerClass)}>

@@ -5,17 +5,19 @@ import { useSourceList } from '../api/getSourceList'
 import { ReactComponent as PlayIcon } from '../../../assets/play-circle.svg'
 import { ReactComponent as NoPlayIcon } from '../../../assets/close-circle.svg'
 import styles from './SourceList.module.scss'
+import { useAudioStore } from '../../../stores/audio'
 
 export const SourceList = () => {
   const pc = useStyle()
   const sourceListQuery = useSourceList()
+  const { setTrack } = useAudioStore()
   if (sourceListQuery.isLoading) {
     return <ContentsLoading />
   }
   if (!sourceListQuery.data) {
     return null
   }
-  const onClickMusicItem = (id: string, trackNumber: number) => console.log('onClickMusicItem', id, trackNumber)
+  const onClickMusicItem = (id: string, track: number) => setTrack(id, track, 'source')
   return (
     <>
       {sourceListQuery.data.list.length === 0 && (
