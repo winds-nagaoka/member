@@ -10,7 +10,7 @@ type AudioStore = {
   playTrack: number | null
   toggleDisplayPlayer: (displayPlayer: boolean) => void
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
-  setTrack: (id: string, track: number, playType: PlayType) => void
+  setTrack: (playTrack: number, playId?: string, playType?: PlayType) => void
 }
 
 export const useAudioStore = create<AudioStore>((set) => ({
@@ -21,7 +21,13 @@ export const useAudioStore = create<AudioStore>((set) => ({
   playTrack: null,
   toggleDisplayPlayer: (displayPlayer) => set((state) => ({ ...state, displayPlayer })),
   toggleDisplayPlaylist: (displayPlaylist) => set((state) => ({ ...state, displayPlaylist })),
-  setTrack: (playId, playTrack, playType) => {
-    set((state) => ({ ...state, displayPlayer: true, playId, playTrack, playType }))
+  setTrack: (playTrack, playId, playType) => {
+    set((state) => ({
+      ...state,
+      displayPlayer: true,
+      playTrack,
+      playId: playId !== undefined ? playId : state.playId,
+      playType: playType !== undefined ? playType : state.playType,
+    }))
   },
 }))

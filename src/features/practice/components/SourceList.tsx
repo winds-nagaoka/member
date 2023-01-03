@@ -17,7 +17,7 @@ export const SourceList = () => {
   if (!sourceListQuery.data) {
     return null
   }
-  const onClickMusicItem = (playId: string, playTrack: number) => setTrack(playId, playTrack, 'source')
+  const onClickMusicItem = (playTrack: number, playId: string) => setTrack(playTrack, playId, 'source')
   return (
     <>
       {sourceListQuery.data.list.length === 0 && (
@@ -74,7 +74,7 @@ export const SourceList = () => {
                           ''
                         )
                       const clickHandler =
-                        'audio' in data[ml] ? () => onClickMusicItem(sourceItem.id, data[ml].audio!) : () => {}
+                        'audio' in data[ml] ? () => onClickMusicItem(data[ml].audio!, sourceItem.id) : () => {}
                       const hasAudio = 'audio' in data[ml] ? <PlayIcon /> : <NoPlayIcon />
                       return (
                         <li

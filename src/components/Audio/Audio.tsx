@@ -318,7 +318,7 @@ const PlaylistTitle = ({ concertDetail, audioSource }: { concertDetail: ConcertD
 }
 
 const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetail; audioSource: AudioSource }) => {
-  const { playType, playTrack } = useAudioStore()
+  const { playType, playTrack, setTrack } = useAudioStore()
 
   return (
     <>
@@ -337,7 +337,7 @@ const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetai
                   <div
                     key={`track-${index}-${trackNumber}`}
                     className={clsx(styles.track, { [styles.playing]: playing }, styles[playType || ''])}
-                    onClick={() => console.log(track.path)}
+                    onClick={() => setTrack(track.data)}
                   >
                     <div className={styles.icon}>
                       <PlayCircleIcon />
