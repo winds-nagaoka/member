@@ -302,14 +302,15 @@ const PlaylistTitle = ({ concertDetail, audioSource }: { concertDetail: ConcertD
     return null
   }
   const trackItem = audioSource.list[playTrack]
-  const track = concertDetail.data.find((item) => item.audio === trackItem.data)
+  const track = concertDetail.data[trackItem.data]
+
   return (
     <div>
-      <span className={styles[playType || '']}>{playTrack !== 0 && '参考音源 - ' + concertDetail.title}</span>
+      <span className={styles[playType || '']}>{playTrack !== null && '参考音源 - ' + concertDetail.title}</span>
       <span>
         <>
           <MusicalNoteIcon />
-          {track?.title}
+          {track.title}
           {trackItem.addtitle && ` ${trackItem.addtitle}`}
         </>
       </span>
