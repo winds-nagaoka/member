@@ -15,9 +15,6 @@ import type { PlayType } from '../../stores/audio'
 import styles from './Audio.module.scss'
 
 type AudioState = {
-  src: string | null
-  track: number | null
-  playing: boolean
   loading: boolean
   loadingPercent: number | null
   currentTime: number | null
@@ -25,9 +22,6 @@ type AudioState = {
 }
 
 const initialState = {
-  src: null,
-  track: null,
-  playing: false,
   loading: false,
   loadingPercent: null,
   currentTime: null,
@@ -36,16 +30,16 @@ const initialState = {
 
 const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   const [state, setState] = useState<AudioState>(initialState)
-  const { resetTrack } = useAudioStore()
+  const { playing, setPlaying, resetTrack } = useAudioStore()
 
   const onPlay = () => {
     audioRef.current?.play()
-    setState((state) => ({ ...state, playing: true }))
+    setPlaying(true)
   }
 
   const onPause = () => {
     audioRef.current?.pause()
-    setState((state) => ({ ...state, playing: false }))
+    setPlaying(false)
   }
 
   const onStop = () => {
@@ -102,7 +96,7 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   }
 
   const onCanPlayThrough = () => {
-    if (state.playing) {
+    if (playing) {
       audioRef.current?.play()
     }
     setState((state) => ({ ...state, loading: false }))
@@ -160,7 +154,8 @@ const useAudioApiQuery = () => {
 
 export const Audio = () => {
   const pc = useStyle()
-  const { playType, playId, playTrack, displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
+  const { playing, playType, playId, playTrack, displayPlayer, displayPlaylist, toggleDisplayPlaylist } =
+    useAudioStore()
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
@@ -193,7 +188,7 @@ export const Audio = () => {
 
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
-  const playStatusClass = { [styles.playing]: state.playing }
+  const playStatusClass = { [styles.playing]: playing }
   const playTypeClass = styles[playType]
   const playProgress = playPercent ? { backgroundSize: playPercent + '% 100%' } : { backgroundSize: '0% 100%' }
   const loadProgress = state.loadingPercent
@@ -217,9 +212,9 @@ export const Audio = () => {
         {/* {prevButton} */}
         <div
           className={clsx(styles.control, styles.play, playStatusClass, playTypeClass, displayPlaylistClass)}
-          onClick={state.playing ? onPause : onPlay}
+          onClick={playing ? onPause : onPlay}
         >
-          {state.playing ? <PauseIcon /> : <PlayIcon />}
+          {playing ? <PauseIcon /> : <PlayIcon />}
         </div>
         <div
           className={clsx(styles.control, styles.stop, playStatusClass, playTypeClass, displayPlaylistClass)}
@@ -255,7 +250,7 @@ export const Audio = () => {
       <Playlist
         playType={playType}
         playTrack={playTrack}
-        playing={state.playing}
+        playing={playing}
         displayPlaylist={displayPlaylist}
         concertDetail={concertDetail}
         audioSource={audioSource}
