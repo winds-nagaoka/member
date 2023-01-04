@@ -84,6 +84,7 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   }
 
   const onCanPlayThrough = () => {
+    audioRef.current?.play()
     setState((state) => ({ ...state, loading: false }))
   }
 
@@ -136,12 +137,16 @@ const useAudioApiQuery = () => {
 
 export const Audio = () => {
   const pc = useStyle()
-  const { playId, playType, displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
+  const { playType, playId, playTrack, displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
   const { state, playPercent, audioFunctions } = useAudio(audioRef)
   const apiQueries = useAudioApiQuery()
+
+  if (playType === null || playId === null || playTrack === null) {
+    return null
+  }
 
   if (apiQueries.isLoading) {
     return null
@@ -170,6 +175,8 @@ export const Audio = () => {
     audioRef.current?.pause()
   }
 
+  const src = referenceData.url + audioSource.baseSrc + audioSource.list[playTrack].path
+
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
   const playStatusClass = { [styles.playing]: state.playing }
@@ -184,7 +191,6 @@ export const Audio = () => {
       const total = Math.round(audioRef.current?.duration)
       if (!isNaN(total)) {
         audioRef.current.currentTime = Math.round(total * (e.pageX / audioProgress.current.clientWidth))
-        // this.props.countPlay(Math.round(total * (e.pageX / audioProgress.current.clientWidth)))
       }
     } else {
       toggleDisplayPlaylist(true)
@@ -231,7 +237,7 @@ export const Audio = () => {
           <OpenIcon />
         </div>
       </div>
-      <audio ref={audioRef} {...audioFunctions} controls={false}></audio>
+      <audio ref={audioRef} src={src} {...audioFunctions} controls={false}></audio>
       <Playlist
         playing={state.playing}
         displayPlaylist={displayPlaylist}
