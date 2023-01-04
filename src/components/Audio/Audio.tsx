@@ -13,6 +13,7 @@ import { AudioSource, useReferenceList } from './api/getReferenceList'
 import { ConcertDetail, useSourceList } from '../../features/practice/api/getSourceList'
 import type { PlayType } from '../../stores/audio'
 import styles from './Audio.module.scss'
+import { formatPlayTime } from '../../utilities/format'
 
 type AudioState = {
   loading: boolean
@@ -267,8 +268,8 @@ export const Audio = () => {
 const PlayTime = ({ currentTime, duration }: { currentTime: number | null; duration: number | null }) => {
   return (
     <div className={styles.time}>
-      <span>{currentTime ? currentTime : '00:00'}</span>
-      <span>{duration ? duration : '00:00'}</span>
+      <span>{currentTime ? formatPlayTime(currentTime) : '00:00'}</span>
+      <span>{duration ? formatPlayTime(duration) : '00:00'}</span>
     </div>
   )
 }
