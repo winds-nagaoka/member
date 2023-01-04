@@ -320,24 +320,24 @@ const PlaylistTitle = ({ concertDetail, audioSource }: { concertDetail: ConcertD
 const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetail; audioSource: AudioSource }) => {
   const { playType, playTrack, setTrack } = useAudioStore()
 
+  const playlist = composePlaylist(concertDetail, audioSource)
+
   return (
     <>
       {concertDetail.contents.map((part) => {
         return (
           <div key={part.label}>
             <label>{part.label}</label>
-            {part.music.map((musicKey, index) => {
-              const trackData = audioSource.list.filter((audio) => audio.data === musicKey)
-              return trackData.map((track, trackNumber) => {
-                const musicItem = concertDetail.data[musicKey]
-                const { title, composer, arranger } = musicItem
-                const { addtitle } = track
-                const playing = playTrack === musicKey
+            {part.music.map((musicKey) => {
+              const trackData = playlist.filter((playItem) => playItem.data === musicKey)
+              return trackData.map((track) => {
+                const playing = playTrack === track.trackNumber
+                const { title, composer, arranger } = track.music
                 return (
                   <div
-                    key={`track-${index}-${trackNumber}`}
+                    key={`track-${track.trackNumber}`}
                     className={clsx(styles.track, { [styles.playing]: playing }, styles[playType || ''])}
-                    onClick={() => setTrack(track.data)}
+                    onClick={() => setTrack(track.trackNumber)}
                   >
                     <div className={styles.icon}>
                       <PlayCircleIcon />
@@ -345,7 +345,7 @@ const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetai
                     <div className={styles.info}>
                       <span className={styles.title}>
                         {title}
-                        {addtitle && ` ${addtitle}`}
+                        {track.addtitle && ` ${track.addtitle}`}
                       </span>
                       <Composer composer={composer || null} arranger={arranger || null} />
                     </div>
@@ -358,6 +358,14 @@ const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetai
       })}
     </>
   )
+}
+
+const composePlaylist = (concertDetail: ConcertDetail, audioSource: AudioSource) => {
+  return audioSource.list.map((audioItem, index) => {
+    const music = concertDetail.data[audioItem.data]
+    const part = concertDetail.contents.find((part) => part.music.includes(audioItem.data)) || null
+    return { trackNumber: index, ...audioItem, music, part }
+  })
 }
 
 const Composer = ({ composer, arranger }: { composer: string | null; arranger: string | null }) => {
