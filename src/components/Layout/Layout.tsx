@@ -13,6 +13,7 @@ import { Audio } from '../Audio'
 type BreadItem = {
   path: string
   label: string
+  isLoading?: boolean
 }
 
 type LayoutProps = {
@@ -64,7 +65,8 @@ const ContentsLayout = ({ breadList, title, subTitle, children }: LayoutProps) =
           {breadList.map((breadItem, index, array) => {
             return (
               <Fragment key={index}>
-                <Link to={breadItem.path}>{breadItem.label}</Link>
+                {breadItem.isLoading && <>読み込み中</>}
+                {!breadItem.isLoading && <Link to={breadItem.path}>{breadItem.label}</Link>}
                 {array.length - 1 !== index && (
                   <div className={styles.icon}>
                     <RightIcon />
