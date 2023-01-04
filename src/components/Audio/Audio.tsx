@@ -36,6 +36,23 @@ const initialState = {
 
 const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   const [state, setState] = useState<AudioState>(initialState)
+  const { resetTrack } = useAudioStore()
+
+  const onPlay = () => {
+    audioRef.current?.play()
+    setState((state) => ({ ...state, playing: true }))
+  }
+
+  const onPause = () => {
+    audioRef.current?.pause()
+    setState((state) => ({ ...state, playing: false }))
+  }
+
+  const onStop = () => {
+    onPause()
+    setState(initialState)
+    resetTrack()
+  }
 
   const playUpdate = (currentTime: number | null, duration: number | null) => {
     setState((state) => ({ ...state, currentTime, duration }))
@@ -85,7 +102,9 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   }
 
   const onCanPlayThrough = () => {
-    audioRef.current?.play()
+    if (state.playing) {
+      audioRef.current?.play()
+    }
     setState((state) => ({ ...state, loading: false }))
   }
 
@@ -109,6 +128,9 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
     state,
     playPercent:
       state.duration && state.currentTime ? Math.round((state.currentTime / state.duration) * 1000) / 10 : null,
+    onPlay,
+    onPause,
+    onStop,
 
     audioFunctions: {
       onLoadStart,
@@ -142,41 +164,32 @@ export const Audio = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
-  const { state, playPercent, audioFunctions } = useAudio(audioRef)
+  const { state, playPercent, onPlay, onPause, onStop, audioFunctions } = useAudio(audioRef)
   const apiQueries = useAudioApiQuery()
 
-  if (playType === null || playId === null || playTrack === null) {
+  if (playType === null || playId === null) {
     return null
   }
 
   if (apiQueries.isLoading) {
     return null
   }
-  if (apiQueries.isDataBlank) {
-    return null
-  }
 
   const { referenceListQuery, sourceListQuery } = apiQueries
-  if (!referenceListQuery.data || !sourceListQuery.data) {
+  const { data: referenceData } = referenceListQuery
+  const { data: sourceData } = sourceListQuery
+  if (!referenceData || !sourceData) {
     return null
   }
-  const { data: referenceData } = referenceListQuery
 
-  const concertDetail = sourceListQuery.data.list.find((item) => item.id === playId)?.detail
+  const concertDetail = sourceData.list.find((item) => item.id === playId)?.detail
   const audioSource = referenceData?.list.find((item) => item.id === playId)
   if (!concertDetail || !audioSource) {
     return null
   }
 
-  const play = () => {
-    audioRef.current?.play()
-  }
-
-  const stop = () => {
-    audioRef.current?.pause()
-  }
-
-  const src = referenceData.url + audioSource.baseSrc + audioSource.list[playTrack].path
+  const src =
+    playTrack !== null ? referenceData.url + audioSource.baseSrc + audioSource.list[playTrack].path : undefined
 
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
@@ -204,13 +217,13 @@ export const Audio = () => {
         {/* {prevButton} */}
         <div
           className={clsx(styles.control, styles.play, playStatusClass, playTypeClass, displayPlaylistClass)}
-          onClick={play}
+          onClick={state.playing ? onPause : onPlay}
         >
           {state.playing ? <PauseIcon /> : <PlayIcon />}
         </div>
         <div
           className={clsx(styles.control, styles.stop, playStatusClass, playTypeClass, displayPlaylistClass)}
-          onClick={stop}
+          onClick={onStop}
         >
           <StopIcon />
         </div>
@@ -280,7 +293,7 @@ const Playlist = ({
   toggleDisplayPlaylist,
 }: {
   playType: PlayType
-  playTrack: number
+  playTrack: number | null
   playing: boolean
   displayPlaylist: boolean
   concertDetail: ConcertDetail
@@ -331,10 +344,13 @@ const PlaylistTitle = ({
   audioSource,
 }: {
   playType: PlayType
-  playTrack: number
+  playTrack: number | null
   concertDetail: ConcertDetail
   audioSource: AudioSource
 }) => {
+  if (playTrack === null) {
+    return null
+  }
   const trackItem = audioSource.list[playTrack]
   const track = concertDetail.data[trackItem.data]
 
@@ -359,7 +375,7 @@ const TrackList = ({
   audioSource,
 }: {
   playType: PlayType
-  playTrack: number
+  playTrack: number | null
   concertDetail: ConcertDetail
   audioSource: AudioSource
 }) => {
