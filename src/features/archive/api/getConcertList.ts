@@ -4,15 +4,17 @@ import { fetchApi } from '../../../library/fetch'
 import { MainConcert, MiniConcert, OtherConcert } from '../../../types'
 import { getSession } from '../../../utilities/session'
 
+export type ConcertItem = {
+  id: string
+  time: number
+  type: 'main' | 'mini' | 'other'
+  detail: MainConcert | MiniConcert | OtherConcert
+  _id: string
+}
+
 type ConcertListApi = {
   status: boolean
-  list: {
-    id: string
-    time: number
-    type: 'main' | 'mini' | 'other'
-    detail: MainConcert | MiniConcert | OtherConcert
-    _id: string
-  }[]
+  list: ConcertItem[]
 }
 
 const getConcertList = async (): Promise<ConcertListApi> => {

@@ -282,12 +282,14 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
           border-radius: 50%;
           cursor: default;
 
-          & {
-            color: #eee;
+          svg {
+            width: 24px;
+            height: 24px;
+            fill: #eee;
           }
           @media (prefers-color-scheme: dark) {
-            & {
-              color: #333;
+            svg {
+              fill: #333;
             }
           }
 
@@ -296,7 +298,9 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
           align-items: center;
 
           &.on {
-            color: $base-play-color-half-light;
+            svg {
+              fill: $base-play-color-half-light;
+            }
             cursor: pointer;
 
             &:hover {
@@ -309,13 +313,19 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
             }
 
             &.main {
-              color: $main-play-color-half-light;
+              svg {
+                fill: $main-play-color-half-light;
+              }
             }
             &.mini {
-              color: $mini-play-color-half-light;
+              svg {
+                fill: $mini-play-color-half-light;
+              }
             }
             &.other {
-              color: $other-play-color-half-light;
+              svg {
+                fill: $other-play-color-half-light;
+              }
             }
           }
 
