@@ -10,6 +10,9 @@ import { useState } from 'react'
 
 export const ConcertList = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const [displayMain, setDisplayMain] = useState(true)
+  const [displayMini, setDisplayMini] = useState(true)
+  const [displayOther, setDisplayOther] = useState(true)
 
   const concertListQuery = useConcertList()
   if (concertListQuery.isLoading) {
@@ -24,8 +27,26 @@ export const ConcertList = () => {
     <ContentsBox>
       <div className={styles['archive-list']}>
         <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <ConcertSwitch
+          searchQuery={searchQuery}
+          displayMain={displayMain}
+          setDisplayMain={setDisplayMain}
+          displayMini={displayMini}
+          setDisplayMini={setDisplayMini}
+          displayOther={displayOther}
+          setDisplayOther={setDisplayOther}
+        />
         {concertList.map((concertItem) => {
-          const { detail } = concertItem
+          const { detail, type } = concertItem
+          if (type === 'main' && !displayMain) {
+            return null
+          }
+          if (type === 'mini' && !displayMini) {
+            return null
+          }
+          if (type === 'other' && !displayOther) {
+            return null
+          }
           return (
             <Link key={concertItem.id} to={`/archive/overview/${concertItem.id}`} className={styles['concert-item']}>
               <div className={clsx(styles.info, styles[detail.type])}>
@@ -69,6 +90,50 @@ const SearchBox = ({
             <ResetIcon />
           </div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+const ConcertSwitch = ({
+  searchQuery,
+  displayMain,
+  setDisplayMain,
+  displayMini,
+  setDisplayMini,
+  displayOther,
+  setDisplayOther,
+}: {
+  searchQuery: string
+  displayMain: boolean
+  setDisplayMain: (displayMain: boolean) => void
+  displayMini: boolean
+  setDisplayMini: (displayMini: boolean) => void
+  displayOther: boolean
+  setDisplayOther: (displayOther: boolean) => void
+}) => {
+  if (searchQuery) {
+    return null
+  }
+  return (
+    <div className={styles['concert-switch']}>
+      <div
+        className={clsx(styles.switch, styles.main, { [styles.on]: displayMain })}
+        onClick={() => setDisplayMain(!displayMain)}
+      >
+        定期演奏会
+      </div>
+      <div
+        className={clsx(styles.switch, styles.mini, { [styles.on]: displayMini })}
+        onClick={() => setDisplayMini(!displayMini)}
+      >
+        ミニコンサート
+      </div>
+      <div
+        className={clsx(styles.switch, styles.other, { [styles.on]: displayOther })}
+        onClick={() => setDisplayOther(!displayOther)}
+      >
+        その他
       </div>
     </div>
   )
