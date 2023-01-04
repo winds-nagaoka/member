@@ -421,8 +421,8 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
         }
 
         span,
-        i {
-          color: #b60005;
+        svg {
+          fill: #b60005;
         }
         &.main {
           span,
@@ -477,7 +477,9 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
             // font-family: "tbchibirgothicplusk-pro",sans-serif;
           }
 
-          i {
+          svg {
+            width: 12px;
+            height: 12px;
             margin-right: 0.2em;
             // font-size: 16px;
           }

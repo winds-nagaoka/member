@@ -136,7 +136,7 @@ const useAudioApiQuery = () => {
 
 export const Audio = () => {
   const pc = useStyle()
-  const { playType, displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
+  const { playId, playType, displayPlayer, displayPlaylist, toggleDisplayPlaylist } = useAudioStore()
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
@@ -147,6 +147,18 @@ export const Audio = () => {
     return null
   }
   if (apiQueries.isDataBlank) {
+    return null
+  }
+
+  const { referenceListQuery, sourceListQuery } = apiQueries
+  if (!referenceListQuery.data || !sourceListQuery.data) {
+    return null
+  }
+  const { data: referenceData } = referenceListQuery
+
+  const concertDetail = sourceListQuery.data.list.find((item) => item.id === playId)?.detail
+  const audioSource = referenceData?.list.find((item) => item.id === playId)
+  if (!concertDetail || !audioSource) {
     return null
   }
 
@@ -213,7 +225,7 @@ export const Audio = () => {
           className={clsx(styles['music-info'], playStatusClass, playTypeClass, displayPlaylistClass)}
           onClick={() => toggleDisplayPlaylist(true)}
         >
-          <Title />
+          <PlaylistTitle concertDetail={concertDetail} audioSource={audioSource} />
         </div>
         <div className={clsx(styles.label, displayPlaylistClass, playTypeClass)}>
           <OpenIcon />
@@ -223,7 +235,8 @@ export const Audio = () => {
       <Playlist
         playing={state.playing}
         displayPlaylist={displayPlaylist}
-        apiQueries={apiQueries}
+        concertDetail={concertDetail}
+        audioSource={audioSource}
         toggleDisplayPlaylist={toggleDisplayPlaylist}
       />
       <div
@@ -243,33 +256,21 @@ const PlayTime = ({ currentTime, duration }: { currentTime: number | null; durat
   )
 }
 
-const Title = () => {
-  return <>ここにタイトル</>
-}
-
 const Playlist = ({
   playing,
   displayPlaylist,
-  apiQueries,
+  concertDetail,
+  audioSource,
   toggleDisplayPlaylist,
 }: {
   playing: boolean
   displayPlaylist: boolean
-  apiQueries: ReturnType<typeof useAudioApiQuery>
+  concertDetail: ConcertDetail
+  audioSource: AudioSource
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
 }) => {
   const pc = useStyle()
-  const { playType, playId } = useAudioStore()
-  const { referenceListQuery, sourceListQuery } = apiQueries
-  if (!referenceListQuery.data || !sourceListQuery.data) {
-    return null
-  }
-  const { data: referenceData } = referenceListQuery
-  const concertDetail = sourceListQuery.data.list.find((item) => item.id === playId)?.detail
-  const audioSource = referenceData?.list.find((item) => item.id === playId)
-  if (!concertDetail || !audioSource) {
-    return null
-  }
+  const { playType } = useAudioStore()
 
   const playStatusClass = { [styles.playing]: playing }
   const playTypeClass = styles[playType || '']
