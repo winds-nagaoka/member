@@ -124,8 +124,10 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
       //   transition: all ease-in-out .1s;
       // }
 
-      i {
-        font-size: 16px;
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
       }
 
       // &.play {
@@ -426,20 +428,20 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
         }
         &.main {
           span,
-          i {
-            color: $main-play-color;
+          svg {
+            fill: $main-play-color;
           }
         }
         &.mini {
           span,
-          i {
-            color: $mini-play-color;
+          svg {
+            fill: $mini-play-color;
           }
         }
         &.other {
           span,
-          i {
-            color: $other-play-color;
+          svg {
+            fill: $other-play-color;
           }
         }
       }
@@ -503,6 +505,11 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
       display: flex;
       justify-content: center;
       align-items: center;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
 
       &.list-open {
         z-index: 34;
@@ -626,30 +633,32 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
         }
 
         span,
-        i {
-          color: #b60005;
+        svg {
+          width: 16px;
+          height: 16px;
+          fill: #b60005;
         }
         &.main {
           span,
-          i {
-            color: $main-play-color;
+          svg {
+            fill: $main-play-color;
           }
         }
         &.mini {
           span,
-          i {
-            color: $mini-play-color;
+          svg {
+            fill: $mini-play-color;
           }
         }
         &.other {
           span,
-          i {
+          svg {
             & {
-              color: $other-play-color;
+              fill: $other-play-color;
             }
             @media (prefers-color-scheme: dark) {
               & {
-                color: #fff;
+                fill: #fff;
               }
             }
           }
@@ -706,6 +715,11 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
       align-items: center;
 
       &.close {
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+
         &.main {
           color: $main-play-color;
         }
@@ -918,18 +932,18 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
           }
 
           &.playing {
-            .icon i {
-              color: $base-play-color;
+            .icon svg {
+              fill: $base-play-color;
             }
 
-            &.main .icon i {
-              color: $main-play-color;
+            &.main .icon svg {
+              fill: $main-play-color;
             }
-            &.mini .icon i {
-              color: $mini-play-color;
+            &.mini .icon svg {
+              fill: $mini-play-color;
             }
-            &.other .icon i {
-              color: $other-play-color;
+            &.other .icon svg {
+              fill: $other-play-color;
             }
           }
 
@@ -1091,10 +1105,10 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
             justify-content: center;
             align-items: center;
 
-            i {
+            svg {
               width: 16px;
               height: 16px;
-              color: #ccc;
+              fill: #ccc;
               text-align: center;
               font-size: 16px;
             }
@@ -1122,18 +1136,18 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
           }
 
           &.playing {
-            .icon i {
-              color: $base-play-color;
+            .icon svg {
+              fill: $base-play-color;
             }
 
-            &.main .icon i {
-              color: $main-play-color;
+            &.main .icon svg {
+              fill: $main-play-color;
             }
-            &.mini .icon i {
-              color: $mini-play-color;
+            &.mini .icon svg {
+              fill: $mini-play-color;
             }
-            &.other .icon i {
-              color: $other-play-color;
+            &.other .icon svg {
+              fill: $other-play-color;
             }
           }
         }
