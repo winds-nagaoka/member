@@ -11,6 +11,7 @@ import { ReactComponent as MusicalNoteIcon } from '../../assets/musical-note.svg
 import { useAudioStore } from '../../stores/audio'
 import { AudioSource, useReferenceList } from './api/getReferenceList'
 import { ConcertDetail, useSourceList } from '../../features/practice/api/getSourceList'
+import type { PlayType } from '../../stores/audio'
 import styles from './Audio.module.scss'
 
 type AudioState = {
@@ -180,7 +181,7 @@ export const Audio = () => {
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
   const playStatusClass = { [styles.playing]: state.playing }
-  const playTypeClass = styles[playType || '']
+  const playTypeClass = styles[playType]
   const playProgress = playPercent ? { backgroundSize: playPercent + '% 100%' } : { backgroundSize: '0% 100%' }
   const loadProgress = state.loadingPercent
     ? { backgroundSize: state.loadingPercent + '% 100%' }
@@ -231,7 +232,12 @@ export const Audio = () => {
           className={clsx(styles['music-info'], playStatusClass, playTypeClass, displayPlaylistClass)}
           onClick={() => toggleDisplayPlaylist(true)}
         >
-          <PlaylistTitle concertDetail={concertDetail} audioSource={audioSource} />
+          <PlaylistTitle
+            playType={playType}
+            playTrack={playTrack}
+            concertDetail={concertDetail}
+            audioSource={audioSource}
+          />
         </div>
         <div className={clsx(styles.label, displayPlaylistClass, playTypeClass)}>
           <OpenIcon />
@@ -239,6 +245,8 @@ export const Audio = () => {
       </div>
       <audio ref={audioRef} src={src} {...audioFunctions} controls={false}></audio>
       <Playlist
+        playType={playType}
+        playTrack={playTrack}
         playing={state.playing}
         displayPlaylist={displayPlaylist}
         concertDetail={concertDetail}
@@ -263,12 +271,16 @@ const PlayTime = ({ currentTime, duration }: { currentTime: number | null; durat
 }
 
 const Playlist = ({
+  playType,
+  playTrack,
   playing,
   displayPlaylist,
   concertDetail,
   audioSource,
   toggleDisplayPlaylist,
 }: {
+  playType: PlayType
+  playTrack: number
   playing: boolean
   displayPlaylist: boolean
   concertDetail: ConcertDetail
@@ -276,17 +288,21 @@ const Playlist = ({
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
 }) => {
   const pc = useStyle()
-  const { playType } = useAudioStore()
 
   const playStatusClass = { [styles.playing]: playing }
-  const playTypeClass = styles[playType || '']
+  const playTypeClass = styles[playType]
   return (
     <div className={clsx(styles['music-list'], { [styles.open]: displayPlaylist }, styles[pc])}>
       <div
         className={clsx(styles.header, playTypeClass, playStatusClass, styles[pc])}
         onClick={() => toggleDisplayPlaylist(false)}
       >
-        <PlaylistTitle concertDetail={concertDetail} audioSource={audioSource} />
+        <PlaylistTitle
+          playType={playType}
+          playTrack={playTrack}
+          concertDetail={concertDetail}
+          audioSource={audioSource}
+        />
       </div>
       <div className={clsx(styles.label, styles.close, playTypeClass)} onClick={() => toggleDisplayPlaylist(false)}>
         <CloseIcon />
@@ -294,7 +310,12 @@ const Playlist = ({
       <div className={styles.contents}>
         <div className={styles['contents-inner']}>
           <div className={clsx(styles.album, styles.source)}>
-            <TrackList concertDetail={concertDetail} audioSource={audioSource} />
+            <TrackList
+              playType={playType}
+              playTrack={playTrack}
+              concertDetail={concertDetail}
+              audioSource={audioSource}
+            />
           </div>
           <div className={styles.gap}></div>
         </div>
@@ -303,17 +324,23 @@ const Playlist = ({
   )
 }
 
-const PlaylistTitle = ({ concertDetail, audioSource }: { concertDetail: ConcertDetail; audioSource: AudioSource }) => {
-  const { playTrack, playType } = useAudioStore()
-  if (playTrack === null) {
-    return null
-  }
+const PlaylistTitle = ({
+  playType,
+  playTrack,
+  concertDetail,
+  audioSource,
+}: {
+  playType: PlayType
+  playTrack: number
+  concertDetail: ConcertDetail
+  audioSource: AudioSource
+}) => {
   const trackItem = audioSource.list[playTrack]
   const track = concertDetail.data[trackItem.data]
 
   return (
     <div>
-      <span className={styles[playType || '']}>{playTrack !== null && '参考音源 - ' + concertDetail.title}</span>
+      <span className={styles[playType]}>{playTrack !== null && '参考音源 - ' + concertDetail.title}</span>
       <span>
         <>
           <MusicalNoteIcon />
@@ -325,8 +352,18 @@ const PlaylistTitle = ({ concertDetail, audioSource }: { concertDetail: ConcertD
   )
 }
 
-const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetail; audioSource: AudioSource }) => {
-  const { playType, playTrack, setTrack } = useAudioStore()
+const TrackList = ({
+  playType,
+  playTrack,
+  concertDetail,
+  audioSource,
+}: {
+  playType: PlayType
+  playTrack: number
+  concertDetail: ConcertDetail
+  audioSource: AudioSource
+}) => {
+  const { setTrack } = useAudioStore()
 
   const playlist = composePlaylist(concertDetail, audioSource)
 
@@ -344,7 +381,7 @@ const TrackList = ({ concertDetail, audioSource }: { concertDetail: ConcertDetai
                 return (
                   <div
                     key={`track-${track.trackNumber}`}
-                    className={clsx(styles.track, { [styles.playing]: playing }, styles[playType || ''])}
+                    className={clsx(styles.track, { [styles.playing]: playing }, styles[playType])}
                     onClick={() => setTrack(track.trackNumber)}
                   >
                     <div className={styles.icon}>
