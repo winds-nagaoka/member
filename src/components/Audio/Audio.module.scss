@@ -422,24 +422,32 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
           color: #888 !important;
         }
 
-        span,
+        span {
+          color: #b60005;
+        }
         svg {
           fill: #b60005;
         }
         &.main {
-          span,
+          span {
+            color: $main-play-color;
+          }
           svg {
             fill: $main-play-color;
           }
         }
         &.mini {
-          span,
+          span {
+            color: $mini-play-color;
+          }
           svg {
             fill: $mini-play-color;
           }
         }
         &.other {
-          span,
+          span {
+            color: $other-play-color;
+          }
           svg {
             fill: $other-play-color;
           }
@@ -627,31 +635,49 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
       //   background: $other-play-color-light;
       // }
 
+      & > div svg {
+        width: 12px;
+        height: 12px;
+      }
+
       &.playing {
         span:first-child {
           color: #888 !important;
         }
 
-        span,
+        span {
+          color: #b60005;
+        }
         svg {
-          width: 16px;
-          height: 16px;
           fill: #b60005;
         }
         &.main {
-          span,
+          span {
+            color: $main-play-color;
+          }
           svg {
             fill: $main-play-color;
           }
         }
         &.mini {
-          span,
+          span {
+            color: $mini-play-color;
+          }
           svg {
             fill: $mini-play-color;
           }
         }
         &.other {
-          span,
+          span {
+            & {
+              color: $other-play-color;
+            }
+            @media (prefers-color-scheme: dark) {
+              & {
+                color: #fff;
+              }
+            }
+          }
           svg {
             & {
               fill: $other-play-color;
@@ -692,8 +718,6 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
           }
 
           svg {
-            width: 12px;
-            height: 12px;
             margin-right: 0.2em;
           }
         }

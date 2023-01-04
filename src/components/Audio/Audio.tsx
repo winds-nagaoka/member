@@ -245,12 +245,7 @@ export const Audio = () => {
           className={clsx(styles['music-info'], playStatusClass, playTypeClass, displayPlaylistClass)}
           onClick={() => toggleDisplayPlaylist(true)}
         >
-          <PlaylistTitle
-            playType={playType}
-            playTrack={playTrack}
-            concertDetail={concertDetail}
-            audioSource={audioSource}
-          />
+          <Title playType={playType} playTrack={playTrack} concertDetail={concertDetail} audioSource={audioSource} />
         </div>
         <div className={clsx(styles.label, displayPlaylistClass, playTypeClass)}>
           <OpenIcon />
@@ -310,12 +305,7 @@ const Playlist = ({
         className={clsx(styles.header, playTypeClass, playStatusClass, styles[pc])}
         onClick={() => toggleDisplayPlaylist(false)}
       >
-        <PlaylistTitle
-          playType={playType}
-          playTrack={playTrack}
-          concertDetail={concertDetail}
-          audioSource={audioSource}
-        />
+        <Title playType={playType} playTrack={playTrack} concertDetail={concertDetail} audioSource={audioSource} />
       </div>
       <div className={clsx(styles.label, styles.close, playTypeClass)} onClick={() => toggleDisplayPlaylist(false)}>
         <CloseIcon />
@@ -337,7 +327,7 @@ const Playlist = ({
   )
 }
 
-const PlaylistTitle = ({
+const Title = ({
   playType,
   playTrack,
   concertDetail,
