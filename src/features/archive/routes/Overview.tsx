@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
 import { useConcertList } from '../api/getConcertList'
+import { ConcertNavigation } from '../components/ConcertNavigation'
 import { OverviewDetail } from '../components/OverviewDetail'
 
 export const Overview = () => {
@@ -21,6 +22,7 @@ export const Overview = () => {
       title="アーカイブ"
       subTitle="過去のウィンズの活動履歴を確認できます"
     >
+      <ConcertNavigation />
       <OverviewDetail />
     </Layout>
   )
