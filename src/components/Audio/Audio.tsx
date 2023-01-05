@@ -17,7 +17,7 @@ import styles from './Audio.module.scss'
 import { formatPlayTime } from '../../utilities/format'
 import { useAudioList } from './api/getAudioList'
 import { useConcertList } from '../../features/archive/api/getConcertList'
-import { getConcertDetail, getAudioSource } from './utilities'
+import { getConcertDetail, getAudioSource, composeSrc } from './utilities'
 
 type ConcertDetail = MainConcert | MiniConcert | OtherConcert | SourceConcert
 
@@ -200,8 +200,7 @@ export const Audio = () => {
     return null
   }
 
-  const src =
-    playTrack !== null ? referenceData.url + audioSource.baseSrc + audioSource.list[playTrack].path : undefined
+  const src = composeSrc(playType, playTrack, audioSource, audioData, referenceData)
 
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
