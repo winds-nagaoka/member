@@ -8,6 +8,68 @@
     li {
       list-style: none;
 
+      &:first-child {
+        & {
+          border-bottom: 0.55px solid #cbcbcd;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            border-bottom: 0.55px solid #2d2d2f;
+          }
+        }
+      }
+
+      .disabled-link {
+        display: block;
+        margin: 0;
+
+        text-decoration: none;
+
+        & {
+          color: #ccc;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #333;
+          }
+        }
+
+        .inner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: default;
+
+          span {
+            // margin: 11px 8px 11px 0;
+            line-height: 44px;
+            font-size: 16px;
+          }
+
+          svg {
+            width: 20px;
+            height: 20px;
+            padding-right: 12px;
+            font-size: 1.2rem;
+          }
+
+          svg {
+            fill: #eee;
+            path {
+              stroke: #eee;
+            }
+          }
+          @media (prefers-color-scheme: dark) {
+            svg {
+              fill: #333;
+              path {
+                stroke: #333;
+              }
+            }
+          }
+        }
+      }
+
       a {
         display: block;
         margin: 0;
