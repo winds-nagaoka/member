@@ -355,9 +355,11 @@ const Title = ({
   const trackItem = audioSource.list[playTrack]
   const track = concertDetail.data[trackItem.data]
 
+  const sourcePrefix = playType === 'source' ? '参考音源 - ' : ''
+
   return (
     <div>
-      <span className={styles[playType]}>{playTrack !== null && '参考音源 - ' + concertDetail.title}</span>
+      <span className={styles[playType]}>{playTrack !== null && sourcePrefix + concertDetail.title}</span>
       <span>
         <>
           <MusicalNoteIcon />
