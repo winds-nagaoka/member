@@ -8,7 +8,6 @@ import { MenuContents } from './MenuContents'
 import { ReactComponent as RightIcon } from '../../assets/right.svg'
 
 import styles from './Layout.module.scss'
-import { Audio } from '../Audio'
 
 type BreadItem = {
   path: string
@@ -39,7 +38,6 @@ export const Layout = (props: LayoutProps) => {
           <Footer />
         </div>
       </div>
-      <Audio />
     </div>
   )
 }

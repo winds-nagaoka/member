@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
+import { Audio } from '../components/Audio'
 import { FullScreenLoading } from '../components/ContentsBox'
 import { ArchiveRoutes } from '../features/archive'
 import { Home } from '../features/home'
@@ -9,6 +10,7 @@ const App = () => {
   return (
     <Suspense fallback={<FullScreenLoading />}>
       <Outlet />
+      <Audio />
     </Suspense>
   )
 }
