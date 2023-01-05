@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
-import { ContentsLoading } from '../../../components/ContentsBox'
 import { Layout } from '../../../components/Layout'
 import { useConcertList } from '../api/getConcertList'
+import { OverviewDetail } from '../components/OverviewDetail'
 
 export const Overview = () => {
   const { concertId } = useParams()
@@ -21,8 +21,7 @@ export const Overview = () => {
       title="アーカイブ"
       subTitle="過去のウィンズの活動履歴を確認できます"
     >
-      {concertListQuery.isLoading && <ContentsLoading />}
-      {!concertListQuery.isLoading && <>Overview</>}
+      <OverviewDetail />
     </Layout>
   )
 }
