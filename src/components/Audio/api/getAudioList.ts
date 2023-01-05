@@ -18,13 +18,13 @@ type AudioArchive = {
   _id: 'ddeOCFCgEjPr3bC1'
 }
 
-type AudioList = {
+export type AudioListApi = {
   status: true
   list: AudioArchive[]
   url: string
 }
 
-const getAudioList = async (): Promise<AudioList> => {
+const getAudioList = async (): Promise<AudioListApi> => {
   return await fetchApi(`${APP_API_URL}/api/audio`, { session: getSession() })
 }
 

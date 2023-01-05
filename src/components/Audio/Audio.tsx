@@ -17,6 +17,7 @@ import styles from './Audio.module.scss'
 import { formatPlayTime } from '../../utilities/format'
 import { useAudioList } from './api/getAudioList'
 import { useConcertList } from '../../features/archive/api/getConcertList'
+import { getConcertDetail, getAudioSource } from './utilities'
 
 type ConcertDetail = MainConcert | MiniConcert | OtherConcert | SourceConcert
 
@@ -193,27 +194,8 @@ export const Audio = () => {
     return null
   }
 
-  const getConcertDetail = () => {
-    if (playType === 'archive') {
-      return concertData.list.find((item) => item.id === playId)?.detail || null
-    }
-    if (playType === 'source') {
-      return sourceData.list.find((item) => item.id === playId)?.detail || null
-    }
-    return null
-  }
-  const getAudioSource = () => {
-    if (playType === 'archive') {
-      return audioData.list.find((item) => item.id === playId)
-    }
-    if (playType === 'source') {
-      return referenceData.list.find((item) => item.id === playId)
-    }
-    return null
-  }
-
-  const concertDetail = getConcertDetail()
-  const audioSource = getAudioSource()
+  const concertDetail = getConcertDetail(playType, concertData, sourceData, playId)
+  const audioSource = getAudioSource(playType, audioData, referenceData, playId)
   if (!concertDetail || !audioSource) {
     return null
   }

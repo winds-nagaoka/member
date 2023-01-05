@@ -12,7 +12,7 @@ export type ConcertItem = {
   _id: string
 }
 
-type ConcertListApi = {
+export type ConcertListApi = {
   status: boolean
   list: ConcertItem[]
 }

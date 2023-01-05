@@ -17,13 +17,13 @@ export type AudioSource = {
   _id: string
 }
 
-export type ReferenceList = {
+export type ReferenceListApi = {
   status: true
   list: AudioSource[]
   url: string
 }
 
-const getReferenceList = async (): Promise<ReferenceList> => {
+const getReferenceList = async (): Promise<ReferenceListApi> => {
   return await fetchApi(`${APP_API_URL}/api/reference`, { session: getSession() })
 }
 
