@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { Audio } from '../components/Audio'
+import { Audio } from '../features/audio'
 import { FullScreenLoading } from '../components/ContentsBox'
 import { ArchiveRoutes } from '../features/archive'
 import { Home } from '../features/home'
