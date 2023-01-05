@@ -11,6 +11,7 @@ import { ReactComponent as VideoOffIcon } from '../../../assets/video-off.svg'
 import styles from './ConcertList.module.scss'
 import { useState } from 'react'
 import { escapeReg } from '../../../utilities/escape'
+import { useAudioStore } from '../../../stores/audio'
 
 export const ConcertList = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -102,6 +103,8 @@ const SearchBox = ({
 }
 
 const SearchResult = ({ searchQuery, concertList }: { searchQuery: string; concertList: ConcertItem[] }) => {
+  const { setTrack } = useAudioStore()
+
   if (!searchQuery) {
     return null
   }
@@ -116,7 +119,8 @@ const SearchResult = ({ searchQuery, concertList }: { searchQuery: string; conce
           return null
         }
         const { concert, track } = item
-        const audioHandler = () => {}
+        const audioHandler =
+          'audio' in track ? () => track.audio !== undefined && setTrack(track.audio, concert.id, 'archive') : () => {}
         return (
           <div key={`${concert.id}-${track.title}-${index}`} className={styles['search-result-item']}>
             <div className={styles[concert.type]}>
@@ -142,12 +146,12 @@ const SearchResult = ({ searchQuery, concertList }: { searchQuery: string; conce
             <div>
               <span
                 onClick={audioHandler}
-                className={clsx(styles.audio, { [styles.on]: !!track.audio }, styles[concert.type])}
+                className={clsx(styles.audio, { [styles.on]: 'audio' in track }, styles[concert.type])}
               >
-                {!!track.audio ? <PlayIcon /> : <CloseIcon />}
+                {'audio' in track ? <PlayIcon /> : <CloseIcon />}
               </span>
-              <span className={clsx(styles.video, { [styles.on]: !!track.video }, styles[concert.type])}>
-                {!!track.video ? <VideoIcon /> : <VideoOffIcon />}
+              <span className={clsx(styles.video, { [styles.on]: 'video' in track }, styles[concert.type])}>
+                {'video' in track ? <VideoIcon /> : <VideoOffIcon />}
               </span>
             </div>
           </div>

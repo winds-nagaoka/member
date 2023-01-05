@@ -147,7 +147,7 @@ const ShowMusic = ({
               {contentItem.label}
             </label>
             <ol>
-              {contentItem.music.map((track) => {
+              {contentItem.music.map((track, index) => {
                 const music = musicList[track]
                 const onClickHandler =
                   'audio' in music
@@ -155,7 +155,7 @@ const ShowMusic = ({
                     : () => {}
                 return (
                   <li
-                    key={'m' + music.title}
+                    key={music.title + index}
                     className={clsx(styles.track, { [styles['has-audio']]: 'audio' in music })}
                     onClick={onClickHandler}
                   >
