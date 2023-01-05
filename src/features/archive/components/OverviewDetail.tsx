@@ -8,6 +8,7 @@ import { ReactComponent as NoPlayIcon } from '../../../assets/close-circle.svg'
 import { useStyle } from '../../../utilities/useStyle'
 import type { ConcertPlace, ConcertTime, Conductor, Guest, ConcertContent, ConcertMusic } from '../../../types'
 import styles from './OverviewDetail.module.scss'
+import { useAudioStore } from '../../../stores/audio'
 
 export const OverviewDetail = () => {
   const { concertId } = useParams()
@@ -49,7 +50,7 @@ const Overview = ({ concertItem }: { concertItem: ConcertItem }) => {
               {detail.type === 'main' && <ShowGuest guests={detail.guest || null} />}
             </div>
             <ol className={styles['music-list']}>
-              <ShowMusic contents={detail.contents} musicList={detail.data} />
+              <ShowMusic concertId={concertItem.id} contents={detail.contents} musicList={detail.data} />
             </ol>
           </div>
         </div>
@@ -127,7 +128,16 @@ const ShowGuest = ({ guests }: { guests: Guest[] | null }) => {
   return <Label label="客演">{guests.map((guest) => `${guest.name}(${guest.instrument})`)}</Label>
 }
 
-const ShowMusic = ({ contents, musicList }: { contents: ConcertContent[]; musicList: ConcertMusic[] }) => {
+const ShowMusic = ({
+  concertId,
+  contents,
+  musicList,
+}: {
+  concertId: string
+  contents: ConcertContent[]
+  musicList: ConcertMusic[]
+}) => {
+  const { setTrack } = useAudioStore()
   return (
     <>
       {contents.map((contentItem) => {
@@ -139,7 +149,10 @@ const ShowMusic = ({ contents, musicList }: { contents: ConcertContent[]; musicL
             <ol>
               {contentItem.music.map((track) => {
                 const music = musicList[track]
-                const onClickHandler = () => {}
+                const onClickHandler =
+                  'audio' in music
+                    ? () => music.audio !== undefined && setTrack(music.audio, concertId, 'archive')
+                    : () => {}
                 return (
                   <li
                     key={'m' + music.title}

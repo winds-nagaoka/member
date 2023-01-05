@@ -10,12 +10,15 @@ import { ReactComponent as PlayCircleIcon } from '../../assets/play-circle.svg'
 import { ReactComponent as MusicalNoteIcon } from '../../assets/musical-note.svg'
 import { useAudioStore } from '../../stores/audio'
 import { AudioSource, useReferenceList } from './api/getReferenceList'
-import { ConcertDetail, useSourceList } from '../../features/practice/api/getSourceList'
+import { useSourceList } from '../../features/practice/api/getSourceList'
+import type { MainConcert, MiniConcert, OtherConcert, SourceConcert } from '../../types'
 import type { PlayType } from '../../stores/audio'
 import styles from './Audio.module.scss'
 import { formatPlayTime } from '../../utilities/format'
 import { useAudioList } from './api/getAudioList'
 import { useConcertList } from '../../features/archive/api/getConcertList'
+
+type ConcertDetail = MainConcert | MiniConcert | OtherConcert | SourceConcert
 
 type AudioState = {
   loading: boolean
@@ -181,15 +184,36 @@ export const Audio = () => {
     return null
   }
 
-  const { referenceListQuery, sourceListQuery } = apiQueries
+  const { referenceListQuery, sourceListQuery, audioListQuery, concertListQuery } = apiQueries
   const { data: referenceData } = referenceListQuery
   const { data: sourceData } = sourceListQuery
-  if (!referenceData || !sourceData) {
+  const { data: audioData } = audioListQuery
+  const { data: concertData } = concertListQuery
+  if (!referenceData || !sourceData || !audioData || !concertData) {
     return null
   }
 
-  const concertDetail = sourceData.list.find((item) => item.id === playId)?.detail
-  const audioSource = referenceData?.list.find((item) => item.id === playId)
+  const getConcertDetail = () => {
+    if (playType === 'archive') {
+      return concertData.list.find((item) => item.id === playId)?.detail || null
+    }
+    if (playType === 'source') {
+      return sourceData.list.find((item) => item.id === playId)?.detail || null
+    }
+    return null
+  }
+  const getAudioSource = () => {
+    if (playType === 'archive') {
+      return audioData.list.find((item) => item.id === playId)
+    }
+    if (playType === 'source') {
+      return referenceData.list.find((item) => item.id === playId)
+    }
+    return null
+  }
+
+  const concertDetail = getConcertDetail()
+  const audioSource = getAudioSource()
   if (!concertDetail || !audioSource) {
     return null
   }

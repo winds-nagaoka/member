@@ -56,7 +56,7 @@ export const SourceList = () => {
                       const additional =
                         'add' in data[ml] ? (
                           <ol>
-                            {data[ml].addtitle?.map((mv, k) => (
+                            {data[ml].add?.map((mv, k) => (
                               <li key={'a' + sourceItem.id + k}>{mv}</li>
                             ))}
                           </ol>
