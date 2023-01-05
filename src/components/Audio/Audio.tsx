@@ -14,6 +14,8 @@ import { ConcertDetail, useSourceList } from '../../features/practice/api/getSou
 import type { PlayType } from '../../stores/audio'
 import styles from './Audio.module.scss'
 import { formatPlayTime } from '../../utilities/format'
+import { useAudioList } from './api/getAudioList'
+import { useConcertList } from '../../features/archive/api/getConcertList'
 
 type AudioState = {
   loading: boolean
@@ -144,12 +146,20 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
 const useAudioApiQuery = () => {
   const referenceListQuery = useReferenceList()
   const sourceListQuery = useSourceList()
+  const audioListQuery = useAudioList()
+  const concertListQuery = useConcertList()
 
   return {
     referenceListQuery,
     sourceListQuery,
-    isLoading: referenceListQuery.isLoading || sourceListQuery.isLoading,
-    isDataBlank: !referenceListQuery.data || !sourceListQuery.data,
+    audioListQuery,
+    concertListQuery,
+    isLoading:
+      referenceListQuery.isLoading ||
+      sourceListQuery.isLoading ||
+      audioListQuery.isLoading ||
+      concertListQuery.isLoading,
+    isDataBlank: !referenceListQuery.data || !sourceListQuery.data || !audioListQuery.data || !concertListQuery.data,
   }
 }
 

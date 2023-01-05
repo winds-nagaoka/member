@@ -3,33 +3,34 @@ import { APP_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
 import { getSession } from '../../../utilities/session'
 
-export type AudioSource = {
+type AudioArchive = {
   id: string
   time: number
   status: boolean
   baseSrc: string
+  type: 'main'
   list: {
     available: boolean
     data: number
     path: string
     addtitle?: string
   }[]
-  _id: string
+  _id: 'ddeOCFCgEjPr3bC1'
 }
 
-export type ReferenceList = {
+type AudioList = {
   status: true
-  list: AudioSource[]
+  list: AudioArchive[]
   url: string
 }
 
-const getReferenceList = async (): Promise<ReferenceList> => {
-  return await fetchApi(`${APP_API_URL}/api/reference`, { session: getSession() })
+const getAudioList = async (): Promise<AudioList> => {
+  return await fetchApi(`${APP_API_URL}/api/audio`, { session: getSession() })
 }
 
-export const useReferenceList = () => {
+export const useAudioList = () => {
   return useQuery({
-    queryKey: 'referenceList',
-    queryFn: async () => await getReferenceList(),
+    queryKey: 'audioList',
+    queryFn: async () => await getAudioList(),
   })
 }
