@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { ContentsBox, ContentsLoading } from '../../../components/ContentsBox'
+import { usePhotoModalStore } from '../../../stores/photoModal'
 import { usePhoto } from '../api/getPhoto'
 import styles from './PhotoList.module.scss'
 
 export const PhotoList = () => {
   const { concertId } = useParams()
   const photoQuery = usePhoto(concertId || '')
+  const { onOpen } = usePhotoModalStore()
 
   if (photoQuery.isLoading) {
     return <ContentsLoading />
@@ -17,7 +19,7 @@ export const PhotoList = () => {
 
   const { data } = photoQuery
 
-  const openPhoto = (photoIndex: number) => {}
+  const openPhoto = (photoIndex: number) => onOpen(photoIndex)
 
   return (
     <ContentsBox>

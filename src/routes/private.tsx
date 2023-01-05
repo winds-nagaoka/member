@@ -5,12 +5,14 @@ import { FullScreenLoading } from '../components/ContentsBox'
 import { ArchiveRoutes } from '../features/archive'
 import { Home } from '../features/home'
 import { PracticeRoutes } from '../features/practice'
+import { PhotoModal } from '../features/archive/components/PhotoModal'
 
 const App = () => {
   return (
     <Suspense fallback={<FullScreenLoading />}>
       <Outlet />
       <Audio />
+      <PhotoModal />
     </Suspense>
   )
 }

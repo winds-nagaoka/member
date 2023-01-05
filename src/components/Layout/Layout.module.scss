@@ -19,7 +19,7 @@
 
     z-index: 1;
 
-    transform: translateZ(0); // Retinaスクロール対策
+    // transform: translateZ(0); // Retinaスクロール対策
 
     margin-top: calc(constant(safe-area-inset-top) + 44.5px);
     // margin-bottom: constant(safe-area-inset-bottom);
@@ -60,7 +60,7 @@
     // scroll-behavior: smooth;
     will-change: scroll-position;
     contain: size style layout;
-    transform: translateZ(0); // Retinaスクロール対策
+    // transform: translateZ(0); // Retinaスクロール対策
   }
 
   .flex-frame {
