@@ -54,60 +54,18 @@
       }
     }
 
-    .swiper-container {
-      // background: rgba(0,0,0,.8);
-
-      .swiper-custom-button-prev,
-      .swiper-custom-button-next {
-        position: absolute;
-        top: 50%;
-        width: 24px;
-        height: 36px;
-        margin-top: -18px;
-        z-index: 10;
-        color: #fff;
-        font-size: 36px;
-        cursor: pointer;
-        background: none;
-        opacity: 0.6;
-
-        &.mobile {
-          display: none;
-        }
-
-        &:hover {
-          opacity: 0.8;
-        }
-
-        &.swiper-button-disabled {
-          opacity: 0.35;
-          cursor: auto;
-          pointer-events: none;
-        }
-      }
-
-      .swiper-custom-button-prev {
-        left: 10px;
-        right: auto;
-      }
-      .swiper-custom-button-next {
-        right: 10px;
-        left: auto;
-      }
+    .swiper {
+      width: 100vw;
+      height: 100vh;
     }
 
-    .archive-photo-slide {
-      background: rgba(0, 0, 0, 0);
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
 
-      .swiper-container {
-        background: rgba(0, 0, 0, 0);
-        .swiper-wrapper {
-          background: rgba(0, 0, 0, 0);
-          .swiper-slide {
-            background: rgba(0, 0, 0, 0);
-          }
-        }
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .each-original {
         width: 100%;
@@ -124,33 +82,106 @@
           height: auto;
           max-height: 100vh;
           object-fit: contain;
-          z-index: 11;
-        }
-
-        .swiper-lazy-preloader {
-          width: 36px;
-          height: 36px;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          margin-left: -18px;
-          margin-top: -18px;
-          font-size: 36px;
-          text-align: center;
-          z-index: 10;
-
-          -webkit-transform-origin: 50%;
-          -ms-transform-origin: 50%;
-          transform-origin: 50%;
-          -webkit-animation: none;
-          animation: none;
-
-          &::after {
-            display: none;
-          }
         }
       }
     }
+    // .swiper-container {
+    //   // background: rgba(0,0,0,.8);
+
+    //   .swiper-custom-button-prev,
+    //   .swiper-custom-button-next {
+    //     position: absolute;
+    //     top: 50%;
+    //     width: 24px;
+    //     height: 36px;
+    //     margin-top: -18px;
+    //     z-index: 10;
+    //     color: #fff;
+    //     font-size: 36px;
+    //     cursor: pointer;
+    //     background: none;
+    //     opacity: 0.6;
+
+    //     &.mobile {
+    //       display: none;
+    //     }
+
+    //     &:hover {
+    //       opacity: 0.8;
+    //     }
+
+    //     &.swiper-button-disabled {
+    //       opacity: 0.35;
+    //       cursor: auto;
+    //       pointer-events: none;
+    //     }
+    //   }
+
+    //   .swiper-custom-button-prev {
+    //     left: 10px;
+    //     right: auto;
+    //   }
+    //   .swiper-custom-button-next {
+    //     right: 10px;
+    //     left: auto;
+    //   }
+    // }
+
+    // .archive-photo-slide {
+    //   background: rgba(0, 0, 0, 0);
+
+    //   .swiper-container {
+    //     background: rgba(0, 0, 0, 0);
+    //     .swiper-wrapper {
+    //       background: rgba(0, 0, 0, 0);
+    //       .swiper-slide {
+    //         background: rgba(0, 0, 0, 0);
+    //       }
+    //     }
+    //   }
+
+    //   .each-original {
+    //     width: 100%;
+    //     height: 100vh;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     background: rgba(0, 0, 0, 0);
+
+    // img {
+    //   display: block;
+    //   width: 100%;
+    //   max-width: 800px;
+    //   height: auto;
+    //   max-height: 100vh;
+    //   object-fit: contain;
+    //   z-index: 11;
+    // }
+
+    //     .swiper-lazy-preloader {
+    //       width: 36px;
+    //       height: 36px;
+    //       position: absolute;
+    //       left: 50%;
+    //       top: 50%;
+    //       margin-left: -18px;
+    //       margin-top: -18px;
+    //       font-size: 36px;
+    //       text-align: center;
+    //       z-index: 10;
+
+    //       -webkit-transform-origin: 50%;
+    //       -ms-transform-origin: 50%;
+    //       transform-origin: 50%;
+    //       -webkit-animation: none;
+    //       animation: none;
+
+    //       &::after {
+    //         display: none;
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   .photo-slide-modal-background {

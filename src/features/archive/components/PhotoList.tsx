@@ -13,13 +13,13 @@ export const PhotoList = () => {
     return <ContentsLoading />
   }
 
-  if (!photoQuery.data) {
+  if (!photoQuery.data || !concertId) {
     return null
   }
 
   const { data } = photoQuery
 
-  const openPhoto = (photoIndex: number) => onOpen(photoIndex)
+  const openPhoto = (concertId: string, photoIndex: number) => onOpen(concertId, photoIndex)
 
   return (
     <ContentsBox>
@@ -27,7 +27,7 @@ export const PhotoList = () => {
         <div className={styles['thumbnail-list']}>
           {photoQuery.data.list.map((photoPath, index) => {
             return (
-              <div key={photoPath} className={styles['each-thumbnail']} onClick={() => openPhoto(index)}>
+              <div key={photoPath} className={styles['each-thumbnail']} onClick={() => openPhoto(concertId, index)}>
                 <img
                   src={(data.url || '') + (data.baseSrcThumbnail + '') + photoPath}
                   className={styles['thumbnail-photo']}
