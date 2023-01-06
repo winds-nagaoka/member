@@ -14,6 +14,7 @@ type MediaStore = {
   setTrack: (playTrack: number, playId?: string, playType?: PlayType) => void
   setPlaying: (playing: boolean) => void
   resetTrack: () => void
+  displayVideoPlayer:boolean
 }
 
 export const useMediaStore = create<MediaStore>((set) => ({
@@ -37,4 +38,5 @@ export const useMediaStore = create<MediaStore>((set) => ({
   },
   setPlaying: (playing) => set((state) => ({ ...state, playing })),
   resetTrack: () => set((state) => ({ ...state, playTrack: null })),
+  displayVideoPlayer:false,
 }))
