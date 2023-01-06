@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
 import { useConcertList } from '../api/getConcertList'
+import { VideoList } from '../components/VideoList'
 
 export const Video = () => {
   const { concertId } = useParams()
@@ -25,7 +26,7 @@ export const Video = () => {
       title="アーカイブ"
       subTitle="過去のウィンズの活動履歴を確認できます"
     >
-      Video
+      <VideoList />
     </Layout>
   )
 }
