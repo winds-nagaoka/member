@@ -10,6 +10,7 @@ export const ArchiveRoutes = () => {
       <Route path="" element={<Archive />} />
       <Route path="overview/:concertId" element={<Overview />} />
       <Route path="photo/:concertId" element={<Photo />} />
+      <Route path="video/:concertId" element={<Video />} />
       <Route path="video/:concertId/:track" element={<Video />} />
     </Routes>
   )
