@@ -1,3 +1,4 @@
+import { RefObject, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import clsx from 'clsx'
 import { ContentsBox, ContentsLoading } from '../../../components/ContentsBox'
@@ -7,9 +8,129 @@ import { useConcertList } from '../api/getConcertList'
 import type { ConcertDetail } from '../../../types'
 import type { Video } from '../../../types/video'
 import { ReactComponent as VideoIcon } from '../../../assets/video.svg'
+import { useMediaStore } from '../../../stores/media'
+
+type VideoState = {
+  loading: boolean
+}
+
+const initialState = {
+  loading: false,
+}
+
+const useVideoElement = (videoRef: RefObject<HTMLVideoElement>) => {
+  const [state, setState] = useState<VideoState>(initialState)
+  const {
+    videoPlaying,
+    videoPlayTrack,
+    videoCurrentTime,
+    setVideoPlaying,
+    setVideoLoadingPercent,
+    updateVideoPlaying,
+  } = useMediaStore()
+
+  const onPlay = () => {
+    videoRef.current?.play()
+    setVideoPlaying(true)
+  }
+
+  const onPause = () => {
+    videoRef.current?.pause()
+    setVideoPlaying(false)
+  }
+
+  const onLoadStart = () => {
+    if (videoRef.current?.src) {
+      setState((state) => ({ ...state, loading: true }))
+    }
+  }
+
+  const onLoadedMetadata = () => {
+    if (videoRef.current && !isNaN(videoRef.current.duration)) {
+      updateVideoPlaying(videoCurrentTime, videoRef.current.duration)
+    } else {
+      updateVideoPlaying(videoCurrentTime, null)
+    }
+  }
+
+  const onLoadedData = () => {
+    if (videoRef.current && !isNaN(videoRef.current.duration)) {
+      updateVideoPlaying(videoCurrentTime, videoRef.current.duration)
+    } else {
+      updateVideoPlaying(videoCurrentTime, null)
+    }
+  }
+
+  const onDurationChange = () => {
+    if (videoRef.current && !isNaN(videoRef.current.duration)) {
+      updateVideoPlaying(videoCurrentTime, videoRef.current.duration)
+    } else {
+      updateVideoPlaying(videoCurrentTime, null)
+    }
+  }
+
+  const onProgress = () => {
+    if (videoRef.current && videoRef.current.buffered.length > 0) {
+      const { buffered } = videoRef.current
+      setVideoLoadingPercent(
+        videoRef.current && Math.round((buffered.end(buffered.length - 1) / videoRef.current.duration) * 1000) / 10
+      )
+    } else {
+      setVideoLoadingPercent(null)
+    }
+  }
+
+  const onCanPlayThrough = () => {
+    if (videoPlaying) {
+      videoRef.current?.play()
+    }
+    setState((state) => ({ ...state, loading: false }))
+  }
+
+  const onError = () => {
+    setState((state) => ({ ...state, loading: true }))
+  }
+
+  const onTimeUpdate = () => {
+    if (videoRef.current && !isNaN(videoRef.current.duration)) {
+      updateVideoPlaying(videoRef.current.currentTime, videoRef.current.duration)
+    } else {
+      updateVideoPlaying(null, null)
+    }
+  }
+
+  const onEnded = () => {
+    // playNext()
+  }
+
+  const onClick = (e: React.MouseEvent<HTMLVideoElement, MouseEvent>) => {
+    videoPlaying ? onPause() : onPlay()
+  }
+
+  return {
+    state,
+    videoPlayTrack,
+    onPlay,
+    onPause,
+    videoFunctions: {
+      onLoadStart,
+      onLoadedMetadata,
+      onLoadedData,
+      onDurationChange,
+      onProgress,
+      onCanPlayThrough,
+      onError,
+      onTimeUpdate,
+      onEnded,
+      onClick,
+    },
+  }
+}
 
 export const VideoList = () => {
   const { concertId } = useParams()
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const { videoPlayTrack, videoFunctions } = useVideoElement(videoRef)
   const videoQuery = useVideo(concertId || '')
   const concertListQuery = useConcertList()
 
@@ -27,6 +148,8 @@ export const VideoList = () => {
 
   const { data: videoData } = videoQuery
 
+  const src = composeSrc(videoData.url, videoData.baseSrc, videoData.list, videoPlayTrack)
+
   const aspectClass = videoData.poster === 'https://video.winds-n.com/poster_800_586.png' ? 'aspect-4-3' : 'aspect-16-9'
 
   return (
@@ -35,26 +158,13 @@ export const VideoList = () => {
         <div className={styles['video-player']}>
           <div className={clsx(styles['video-frame'], styles[aspectClass])}>
             <video
-            // ref={(i) => {
-            //   !this.props.videoRef ? this.props.setVideoRef(i) : false
-            // }}
-            // onLoadStart={() => this.onLoadStart()}
-            // onLoadedMetadata={(e) => this.onLoadedMetadata(e)}
-            // onLoadedData={(e) => this.onLoadedData(e)}
-            // onDurationChange={(e) => this.onDurationChange(e)}
-            // onProgress={(e) => this.onProgress(e)}
-            // onCanPlayThrough={() => this.onCanPlayThrough()}
-            // onError={() => this.onError()}
-            // onTimeUpdate={(e) => this.onTimeUpdate(e)}
-            // onEnded={() => this.onEnded()}
-            // onClick={(e) => this.onClick(e)}
-            // poster={poster}
-            // playsInline
-            // // playsInline={!this.state.fullScreen}
-            // // これは再生中のときtrueにする
-            // controls={true}
-            // // controls={this.getFullScreenElment()}
-            // controlsList="nodownload"
+              ref={videoRef}
+              src={src}
+              {...videoFunctions}
+              poster={videoData.poster}
+              playsInline={true}
+              controls={true}
+              controlsList="nodownload"
             ></video>
           </div>
         </div>
@@ -65,8 +175,8 @@ export const VideoList = () => {
 }
 
 const TrackList = ({ concertDetail, videoData }: { concertDetail: ConcertDetail; videoData: Video }) => {
+  const {videoPlayTrack, setVideoTrack } = useMediaStore()
   const playlist = composePlaylist(concertDetail, videoData)
-  const playingTrack = -1
   return (
     <div className={styles['video-list']}>
       {concertDetail.contents.map((part) => {
@@ -79,9 +189,10 @@ const TrackList = ({ concertDetail, videoData }: { concertDetail: ConcertDetail;
                 key={`track-${track.trackNumber}`}
                 className={clsx(
                   styles.track,
-                  { [styles.playing]: playingTrack === track.trackNumber },
+                  { [styles.playing]: videoPlayTrack === track.trackNumber },
                   styles[concertDetail.type]
                 )}
+                onClick={() => setVideoTrack(track.trackNumber, concertDetail.id)}
               >
                 <div className={styles.icon}>
                   <VideoIcon />
@@ -127,4 +238,15 @@ const composePlaylist = (concertDetail: ConcertDetail, video: Video) => {
     const part = concertDetail.contents.find((part) => part.music.includes(videoItem.data)) || null
     return { trackNumber: index, ...videoItem, music, part }
   })
+}
+
+const composeSrc = (
+  url: string | undefined,
+  baseSrc: string | undefined,
+  videoList: Video['list'],
+  track: number | null
+) => {
+  if (url && baseSrc && track !== null) {
+    return url + baseSrc + videoList[track].path
+  }
 }
