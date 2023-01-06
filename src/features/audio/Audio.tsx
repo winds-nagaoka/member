@@ -11,15 +11,14 @@ import { ReactComponent as MusicalNoteIcon } from '../../assets/musical-note.svg
 import { useAudioStore } from '../../stores/audio'
 import { AudioSource, useReferenceList } from './api/getReferenceList'
 import { useSourceList } from '../practice/api/getSourceList'
-import type { MainConcert, MiniConcert, OtherConcert, SourceConcert } from '../../types'
+import type { ConcertDetail } from '../../types'
 import type { PlayType } from '../../stores/audio'
 import styles from './Audio.module.scss'
 import { formatPlayTime } from '../../utilities/format'
 import { useAudioList } from './api/getAudioList'
 import { useConcertList } from '../archive/api/getConcertList'
 import { getConcertDetail, getAudioSource, composeSrc } from './utilities'
-
-type ConcertDetail = MainConcert | MiniConcert | OtherConcert | SourceConcert
+import { composePlaylist } from './utilities'
 
 type AudioState = {
   loading: boolean
@@ -422,14 +421,6 @@ const TrackList = ({
       })}
     </>
   )
-}
-
-const composePlaylist = (concertDetail: ConcertDetail, audioSource: AudioSource) => {
-  return audioSource.list.map((audioItem, index) => {
-    const music = concertDetail.data[audioItem.data]
-    const part = concertDetail.contents.find((part) => part.music.includes(audioItem.data)) || null
-    return { trackNumber: index, ...audioItem, music, part }
-  })
 }
 
 const Composer = ({ composer, arranger }: { composer: string | null; arranger: string | null }) => {

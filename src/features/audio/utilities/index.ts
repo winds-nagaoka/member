@@ -3,6 +3,7 @@ import type { AudioListApi } from '../api/getAudioList'
 import type { ConcertListApi } from '../../archive/api/getConcertList'
 import type { SourceListApi } from '../../practice/api/getSourceList'
 import type { PlayType } from '../../../stores/audio'
+import type { ConcertDetail } from '../../../types'
 
 export const getConcertDetail = (
   playType: PlayType,
@@ -47,4 +48,12 @@ export const composeSrc = (
   if (playTrack !== null && playType === 'source') {
     return referenceData.url + audioSource.baseSrc + audioSource.list[playTrack].path
   }
+}
+
+export const composePlaylist = (concertDetail: ConcertDetail, audioSource: AudioSource) => {
+  return audioSource.list.map((audioItem, index) => {
+    const music = concertDetail.data[audioItem.data]
+    const part = concertDetail.contents.find((part) => part.music.includes(audioItem.data)) || null
+    return { trackNumber: index, ...audioItem, music, part }
+  })
 }
