@@ -2,7 +2,7 @@ import type { AudioSource, ReferenceListApi } from '../api/getReferenceList'
 import type { AudioListApi } from '../api/getAudioList'
 import type { ConcertListApi } from '../../archive/api/getConcertList'
 import type { SourceListApi } from '../../practice/api/getSourceList'
-import type { PlayType } from '../../../stores/audio'
+import type { PlayType } from '../../../stores/media'
 import type { ConcertDetail } from '../../../types'
 
 export const getConcertDetail = (

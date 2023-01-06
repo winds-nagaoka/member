@@ -11,7 +11,7 @@ import { ReactComponent as VideoOffIcon } from '../../../assets/video-off.svg'
 import styles from './ConcertList.module.scss'
 import { useState } from 'react'
 import { escapeReg } from '../../../utilities/escape'
-import { useAudioStore } from '../../../stores/audio'
+import { useMediaStore } from '../../../stores/media'
 
 export const ConcertList = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -103,7 +103,7 @@ const SearchBox = ({
 }
 
 const SearchResult = ({ searchQuery, concertList }: { searchQuery: string; concertList: ConcertItem[] }) => {
-  const { setTrack } = useAudioStore()
+  const { setTrack } = useMediaStore()
 
   if (!searchQuery) {
     return null

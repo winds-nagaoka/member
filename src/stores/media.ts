@@ -2,7 +2,7 @@ import create from 'zustand'
 
 export type PlayType = 'archive' | 'source' | 'practice'
 
-type AudioStore = {
+type MediaStore = {
   displayPlayer: boolean
   displayPlaylist: boolean
   playing: boolean
@@ -16,7 +16,7 @@ type AudioStore = {
   resetTrack: () => void
 }
 
-export const useAudioStore = create<AudioStore>((set) => ({
+export const useMediaStore = create<MediaStore>((set) => ({
   displayPlayer: false,
   displayPlaylist: false,
   playing: false,

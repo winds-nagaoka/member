@@ -8,7 +8,7 @@ import { ReactComponent as NoPlayIcon } from '../../../assets/close-circle.svg'
 import { useStyle } from '../../../utilities/useStyle'
 import type { ConcertPlace, ConcertTime, Conductor, Guest, ConcertContent, ConcertMusic } from '../../../types'
 import styles from './OverviewDetail.module.scss'
-import { useAudioStore } from '../../../stores/audio'
+import { useMediaStore } from '../../../stores/media'
 
 export const OverviewDetail = () => {
   const { concertId } = useParams()
@@ -137,7 +137,7 @@ const ShowMusic = ({
   contents: ConcertContent[]
   musicList: ConcertMusic[]
 }) => {
-  const { setTrack } = useAudioStore()
+  const { setTrack } = useMediaStore()
   return (
     <>
       {contents.map((contentItem) => {

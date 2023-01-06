@@ -8,11 +8,11 @@ import { ReactComponent as OpenIcon } from '../../assets/up.svg'
 import { ReactComponent as CloseIcon } from '../../assets/down.svg'
 import { ReactComponent as PlayCircleIcon } from '../../assets/play-circle.svg'
 import { ReactComponent as MusicalNoteIcon } from '../../assets/musical-note.svg'
-import { useAudioStore } from '../../stores/audio'
+import { useMediaStore } from '../../stores/media'
 import { AudioSource, useReferenceList } from './api/getReferenceList'
 import { useSourceList } from '../practice/api/getSourceList'
 import type { ConcertDetail } from '../../types'
-import type { PlayType } from '../../stores/audio'
+import type { PlayType } from '../../stores/media'
 import styles from './Audio.module.scss'
 import { formatPlayTime } from '../../utilities/format'
 import { useAudioList } from './api/getAudioList'
@@ -36,7 +36,7 @@ const initialState = {
 
 const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   const [state, setState] = useState<AudioState>(initialState)
-  const { playing, setPlaying, resetTrack } = useAudioStore()
+  const { playing, setPlaying, resetTrack } = useMediaStore()
 
   const onPlay = () => {
     audioRef.current?.play()
@@ -169,7 +169,7 @@ const useAudioApiQuery = () => {
 export const Audio = () => {
   const pc = useStyle()
   const { playing, playType, playId, playTrack, displayPlayer, displayPlaylist, toggleDisplayPlaylist } =
-    useAudioStore()
+    useMediaStore()
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
@@ -381,7 +381,7 @@ const TrackList = ({
   concertDetail: ConcertDetail
   audioSource: AudioSource
 }) => {
-  const { setTrack } = useAudioStore()
+  const { setTrack } = useMediaStore()
 
   const playlist = composePlaylist(concertDetail, audioSource)
 
