@@ -1,4 +1,4 @@
-import { Navigation, Keyboard } from 'swiper'
+import { Navigation, Keyboard, Lazy } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import clsx from 'clsx'
 import { usePhotoModalStore } from '../../../stores/photoModal'
@@ -9,6 +9,7 @@ import styles from './PhotoModal.module.scss'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/keyboard'
+import 'swiper/css/lazy'
 
 export const PhotoModal = () => {
   const pc = useStyle()
@@ -38,16 +39,20 @@ export const PhotoModal = () => {
             grabCursor={true}
             navigation={true}
             keyboard={true}
-            modules={[Navigation, Keyboard]}
-            watchSlidesProgress={true}
+            lazy={true}
+            modules={[Navigation, Keyboard, Lazy]}
             initialSlide={photoIndex || 0}
             preloadImages={false}
             className={styles.swiper}
+            style={{
+              // @ts-ignore
+              '--swiper-navigation-color': '#fff',
+            }}
           >
             {data.list.map((photoPath, index) => {
               return (
                 <SwiperSlide key={index} className={styles['swiper-slide']}>
-                  <div className={styles['each-original']}onClick={onClose}>
+                  <div className={styles['each-original']} onClick={onClose}>
                     <img
                       src={(data.url || '') + (data.baseSrcOriginal + '') + photoPath}
                       className={styles['original-photo']}
