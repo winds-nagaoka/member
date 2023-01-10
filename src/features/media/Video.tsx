@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import clsx from 'clsx'
 import { ReactComponent as PlayIcon } from '../../assets/play.svg'
 import { ReactComponent as PauseIcon } from '../../assets/pause.svg'
+import { ReactComponent as StopIcon } from '../../assets/stop.svg'
 import { useMediaStore } from '../../stores/media'
 import { useStyle } from '../../utilities/useStyle'
 import styles from './Video.module.scss'
@@ -17,7 +18,7 @@ export const Video = () => {
     videoCurrentTime,
     videoDuration,
     videoLoadingPercent,
-    setPlaying,
+    setVideoPlaying,
     setRequestVideoCurrentTime,
   } = useMediaStore()
   if (!videoPlayType) {
@@ -48,15 +49,15 @@ export const Video = () => {
       <div className={clsx(styles.player, { [styles.open]: displayVideoPlayer })}>
         <button
           className={clsx(styles.control, styles.play, styles[videoPlayType])}
-          onClick={() => (videoPlaying ? setPlaying(false) : setPlaying(true))}
+          onClick={() => (videoPlaying ? setVideoPlaying(false) : setVideoPlaying(true))}
         >
           {videoPlaying ? <PauseIcon /> : <PlayIcon />}
         </button>
         <button
           className={clsx(styles.control, styles.stop, { [styles.playing]: videoPlaying }, styles[videoPlayType])}
-          onClick={() => setPlaying(false)}
+          onClick={() => setVideoPlaying(false)}
         >
-          <i className="fas fa-stop"></i>
+          <StopIcon />
         </button>
         <div
           className={clsx(styles['video-progress'], { [styles.playing]: videoPlaying }, styles[videoPlayType])}

@@ -104,6 +104,7 @@ const useVideoElement = (videoRef: RefObject<HTMLVideoElement>) => {
   }
 
   const onClick = (e: React.MouseEvent<HTMLVideoElement, MouseEvent>) => {
+    e.preventDefault()
     videoPlaying ? onPause() : onPlay()
   }
 
