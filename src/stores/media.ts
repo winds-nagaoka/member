@@ -18,7 +18,7 @@ type MediaStore = {
   // video
   displayVideoPlayer: boolean
   videoPlaying: boolean
-  videoPlayType: PlayType | null
+  videoPlayType: 'main' | 'mini' | 'other' | 'source' | null
   videoPlayId: string | null
   videoPlayTrack: number | null
   videoCurrentTime: number | null
@@ -26,7 +26,11 @@ type MediaStore = {
   requestedVideoCurrentTime: number | null
   videoLoadingPercent: number | null
   toggleDisplayVideoPlayer: (displayVideoPlayer: boolean) => void
-  setVideoTrack: (videoPlayTrack: number, videoPlayId?: string, videoPlayType?: PlayType) => void
+  setVideoTrack: (
+    videoPlayTrack: number,
+    videoPlayId?: string,
+    videoPlayType?: 'main' | 'mini' | 'other' | 'source'
+  ) => void
   setVideoPlaying: (videoPlaying: boolean) => void
   updateVideoPlaying: (videoCurrentTime: number | null, videoDuration: number | null) => void
   setRequestVideoCurrentTime: (requestedVideoCurrentTime: number) => void
@@ -65,7 +69,7 @@ export const useMediaStore = create<MediaStore>((set) => ({
   videoLoadingPercent: null,
   toggleDisplayVideoPlayer: (displayVideoPlayer) => set((state) => ({ ...state, displayVideoPlayer })),
   setVideoTrack: (videoPlayTrack, videoPlayId, videoPlayType) => {
-    set((state) => ({ ...state, videoPlayTrack, videoPlayId, videoPlayType }))
+    set((state) => ({ ...state, displayVideoPlayer: true, videoPlayTrack, videoPlayId, videoPlayType }))
   },
   setVideoPlaying: (videoPlaying) => set((state) => ({ ...state, videoPlaying })),
   updateVideoPlaying: (videoCurrentTime, videoDuration) =>

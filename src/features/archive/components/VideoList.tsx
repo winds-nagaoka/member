@@ -175,7 +175,7 @@ export const VideoList = () => {
 }
 
 const TrackList = ({ concertDetail, videoData }: { concertDetail: ConcertDetail; videoData: Video }) => {
-  const {videoPlayTrack, setVideoTrack } = useMediaStore()
+  const { videoPlayTrack, setVideoTrack } = useMediaStore()
   const playlist = composePlaylist(concertDetail, videoData)
   return (
     <div className={styles['video-list']}>
@@ -192,7 +192,7 @@ const TrackList = ({ concertDetail, videoData }: { concertDetail: ConcertDetail;
                   { [styles.playing]: videoPlayTrack === track.trackNumber },
                   styles[concertDetail.type]
                 )}
-                onClick={() => setVideoTrack(track.trackNumber, concertDetail.id)}
+                onClick={() => setVideoTrack(track.trackNumber, concertDetail.id, concertDetail.type)}
               >
                 <div className={styles.icon}>
                   <VideoIcon />
