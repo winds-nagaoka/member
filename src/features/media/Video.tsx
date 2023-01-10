@@ -16,14 +16,16 @@ export const Video = () => {
     videoPlayType,
     videoCurrentTime,
     videoDuration,
+    videoLoadingPercent,
     setPlaying,
     setRequestVideoCurrentTime,
   } = useMediaStore()
   if (!videoPlayType) {
     return null
   }
-  const videoPlayPercent = 0
-  const videoLoadPercent = 0
+  const videoPlayPercent =
+    videoDuration && videoCurrentTime ? Math.round((videoCurrentTime / videoDuration) * 1000) / 10 : null
+  const videoLoadPercent = videoLoadingPercent
   const playProgress = videoPlayPercent
     ? { backgroundSize: videoPlayPercent + '% 100%' }
     : { backgroundSize: '0% 100%' }
