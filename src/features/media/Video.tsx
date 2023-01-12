@@ -22,9 +22,8 @@ export const Video = () => {
     videoLoadingPercent,
     setVideoPlaying,
   } = useMediaStore()
-  if (!videoPlayType) {
-    return null
-  }
+
+  const playType = videoPlayType || ''
   const videoPlayPercent =
     videoDuration && videoCurrentTime ? Math.round((videoCurrentTime / videoDuration) * 1000) / 10 : null
   const videoLoadPercent = videoLoadingPercent
@@ -59,19 +58,19 @@ export const Video = () => {
     <div className={clsx(styles['video-controller'], styles[pc])}>
       <div className={clsx(styles.player, { [styles.open]: displayVideoPlayer })}>
         <button
-          className={clsx(styles.control, styles.play, styles[videoPlayType])}
+          className={clsx(styles.control, styles.play, { [styles.playing]: videoPlaying }, styles[playType])}
           onClick={() => (videoPlaying ? onPause() : onPlay())}
         >
           {videoPlaying ? <PauseIcon /> : <PlayIcon />}
         </button>
         <button
-          className={clsx(styles.control, styles.stop, { [styles.playing]: videoPlaying }, styles[videoPlayType])}
+          className={clsx(styles.control, styles.stop, { [styles.playing]: videoPlaying }, styles[playType])}
           onClick={() => onPause()}
         >
           <StopIcon />
         </button>
         <div
-          className={clsx(styles['video-progress'], { [styles.playing]: videoPlaying }, styles[videoPlayType])}
+          className={clsx(styles['video-progress'], { [styles.playing]: videoPlaying }, styles[playType])}
           style={playProgress}
           ref={videoProgress}
           onClick={seekProgress}
@@ -79,7 +78,7 @@ export const Video = () => {
           <PlayTime currentTime={videoCurrentTime} duration={videoDuration} />
         </div>
         <div
-          className={clsx(styles['video-load-progress'], { [styles.playing]: videoPlaying }, styles[videoPlayType])}
+          className={clsx(styles['video-load-progress'], { [styles.playing]: videoPlaying }, styles[playType])}
           style={loadProgress}
           ref={videoLoadProgress}
         ></div>
