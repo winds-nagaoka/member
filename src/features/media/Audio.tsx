@@ -187,10 +187,6 @@ export const Audio = () => {
   const { state, playPercent, onPlay, onPause, onStop, audioFunctions } = useAudio(audioRef)
   const apiQueries = useAudioApiQuery()
 
-  if (playType === null || playId === null) {
-    return null
-  }
-
   if (apiQueries.isLoading) {
     return null
   }
@@ -206,16 +202,13 @@ export const Audio = () => {
 
   const concertDetail = getConcertDetail(playType, concertData, sourceData, playId)
   const audioSource = getAudioSource(playType, audioData, referenceData, playId)
-  if (!concertDetail || !audioSource) {
-    return null
-  }
 
   const src = composeSrc(playType, playTrack, audioSource, audioData, referenceData)
 
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
   const playStatusClass = { [styles.playing]: playing }
-  const playTypeClass = styles[playType]
+  const playTypeClass = styles[playType || '']
   const playProgress = playPercent ? { backgroundSize: playPercent + '% 100%' } : { backgroundSize: '0% 100%' }
   const loadProgress = state.loadingPercent
     ? { backgroundSize: state.loadingPercent + '% 100%' }
@@ -308,18 +301,22 @@ const Playlist = ({
   audioSource,
   toggleDisplayPlaylist,
 }: {
-  playType: PlayType
+  playType: PlayType | null
   playTrack: number | null
   playing: boolean
   displayPlaylist: boolean
-  concertDetail: ConcertDetail
-  audioSource: AudioSource
+  concertDetail: ConcertDetail | null
+  audioSource: AudioSource | null
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
 }) => {
   const pc = useStyle()
 
+  if (audioSource === null || concertDetail === null) {
+    return null
+  }
+
   const playStatusClass = { [styles.playing]: playing }
-  const playTypeClass = styles[playType]
+  const playTypeClass = styles[playType || '']
   return (
     <div className={clsx(styles['music-list'], { [styles.open]: displayPlaylist }, styles[pc])}>
       <div
@@ -354,22 +351,24 @@ const Title = ({
   concertDetail,
   audioSource,
 }: {
-  playType: PlayType
+  playType: PlayType | null
   playTrack: number | null
-  concertDetail: ConcertDetail
-  audioSource: AudioSource
+  concertDetail: ConcertDetail | null
+  audioSource: AudioSource | null
 }) => {
-  if (playTrack === null) {
+  if (playTrack === null || audioSource === null || concertDetail === null) {
     return null
   }
   const trackItem = audioSource.list[playTrack]
   const track = concertDetail.data[trackItem.data]
 
+  const playTypeClass = styles[playType || '']
+
   const sourcePrefix = playType === 'source' ? '参考音源 - ' : ''
 
   return (
     <div>
-      <span className={styles[playType]}>{playTrack !== null && sourcePrefix + concertDetail.title}</span>
+      <span className={playTypeClass}>{playTrack !== null && sourcePrefix + concertDetail.title}</span>
       <span>
         <>
           <MusicalNoteIcon />
@@ -387,15 +386,20 @@ const TrackList = ({
   concertDetail,
   audioSource,
 }: {
-  playType: PlayType
+  playType: PlayType | null
   playTrack: number | null
-  concertDetail: ConcertDetail
-  audioSource: AudioSource
+  concertDetail: ConcertDetail | null
+  audioSource: AudioSource | null
 }) => {
   const { setTrack } = useMediaStore()
 
+  if (audioSource === null || concertDetail === null) {
+    return null
+  }
+
   const playlist = composePlaylist(concertDetail, audioSource)
 
+  const playTypeClass = styles[playType || '']
   return (
     <>
       {concertDetail.contents.map((part) => {
@@ -410,7 +414,7 @@ const TrackList = ({
                 return (
                   <div
                     key={`track-${track.trackNumber}`}
-                    className={clsx(styles.track, { [styles.playing]: playing }, styles[playType])}
+                    className={clsx(styles.track, { [styles.playing]: playing }, playTypeClass)}
                     onClick={() => setTrack(track.trackNumber)}
                   >
                     <div className={styles.icon}>

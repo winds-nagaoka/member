@@ -6,10 +6,10 @@ import type { PlayType } from '../../../stores/media'
 import type { ConcertDetail } from '../../../types'
 
 export const getConcertDetail = (
-  playType: PlayType,
+  playType: PlayType | null,
   concertData: ConcertListApi,
   sourceData: SourceListApi,
-  playId: string
+  playId: string | null
 ) => {
   if (playType === 'archive') {
     return concertData.list.find((item) => item.id === playId)?.detail || null
@@ -21,10 +21,10 @@ export const getConcertDetail = (
 }
 
 export const getAudioSource = (
-  playType: PlayType,
+  playType: PlayType | null,
   audioData: AudioListApi,
   referenceData: ReferenceListApi,
-  playId: string
+  playId: string | null
 ) => {
   if (playType === 'archive') {
     return audioData.list.find((item) => item.id === playId) || null
@@ -36,16 +36,16 @@ export const getAudioSource = (
 }
 
 export const composeSrc = (
-  playType: PlayType,
+  playType: PlayType | null,
   playTrack: number | null,
-  audioSource: AudioSource,
+  audioSource: AudioSource | null,
   audioData: AudioListApi,
   referenceData: ReferenceListApi
 ) => {
-  if (playTrack !== null && playType === 'archive') {
+  if (playTrack !== null && playType === 'archive' && audioSource) {
     return audioData.url + audioSource.baseSrc + audioSource.list[playTrack].path
   }
-  if (playTrack !== null && playType === 'source') {
+  if (playTrack !== null && playType === 'source' && audioSource) {
     return referenceData.url + audioSource.baseSrc + audioSource.list[playTrack].path
   }
 }
