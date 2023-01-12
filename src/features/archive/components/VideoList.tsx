@@ -9,6 +9,7 @@ import type { ConcertDetail } from '../../../types'
 import type { Video } from '../../../types/video'
 import { ReactComponent as VideoIcon } from '../../../assets/video.svg'
 import { useMediaStore } from '../../../stores/media'
+import { useEffect } from 'react'
 
 type VideoState = {
   loading: boolean
@@ -21,13 +22,25 @@ const initialState = {
 const useVideoElement = (videoRef: RefObject<HTMLVideoElement>) => {
   const [state, setState] = useState<VideoState>(initialState)
   const {
+    videoRef: storedVideoRef,
     videoPlaying,
     videoPlayTrack,
     videoCurrentTime,
+    setVideoRef,
     setVideoPlaying,
     setVideoLoadingPercent,
     updateVideoPlaying,
   } = useMediaStore()
+
+  useEffect(() => {
+    if (videoRef && !storedVideoRef) {
+      setVideoRef(videoRef)
+    }
+  }, [videoRef, storedVideoRef, setVideoRef])
+
+  useEffect(() => {
+    return () => setVideoRef(null)
+  }, [setVideoRef])
 
   const onPlay = () => {
     videoRef.current?.play()

@@ -1,3 +1,4 @@
+import { RefObject } from 'react'
 import create from 'zustand'
 
 export type PlayType = 'archive' | 'source' | 'practice'
@@ -16,6 +17,7 @@ type MediaStore = {
   setPlaying: (playing: boolean) => void
   resetTrack: () => void
   // video
+  videoRef: RefObject<HTMLVideoElement> | null
   displayVideoPlayer: boolean
   videoPlaying: boolean
   videoPlayType: 'main' | 'mini' | 'other' | 'source' | null
@@ -25,6 +27,7 @@ type MediaStore = {
   videoDuration: number | null
   requestedVideoCurrentTime: number | null
   videoLoadingPercent: number | null
+  setVideoRef: (videoRef: RefObject<HTMLVideoElement> | null) => void
   toggleDisplayVideoPlayer: (displayVideoPlayer: boolean) => void
   setVideoTrack: (
     videoPlayTrack: number,
@@ -58,6 +61,7 @@ export const useMediaStore = create<MediaStore>((set) => ({
   },
   setPlaying: (playing) => set((state) => ({ ...state, playing })),
   resetTrack: () => set((state) => ({ ...state, playTrack: null })),
+  videoRef: null,
   displayVideoPlayer: false,
   videoPlaying: false,
   videoPlayType: null,
@@ -67,6 +71,7 @@ export const useMediaStore = create<MediaStore>((set) => ({
   videoDuration: null,
   requestedVideoCurrentTime: null,
   videoLoadingPercent: null,
+  setVideoRef: (videoRef) => set((state) => ({ ...state, videoRef })),
   toggleDisplayVideoPlayer: (displayVideoPlayer) => set((state) => ({ ...state, displayVideoPlayer })),
   setVideoTrack: (videoPlayTrack, videoPlayId, videoPlayType) => {
     set((state) => ({ ...state, displayVideoPlayer: true, videoPlayTrack, videoPlayId, videoPlayType }))
