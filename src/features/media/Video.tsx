@@ -11,7 +11,9 @@ import { formatPlayTime } from '../../utilities/format'
 export const Video = () => {
   const pc = useStyle()
   const videoProgress = useRef<HTMLDivElement>(null)
+  const videoLoadProgress = useRef<HTMLDivElement>(null)
   const {
+    videoRef,
     displayVideoPlayer,
     videoPlaying,
     videoPlayType,
@@ -19,7 +21,6 @@ export const Video = () => {
     videoDuration,
     videoLoadingPercent,
     setVideoPlaying,
-    setRequestVideoCurrentTime,
   } = useMediaStore()
   if (!videoPlayType) {
     return null
@@ -34,12 +35,22 @@ export const Video = () => {
     ? { backgroundSize: videoLoadPercent + '% 100%' }
     : { backgroundSize: '0% 100%' }
 
+  const onPlay = () => {
+    videoRef?.current?.play()
+    setVideoPlaying(true)
+  }
+
+  const onPause = () => {
+    videoRef?.current?.pause()
+    setVideoPlaying(false)
+  }
+
   const seekProgress = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (displayVideoPlayer && videoProgress.current && videoDuration) {
+    if (videoRef?.current && displayVideoPlayer && videoProgress.current && videoDuration) {
       const total = Math.round(videoDuration)
       if (!isNaN(total)) {
         const currentTime = Math.round(total * (e.pageX / videoProgress.current.clientWidth))
-        setRequestVideoCurrentTime(currentTime)
+        videoRef.current.currentTime = currentTime
       }
     }
   }
@@ -49,19 +60,20 @@ export const Video = () => {
       <div className={clsx(styles.player, { [styles.open]: displayVideoPlayer })}>
         <button
           className={clsx(styles.control, styles.play, styles[videoPlayType])}
-          onClick={() => (videoPlaying ? setVideoPlaying(false) : setVideoPlaying(true))}
+          onClick={() => (videoPlaying ? onPause() : onPlay())}
         >
           {videoPlaying ? <PauseIcon /> : <PlayIcon />}
         </button>
         <button
           className={clsx(styles.control, styles.stop, { [styles.playing]: videoPlaying }, styles[videoPlayType])}
-          onClick={() => setVideoPlaying(false)}
+          onClick={() => onPause()}
         >
           <StopIcon />
         </button>
         <div
           className={clsx(styles['video-progress'], { [styles.playing]: videoPlaying }, styles[videoPlayType])}
           style={playProgress}
+          ref={videoProgress}
           onClick={seekProgress}
         >
           <PlayTime currentTime={videoCurrentTime} duration={videoDuration} />
@@ -69,6 +81,7 @@ export const Video = () => {
         <div
           className={clsx(styles['video-load-progress'], { [styles.playing]: videoPlaying }, styles[videoPlayType])}
           style={loadProgress}
+          ref={videoLoadProgress}
         ></div>
       </div>
     </div>

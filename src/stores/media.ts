@@ -25,7 +25,6 @@ type MediaStore = {
   videoPlayTrack: number | null
   videoCurrentTime: number | null
   videoDuration: number | null
-  requestedVideoCurrentTime: number | null
   videoLoadingPercent: number | null
   setVideoRef: (videoRef: RefObject<HTMLVideoElement> | null) => void
   toggleDisplayVideoPlayer: (displayVideoPlayer: boolean) => void
@@ -36,7 +35,6 @@ type MediaStore = {
   ) => void
   setVideoPlaying: (videoPlaying: boolean) => void
   updateVideoPlaying: (videoCurrentTime: number | null, videoDuration: number | null) => void
-  setRequestVideoCurrentTime: (requestedVideoCurrentTime: number) => void
   setVideoLoadingPercent: (videoLoadingPercent: number | null) => void
 }
 
@@ -69,7 +67,6 @@ export const useMediaStore = create<MediaStore>((set) => ({
   videoPlayTrack: null,
   videoCurrentTime: null,
   videoDuration: null,
-  requestedVideoCurrentTime: null,
   videoLoadingPercent: null,
   setVideoRef: (videoRef) => set((state) => ({ ...state, videoRef })),
   toggleDisplayVideoPlayer: (displayVideoPlayer) => set((state) => ({ ...state, displayVideoPlayer })),
@@ -79,6 +76,5 @@ export const useMediaStore = create<MediaStore>((set) => ({
   setVideoPlaying: (videoPlaying) => set((state) => ({ ...state, videoPlaying })),
   updateVideoPlaying: (videoCurrentTime, videoDuration) =>
     set((state) => ({ ...state, videoCurrentTime, videoDuration })),
-  setRequestVideoCurrentTime: (requestedVideoCurrentTime) => set((state) => ({ ...state, requestedVideoCurrentTime })),
   setVideoLoadingPercent: (videoLoadingPercent) => set((state) => ({ ...state, videoLoadingPercent })),
 }))
