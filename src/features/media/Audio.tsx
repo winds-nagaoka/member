@@ -19,6 +19,7 @@ import { useAudioList } from './api/getAudioList'
 import { useConcertList } from '../archive/api/getConcertList'
 import { getConcertDetail, getAudioSource, composeSrc } from './utilities'
 import { composePlaylist } from './utilities'
+import { useEffect } from 'react'
 
 type AudioState = {
   loading: boolean
@@ -36,7 +37,17 @@ const initialState = {
 
 const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   const [state, setState] = useState<AudioState>(initialState)
-  const { playing, setPlaying, resetTrack } = useMediaStore()
+  const { audioRef: storedAudioRef, setAudioRef, playing, setPlaying, resetTrack } = useMediaStore()
+
+  useEffect(() => {
+    if (audioRef && !storedAudioRef) {
+      setAudioRef(audioRef)
+    }
+  }, [audioRef, storedAudioRef, setAudioRef])
+
+  useEffect(() => {
+    return () => setAudioRef(null)
+  }, [setAudioRef])
 
   const onPlay = () => {
     audioRef.current?.play()

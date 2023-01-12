@@ -5,12 +5,14 @@ export type PlayType = 'archive' | 'source' | 'practice'
 
 type MediaStore = {
   // audio
+  audioRef: RefObject<HTMLAudioElement> | null
   displayPlayer: boolean
   displayPlaylist: boolean
   playing: boolean
   playTrack: number | null
   playId: string | null
   playType: PlayType | null
+  setAudioRef: (audioRef: RefObject<HTMLAudioElement> | null) => void
   toggleDisplayPlayer: (displayPlayer: boolean) => void
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
   setTrack: (playTrack: number, playId?: string, playType?: PlayType) => void
@@ -39,12 +41,14 @@ type MediaStore = {
 }
 
 export const useMediaStore = create<MediaStore>((set) => ({
+  audioRef: null,
   displayPlayer: false,
   displayPlaylist: false,
   playing: false,
   playTrack: null,
   playId: null,
   playType: null,
+  setAudioRef: (audioRef) => set((state) => ({ ...state, audioRef })),
   toggleDisplayPlayer: (displayPlayer) => set((state) => ({ ...state, displayPlayer })),
   toggleDisplayPlaylist: (displayPlaylist) => set((state) => ({ ...state, displayPlaylist })),
   setTrack: (playTrack, playId, playType) => {
