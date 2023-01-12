@@ -29,7 +29,6 @@ type MediaStore = {
   videoDuration: number | null
   videoLoadingPercent: number | null
   setVideoRef: (videoRef: RefObject<HTMLVideoElement> | null) => void
-  toggleDisplayVideoPlayer: (displayVideoPlayer: boolean) => void
   setVideoTrack: (
     videoPlayTrack: number,
     videoPlayId?: string,
@@ -40,7 +39,20 @@ type MediaStore = {
   setVideoLoadingPercent: (videoLoadingPercent: number | null) => void
 }
 
+const initialVideoStore = {
+  videoRef: null,
+  displayVideoPlayer: false,
+  videoPlaying: false,
+  videoPlayType: null,
+  videoPlayId: null,
+  videoPlayTrack: null,
+  videoCurrentTime: null,
+  videoDuration: null,
+  videoLoadingPercent: null,
+}
+
 export const useMediaStore = create<MediaStore>((set) => ({
+  // audio
   audioRef: null,
   displayPlayer: false,
   displayPlaylist: false,
@@ -63,22 +75,37 @@ export const useMediaStore = create<MediaStore>((set) => ({
   },
   setPlaying: (playing) => set((state) => ({ ...state, playing })),
   resetTrack: () => set((state) => ({ ...state, playTrack: null })),
-  videoRef: null,
-  displayVideoPlayer: false,
-  videoPlaying: false,
-  videoPlayType: null,
-  videoPlayId: null,
-  videoPlayTrack: null,
-  videoCurrentTime: null,
-  videoDuration: null,
-  videoLoadingPercent: null,
-  setVideoRef: (videoRef) => set((state) => ({ ...state, videoRef })),
-  toggleDisplayVideoPlayer: (displayVideoPlayer) => set((state) => ({ ...state, displayVideoPlayer })),
+  // video
+  ...initialVideoStore,
+  setVideoRef: (videoRef) => {
+    set((state) => {
+      if (videoRef === null) {
+        return { ...state, displayPlayer: !!state.playTrack, ...initialVideoStore }
+      }
+      return { ...state, videoRef }
+    })
+  },
   setVideoTrack: (videoPlayTrack, videoPlayId, videoPlayType) => {
-    set((state) => ({ ...state, displayVideoPlayer: true, videoPlayTrack, videoPlayId, videoPlayType }))
+    set((state) => {
+      if (state.playing && state.audioRef?.current) {
+        state.audioRef.current.pause()
+      }
+      return {
+        ...state,
+        displayPlayer: false,
+        displayPlaylist: false,
+        playing: false,
+        displayVideoPlayer: true,
+        videoPlaying: true,
+        videoPlayTrack,
+        videoPlayId,
+        videoPlayType,
+      }
+    })
   },
   setVideoPlaying: (videoPlaying) => set((state) => ({ ...state, videoPlaying })),
-  updateVideoPlaying: (videoCurrentTime, videoDuration) =>
-    set((state) => ({ ...state, videoCurrentTime, videoDuration })),
+  updateVideoPlaying: (videoCurrentTime, videoDuration) => {
+    set((state) => ({ ...state, videoCurrentTime, videoDuration }))
+  },
   setVideoLoadingPercent: (videoLoadingPercent) => set((state) => ({ ...state, videoLoadingPercent })),
 }))
