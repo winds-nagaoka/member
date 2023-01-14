@@ -6,6 +6,7 @@ import { ArchiveRoutes } from '../features/archive'
 import { Home } from '../features/home'
 import { PracticeRoutes } from '../features/practice'
 import { PhotoModal } from '../features/archive/components/PhotoModal'
+import { ScoreRoutes } from '../features/score'
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ export const privateRoutes = [
     children: [
       { path: '/practice/*', element: <PracticeRoutes /> },
       { path: '/archive/*', element: <ArchiveRoutes /> },
+      { path: '/score/*', element: <ScoreRoutes /> },
       { path: '/', element: <Home /> },
       { path: '*', element: <Navigate to="/" /> },
     ],
