@@ -7,9 +7,15 @@ import { useScoreDetail } from '../api/getScoreDetail'
 import { TitleFrame } from '../../../components/ContentsBox'
 
 import styles from './ScoreDetail.module.scss'
+import { useAuth } from '../../../library/auth'
+import { ContentsButton } from '../../../components/Navigations/ContentsButton'
+import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 
 export const ScoreDetail = () => {
   const { scoreId } = useParams()
+  const { user } = useAuth()
+  const isScoreAdmin = !!user?.scoreAdmin
+
   const scoreDetailQuery = useScoreDetail(scoreId || '')
   if (scoreDetailQuery.isLoading) {
     return <ContentsLoading />
@@ -20,7 +26,11 @@ export const ScoreDetail = () => {
   return (
     <>
       <ScoreDetailStatus scoreItem={scoreDetailQuery.data.data} boxList={scoreDetailQuery.data.boxList} />
+      {isScoreAdmin && <ContentsButton onClick={() => console.log('open')} label="状態を変更" icon={<EditIcon />} />}
       <ContentsDetail scoreItem={scoreDetailQuery.data.data} />
+      {isScoreAdmin && (
+        <ContentsButton onClick={() => console.log('open')} label="詳細情報を修正" icon={<EditIcon />} />
+      )}
     </>
   )
 }
