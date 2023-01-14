@@ -2,9 +2,10 @@ import { useState } from 'react'
 import type { UseQueryResult } from 'react-query'
 import clsx from 'clsx'
 import { ContentsBox, Loading } from '../../../components/ContentsBox'
-import { ScoreItem, ScoreListApi, useScoreList } from '../api/getScoreList'
+import { ScoreListApi, useScoreList } from '../api/getScoreList'
 import { ReactComponent as SearchIcon } from '../../../assets/search.svg'
 import { ReactComponent as CloseIcon } from '../../../assets/close-circle.svg'
+import type { ScoreItem } from '../../../types'
 
 import styles from './ScoreList.module.scss'
 
@@ -46,7 +47,7 @@ const ScoreListComponent = ({
   searchQuery: string
   scoreListQuery: UseQueryResult<ScoreListApi>
   loadMore: boolean
-  setLoadMore: (loadMore:boolean) => void
+  setLoadMore: (loadMore: boolean) => void
 }) => {
   if (scoreListQuery.isLoading) {
     return <Loading />
