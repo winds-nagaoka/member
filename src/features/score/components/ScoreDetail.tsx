@@ -10,10 +10,12 @@ import styles from './ScoreDetail.module.scss'
 import { useAuth } from '../../../library/auth'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
+import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
 
 export const ScoreDetail = () => {
   const { scoreId } = useParams()
   const { user } = useAuth()
+  const { onOpen } = useScoreEditModalStore()
   const isScoreAdmin = !!user?.scoreAdmin
 
   const scoreDetailQuery = useScoreDetail(scoreId || '')
@@ -26,10 +28,20 @@ export const ScoreDetail = () => {
   return (
     <>
       <ScoreDetailStatus scoreItem={scoreDetailQuery.data.data} boxList={scoreDetailQuery.data.boxList} />
-      {isScoreAdmin && <ContentsButton onClick={() => console.log('open')} label="状態を変更" icon={<EditIcon />} />}
+      {isScoreAdmin && (
+        <ContentsButton
+          onClick={() => onOpen(scoreDetailQuery.data.data, 'editStatus')}
+          label="状態を変更"
+          icon={<EditIcon />}
+        />
+      )}
       <ContentsDetail scoreItem={scoreDetailQuery.data.data} />
       {isScoreAdmin && (
-        <ContentsButton onClick={() => console.log('open')} label="詳細情報を修正" icon={<EditIcon />} />
+        <ContentsButton
+          onClick={() => onOpen(scoreDetailQuery.data.data, 'editDetail')}
+          label="詳細情報を修正"
+          icon={<EditIcon />}
+        />
       )}
     </>
   )
