@@ -6,6 +6,7 @@ import { ScoreListApi, useScoreList } from '../api/getScoreList'
 import { ReactComponent as SearchIcon } from '../../../assets/search.svg'
 import { ReactComponent as CloseIcon } from '../../../assets/close-circle.svg'
 import type { ScoreItem } from '../../../types'
+import { useScoreModalStore } from '../../../stores/scoreModal'
 
 import styles from './ScoreList.module.scss'
 
@@ -49,6 +50,7 @@ const ScoreListComponent = ({
   loadMore: boolean
   setLoadMore: (loadMore: boolean) => void
 }) => {
+  const { onOpen } = useScoreModalStore()
   if (scoreListQuery.isLoading) {
     return <Loading />
   }
@@ -75,9 +77,7 @@ const ScoreListComponent = ({
             key={scoreItem._id}
             className={styles['score-list']}
             onTouchStart={() => {}}
-            onClick={() => {
-              // setDisplayScoreModal(true, each)
-            }}
+            onClick={() => onOpen(scoreItem)}
           >
             <div className={styles.content}>
               {/* {boxInfo} */}

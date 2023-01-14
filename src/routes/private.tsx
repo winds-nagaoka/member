@@ -7,6 +7,7 @@ import { Home } from '../features/home'
 import { PracticeRoutes } from '../features/practice'
 import { PhotoModal } from '../features/archive/components/PhotoModal'
 import { ScoreRoutes } from '../features/score'
+import { ScoreModal } from '../features/score/components/ScoreModal'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Audio />
       <Video />
       <PhotoModal />
+      <ScoreModal />
     </Suspense>
   )
 }
