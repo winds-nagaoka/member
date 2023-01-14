@@ -1,3 +1,19 @@
+import { useParams } from 'react-router-dom'
+import { Layout } from '../../../components/Layout'
+
 export const Detail = () => {
-  return <>Detail</>
+  const { scoreId } = useParams()
+  return (
+    <Layout
+      breadList={[
+        { path: '/', label: 'ホーム' },
+        { path: '/score', label: 'ウィンズスコア' },
+        { path: `/score/detail/${scoreId}`, label: '詳細情報' },
+      ]}
+      title="ウィンズスコア"
+      subTitle="楽譜詳細情報"
+    >
+      Detail
+    </Layout>
+  )
 }
