@@ -37,7 +37,7 @@ const getScoreList = async (query: string): Promise<ScoreListApi> => {
 
 export const useScoreList = (query: string) => {
   return useQuery({
-    queryKey: 'scoreList',
+    queryKey: ['scoreList', query],
     queryFn: async () => await getScoreList(query),
   })
 }

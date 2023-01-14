@@ -11,7 +11,7 @@ const LOAD_MORE = 10
 export const ScoreList = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [loadMore, setLoadMore] = useState(false)
-  const scoreListQuery = useScoreList('')
+  const scoreListQuery = useScoreList(searchQuery)
 
   if (scoreListQuery.isLoading) {
     return <ContentsLoading />
