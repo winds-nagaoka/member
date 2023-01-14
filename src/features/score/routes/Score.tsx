@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { ScoreList } from '../components/ScoreList'
 
 export const Score = () => {
   return (
@@ -10,7 +11,7 @@ export const Score = () => {
       title="ウィンズスコア"
       subTitle="ウィンズが所有している楽譜です"
     >
-      score
+      <ScoreList />
     </Layout>
   )
 }
