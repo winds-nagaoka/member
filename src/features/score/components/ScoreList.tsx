@@ -76,33 +76,6 @@ export const ScoreList = () => {
   )
 }
 
-const EndLabel = ({
-  scoreList,
-  isSearch,
-  loadMore,
-  setLoadMore,
-}: {
-  scoreList: ScoreItem[]
-  isSearch: boolean
-  loadMore: boolean
-  setLoadMore: (loadMore: boolean) => void
-}) => {
-  if (scoreList.length > LOAD_MORE && !loadMore) {
-    return (
-      <div onClick={() => setLoadMore(true)} className={styles['score-more']}>
-        <span>すべての楽譜を表示</span>
-      </div>
-    )
-  }
-  return (
-    <div className={styles['end-label']}>
-      {scoreList.length === 0 && !isSearch && 'データはありません'}
-      {scoreList.length === 0 && isSearch && 'みつかりませんでした'}
-      {loadMore && <div className={styles['end-label']}>これ以上データはありません</div>}
-    </div>
-  )
-}
-
 const SearchBox = ({
   searchQuery,
   setSearchQuery,
@@ -145,6 +118,33 @@ const ScoreCount = ({ isSearch, scoreList }: { isSearch: boolean; scoreList: Sco
         {scoreList ? <span>{scoreList.length}</span> : false}
         {scoreList ? <span>件</span> : false}
       </div>
+    </div>
+  )
+}
+
+const EndLabel = ({
+  scoreList,
+  isSearch,
+  loadMore,
+  setLoadMore,
+}: {
+  scoreList: ScoreItem[]
+  isSearch: boolean
+  loadMore: boolean
+  setLoadMore: (loadMore: boolean) => void
+}) => {
+  if (scoreList.length > LOAD_MORE && !loadMore) {
+    return (
+      <div onClick={() => setLoadMore(true)} className={styles['score-more']}>
+        <span>すべての楽譜を表示</span>
+      </div>
+    )
+  }
+  return (
+    <div className={styles['end-label']}>
+      {scoreList.length === 0 && !isSearch && 'データはありません'}
+      {scoreList.length === 0 && isSearch && 'みつかりませんでした'}
+      {loadMore && <div className={styles['end-label']}>これ以上データはありません</div>}
     </div>
   )
 }
