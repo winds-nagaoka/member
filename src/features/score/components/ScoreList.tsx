@@ -1,20 +1,41 @@
 import { useState } from 'react'
-import { ContentsBox, ContentsLoading } from '../../../components/ContentsBox'
-import { ScoreItem, useScoreList } from '../api/getScoreList'
+import type { UseQueryResult } from 'react-query'
+import clsx from 'clsx'
+import { ContentsBox, Loading } from '../../../components/ContentsBox'
+import { ScoreItem, ScoreListApi, useScoreList } from '../api/getScoreList'
 import { ReactComponent as SearchIcon } from '../../../assets/search.svg'
 import { ReactComponent as CloseIcon } from '../../../assets/close-circle.svg'
+
 import styles from './ScoreList.module.scss'
-import clsx from 'clsx'
 
 const LOAD_MORE = 10
 
 export const ScoreList = () => {
   const [searchQuery, setSearchQuery] = useState('')
-  const [loadMore, setLoadMore] = useState(false)
   const scoreListQuery = useScoreList(searchQuery)
 
+  return (
+    <ContentsBox>
+      <div className={styles.score}>
+        <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <ScoreCount isSearch={!!searchQuery} scoreList={scoreListQuery.data?.list || null} />
+        <ScoreListComponent searchQuery={searchQuery} scoreListQuery={scoreListQuery} />
+      </div>
+    </ContentsBox>
+  )
+}
+
+const ScoreListComponent = ({
+  searchQuery,
+  scoreListQuery,
+}: {
+  searchQuery: string
+  scoreListQuery: UseQueryResult<ScoreListApi>
+}) => {
+  const [loadMore, setLoadMore] = useState(false)
+
   if (scoreListQuery.isLoading) {
-    return <ContentsLoading />
+    return <Loading />
   }
 
   if (!scoreListQuery.data) {
@@ -22,57 +43,53 @@ export const ScoreList = () => {
   }
 
   return (
-    <ContentsBox>
-      <div className={styles.score}>
-        <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        <ScoreCount isSearch={!!searchQuery} scoreList={scoreListQuery.data.list} />
-        {scoreListQuery.data.list.map((scoreItem, index) => {
-          if (!loadMore && index > LOAD_MORE) {
-            return null
-          }
-          if (scoreItem.status === 'false') {
-            return null
-          }
-          const composer = scoreItem.composer.length === 0 ? '' : scoreItem.composer.join(', ')
-          const arranger = scoreItem.arranger.length === 0 ? '' : scoreItem.arranger.join(', ')
-          const bar = composer === '' || arranger === '' ? '' : <span className="bar">/</span>
+    <>
+      {scoreListQuery.data.list.map((scoreItem, index) => {
+        if (!loadMore && index > LOAD_MORE) {
+          return null
+        }
+        if (scoreItem.status === 'false') {
+          return null
+        }
+        const composer = scoreItem.composer.length === 0 ? '' : scoreItem.composer.join(', ')
+        const arranger = scoreItem.arranger.length === 0 ? '' : scoreItem.arranger.join(', ')
+        const bar = composer === '' || arranger === '' ? '' : <span className="bar">/</span>
 
-          return (
-            <div
-              key={scoreItem._id}
-              className={styles['score-list']}
-              onTouchStart={() => {}}
-              onClick={() => {
-                // setDisplayScoreModal(true, each)
-              }}
-            >
-              <div className={styles.content}>
-                {/* {boxInfo} */}
-                <div className={styles['title-ja']}>
-                  <span>{scoreItem.titleJa}</span>
-                </div>
-                <div className={styles['title-en']}>
-                  <span>{scoreItem.titleEn}</span>
-                </div>
-                <div className={styles['composer-arranger']}>
-                  <span>
-                    <span>{composer}</span>
-                    {bar}
-                    <span>{arranger}</span>
-                  </span>
-                </div>
+        return (
+          <div
+            key={scoreItem._id}
+            className={styles['score-list']}
+            onTouchStart={() => {}}
+            onClick={() => {
+              // setDisplayScoreModal(true, each)
+            }}
+          >
+            <div className={styles.content}>
+              {/* {boxInfo} */}
+              <div className={styles['title-ja']}>
+                <span>{scoreItem.titleJa}</span>
+              </div>
+              <div className={styles['title-en']}>
+                <span>{scoreItem.titleEn}</span>
+              </div>
+              <div className={styles['composer-arranger']}>
+                <span>
+                  <span>{composer}</span>
+                  {bar}
+                  <span>{arranger}</span>
+                </span>
               </div>
             </div>
-          )
-        })}
-        <EndLabel
-          scoreList={scoreListQuery.data.list}
-          isSearch={!!searchQuery}
-          loadMore={loadMore}
-          setLoadMore={setLoadMore}
-        />
-      </div>
-    </ContentsBox>
+          </div>
+        )
+      })}
+      <EndLabel
+        scoreList={scoreListQuery.data.list}
+        isSearch={!!searchQuery}
+        loadMore={loadMore}
+        setLoadMore={setLoadMore}
+      />
+    </>
   )
 }
 
@@ -109,14 +126,14 @@ const SearchBox = ({
   )
 }
 
-const ScoreCount = ({ isSearch, scoreList }: { isSearch: boolean; scoreList: ScoreItem[] }) => {
+const ScoreCount = ({ isSearch, scoreList }: { isSearch: boolean; scoreList: ScoreItem[] | null }) => {
   const title = isSearch ? '該当' : '楽譜'
   return (
     <div className={styles['score-count']}>
       <div>
-        {scoreList ? <span>{title}</span> : false}
-        {scoreList ? <span>{scoreList.length}</span> : false}
-        {scoreList ? <span>件</span> : false}
+        <span>{title}</span>
+        <span>{scoreList ? scoreList.length : '-'}</span>
+        <span>件</span>
       </div>
     </div>
   )
