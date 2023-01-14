@@ -11,15 +11,27 @@ import styles from './ScoreList.module.scss'
 const LOAD_MORE = 10
 
 export const ScoreList = () => {
+  const [loadMore, setLoadMore] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const scoreListQuery = useScoreList(searchQuery)
 
   return (
     <ContentsBox>
       <div className={styles.score}>
-        <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <SearchBox
+          searchQuery={searchQuery}
+          setSearchQuery={(searchQuery) => {
+            setLoadMore(false)
+            setSearchQuery(searchQuery)
+          }}
+        />
         <ScoreCount isSearch={!!searchQuery} scoreList={scoreListQuery.data?.list || null} />
-        <ScoreListComponent searchQuery={searchQuery} scoreListQuery={scoreListQuery} />
+        <ScoreListComponent
+          searchQuery={searchQuery}
+          scoreListQuery={scoreListQuery}
+          loadMore={loadMore}
+          setLoadMore={setLoadMore}
+        />
       </div>
     </ContentsBox>
   )
@@ -28,12 +40,14 @@ export const ScoreList = () => {
 const ScoreListComponent = ({
   searchQuery,
   scoreListQuery,
+  loadMore,
+  setLoadMore,
 }: {
   searchQuery: string
   scoreListQuery: UseQueryResult<ScoreListApi>
+  loadMore: boolean
+  setLoadMore: (loadMore:boolean) => void
 }) => {
-  const [loadMore, setLoadMore] = useState(false)
-
   if (scoreListQuery.isLoading) {
     return <Loading />
   }
@@ -161,7 +175,7 @@ const EndLabel = ({
     <div className={styles['end-label']}>
       {scoreList.length === 0 && !isSearch && 'データはありません'}
       {scoreList.length === 0 && isSearch && 'みつかりませんでした'}
-      {loadMore && <div className={styles['end-label']}>これ以上データはありません</div>}
+      {scoreList.length !== 0 && (loadMore || isSearch) && 'これ以上データはありません'}
     </div>
   )
 }
