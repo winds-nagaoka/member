@@ -18,7 +18,8 @@ const loadUser = async (): Promise<User | null> => {
   if (!session) {
     return null
   }
-  return await getUser(session)
+  const response = await getUser(session)
+  return handleUserResponse(response)
 }
 
 type LoginInputs = { userId: string; password: string }
