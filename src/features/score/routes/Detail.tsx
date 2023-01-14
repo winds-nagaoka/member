@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
+import { ScoreDetail } from '../components/ScoreDetail'
 
 export const Detail = () => {
   const { scoreId } = useParams()
@@ -13,7 +14,7 @@ export const Detail = () => {
       title="ウィンズスコア"
       subTitle="楽譜詳細情報"
     >
-      Detail
+      <ScoreDetail />
     </Layout>
   )
 }

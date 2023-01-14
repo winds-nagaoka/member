@@ -20,3 +20,12 @@ export type ScoreItem = {
   updatedAt: string
   _id: string
 }
+
+export type BoxItem = {
+  status: boolean
+  number: number
+  label: string
+  locate: string | false
+  time: number
+  _id: string
+}
