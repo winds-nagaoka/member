@@ -101,11 +101,17 @@ export const ScoreEditModal = () => {
           // }}
         >
           <div className={styles['contents-inner']}>
-            <Base input={input} setValue={setValue} addBlank={addBlank} />
+            {(editMode === 'editDetail' || editMode === 'new') && (
+              <Base input={input} setValue={setValue} addBlank={addBlank} />
+            )}
 
-            <Status input={input} setValue={setValue} addBlank={addBlank} />
+            {(editMode === 'editDetail' || editMode === 'new') && (
+              <Status input={input} setValue={setValue} addBlank={addBlank} />
+            )}
 
-            <Info editMode={editMode} boxList={boxList} input={input} setValue={setValue} />
+            {(editMode === 'editStatus' || editMode === 'new') && (
+              <Info editMode={editMode} boxList={boxList} input={input} setValue={setValue} />
+            )}
 
             <ContentsBox>
               <ContentsButton
