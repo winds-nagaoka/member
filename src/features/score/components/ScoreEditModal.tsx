@@ -155,14 +155,16 @@ const Base = ({
             <Input
               label="タイトル(日本語)"
               value={input.titleJa}
+              target="titleJa"
               inputClassName={styles['title-ja']}
-              onChange={(e) => setValue(e.target.value, 'titleJa')}
+              onChange={(value) => setValue(value, 'titleJa')}
             />
             <Input
               label="タイトル(英語)"
               value={input.titleEn}
+              target="titleEn"
               inputClassName={styles['title-en']}
-              onChange={(e) => setValue(e.target.value, 'titleEn')}
+              onChange={(value) => setValue(value, 'titleEn')}
             />
             {input.composer.map((composer, index) => {
               return (
@@ -170,9 +172,10 @@ const Base = ({
                   key={`composer-${index}`}
                   label={'作曲者' + (index + 1)}
                   value={composer}
+                  target="composer"
                   inputClassName={styles.composer}
                   multi={true}
-                  onChange={(e) => setValue(e.target.value, 'composer', index)}
+                  onChange={(value) => setValue(value, 'composer', index)}
                 />
               )
             })}
@@ -185,9 +188,10 @@ const Base = ({
                   key={`arranger-${index}`}
                   label={'編曲者' + (index + 1)}
                   value={arranger}
+                  target="arranger"
                   inputClassName={styles.arranger}
                   multi={true}
-                  onChange={(e) => setValue(e.target.value, 'arranger', index)}
+                  onChange={(value) => setValue(value, 'arranger', index)}
                 />
               )
             })}
@@ -197,14 +201,16 @@ const Base = ({
             <Input
               label="出版社"
               value={input.publisher}
+              target="publisher"
               inputClassName={styles.publisher}
-              onChange={(e) => setValue(e.target.value, 'publisher')}
+              onChange={(value) => setValue(value, 'publisher')}
             />
             <Input
               label="ジャンル"
               value={input.genre}
+              target="genre"
               inputClassName={styles.genre}
-              onChange={(e) => setValue(e.target.value, 'genre')}
+              onChange={(value) => setValue(value, 'genre')}
             />
           </div>
         </TitleFrame>
@@ -259,8 +265,9 @@ const Status = ({
               <Input
                 label="コピーメモ"
                 value={input.copyMemo}
+                target="copyMemo"
                 inputClassName={styles['copied-from']}
-                onChange={(e) => setValue(e.target.value, 'copyMemo')}
+                onChange={(value) => setValue(value, 'copyMemo')}
               />
             )}
             <div className={styles.input}>
@@ -308,9 +315,10 @@ const Status = ({
                     key={`lack-${index}`}
                     label={'欠譜' + (index + 1)}
                     value={lack}
+                    target="lackList"
                     inputClassName={styles['lack-list']}
                     multi={true}
-                    onChange={(e) => setValue(e.target.value, 'lackList', index)}
+                    onChange={(value) => setValue(value, 'lackList', index)}
                   />
                 ))}
                 <div className={styles['add-data']} onClick={() => addBlank('lackList')}>
@@ -426,8 +434,9 @@ const Info = ({
               <Input
                 label="貸出先"
                 value={input.lendLocate}
+                target="lendLocate"
                 inputClassName={styles.lend}
-                onChange={(e) => setValue(e.target.value, 'lendLocate')}
+                onChange={(value) => setValue(value, 'lendLocate')}
               />
             )}
             <div
