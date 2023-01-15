@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { EditMode, useScoreEditModalStore } from '../../../stores/scoreEditModal'
 import { useStyle } from '../../../utilities/useStyle'
@@ -6,7 +6,7 @@ import styles from './ScoreEditModal.module.scss'
 import { ContentsBox, TitleFrame } from '../../../components/ContentsBox'
 import { useMediaStore } from '../../../stores/media'
 import { Input } from './Input'
-import { BoxItem } from '../../../types'
+import type { BoxItem, ScoreItem } from '../../../types'
 import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
@@ -45,8 +45,15 @@ function assertArraysKey(key: keyof typeof initialState): asserts key is ArraysK
   throw Error('Not a arrays key')
 }
 
-const useScoreEdit = () => {
+const useScoreEdit = (scoreItem: ScoreItem | null) => {
   const [input, setInput] = useState(initialState)
+
+  useEffect(() => {
+    if (scoreItem) {
+      setInput(scoreItem)
+    }
+  }, [scoreItem])
+
   const setValue = (value: string, key: keyof typeof initialState, arrayIndex?: number) => {
     if (['composer', 'arranger', 'lackList'].includes(key)) {
       assertArraysKey(key)
@@ -69,14 +76,10 @@ export const ScoreEditModal = () => {
   const { isOpen, onClose, scoreItem, boxList, editMode } = useScoreEditModalStore()
   const { displayPlayer } = useMediaStore()
 
-  const { input, setValue, addBlank } = useScoreEdit()
+  const { input, setValue, addBlank } = useScoreEdit(scoreItem)
 
   const editLoading = false
   const updateScoreEdit = () => console.log('updateScoreEdit')
-
-  if (!scoreItem) {
-    return null
-  }
 
   return (
     <div className={styles['score-edit-modal']}>
