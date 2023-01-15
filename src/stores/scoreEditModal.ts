@@ -6,11 +6,13 @@ const MODAL_DURATION = 200
 
 export type EditMode = 'new' | 'editStatus' | 'editDetail'
 
+type LatestScoreItem = ScoreItem
+
 type ScoreEditModalStore = {
   isOpen: boolean
-  onOpen: (scoreItem: ScoreItem, boxList: BoxItem[], editMode: EditMode) => void
+  onOpen: (scoreItem: ScoreItem | LatestScoreItem | null, boxList: BoxItem[], editMode: EditMode) => void
   onClose: () => void
-  scoreItem: ScoreItem | null
+  scoreItem: ScoreItem | LatestScoreItem | null
   boxList: BoxItem[]
   editMode: EditMode | null
 }
@@ -22,6 +24,7 @@ export const useScoreEditModalStore = create<ScoreEditModalStore>((set) => ({
     set((state) => ({ ...state, isOpen: false }))
     setTimeout(() => set((state) => ({ ...state, scoreItem: null })), MODAL_DURATION)
   },
+  id: null,
   scoreItem: null,
   boxList: [],
   editMode: null,

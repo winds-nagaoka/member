@@ -1,41 +1,65 @@
 import { useState } from 'react'
 import type { UseQueryResult } from 'react-query'
 import clsx from 'clsx'
-import { ContentsBox, Loading } from '../../../components/ContentsBox'
+import { ContentsBox, ContentsLoading, Loading } from '../../../components/ContentsBox'
 import { ScoreListApi, useScoreList } from '../api/getScoreList'
 import { ReactComponent as SearchIcon } from '../../../assets/search.svg'
 import { ReactComponent as CloseIcon } from '../../../assets/close-circle.svg'
 import type { ScoreItem } from '../../../types'
 import { useScoreModalStore } from '../../../stores/scoreModal'
+import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 
 import styles from './ScoreList.module.scss'
+import { ContentsButton } from '../../../components/Navigations/ContentsButton'
+import { useAuth } from '../../../library/auth'
+import { usePreEdit } from '../api/getPreEdit'
+import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
 
 const LOAD_MORE = 10
 
 export const ScoreList = () => {
+  const { user } = useAuth()
+  const isScoreAdmin = user?.scoreAdmin
+
+  const { onOpen } = useScoreEditModalStore()
+
   const [loadMore, setLoadMore] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const scoreListQuery = useScoreList(searchQuery)
+  const scorePreEditQuery = usePreEdit('new')
 
   return (
-    <ContentsBox>
-      <div className={styles.score}>
-        <SearchBox
-          searchQuery={searchQuery}
-          setSearchQuery={(searchQuery) => {
-            setLoadMore(false)
-            setSearchQuery(searchQuery)
-          }}
-        />
-        <ScoreCount isSearch={!!searchQuery} scoreList={scoreListQuery.data?.list || null} />
-        <ScoreListComponent
-          searchQuery={searchQuery}
-          scoreListQuery={scoreListQuery}
-          loadMore={loadMore}
-          setLoadMore={setLoadMore}
-        />
-      </div>
-    </ContentsBox>
+    <>
+      <ContentsBox>
+        <div className={styles.score}>
+          <SearchBox
+            searchQuery={searchQuery}
+            setSearchQuery={(searchQuery) => {
+              setLoadMore(false)
+              setSearchQuery(searchQuery)
+            }}
+          />
+          <ScoreCount isSearch={!!searchQuery} scoreList={scoreListQuery.data?.list || null} />
+          <ScoreListComponent
+            searchQuery={searchQuery}
+            scoreListQuery={scoreListQuery}
+            loadMore={loadMore}
+            setLoadMore={setLoadMore}
+          />
+        </div>
+      </ContentsBox>
+
+      {scorePreEditQuery.isLoading && <ContentsLoading />}
+      {isScoreAdmin && scorePreEditQuery.data && (
+        <ContentsBox>
+          <ContentsButton
+            icon={<EditIcon />}
+            label="新しい楽譜を追加"
+            onClick={() => onOpen(scorePreEditQuery.data.latest || null, scorePreEditQuery.data.boxList, 'new')}
+          />
+        </ContentsBox>
+      )}
+    </>
   )
 }
 

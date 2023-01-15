@@ -12,7 +12,7 @@ import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 
 const initialState = {
-  number: '',
+  number: '1',
   titleJa: '',
   titleEn: '',
   composer: [''],
@@ -26,7 +26,7 @@ const initialState = {
   lackList: [''],
   lendLocate: '',
   scoreBased: '0',
-  label: '',
+  label: '000001',
   boxLabel: '',
   status: '',
   createdAt: '',
@@ -45,7 +45,7 @@ function assertArraysKey(key: keyof typeof initialState): asserts key is ArraysK
   throw Error('Not a arrays key')
 }
 
-const useScoreEdit = (scoreItem: ScoreItem | null) => {
+const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null) => {
   const [input, setInput] = useState(initialState)
 
   useEffect(() => {
@@ -53,6 +53,21 @@ const useScoreEdit = (scoreItem: ScoreItem | null) => {
       setInput(scoreItem)
     }
   }, [scoreItem])
+
+  useEffect(() => {
+    if (editMode === 'new') {
+      if (!scoreItem) {
+        return setInput(initialState)
+      } else {
+        const newNumber = parseInt(scoreItem.number) + 1
+        setInput({
+          ...initialState,
+          number: String(newNumber),
+          label: String(newNumber).padStart(6, '0'),
+        })
+      }
+    }
+  }, [editMode, scoreItem])
 
   const setValue = (value: string, key: keyof typeof initialState, arrayIndex?: number) => {
     if (['composer', 'arranger', 'lackList'].includes(key)) {
@@ -76,7 +91,7 @@ export const ScoreEditModal = () => {
   const { isOpen, onClose, scoreItem, boxList, editMode } = useScoreEditModalStore()
   const { displayPlayer } = useMediaStore()
 
-  const { input, setValue, addBlank } = useScoreEdit(scoreItem)
+  const { input, setValue, addBlank } = useScoreEdit(scoreItem, editMode)
 
   const editLoading = false
   const updateScoreEdit = () => console.log('updateScoreEdit')
