@@ -270,6 +270,19 @@
         }
       }
 
+      .contents-inner {
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+        // Chromeだけっぽい
+        // scroll-behavior: smooth;
+        will-change: scroll-position;
+        contain: size style layout;
+        // transform: translateZ(0); // Retinaスクロール対策
+      }
+
       .box-label {
         margin: 32px 0 11px;
         padding: 0 0 0 12px;

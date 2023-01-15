@@ -30,7 +30,7 @@ export const ScoreDetail = () => {
       <ScoreDetailStatus scoreItem={scoreDetailQuery.data.data} boxList={scoreDetailQuery.data.boxList} />
       {isScoreAdmin && (
         <ContentsButton
-          onClick={() => onOpen(scoreDetailQuery.data.data, 'editStatus')}
+          onClick={() => onOpen(scoreDetailQuery.data.data, scoreDetailQuery.data.boxList, 'editStatus')}
           label="状態を変更"
           icon={<EditIcon />}
         />
@@ -38,7 +38,7 @@ export const ScoreDetail = () => {
       <ContentsDetail scoreItem={scoreDetailQuery.data.data} />
       {isScoreAdmin && (
         <ContentsButton
-          onClick={() => onOpen(scoreDetailQuery.data.data, 'editDetail')}
+          onClick={() => onOpen(scoreDetailQuery.data.data, scoreDetailQuery.data.boxList, 'editDetail')}
           label="詳細情報を修正"
           icon={<EditIcon />}
         />
