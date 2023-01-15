@@ -7,6 +7,9 @@ import { ContentsBox, TitleFrame } from '../../../components/ContentsBox'
 import { useMediaStore } from '../../../stores/media'
 import { Input } from './Input'
 import { BoxItem } from '../../../types'
+import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
+import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
+import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 
 const initialState = {
   number: '',
@@ -84,15 +87,7 @@ export const ScoreEditModal = () => {
           </div>
           <div className={styles.title}>{editMode === 'new' ? '新しい楽譜を追加' : '楽譜の修正'}</div>
           <div className={styles.save} onClick={updateScoreEdit}>
-            {editLoading ? (
-              <span>
-                &nbsp;<i className="fas fa-spinner fa-pulse"></i>&nbsp;
-              </span>
-            ) : editMode === 'new' ? (
-              '追加'
-            ) : (
-              '修正'
-            )}
+            {editLoading ? <span>読み込み中...</span> : editMode === 'new' ? '追加' : '修正'}
           </div>
         </div>
 
@@ -110,21 +105,11 @@ export const ScoreEditModal = () => {
             <Info editMode={editMode} boxList={boxList} input={input} setValue={setValue} />
 
             <ContentsBox>
-              <div className={clsx(styles['score-edit-send'], styles[pc])}>
-                <div onClick={updateScoreEdit} className={styles['send-button']}>
-                  {editLoading ? (
-                    '読み込み中'
-                  ) : editMode === 'new' ? (
-                    <span>
-                      <i className="far fa-edit"></i>追加
-                    </span>
-                  ) : (
-                    <span>
-                      <i className="far fa-edit"></i>修正
-                    </span>
-                  )}
-                </div>
-              </div>
+              <ContentsButton
+                icon={<EditIcon />}
+                label={editMode === 'new' ? '追加' : '修正'}
+                onClick={updateScoreEdit}
+              />
             </ContentsBox>
 
             {displayPlayer && <div className={styles.gap}></div>}
@@ -180,7 +165,8 @@ const Base = ({
               )
             })}
             <div className={styles['add-data']} onClick={() => addBlank('composer')}>
-              <i className="fas fa-plus-circle"></i>作曲者を追加
+              <PlusIcon />
+              作曲者を追加
             </div>
             {input.arranger.map((arranger, index) => {
               return (
@@ -196,7 +182,8 @@ const Base = ({
               )
             })}
             <div className={styles['add-data']} onClick={() => addBlank('arranger')}>
-              <i className="fas fa-plus-circle"></i>編曲者を追加
+              <PlusIcon />
+              編曲者を追加
             </div>
             <Input
               label="出版社"
@@ -322,7 +309,8 @@ const Status = ({
                   />
                 ))}
                 <div className={styles['add-data']} onClick={() => addBlank('lackList')}>
-                  <i className="fas fa-plus-circle"></i>欠譜情報を追加
+                  <PlusIcon />
+                  欠譜情報を追加
                 </div>
               </div>
             )}
