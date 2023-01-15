@@ -1,23 +1,24 @@
+import clsx from 'clsx'
 import { ChangeEvent } from 'react'
 import styles from './Input.module.scss'
 
 export const Input = ({
   label,
   value,
-  inputClass,
-  className,
+  inputClassName,
+  multi,
   onChange,
 }: {
   label: string
   value: string
-  inputClass?: string
-  className?: string
+  inputClassName: string
+  multi?: boolean
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) => {
   return (
-    <div className={styles.input}>
+    <div className={clsx(styles.input, { [styles.multi]: multi })}>
       <label>{label}</label>
-      <input type="text" className={inputClass} value={value} onChange={onChange} />
+      <input type="text" className={inputClassName} value={value} onChange={onChange} />
       {/* {autoCorrect} */}
     </div>
   )

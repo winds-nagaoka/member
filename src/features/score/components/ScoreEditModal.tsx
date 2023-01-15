@@ -155,13 +155,13 @@ const Base = ({
             <Input
               label="タイトル(日本語)"
               value={input.titleJa}
-              inputClass="title-ja"
+              inputClassName={styles['title-ja']}
               onChange={(e) => setValue(e.target.value, 'titleJa')}
             />
             <Input
               label="タイトル(英語)"
               value={input.titleEn}
-              inputClass="title-en"
+              inputClassName={styles['title-en']}
               onChange={(e) => setValue(e.target.value, 'titleEn')}
             />
             {input.composer.map((composer, index) => {
@@ -170,8 +170,8 @@ const Base = ({
                   key={`composer-${index}`}
                   label={'作曲者' + (index + 1)}
                   value={composer}
-                  className="multi"
-                  inputClass="composer"
+                  inputClassName={styles.composer}
+                  multi={true}
                   onChange={(e) => setValue(e.target.value, 'composer', index)}
                 />
               )
@@ -185,8 +185,8 @@ const Base = ({
                   key={`arranger-${index}`}
                   label={'編曲者' + (index + 1)}
                   value={arranger}
-                  className="multi"
-                  inputClass="arranger"
+                  inputClassName={styles.arranger}
+                  multi={true}
                   onChange={(e) => setValue(e.target.value, 'arranger', index)}
                 />
               )
@@ -197,13 +197,13 @@ const Base = ({
             <Input
               label="出版社"
               value={input.publisher}
-              inputClass="publisher"
+              inputClassName={styles.publisher}
               onChange={(e) => setValue(e.target.value, 'publisher')}
             />
             <Input
               label="ジャンル"
               value={input.genre}
-              inputClass="genre"
+              inputClassName={styles.genre}
               onChange={(e) => setValue(e.target.value, 'genre')}
             />
           </div>
@@ -259,7 +259,7 @@ const Status = ({
               <Input
                 label="コピーメモ"
                 value={input.copyMemo}
-                inputClass="copied-from"
+                inputClassName={styles['copied-from']}
                 onChange={(e) => setValue(e.target.value, 'copyMemo')}
               />
             )}
@@ -308,8 +308,8 @@ const Status = ({
                     key={`lack-${index}`}
                     label={'欠譜' + (index + 1)}
                     value={lack}
-                    className="multi"
-                    inputClass="lack-list"
+                    inputClassName={styles['lack-list']}
+                    multi={true}
                     onChange={(e) => setValue(e.target.value, 'lackList', index)}
                   />
                 ))}
@@ -426,7 +426,7 @@ const Info = ({
               <Input
                 label="貸出先"
                 value={input.lendLocate}
-                className="lend"
+                inputClassName={styles.lend}
                 onChange={(e) => setValue(e.target.value, 'lendLocate')}
               />
             )}
