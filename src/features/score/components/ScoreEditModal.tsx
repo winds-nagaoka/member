@@ -10,8 +10,9 @@ import type { BoxItem, ScoreItem } from '../../../types'
 import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
+import { useUpdateScore } from '../api/updateScore'
 
-const initialState = {
+const initialState: ScoreItem = {
   number: '1',
   titleJa: '',
   titleEn: '',
@@ -46,7 +47,7 @@ function assertArraysKey(key: keyof typeof initialState): asserts key is ArraysK
 }
 
 const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null) => {
-  const [input, setInput] = useState(initialState)
+  const [input, setInput] = useState<ScoreItem>(initialState)
 
   useEffect(() => {
     if (scoreItem) {
@@ -92,9 +93,12 @@ export const ScoreEditModal = () => {
   const { displayPlayer } = useMediaStore()
 
   const { input, setValue, addBlank } = useScoreEdit(scoreItem, editMode)
+  const updateScoreMutation = useUpdateScore({ scoreItem: input })
 
-  const editLoading = false
-  const updateScoreEdit = () => console.log('updateScoreEdit')
+  const editLoading = updateScoreMutation.isLoading
+  const updateScoreEdit = () => {
+    updateScoreMutation.mutate()
+  }
 
   return (
     <div className={styles['score-edit-modal']}>

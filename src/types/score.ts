@@ -8,7 +8,7 @@ export type ScoreItem = {
   genre: string
   scoreType: '0' | '1' | '2'
   copyMemo: string
-  scoreStatus: '0' | '1' | '2'
+  scoreStatus: '0' | '1' | '2' | '-1'
   scoreLack: '0' | '1' | '2'
   lackList: string[]
   lendLocate: string
