@@ -10,7 +10,7 @@ import type { BoxItem, ScoreItem } from '../../../types'
 import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
-import { useUpdateScore } from '../api/updateScore'
+import { UpdateScoreData, useUpdateScore } from '../api/updateScore'
 
 const initialState: ScoreItem = {
   number: '1',
@@ -46,7 +46,15 @@ function assertArraysKey(key: keyof typeof initialState): asserts key is ArraysK
   throw Error('Not a arrays key')
 }
 
-const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null) => {
+type Return = {
+  input: ScoreItem
+  newScore: Omit<ScoreItem, 'createdAt' | 'updatedAt' | '_id'>
+  editScore: ScoreItem
+  setValue: (value: string, key: keyof typeof initialState, arrayIndex?: number) => void
+  addBlank: (key: ArraysKey) => void
+}
+
+const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null): Return => {
   const [input, setInput] = useState<ScoreItem>(initialState)
 
   useEffect(() => {
@@ -84,7 +92,9 @@ const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null) =>
     setInput((state) => ({ ...state, [key]: [...input[key], ''] }))
   }
 
-  return { input, setValue, addBlank }
+  const { createdAt, updatedAt, _id, ...newScore } = input
+  const editScore = input
+  return { input, newScore, editScore, setValue, addBlank }
 }
 
 export const ScoreEditModal = () => {
@@ -92,8 +102,12 @@ export const ScoreEditModal = () => {
   const { isOpen, onClose, scoreItem, boxList, editMode } = useScoreEditModalStore()
   const { displayPlayer } = useMediaStore()
 
-  const { input, setValue, addBlank } = useScoreEdit(scoreItem, editMode)
-  const updateScoreMutation = useUpdateScore({ scoreItem: input })
+  const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(scoreItem, editMode)
+  const composedScoreItem: UpdateScoreData =
+    editMode === 'new'
+      ? { mode: 'new', scoreItem: newScore }
+      : { mode: 'edit', id: editScore._id, scoreItem: editScore }
+  const updateScoreMutation = useUpdateScore(composedScoreItem)
 
   const editLoading = updateScoreMutation.isLoading
   const updateScoreEdit = () => {

@@ -4,16 +4,35 @@ import { fetchApi } from '../../../library/fetch'
 import type { ScoreItem } from '../../../types'
 import { getSession } from '../../../utilities/session'
 
-type UpdateScore = {
-  scoreItem: ScoreItem
-}
+export type UpdateScoreData =
+  | {
+      mode: 'new'
+      scoreItem: Omit<ScoreItem, 'createdAt' | 'updatedAt' | '_id'>
+    }
+  | {
+      mode: 'edit'
+      id: string
+      scoreItem: ScoreItem
+    }
 
 type Response = { status: boolean }
 
-const updateScore = ({ scoreItem }: UpdateScore): Promise<Response> => {
-  return fetchApi(`${SCORE_API_URL}/api/member/edit`, { session: getSession(), mode: 'new', data: scoreItem })
+const updateScore = ({ scoreItem, mode }: UpdateScoreData): Promise<Response> => {
+  console.log('updateScore', scoreItem)
+  return fetchApi(`${SCORE_API_URL}/api/member/edit`, { session: getSession(), mode, data: scoreItem })
 }
 
-export const useUpdateScore = (scoreItem: UpdateScore) => {
-  return useMutation(() => updateScore(scoreItem))
+export const useUpdateScore = (updateScoreData: UpdateScoreData) => {
+  return useMutation({
+    onMutate: () => {
+      console.log('onMutate')
+    },
+    onError: () => {
+      console.log('onError')
+    },
+    onSuccess: () => {
+      console.log('onSuccess')
+    },
+    mutationFn: async () => await updateScore(updateScoreData),
+  })
 }
