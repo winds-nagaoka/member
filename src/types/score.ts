@@ -29,3 +29,5 @@ export type BoxItem = {
   time: number
   _id: string
 }
+
+export type EditMode = 'new' | 'editStatus' | 'editDetail'

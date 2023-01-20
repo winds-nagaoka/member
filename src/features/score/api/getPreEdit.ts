@@ -1,8 +1,7 @@
 import { useQuery } from 'react-query'
 import { SCORE_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
-import { EditMode } from '../../../stores/scoreEditModal'
-import type { BoxItem, ScoreItem } from '../../../types'
+import type { BoxItem, ScoreItem, EditMode } from '../../../types'
 import { getSession } from '../../../utilities/session'
 
 export type PreEditApi = {

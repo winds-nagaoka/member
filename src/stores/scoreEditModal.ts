@@ -1,10 +1,8 @@
 import create from 'zustand'
-import type { BoxItem, ScoreItem } from '../types'
+import type { BoxItem, ScoreItem, EditMode } from '../types'
 
 // モーダルの開閉時間
 const MODAL_DURATION = 200
-
-export type EditMode = 'new' | 'editStatus' | 'editDetail'
 
 type LatestScoreItem = ScoreItem
 
