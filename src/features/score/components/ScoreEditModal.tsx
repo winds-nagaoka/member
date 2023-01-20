@@ -32,7 +32,6 @@ const initialState: ScoreItem = {
   status: '',
   createdAt: '',
   updatedAt: '',
-  _id: '',
 }
 
 type InputType = typeof initialState
@@ -92,7 +91,7 @@ const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null): R
     setInput((state) => ({ ...state, [key]: [...input[key], ''] }))
   }
 
-  const { createdAt, updatedAt, _id, ...newScore } = input
+  const { createdAt, updatedAt, ...newScore } = input
   const editScore = input
   return { input, newScore, editScore, setValue, addBlank }
 }
@@ -104,9 +103,7 @@ export const ScoreEditModal = () => {
 
   const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(scoreItem, editMode)
   const composedScoreItem: UpdateScoreData =
-    editMode === 'new'
-      ? { mode: 'new', scoreItem: newScore }
-      : { mode: 'edit', id: editScore._id, scoreItem: editScore }
+    editMode === 'new' ? { mode: 'new', scoreItem: newScore } : { mode: 'edit', id: '', scoreItem: editScore }
   const updateScoreMutation = useUpdateScore(composedScoreItem)
 
   const editLoading = updateScoreMutation.isLoading

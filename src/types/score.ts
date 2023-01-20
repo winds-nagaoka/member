@@ -18,7 +18,7 @@ export type ScoreItem = {
   status: string
   createdAt: string
   updatedAt: string
-  _id: string
+  _id?: string
 }
 
 export type BoxItem = {

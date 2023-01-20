@@ -46,8 +46,10 @@ const AutoCorrect = ({
     const currentValue = current[target]
     if (Array.isArray(currentValue)) {
       return [...previous, ...currentValue.filter((cur) => !previous.includes(cur))]
-    } else {
+    } else if (typeof currentValue === 'string') {
       return !previous.includes(currentValue) ? [...previous, currentValue] : previous
+    } else {
+      return previous
     }
   }, [] as string[])
 
