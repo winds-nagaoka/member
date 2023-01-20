@@ -1,29 +1,24 @@
 import create from 'zustand'
-import type { BoxItem, ScoreItem, EditMode } from '../types'
+import type { EditMode } from '../types'
 
 // モーダルの開閉時間
 const MODAL_DURATION = 200
 
-type LatestScoreItem = ScoreItem
-
 type ScoreEditModalStore = {
   isOpen: boolean
-  onOpen: (scoreItem: ScoreItem | LatestScoreItem | null, boxList: BoxItem[], editMode: EditMode) => void
+  onOpen: (editMode: EditMode, scoreId: string | null) => void
   onClose: () => void
-  scoreItem: ScoreItem | LatestScoreItem | null
-  boxList: BoxItem[]
   editMode: EditMode | null
+  scoreId: string | null
 }
 
 export const useScoreEditModalStore = create<ScoreEditModalStore>((set) => ({
   isOpen: false,
-  onOpen: (scoreItem, boxList, editMode) => set((state) => ({ ...state, isOpen: true, scoreItem, boxList, editMode })),
+  onOpen: (editMode, scoreId) => set((state) => ({ ...state, isOpen: true, editMode, scoreId })),
   onClose: () => {
     set((state) => ({ ...state, isOpen: false }))
     setTimeout(() => set((state) => ({ ...state, scoreItem: null })), MODAL_DURATION)
   },
-  id: null,
-  scoreItem: null,
-  boxList: [],
   editMode: null,
+  scoreId: null,
 }))

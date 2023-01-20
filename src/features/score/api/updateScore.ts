@@ -22,7 +22,7 @@ const updateScore = ({ scoreItem, mode }: UpdateScoreData): Promise<Response> =>
   return fetchApi(`${SCORE_API_URL}/api/member/edit`, { session: getSession(), mode, data: scoreItem })
 }
 
-export const useUpdateScore = (updateScoreData: UpdateScoreData) => {
+export const useUpdateScore = () => {
   return useMutation({
     onMutate: () => {
       console.log('onMutate')
@@ -33,6 +33,6 @@ export const useUpdateScore = (updateScoreData: UpdateScoreData) => {
     onSuccess: () => {
       console.log('onSuccess')
     },
-    mutationFn: async () => await updateScore(updateScoreData),
+    mutationFn: async (updateScoreData: UpdateScoreData) => await updateScore(updateScoreData),
   })
 }

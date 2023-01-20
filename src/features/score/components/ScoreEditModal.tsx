@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
 import { useStyle } from '../../../utilities/useStyle'
 import styles from './ScoreEditModal.module.scss'
-import { ContentsBox, TitleFrame } from '../../../components/ContentsBox'
+import { ContentsBox, ContentsLoading, TitleFrame } from '../../../components/ContentsBox'
 import { useMediaStore } from '../../../stores/media'
 import { Input } from './Input'
 import type { BoxItem, ScoreItem, EditMode } from '../../../types'
@@ -11,6 +11,7 @@ import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { UpdateScoreData, useUpdateScore } from '../api/updateScore'
+import { usePreEdit } from '../api/getPreEdit'
 
 const initialState: ScoreItem = {
   number: '1',
@@ -53,7 +54,11 @@ type Return = {
   addBlank: (key: ArraysKey) => void
 }
 
-const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null): Return => {
+const useScoreEdit = (
+  editMode: EditMode | null,
+  scoreItem: ScoreItem | null,
+  latestScoreItem: ScoreItem | null
+): Return => {
   const [input, setInput] = useState<ScoreItem>(initialState)
 
   useEffect(() => {
@@ -63,19 +68,15 @@ const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null): R
   }, [scoreItem])
 
   useEffect(() => {
-    if (editMode === 'new') {
-      if (!scoreItem) {
-        return setInput(initialState)
-      } else {
-        const newNumber = parseInt(scoreItem.number) + 1
-        setInput({
-          ...initialState,
-          number: String(newNumber),
-          label: String(newNumber).padStart(6, '0'),
-        })
+    if (editMode === 'new' && !scoreItem && latestScoreItem) {
+      const editScore = {
+        ...initialState,
+        number: String(parseInt(latestScoreItem.number) + 1),
+        label: String(parseInt(latestScoreItem.number) + 1).padStart(6, '0'),
       }
+      return setInput(editScore)
     }
-  }, [editMode, scoreItem])
+  }, [editMode, scoreItem, latestScoreItem])
 
   const setValue = (value: string, key: keyof typeof initialState, arrayIndex?: number) => {
     if (['composer', 'arranger', 'lackList'].includes(key)) {
@@ -98,17 +99,13 @@ const useScoreEdit = (scoreItem: ScoreItem | null, editMode: EditMode | null): R
 
 export const ScoreEditModal = () => {
   const pc = useStyle()
-  const { isOpen, onClose, scoreItem, boxList, editMode } = useScoreEditModalStore()
-  const { displayPlayer } = useMediaStore()
-
-  const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(scoreItem, editMode)
-  const composedScoreItem: UpdateScoreData =
-    editMode === 'new' ? { mode: 'new', scoreItem: newScore } : { mode: 'edit', id: '', scoreItem: editScore }
-  const updateScoreMutation = useUpdateScore(composedScoreItem)
+  const { isOpen, onClose, editMode } = useScoreEditModalStore()
+  const updateScoreMutation = useUpdateScore()
 
   const editLoading = updateScoreMutation.isLoading
+
   const updateScoreEdit = () => {
-    updateScoreMutation.mutate()
+    console.log('updateScoreEdit')
   }
 
   return (
@@ -130,33 +127,75 @@ export const ScoreEditModal = () => {
           //   !this.props.editModalRef ? this.props.setEditModalRef(i) : false
           // }}
         >
-          <div className={styles['contents-inner']}>
-            {(editMode === 'editDetail' || editMode === 'new') && (
-              <Base input={input} setValue={setValue} addBlank={addBlank} />
-            )}
-
-            {(editMode === 'editDetail' || editMode === 'new') && (
-              <Status input={input} setValue={setValue} addBlank={addBlank} />
-            )}
-
-            {(editMode === 'editStatus' || editMode === 'new') && (
-              <Info editMode={editMode} boxList={boxList} input={input} setValue={setValue} />
-            )}
-
-            <ContentsBox>
-              <ContentsButton
-                icon={<EditIcon />}
-                label={editMode === 'new' ? '追加' : '修正'}
-                onClick={updateScoreEdit}
-              />
-            </ContentsBox>
-
-            {displayPlayer && <div className={styles.gap}></div>}
-          </div>
+          <ContentsContainer updateScoreMutation={updateScoreMutation} />
         </div>
       </div>
 
       <div className={clsx(styles['score-edit-modal-background'], { [styles.open]: isOpen })} onClick={onClose}></div>
+    </div>
+  )
+}
+
+const ContentsContainer = ({ updateScoreMutation }: { updateScoreMutation: ReturnType<typeof useUpdateScore> }) => {
+  const { editMode, scoreId } = useScoreEditModalStore()
+
+  const scorePreEditQuery = usePreEdit(editMode, scoreId || false)
+  if (scorePreEditQuery.isLoading) {
+    return <ContentsLoading />
+  }
+  if (!scorePreEditQuery.data) {
+    return null
+  }
+
+  const { data, latest, boxList } = scorePreEditQuery.data
+
+  return (
+    <Contents data={data || null} latest={latest || null} boxList={boxList} updateScoreMutation={updateScoreMutation} />
+  )
+}
+
+const Contents = ({
+  data,
+  latest,
+  boxList,
+  updateScoreMutation,
+}: {
+  data: ScoreItem | null
+  latest: ScoreItem | null
+  boxList: BoxItem[]
+  updateScoreMutation: ReturnType<typeof useUpdateScore>
+}) => {
+  const { editMode } = useScoreEditModalStore()
+
+  const { displayPlayer } = useMediaStore()
+
+  const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(editMode, data, latest)
+  const composedScoreItem: UpdateScoreData =
+    editMode === 'new' ? { mode: 'new', scoreItem: newScore } : { mode: 'edit', id: '', scoreItem: editScore }
+
+  const updateScoreEdit = () => {
+    updateScoreMutation.mutate(composedScoreItem)
+  }
+
+  return (
+    <div className={styles['contents-inner']}>
+      {(editMode === 'editDetail' || editMode === 'new') && (
+        <Base input={input} setValue={setValue} addBlank={addBlank} />
+      )}
+
+      {(editMode === 'editDetail' || editMode === 'new') && (
+        <Status input={input} setValue={setValue} addBlank={addBlank} />
+      )}
+
+      {(editMode === 'editStatus' || editMode === 'new') && (
+        <Info editMode={editMode} boxList={boxList} input={input} setValue={setValue} />
+      )}
+
+      <ContentsBox>
+        <ContentsButton icon={<EditIcon />} label={editMode === 'new' ? '追加' : '修正'} onClick={updateScoreEdit} />
+      </ContentsBox>
+
+      {displayPlayer && <div className={styles.gap}></div>}
     </div>
   )
 }

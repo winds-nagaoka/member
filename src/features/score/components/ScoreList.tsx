@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { UseQueryResult } from 'react-query'
 import clsx from 'clsx'
-import { ContentsBox, ContentsLoading, Loading } from '../../../components/ContentsBox'
+import { ContentsBox, Loading } from '../../../components/ContentsBox'
 import { ScoreListApi, useScoreList } from '../api/getScoreList'
 import { ReactComponent as SearchIcon } from '../../../assets/search.svg'
 import { ReactComponent as CloseIcon } from '../../../assets/close-circle.svg'
@@ -12,7 +12,6 @@ import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import styles from './ScoreList.module.scss'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { useAuth } from '../../../library/auth'
-import { usePreEdit } from '../api/getPreEdit'
 import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
 
 const LOAD_MORE = 10
@@ -26,7 +25,6 @@ export const ScoreList = () => {
   const [loadMore, setLoadMore] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const scoreListQuery = useScoreList(searchQuery)
-  const scorePreEditQuery = usePreEdit('new')
 
   return (
     <>
@@ -49,14 +47,9 @@ export const ScoreList = () => {
         </div>
       </ContentsBox>
 
-      {scorePreEditQuery.isLoading && <ContentsLoading />}
-      {isScoreAdmin && scorePreEditQuery.data && (
+      {isScoreAdmin && (
         <ContentsBox>
-          <ContentsButton
-            icon={<EditIcon />}
-            label="新しい楽譜を追加"
-            onClick={() => onOpen(scorePreEditQuery.data.latest || null, scorePreEditQuery.data.boxList, 'new')}
-          />
+          <ContentsButton icon={<EditIcon />} label="新しい楽譜を追加" onClick={() => onOpen('new', null)} />
         </ContentsBox>
       )}
     </>

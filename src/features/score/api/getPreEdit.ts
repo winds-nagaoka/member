@@ -11,11 +11,11 @@ export type PreEditApi = {
   latest?: ScoreItem
 }
 
-const getPreEdit = async (mode: EditMode | null, id: string | undefined): Promise<PreEditApi> => {
+const getPreEdit = async (mode: EditMode | null, id: string | false): Promise<PreEditApi> => {
   return await fetchApi(`${SCORE_API_URL}/api/member/edit/pre`, { session: getSession(), mode, id })
 }
 
-export const usePreEdit = (mode: EditMode | null, id?: string | undefined) => {
+export const usePreEdit = (mode: EditMode | null, id: string | false) => {
   return useQuery({
     queryKey: ['preEdit', mode, id],
     queryFn: async () => await getPreEdit(mode, id),
