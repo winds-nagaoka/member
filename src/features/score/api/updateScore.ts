@@ -2,6 +2,7 @@ import { useMutation } from 'react-query'
 import { SCORE_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
 import { useNotificationStore } from '../../../stores/notification'
+import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
 import type { ScoreItem } from '../../../types'
 import { getSession } from '../../../utilities/session'
 
@@ -45,6 +46,7 @@ const updateScore = async (updateScoreData: UpdateScoreData): Promise<UpdateScor
 
 export const useUpdateScore = () => {
   const { addNotification } = useNotificationStore()
+  const { onClose } = useScoreEditModalStore()
 
   return useMutation({
     onMutate: () => {
@@ -56,6 +58,7 @@ export const useUpdateScore = () => {
     onSuccess: (result) => {
       console.log('onSuccess')
       addNotification(result.mode === 'new' ? '新しい楽譜を追加しました' : '楽譜情報を修正しました')
+      onClose()
     },
     mutationFn: async (updateScoreData: UpdateScoreData) => await updateScore(updateScoreData),
   })
