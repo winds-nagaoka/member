@@ -28,7 +28,6 @@ type UpdateScoreReturn = {
 
 const updateScore = async (updateScoreData: UpdateScoreData): Promise<UpdateScoreReturn> => {
   const { mode, scoreItem } = updateScoreData
-  console.log('updateScore', scoreItem)
   if (updateScoreData.mode === 'new') {
     const response = await fetchApi(`${SCORE_API_URL}/api/member/edit`, {
       session: getSession(),
@@ -59,7 +58,10 @@ export const useUpdateScore = () => {
         const previousScoreList = queryClient.getQueryData<ScoreListApi>(['scoreList', ''])
         queryClient.setQueryData(['scoreList', ''], {
           ...previousScoreList,
-          list: [...(previousScoreList?.list || []), updateScoreData.scoreItem],
+          list: [
+            ...(previousScoreList?.list || []),
+            { ...updateScoreData.scoreItem, _id: updateScoreData.scoreItem.label },
+          ],
         })
         return { previousScoreList }
       } else {
@@ -79,7 +81,6 @@ export const useUpdateScore = () => {
       console.log('onError')
     },
     onSuccess: (result) => {
-      console.log('onSuccess')
       onClose()
       if (result.mode === 'new') {
         queryClient.invalidateQueries(['scoreList', ''])
