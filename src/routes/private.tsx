@@ -9,6 +9,7 @@ import { PhotoModal } from '../features/archive/components/PhotoModal'
 import { ScoreRoutes } from '../features/score'
 import { ScoreModal } from '../features/score/components/ScoreModal'
 import { ScoreEditModal } from '../features/score/components/ScoreEditModal'
+import { ScoreBoxModal } from '../features/score/components/BoxModal'
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
       <PhotoModal />
       <ScoreModal />
       <ScoreEditModal />
+      <ScoreBoxModal />
     </Suspense>
   )
 }

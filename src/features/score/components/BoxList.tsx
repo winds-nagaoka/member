@@ -3,9 +3,11 @@ import { ContentsBox, ContentsLoading } from '../../../components/ContentsBox'
 import { useBoxList } from '../api/getBoxList'
 import styles from './BoxList.module.scss'
 import { ReactComponent as BoxIcon } from '../../../assets/box.svg'
+import { useScoreBoxModalStore } from '../../../stores/scoreBoxModal'
 
 export const BoxList = () => {
   const boxListQuery = useBoxList()
+  const { onOpen } = useScoreBoxModalStore()
 
   if (boxListQuery.isLoading) {
     return <ContentsLoading />
@@ -27,9 +29,7 @@ export const BoxList = () => {
             <div
               key={`score-box-${box._id}`}
               className={clsx(styles['score-box'], { [styles.disabled]: !box.status })}
-              onClick={() => {
-                // this.props.setDisplayBoxModal(true, each)
-              }}
+              onClick={() => onOpen(box)}
             >
               <div className="label">
                 <span>{box.label}</span>
