@@ -111,13 +111,17 @@ const useScoreEdit = (
 
 export const ScoreEditModal = () => {
   const pc = useStyle()
-  const { isOpen, onClose, editMode } = useScoreEditModalStore()
+  const { isOpen, onClose, editMode, scoreId } = useScoreEditModalStore()
   const updateScoreMutation = useUpdateScore()
 
-  const editLoading = updateScoreMutation.isLoading
+  const scorePreEditQuery = usePreEdit(editMode, scoreId || false)
+
+  const { data, latest, boxList } = scorePreEditQuery.data || { data: undefined, latest: undefined, boxList: [] }
+
+  const inputState = useScoreEdit(editMode, data || null, latest || null, boxList, scoreId)
 
   const updateScoreEdit = () => {
-    console.log('updateScoreEdit')
+    updateScoreMutation.mutate(inputState.composedScoreItem)
   }
 
   return (
@@ -129,7 +133,7 @@ export const ScoreEditModal = () => {
           </div>
           <div className={styles.title}>{editMode === 'new' ? '新しい楽譜を追加' : '楽譜の修正'}</div>
           <div className={styles.save} onClick={updateScoreEdit}>
-            {editLoading ? <span>読み込み中...</span> : editMode === 'new' ? '追加' : '修正'}
+            {updateScoreMutation.isLoading ? <span>読み込み中...</span> : editMode === 'new' ? '追加' : '修正'}
           </div>
         </div>
 
@@ -139,7 +143,17 @@ export const ScoreEditModal = () => {
           //   !this.props.editModalRef ? this.props.setEditModalRef(i) : false
           // }}
         >
-          {isOpen && <ContentsContainer updateScoreMutation={updateScoreMutation} />}
+          {scorePreEditQuery.isLoading && <ContentsLoading />}
+          {!scorePreEditQuery.isLoading && (
+            <Contents
+              data={data || null}
+              latest={latest || null}
+              boxList={boxList}
+              updateScoreMutation={updateScoreMutation}
+              inputState={inputState}
+              updateScoreEdit={updateScoreEdit}
+            />
+          )}
         </div>
       </div>
 
@@ -148,43 +162,24 @@ export const ScoreEditModal = () => {
   )
 }
 
-const ContentsContainer = ({ updateScoreMutation }: { updateScoreMutation: ReturnType<typeof useUpdateScore> }) => {
-  const { editMode, scoreId } = useScoreEditModalStore()
-
-  const scorePreEditQuery = usePreEdit(editMode, scoreId || false)
-  if (scorePreEditQuery.isLoading) {
-    return <ContentsLoading />
-  }
-  if (!scorePreEditQuery.data) {
-    return null
-  }
-
-  const { data, latest, boxList } = scorePreEditQuery.data
-
-  return (
-    <Contents data={data || null} latest={latest || null} boxList={boxList} updateScoreMutation={updateScoreMutation} />
-  )
-}
-
 const Contents = ({
   data,
   latest,
   boxList,
   updateScoreMutation,
+  inputState,
+  updateScoreEdit,
 }: {
   data: ScoreItem | null
   latest: ScoreItem | null
   boxList: BoxItem[]
   updateScoreMutation: ReturnType<typeof useUpdateScore>
+  inputState: ReturnType<typeof useScoreEdit>
+  updateScoreEdit: () => void
 }) => {
-  const { editMode, scoreId } = useScoreEditModalStore()
+  const { editMode } = useScoreEditModalStore()
   const { displayPlayer } = useMediaStore()
-
-  const { input, composedScoreItem, setValue, addBlank } = useScoreEdit(editMode, data, latest, boxList, scoreId)
-
-  const updateScoreEdit = () => {
-    updateScoreMutation.mutate(composedScoreItem)
-  }
+  const { input, setValue, addBlank } = inputState
 
   return (
     <div className={styles['contents-inner']}>
