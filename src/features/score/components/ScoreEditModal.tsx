@@ -70,34 +70,9 @@ function assertArraysKey(key: keyof typeof initialState): asserts key is ArraysK
   throw Error('Not a arrays key')
 }
 
-// 既存データを編集後にpostするための型
-type ScoreEditComposed = {
-  number: string
-  titleJa: string
-  titleEn: string
-  composer: string[]
-  arranger: string[]
-  publisher: string
-  genre: string
-  scoreType: '0' | '1' | '2'
-  copyMemo: string
-  scoreStatus: '0' | '1' | '2' | '-1'
-  scoreLack: '0' | '1' | '2'
-  lackList: string[]
-  lendLocate: string
-  scoreBased: '0' | '1' | '2'
-  label: string
-  boxLabel: string
-  status: string
-  createdAt: string
-  updatedAt: string
-  _id: string
-}
-
 type ScoreEditState = {
   input: ScoreEdit
-  newScore: Omit<ScoreItem, 'createdAt' | 'updatedAt' | '_id'>
-  editScore: ScoreEditComposed
+  composedScoreItem: UpdateScoreData
   setValue: (value: string, key: keyof typeof initialState, arrayIndex?: number) => void
   addBlank: (key: ArraysKey) => void
 }
@@ -106,7 +81,8 @@ const useScoreEdit = (
   editMode: EditMode | null,
   scoreItem: ScoreItem | null,
   latestScoreItem: ScoreItem | null,
-  boxList: BoxItem[]
+  boxList: BoxItem[],
+  scoreId: string | null
 ): ScoreEditState => {
   const [input, setInput] = useState<ScoreEdit>(initialState)
 
@@ -149,7 +125,12 @@ const useScoreEdit = (
   const { createdAt, updatedAt, ...rest } = input
   const newScore = { ...rest, number: String(rest.number) }
   const editScore = { createdAt: '', updatedAt: '', _id: '', ...input, number: String(input.number) }
-  return { input, newScore, editScore, setValue, addBlank }
+  const composedScoreItem: UpdateScoreData =
+    editMode === 'new'
+      ? { mode: 'new', scoreItem: newScore }
+      : { mode: 'edit', id: scoreId || '', scoreItem: editScore }
+
+  return { input, composedScoreItem, setValue, addBlank }
 }
 
 export const ScoreEditModal = () => {
@@ -223,11 +204,7 @@ const Contents = ({
   const { editMode, scoreId } = useScoreEditModalStore()
   const { displayPlayer } = useMediaStore()
 
-  const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(editMode, data, latest, boxList)
-  const composedScoreItem: UpdateScoreData =
-    editMode === 'new'
-      ? { mode: 'new', scoreItem: newScore }
-      : { mode: 'edit', id: scoreId || '', scoreItem: editScore }
+  const { input, composedScoreItem, setValue, addBlank } = useScoreEdit(editMode, data, latest, boxList, scoreId)
 
   const updateScoreEdit = () => {
     updateScoreMutation.mutate(composedScoreItem)
