@@ -17,9 +17,15 @@ export type UpdateScoreData =
 
 type Response = { status: boolean }
 
-const updateScore = ({ scoreItem, mode }: UpdateScoreData): Promise<Response> => {
+const updateScore = (updateScoreData: UpdateScoreData): Promise<Response> => {
+  const { mode, scoreItem } = updateScoreData
   console.log('updateScore', scoreItem)
-  return fetchApi(`${SCORE_API_URL}/api/member/edit`, { session: getSession(), mode, data: scoreItem })
+  if (updateScoreData.mode === 'new') {
+    return fetchApi(`${SCORE_API_URL}/api/member/edit`, { session: getSession(), mode, data: scoreItem })
+  } else {
+    const { id } = updateScoreData
+    return fetchApi(`${SCORE_API_URL}/api/member/edit`, { session: getSession(), mode, id, data: scoreItem })
+  }
 }
 
 export const useUpdateScore = () => {

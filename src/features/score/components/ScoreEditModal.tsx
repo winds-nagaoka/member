@@ -220,12 +220,14 @@ const Contents = ({
   boxList: BoxItem[]
   updateScoreMutation: ReturnType<typeof useUpdateScore>
 }) => {
-  const { editMode } = useScoreEditModalStore()
+  const { editMode, scoreId } = useScoreEditModalStore()
   const { displayPlayer } = useMediaStore()
 
   const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(editMode, data, latest, boxList)
   const composedScoreItem: UpdateScoreData =
-    editMode === 'new' ? { mode: 'new', scoreItem: newScore } : { mode: 'edit', id: '', scoreItem: editScore }
+    editMode === 'new'
+      ? { mode: 'new', scoreItem: newScore }
+      : { mode: 'edit', id: scoreId || '', scoreItem: editScore }
 
   const updateScoreEdit = () => {
     updateScoreMutation.mutate(composedScoreItem)
