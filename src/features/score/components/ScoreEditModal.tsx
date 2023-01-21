@@ -13,8 +13,32 @@ import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { UpdateScoreData, useUpdateScore } from '../api/updateScore'
 import { usePreEdit } from '../api/getPreEdit'
 
-const initialState: ScoreItem = {
-  number: '1',
+// 編集中の楽譜の型(新規と既存共通)
+type ScoreEdit = {
+  number: string | number
+  titleJa: string
+  titleEn: string
+  composer: string[]
+  arranger: string[]
+  publisher: string
+  genre: string
+  scoreType: '0' | '1' | '2'
+  copyMemo: string
+  scoreStatus: '0' | '1' | '2' | '-1'
+  scoreLack: '0' | '1' | '2'
+  lackList: string[]
+  lendLocate: string
+  scoreBased: '0' | '1' | '2'
+  label: string
+  boxLabel: string
+  status: string
+  createdAt?: string
+  updatedAt?: string
+  _id?: string
+}
+
+const initialState: ScoreEdit = {
+  number: 1,
   titleJa: '',
   titleEn: '',
   composer: [''],
@@ -46,10 +70,34 @@ function assertArraysKey(key: keyof typeof initialState): asserts key is ArraysK
   throw Error('Not a arrays key')
 }
 
+// 既存データを編集後にpostするための型
+type ScoreEditComposed = {
+  number: string
+  titleJa: string
+  titleEn: string
+  composer: string[]
+  arranger: string[]
+  publisher: string
+  genre: string
+  scoreType: '0' | '1' | '2'
+  copyMemo: string
+  scoreStatus: '0' | '1' | '2' | '-1'
+  scoreLack: '0' | '1' | '2'
+  lackList: string[]
+  lendLocate: string
+  scoreBased: '0' | '1' | '2'
+  label: string
+  boxLabel: string
+  status: string
+  createdAt: string
+  updatedAt: string
+  _id: string
+}
+
 type ScoreEditState = {
-  input: ScoreItem
+  input: ScoreEdit
   newScore: Omit<ScoreItem, 'createdAt' | 'updatedAt' | '_id'>
-  editScore: ScoreItem
+  editScore: ScoreEditComposed
   setValue: (value: string, key: keyof typeof initialState, arrayIndex?: number) => void
   addBlank: (key: ArraysKey) => void
 }
@@ -60,7 +108,7 @@ const useScoreEdit = (
   latestScoreItem: ScoreItem | null,
   boxList: BoxItem[]
 ): ScoreEditState => {
-  const [input, setInput] = useState<ScoreItem>(initialState)
+  const [input, setInput] = useState<ScoreEdit>(initialState)
 
   useEffect(() => {
     if (scoreItem) {
@@ -73,7 +121,7 @@ const useScoreEdit = (
       if (boxList.length !== 0) {
         const editScore = {
           ...initialState,
-          number: String(parseInt(latestScoreItem.number) + 1),
+          number: parseInt(latestScoreItem.number) + 1,
           label: String(parseInt(latestScoreItem.number) + 1).padStart(6, '0'),
           boxLabel: boxList[boxList.length - 1].label,
         }
@@ -98,8 +146,9 @@ const useScoreEdit = (
     setInput((state) => ({ ...state, [key]: [...input[key], ''] }))
   }
 
-  const { createdAt, updatedAt, ...newScore } = input
-  const editScore = input
+  const { createdAt, updatedAt, ...rest } = input
+  const newScore = { ...rest, number: String(rest.number) }
+  const editScore = { createdAt: '', updatedAt: '', _id: '', ...input, number: String(input.number) }
   return { input, newScore, editScore, setValue, addBlank }
 }
 
@@ -133,7 +182,7 @@ export const ScoreEditModal = () => {
           //   !this.props.editModalRef ? this.props.setEditModalRef(i) : false
           // }}
         >
-          <ContentsContainer updateScoreMutation={updateScoreMutation} />
+          {isOpen && <ContentsContainer updateScoreMutation={updateScoreMutation} />}
         </div>
       </div>
 
