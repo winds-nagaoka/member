@@ -80,8 +80,16 @@ export const useUpdateScore = () => {
     },
     onSuccess: (result) => {
       console.log('onSuccess')
-      addNotification(result.mode === 'new' ? '新しい楽譜を追加しました' : '楽譜情報を修正しました')
       onClose()
+      if (result.mode === 'new') {
+        queryClient.invalidateQueries(['scoreList', ''])
+        queryClient.invalidateQueries(['preEdit', 'new', false])
+        addNotification('新しい楽譜を追加しました')
+      } else {
+        queryClient.invalidateQueries(['scoreDetail', result.id])
+        queryClient.invalidateQueries(['preEdit', 'edit', result.id])
+        addNotification('楽譜情報を修正しました')
+      }
     },
     mutationFn: async (updateScoreData: UpdateScoreData) => await updateScore(updateScoreData),
   })
