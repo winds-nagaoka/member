@@ -46,7 +46,7 @@ function assertArraysKey(key: keyof typeof initialState): asserts key is ArraysK
   throw Error('Not a arrays key')
 }
 
-type Return = {
+type ScoreEditState = {
   input: ScoreItem
   newScore: Omit<ScoreItem, 'createdAt' | 'updatedAt' | '_id'>
   editScore: ScoreItem
@@ -57,8 +57,9 @@ type Return = {
 const useScoreEdit = (
   editMode: EditMode | null,
   scoreItem: ScoreItem | null,
-  latestScoreItem: ScoreItem | null
-): Return => {
+  latestScoreItem: ScoreItem | null,
+  boxList: BoxItem[]
+): ScoreEditState => {
   const [input, setInput] = useState<ScoreItem>(initialState)
 
   useEffect(() => {
@@ -69,14 +70,19 @@ const useScoreEdit = (
 
   useEffect(() => {
     if (editMode === 'new' && !scoreItem && latestScoreItem) {
-      const editScore = {
-        ...initialState,
-        number: String(parseInt(latestScoreItem.number) + 1),
-        label: String(parseInt(latestScoreItem.number) + 1).padStart(6, '0'),
+      if (boxList.length !== 0) {
+        const editScore = {
+          ...initialState,
+          number: String(parseInt(latestScoreItem.number) + 1),
+          label: String(parseInt(latestScoreItem.number) + 1).padStart(6, '0'),
+          boxLabel: boxList[boxList.length - 1].label,
+        }
+        return setInput(editScore)
+      } else {
+        console.log('箱がありません')
       }
-      return setInput(editScore)
     }
-  }, [editMode, scoreItem, latestScoreItem])
+  }, [editMode, scoreItem, latestScoreItem, boxList])
 
   const setValue = (value: string, key: keyof typeof initialState, arrayIndex?: number) => {
     if (['composer', 'arranger', 'lackList'].includes(key)) {
@@ -166,10 +172,9 @@ const Contents = ({
   updateScoreMutation: ReturnType<typeof useUpdateScore>
 }) => {
   const { editMode } = useScoreEditModalStore()
-
   const { displayPlayer } = useMediaStore()
 
-  const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(editMode, data, latest)
+  const { input, newScore, editScore, setValue, addBlank } = useScoreEdit(editMode, data, latest, boxList)
   const composedScoreItem: UpdateScoreData =
     editMode === 'new' ? { mode: 'new', scoreItem: newScore } : { mode: 'edit', id: '', scoreItem: editScore }
 
