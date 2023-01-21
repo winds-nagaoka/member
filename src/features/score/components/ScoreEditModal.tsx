@@ -11,7 +11,8 @@ import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { UpdateScoreData, useUpdateScore } from '../api/updateScore'
-import { usePreEdit } from '../api/getPreEdit'
+import { PreEditApi, usePreEdit } from '../api/getPreEdit'
+import { UseQueryResult } from 'react-query'
 
 const initialState: ScoreEdit = {
   number: 1,
@@ -116,9 +117,13 @@ export const ScoreEditModal = () => {
 
   const scorePreEditQuery = usePreEdit(editMode, scoreId || false)
 
-  const { data, latest, boxList } = scorePreEditQuery.data || { data: undefined, latest: undefined, boxList: [] }
-
-  const inputState = useScoreEdit(editMode, data || null, latest || null, boxList, scoreId)
+  const inputState = useScoreEdit(
+    editMode,
+    scorePreEditQuery.data?.data || null,
+    scorePreEditQuery.data?.latest || null,
+    scorePreEditQuery.data?.boxList || [],
+    scoreId
+  )
 
   const updateScoreEdit = () => {
     updateScoreMutation.mutate(inputState.composedScoreItem)
@@ -145,14 +150,7 @@ export const ScoreEditModal = () => {
         >
           {scorePreEditQuery.isLoading && <ContentsLoading />}
           {!scorePreEditQuery.isLoading && (
-            <Contents
-              data={data || null}
-              latest={latest || null}
-              boxList={boxList}
-              updateScoreMutation={updateScoreMutation}
-              inputState={inputState}
-              updateScoreEdit={updateScoreEdit}
-            />
+            <Contents scorePreEditQuery={scorePreEditQuery} inputState={inputState} updateScoreEdit={updateScoreEdit} />
           )}
         </div>
       </div>
@@ -163,17 +161,11 @@ export const ScoreEditModal = () => {
 }
 
 const Contents = ({
-  data,
-  latest,
-  boxList,
-  updateScoreMutation,
+  scorePreEditQuery,
   inputState,
   updateScoreEdit,
 }: {
-  data: ScoreItem | null
-  latest: ScoreItem | null
-  boxList: BoxItem[]
-  updateScoreMutation: ReturnType<typeof useUpdateScore>
+  scorePreEditQuery: UseQueryResult<PreEditApi>
   inputState: ReturnType<typeof useScoreEdit>
   updateScoreEdit: () => void
 }) => {
@@ -192,7 +184,7 @@ const Contents = ({
       )}
 
       {(editMode === 'editStatus' || editMode === 'new') && (
-        <Info editMode={editMode} boxList={boxList} input={input} setValue={setValue} />
+        <Info editMode={editMode} boxList={scorePreEditQuery.data?.boxList || []} input={input} setValue={setValue} />
       )}
 
       <ContentsBox>
