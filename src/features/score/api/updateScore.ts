@@ -1,10 +1,13 @@
 import { useMutation } from 'react-query'
 import { SCORE_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
+import { queryClient } from '../../../library/queryClient'
 import { useNotificationStore } from '../../../stores/notification'
 import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
 import type { ScoreItem, ScoreEdit } from '../../../types'
 import { getSession } from '../../../utilities/session'
+import type { ScoreDetailApi } from './getScoreDetail'
+import type { ScoreListApi } from './getScoreList'
 
 export type UpdateScoreData =
   | {
@@ -20,6 +23,7 @@ export type UpdateScoreData =
 type UpdateScoreReturn = {
   response: { status: boolean }
   mode: 'new' | 'edit'
+  id: string | null
 }
 
 const updateScore = async (updateScoreData: UpdateScoreData): Promise<UpdateScoreReturn> => {
@@ -31,7 +35,7 @@ const updateScore = async (updateScoreData: UpdateScoreData): Promise<UpdateScor
       mode,
       data: scoreItem,
     })
-    return { response, mode }
+    return { response, mode, id: null }
   } else {
     const { id } = updateScoreData
     const response = await fetchApi(`${SCORE_API_URL}/api/member/edit`, {
@@ -40,7 +44,7 @@ const updateScore = async (updateScoreData: UpdateScoreData): Promise<UpdateScor
       id,
       data: scoreItem,
     })
-    return { response, mode }
+    return { response, mode, id }
   }
 }
 
@@ -49,8 +53,27 @@ export const useUpdateScore = () => {
   const { onClose } = useScoreEditModalStore()
 
   return useMutation({
-    onMutate: () => {
-      console.log('onMutate')
+    onMutate: async (updateScoreData: UpdateScoreData) => {
+      if (updateScoreData.mode === 'new') {
+        await queryClient.cancelQueries(['scoreList', ''])
+        const previousScoreList = queryClient.getQueryData<ScoreListApi>(['scoreList', ''])
+        queryClient.setQueryData(['scoreList', ''], {
+          ...previousScoreList,
+          list: [...(previousScoreList?.list || []), updateScoreData.scoreItem],
+        })
+        return { previousScoreList }
+      } else {
+        await queryClient.cancelQueries(['scoreDetail', updateScoreData.id])
+        const previousDetailScore = queryClient.getQueryData<ScoreDetailApi>(['scoreDetail', updateScoreData.id])
+        queryClient.setQueryData(['scoreDetail', updateScoreData.id], {
+          ...previousDetailScore,
+          data: {
+            ...previousDetailScore?.data,
+            ...updateScoreData.scoreItem,
+          },
+        })
+        return { previousDetailScore }
+      }
     },
     onError: () => {
       console.log('onError')
