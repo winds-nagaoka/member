@@ -13,6 +13,7 @@ import styles from './ScoreList.module.scss'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { useAuth } from '../../../library/auth'
 import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
+import { ContentsLinks } from '../../../components/Navigations'
 
 const LOAD_MORE = 10
 
@@ -50,6 +51,12 @@ export const ScoreList = () => {
       {isScoreAdmin && (
         <ContentsBox>
           <ContentsButton icon={<EditIcon />} label="新しい楽譜を追加" onClick={() => onOpen('new', null)} />
+        </ContentsBox>
+      )}
+
+      {isScoreAdmin && (
+        <ContentsBox>
+          <ContentsLinks list={[{ path: 'box', label: '楽譜管理箱' }]} />
         </ContentsBox>
       )}
     </>
