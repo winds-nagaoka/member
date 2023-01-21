@@ -70,12 +70,12 @@ const useScoreEdit = (
   }, [scoreItem])
 
   useEffect(() => {
-    if (editMode === 'new' && !scoreItem && latestScoreItem) {
+    if (editMode === 'new' && !scoreItem) {
       if (boxList.length !== 0) {
         const editScore = {
           ...initialState,
-          number: parseInt(latestScoreItem.number) + 1,
-          label: String(parseInt(latestScoreItem.number) + 1).padStart(6, '0'),
+          number: parseInt(latestScoreItem?.number || '0') + 1,
+          label: String(parseInt(latestScoreItem?.number || '0') + 1).padStart(6, '0'),
           boxLabel: boxList[boxList.length - 1].label,
         }
         return setInput(editScore)
