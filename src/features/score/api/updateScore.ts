@@ -3,7 +3,7 @@ import { SCORE_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
 import { useNotificationStore } from '../../../stores/notification'
 import { useScoreEditModalStore } from '../../../stores/scoreEditModal'
-import type { ScoreItem } from '../../../types'
+import type { ScoreItem, ScoreEdit } from '../../../types'
 import { getSession } from '../../../utilities/session'
 
 export type UpdateScoreData =
@@ -14,7 +14,7 @@ export type UpdateScoreData =
   | {
       mode: 'edit'
       id: string
-      scoreItem: ScoreItem
+      scoreItem: ScoreEdit
     }
 
 type UpdateScoreReturn = {

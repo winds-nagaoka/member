@@ -6,36 +6,12 @@ import styles from './ScoreEditModal.module.scss'
 import { ContentsBox, ContentsLoading, TitleFrame } from '../../../components/ContentsBox'
 import { useMediaStore } from '../../../stores/media'
 import { Input } from './Input'
-import type { BoxItem, ScoreItem, EditMode } from '../../../types'
+import type { BoxItem, ScoreItem, EditMode, ScoreEdit } from '../../../types'
 import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { UpdateScoreData, useUpdateScore } from '../api/updateScore'
 import { usePreEdit } from '../api/getPreEdit'
-
-// 編集中の楽譜の型(新規と既存共通)
-type ScoreEdit = {
-  number: string | number
-  titleJa: string
-  titleEn: string
-  composer: string[]
-  arranger: string[]
-  publisher: string
-  genre: string
-  scoreType: '0' | '1' | '2'
-  copyMemo: string
-  scoreStatus: '0' | '1' | '2' | '-1'
-  scoreLack: '0' | '1' | '2'
-  lackList: string[]
-  lendLocate: string
-  scoreBased: '0' | '1' | '2'
-  label: string
-  boxLabel: string
-  status: string
-  createdAt?: string
-  updatedAt?: string
-  _id?: string
-}
 
 const initialState: ScoreEdit = {
   number: 1,
@@ -124,7 +100,7 @@ const useScoreEdit = (
 
   const { createdAt, updatedAt, ...rest } = input
   const newScore = { ...rest, number: String(rest.number) }
-  const editScore = { createdAt: '', updatedAt: '', _id: '', ...input, number: String(input.number) }
+  const editScore = { ...input, number: String(input.number) }
   const composedScoreItem: UpdateScoreData =
     editMode === 'new'
       ? { mode: 'new', scoreItem: newScore }
