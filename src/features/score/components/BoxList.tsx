@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { confirmAlert } from 'react-confirm-alert'
 import { ContentsBox, ContentsLoading } from '../../../components/ContentsBox'
 import { useBoxList } from '../api/getBoxList'
 import styles from './BoxList.module.scss'
@@ -7,6 +8,7 @@ import { ReactComponent as EditIcon } from '../../../assets/edit.svg'
 import { useScoreBoxModalStore } from '../../../stores/scoreBoxModal'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { useCreateScoreBox } from '../api/createScoreBox'
+import { Alert } from '../../../components/Alert/Alert'
 
 export const BoxList = () => {
   const boxListQuery = useBoxList()
@@ -19,6 +21,19 @@ export const BoxList = () => {
 
   if (!boxListQuery.data) {
     return null
+  }
+
+  const addBox = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => (
+        <Alert
+          title="新しい箱を追加します"
+          message="古い箱が満杯になったら追加してください"
+          onConfirm={() => createScoreBoxMutation.mutate()}
+          onClose={onClose}
+        />
+      ),
+    })
   }
 
   return (
@@ -53,7 +68,7 @@ export const BoxList = () => {
         </div>
       </ContentsBox>
 
-      <ContentsButton onClick={() => createScoreBoxMutation.mutate()} icon={<EditIcon />} label="新しい箱を追加" />
+      <ContentsButton onClick={addBox} icon={<EditIcon />} label="新しい箱を追加" />
     </>
   )
 }
