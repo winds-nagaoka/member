@@ -1,4 +1,5 @@
 import styles from './Alert.module.scss'
+import './react-confirm-alert.css'
 
 export const Alert = ({
   title,
