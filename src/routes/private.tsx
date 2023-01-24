@@ -10,6 +10,7 @@ import { ScoreRoutes } from '../features/score'
 import { ScoreModal } from '../features/score/components/ScoreModal'
 import { ScoreEditModal } from '../features/score/components/ScoreEditModal'
 import { ScoreBoxModal } from '../features/score/components/BoxModal'
+import { SettingRoutes } from '../features/setting'
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ export const privateRoutes = [
       { path: '/practice/*', element: <PracticeRoutes /> },
       { path: '/archive/*', element: <ArchiveRoutes /> },
       { path: '/score/*', element: <ScoreRoutes /> },
+      { path: '/setting/*', element: <SettingRoutes /> },
       { path: '/', element: <Home /> },
       { path: '*', element: <Navigate to="/" /> },
     ],
