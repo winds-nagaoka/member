@@ -36,3 +36,5 @@ export const getRegisterRequestBody = (inputs: RegisterInputs) => ({
   useragent: getUserAgent(),
   version: VERSION,
 })
+
+export const getToken = () => authStorage.getToken()

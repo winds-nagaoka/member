@@ -8,7 +8,7 @@ export const ContentsButton = ({
   onClick,
 }: {
   label: string
-  icon: ReactNode
+  icon?: ReactNode
   isLoading?: boolean
   onClick: () => void
 }) => {
