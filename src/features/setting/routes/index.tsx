@@ -5,6 +5,7 @@ import { Mail } from './Mail'
 import { Name } from './Name'
 import { Password } from './Password'
 import { Remove } from './Remove'
+import { ScoreSettingRoutes } from './score'
 import { Session } from './Session'
 
 export const SettingRoutes = () => {
@@ -17,6 +18,7 @@ export const SettingRoutes = () => {
       <Route path="session" element={<Session />} />
       <Route path="admin" element={<Admin />} />
       <Route path="delete" element={<Remove />} />
+      <Route path="score/*" element={<ScoreSettingRoutes />} />
     </Routes>
   )
 }
