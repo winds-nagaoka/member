@@ -6,6 +6,7 @@ import { useAuth } from '../../../library/auth'
 import styles from './ChangeMail.module.scss'
 import { ContentsSubmitButton } from '../../../components/Navigations/ContentsButton'
 import { useStyle } from '../../../utilities/useStyle'
+import { useUpdateMail } from '../api/updateMail'
 
 const composeValidationScheme = (defaultMail: string) => {
   return z.object({
@@ -24,8 +25,9 @@ type ChangeMailInput = {
 export const ChangeMail = () => {
   const pc = useStyle()
   const { user } = useAuth()
+  const updateMailMutation = useUpdateMail()
 
-  const onSubmit = () => console.log('onSubmit')
+  const onSubmit = (value: ChangeMailInput) => updateMailMutation.mutate({ mail: value.mail })
 
   const defaultMail = user?.emailAddress ?? ''
   return (

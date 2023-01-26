@@ -8,25 +8,25 @@ import { useNotificationStore } from '../../../stores/notification'
 import type { User } from '../../../types'
 import { getSession } from '../../../utilities/session'
 
-type UpdateUsernameData = {
-  username: string
+type UpdateMailData = {
+  mail: string
 }
 
-const updateUsername = async ({ username }: UpdateUsernameData) => {
-  return await fetchApi(`${AUTH_API_URL}/api/setting/username`, { session: getSession(), text: username })
+const updateMail = async ({ mail }: UpdateMailData) => {
+  return await fetchApi(`${AUTH_API_URL}/api/setting/email`, { session: getSession(), text: mail })
 }
 
-export const useUpdateUsername = () => {
+export const useUpdateMail = () => {
   const { addNotification } = useNotificationStore()
   const navigate = useNavigate()
 
   return useMutation({
-    onMutate: async (updateUsernameData: UpdateUsernameData) => {
+    onMutate: async (updateMailData: UpdateMailData) => {
       await queryClient.cancelQueries(USER_QUERY_KEY)
       const previousUser = queryClient.getQueryData<User>(USER_QUERY_KEY)
       const newUser = {
         ...previousUser,
-        name: updateUsernameData.username,
+        email: updateMailData.mail,
       }
       queryClient.setQueryData(USER_QUERY_KEY, newUser)
       return { previousUser }
@@ -36,6 +36,6 @@ export const useUpdateUsername = () => {
       addNotification('変更しました')
       navigate('/setting')
     },
-    mutationFn: async (updateUsernameData: UpdateUsernameData) => await updateUsername(updateUsernameData),
+    mutationFn: async (updateMailData: UpdateMailData) => await updateMail(updateMailData),
   })
 }
