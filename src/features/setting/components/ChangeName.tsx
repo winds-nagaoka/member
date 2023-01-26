@@ -5,6 +5,7 @@ import { Form } from '../../../components/Form'
 import { ContentsSubmitButton } from '../../../components/Navigations/ContentsButton'
 import { useAuth } from '../../../library/auth'
 import { useStyle } from '../../../utilities/useStyle'
+import { useUpdateUsername } from '../api/updateName'
 import styles from './ChangeName.module.scss'
 
 const composeValidationScheme = (defaultUserName: string) => {
@@ -23,8 +24,9 @@ type ChangeNameInput = {
 export const ChangeName = () => {
   const pc = useStyle()
   const { user } = useAuth()
+  const updateUsernameMutation = useUpdateUsername()
 
-  const onSubmit = (value: any) => console.log(value)
+  const onSubmit = (value: ChangeNameInput) => updateUsernameMutation.mutate({ username: value.name })
 
   const defaultUsername = user?.name ?? ''
 

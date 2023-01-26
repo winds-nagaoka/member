@@ -6,6 +6,8 @@ import { useNotificationStore } from '../stores/notification'
 import { getLoginRequestBody, getRegisterRequestBody, getSession } from '../utilities/session'
 import { FullScreenLoading } from '../components/ContentsBox'
 
+export const USER_QUERY_KEY = 'user'
+
 type UserResponse = { status: boolean; token: string; user: User }
 const handleUserResponse = (response: UserResponse) => {
   authStorage.setToken(response.token)
@@ -59,6 +61,7 @@ const logoutFn = async (): Promise<null> => {
 }
 
 const authConfig = {
+  key: USER_QUERY_KEY,
   loadUser,
   loginFn,
   registerFn,
