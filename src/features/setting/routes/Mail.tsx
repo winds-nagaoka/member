@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { ChangeMail } from '../components/ChangeMail'
 
 export const Mail = () => {
   return (
@@ -11,7 +12,7 @@ export const Mail = () => {
       title="メールアドレスの設定"
       subTitle="連絡先を登録します"
     >
-      Mail
+      <ChangeMail />
     </Layout>
   )
 }
