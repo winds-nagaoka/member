@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { ChangeName } from '../components/ChangeName'
 
 export const Name = () => {
   return (
@@ -11,7 +12,7 @@ export const Name = () => {
       title="名前の変更"
       subTitle="名前を変える意味はあんまりないです"
     >
-      Name
+      <ChangeName />
     </Layout>
   )
 }
