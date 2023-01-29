@@ -4,6 +4,7 @@ import { ContentsBox } from '../../../components/ContentsBox'
 import styles from './ChangePassword.module.scss'
 import { useStyle } from '../../../utilities/useStyle'
 import { ContentsSubmitButton } from '../../../components/Navigations/ContentsButton'
+import { useUpdatePassword } from '../api/updatePassword'
 
 type ChangePasswordInput = {
   oldPassword: string
@@ -12,10 +13,13 @@ type ChangePasswordInput = {
 
 export const ChangePassword = () => {
   const pc = useStyle()
+  const updatePasswordMutation = useUpdatePassword()
+
+  const onSubmit = (value: ChangePasswordInput) => updatePasswordMutation.mutate(value)
 
   return (
     <>
-      <Form<ChangePasswordInput> onSubmit={() => console.log('onSubmit')}>
+      <Form<ChangePasswordInput> onSubmit={onSubmit}>
         {({ register, formState }) => {
           const hasError = !formState.isValid
           return (
