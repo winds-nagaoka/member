@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { ChangeAdmin } from '../components/ChangeAdmin'
 
 export const Admin = () => {
   return (
@@ -11,7 +12,7 @@ export const Admin = () => {
       title="管理者"
       subTitle="いろいろできるようになります"
     >
-      Admin
+      <ChangeAdmin />
     </Layout>
   )
 }
