@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { confirmAlert } from 'react-confirm-alert'
 import { ContentsBox } from '../../../components/ContentsBox'
 import { useAuth } from '../../../library/auth'
 import { getClientId } from '../../../utilities/session'
@@ -6,23 +7,38 @@ import { getBrowserName } from '../../../utilities/userAgent'
 import { ReactComponent as DesktopIcon } from '../../../assets/desktop.svg'
 import { ReactComponent as TabletIcon } from '../../../assets/tablet.svg'
 import { ReactComponent as MobileIcon } from '../../../assets/mobile.svg'
+import { Alert } from '../../../components/Alert/Alert'
+import { useDeleteSession } from '../api/deleteSession'
 import styles from './SessionList.module.scss'
 
 export const SessionList = () => {
   const { user } = useAuth()
+  const deleteSessionMutation = useDeleteSession()
 
   if (!user) {
     return null
   }
 
-  const { clientList } = user
+  const deleteSession = (clientId: string) => {
+    confirmAlert({
+      customUI: ({ onClose }) => (
+        <Alert
+          title="この端末をログアウトしますか？"
+          message="ユーザー情報は端末に残りません。"
+          onConfirm={() => deleteSessionMutation.mutate({ clientId })}
+          confirmButtonLabel="削除"
+          onClose={onClose}
+        />
+      ),
+    })
+  }
 
   return (
     <ContentsBox>
       <div className={styles['session-list']}>
         <div>
           <ol>
-            {clientList
+            {user.clientList
               .sort((n, m) => (n.lastLogin < m.lastLogin ? 1 : -1))
               .map((clientInfo, index) => {
                 if (!clientInfo.agent) {
@@ -40,7 +56,7 @@ export const SessionList = () => {
                   <DesktopIcon />
                 )
                 const deviceLabel = getBrowserName(clientInfo.agent)
-                const listClick = clientInfo.id === getClientId() ? () => {} : () => console.log('deleteSession')
+                const listClick = clientInfo.id === getClientId() ? () => {} : () => deleteSession(clientInfo.id)
                 return (
                   <li
                     key={'client-' + index}
