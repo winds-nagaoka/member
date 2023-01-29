@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { SessionList } from '../components/SessionList'
 
 export const Session = () => {
   return (
@@ -11,7 +12,7 @@ export const Session = () => {
       title="セッションの管理"
       subTitle="過去にログインした端末の管理ができます"
     >
-      Session
+      <SessionList />
     </Layout>
   )
 }

@@ -38,3 +38,5 @@ export const getRegisterRequestBody = (inputs: RegisterInputs) => ({
 })
 
 export const getToken = () => authStorage.getToken()
+
+export const getClientId = () => authStorage.getClientId()
