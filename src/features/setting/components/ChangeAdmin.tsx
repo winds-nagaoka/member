@@ -1,9 +1,13 @@
 import clsx from 'clsx'
 import { z } from 'zod'
+import { confirmAlert } from 'react-confirm-alert'
 import { ContentsBox } from '../../../components/ContentsBox'
 import { Form } from '../../../components/Form'
-import { ContentsSubmitButton } from '../../../components/Navigations/ContentsButton'
+import { ContentsButton, ContentsSubmitButton } from '../../../components/Navigations/ContentsButton'
+import { useAuth } from '../../../library/auth'
 import { useStyle } from '../../../utilities/useStyle'
+import { useUpdateAdmin } from '../api/updateAdmin'
+import { Alert } from '../../../components/Alert/Alert'
 import styles from './ChangeAdmin.module.scss'
 
 type ChangeAdminInput = {
@@ -16,7 +20,35 @@ const validationScheme = z.object({
 
 export const ChangeAdmin = () => {
   const pc = useStyle()
-  const onSubmit = () => console.log('onSubmit')
+  const updateAdminMutation = useUpdateAdmin()
+
+  const { user } = useAuth()
+  if (!user) {
+    return null
+  }
+
+  if (user.admin) {
+    const onClickHandler = () => {
+      confirmAlert({
+        customUI: ({ onClose }) => (
+          <Alert
+            title="管理者を辞めますか？"
+            message="改めて管理者になるにはパスワードの再入力が必要です"
+            onConfirm={() => updateAdminMutation.mutate({ admin: false, password: '' })}
+            confirmButtonLabel="辞める"
+            onClose={onClose}
+          />
+        ),
+      })
+    }
+    return (
+      <ContentsBox>
+        <ContentsButton label="管理者を辞める" onClick={onClickHandler} />
+      </ContentsBox>
+    )
+  }
+
+  const onSubmit = (value: ChangeAdminInput) => updateAdminMutation.mutate({ admin: true, ...value })
 
   return (
     <Form<ChangeAdminInput> onSubmit={onSubmit} validationScheme={validationScheme}>
