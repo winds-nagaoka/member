@@ -1,4 +1,5 @@
 import { Layout } from '../../../../components/Layout'
+import { ScoreData } from '../../components/ScoreData'
 
 export const Mail = () => {
   return (
@@ -11,7 +12,7 @@ export const Mail = () => {
       title="CSV出力"
       subTitle="ウィンズスコア一覧をCSVにて登録されたメールアドレスへ送信します。"
     >
-      Score Mail
+      <ScoreData />
     </Layout>
   )
 }

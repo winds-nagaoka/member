@@ -13,7 +13,7 @@ const getScoreList = async (query: string): Promise<ScoreListApi> => {
   return await fetchApi(`${SCORE_API_URL}/api/member/score`, { session: getSession(), query })
 }
 
-export const useScoreList = (query: string) => {
+export const useScoreList = (query: string = '') => {
   return useQuery({
     queryKey: ['scoreList', query],
     queryFn: async () => await getScoreList(query),
