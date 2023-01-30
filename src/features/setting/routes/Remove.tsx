@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { RemoveAccount } from '../components/RemoveAccount'
 
 export const Remove = () => {
   return (
@@ -11,7 +12,7 @@ export const Remove = () => {
       title="アカウントの削除"
       subTitle="ウィンズサーバから関連する全ての情報が削除されます。"
     >
-      Remove
+      <RemoveAccount />
     </Layout>
   )
 }
