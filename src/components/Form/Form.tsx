@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { useForm, SubmitHandler, UseFormReturn, UseFormProps } from 'react-hook-form'
 import type { ZodType, ZodTypeDef } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,5 +18,11 @@ export const Form = <
   validationScheme?: ValidationScheme
 }) => {
   const methods = useForm<TFieldValues>({ ...options, resolver: validationScheme && zodResolver(validationScheme) })
+  const { formState, reset } = methods
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset()
+    }
+  }, [formState.isSubmitSuccessful, reset])
   return <form onSubmit={methods.handleSubmit(onSubmit)}>{children(methods)}</form>
 }
