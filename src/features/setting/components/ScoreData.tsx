@@ -2,9 +2,12 @@ import { ContentsBox, Text } from '../../../components/ContentsBox'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { useAuth } from '../../../library/auth'
 import { useScoreList } from '../api/getScoreList'
+import { useRequestScoreData } from '../api/requestScoreData'
 import styles from './ScoreData.module.scss'
 
 export const ScoreData = () => {
+  const requestScoreDataMutation = useRequestScoreData()
+
   return (
     <>
       <ContentsBox>
@@ -14,7 +17,7 @@ export const ScoreData = () => {
       </ContentsBox>
 
       <ContentsBox>
-        <ContentsButton label="送信" onClick={() => console.log('onClick')} />
+        <ContentsButton label="送信" onClick={() => requestScoreDataMutation.mutate()} />
       </ContentsBox>
     </>
   )
