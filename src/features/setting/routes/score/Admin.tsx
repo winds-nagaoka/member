@@ -1,4 +1,5 @@
 import { Layout } from '../../../../components/Layout'
+import { ChangeScoreAdmin } from '../../components/ChangeScoreAdmin'
 
 export const Admin = () => {
   return (
@@ -11,7 +12,7 @@ export const Admin = () => {
       title="楽譜管理者"
       subTitle="楽譜登録情報の追加/編集ができるようになります"
     >
-      Score Admin
+      <ChangeScoreAdmin />
     </Layout>
   )
 }
