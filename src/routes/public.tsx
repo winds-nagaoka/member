@@ -1,6 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { Login } from '../features/public'
-import { Register } from '../features/public'
+import { Login, Register, MailValidation } from '../features/public'
 
 const App = () => {
   return <Outlet />
@@ -13,6 +12,7 @@ export const publicRoutes = [
     children: [
       { path: 'login', element: <Login /> },
       { path: 'reg', element: <Register /> },
+      { path: 'valid/:key', element: <MailValidation /> },
       { path: '*', element: <Navigate to="/login" /> },
     ],
   },
