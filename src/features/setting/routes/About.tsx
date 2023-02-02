@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { AboutDetail } from '../components/AboutDetail'
 
 export const About = () => {
   return (
@@ -10,7 +11,7 @@ export const About = () => {
       ]}
       title="このアプリについて"
     >
-      About
+      <AboutDetail />
     </Layout>
   )
 }
