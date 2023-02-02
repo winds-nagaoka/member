@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { TermsDetail } from '../components/TermsDetail'
 
 export const Terms = () => {
   return (
@@ -10,7 +11,7 @@ export const Terms = () => {
       ]}
       title="ウィンズ会員規約"
     >
-      Terms
+      <TermsDetail />
     </Layout>
   )
 }
