@@ -1,0 +1,32 @@
+.email-validation {
+  .label {
+    display: inline-block;
+
+    span {
+      display: flex;
+      align-items: center;
+      margin: 0 8px;
+      padding: 2px 6px;
+      border-radius: 12px;
+      background: rgba(50, 215, 75, 1);
+      font-size: 12px;
+      color: #fff;
+
+      svg {
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        margin-right: 0.2em;
+        fill: #fff;
+      }
+    }
+
+    &.ok span {
+      background: rgba(50, 215, 75, 1);
+    }
+
+    &.ng span {
+      background: rgba(255, 69, 58, 1);
+    }
+  }
+}
