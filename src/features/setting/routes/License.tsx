@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { LicenseDetail } from '../components/LicenseDetail'
 
 export const License = () => {
   return (
@@ -10,7 +11,7 @@ export const License = () => {
       ]}
       title="ライセンス情報"
     >
-      License
+      <LicenseDetail />
     </Layout>
   )
 }
