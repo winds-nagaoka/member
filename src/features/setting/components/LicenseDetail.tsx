@@ -1,10 +1,10 @@
 import { ContentsBox, Text } from '../../../components/ContentsBox'
 import { ReactComponent as Logo } from '../../../assets/hr.svg'
-import { ReactComponent as ReactIcon } from '../../../assets/react.svg'
-import { ReactComponent as NodejsIcon } from '../../../assets/nodejs.svg'
-import { ReactComponent as HTMLIcon } from '../../../assets/html.svg'
-import { ReactComponent as CSSIcon } from '../../../assets/css.svg'
-import { ReactComponent as JavaScriptIcon } from '../../../assets/javascript.svg'
+// import { ReactComponent as ReactIcon } from '../../../assets/react.svg'
+// import { ReactComponent as NodejsIcon } from '../../../assets/nodejs.svg'
+// import { ReactComponent as HTMLIcon } from '../../../assets/html.svg'
+// import { ReactComponent as CSSIcon } from '../../../assets/css.svg'
+// import { ReactComponent as JavaScriptIcon } from '../../../assets/javascript.svg'
 import { VERSION } from '../../../config'
 import styles from './LicenseDetail.module.scss'
 
@@ -35,7 +35,7 @@ export const LicenseDetail = () => {
           <p>Thank the open source community for all of their contributions.</p>
         </Text>
 
-        <div className={styles['license-detail']}>
+        {/* <div className={styles['license-detail']}>
           <h2>Application Dependencies</h2>
           <p className={styles.react}>
             <ReactIcon />
@@ -84,7 +84,7 @@ export const LicenseDetail = () => {
             <JavaScriptIcon />
             JavaScript (ECMAScript2018)
           </p>
-        </div>
+        </div> */}
       </div>
     </ContentsBox>
   )
