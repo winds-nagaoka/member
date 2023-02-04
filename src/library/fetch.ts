@@ -18,6 +18,13 @@ export const fetchApi = async (path: string, body: unknown = {}) => {
   }).then(handleApiResponse)
 }
 
+export const fetchApiNoHeaders = async (path: string, body: unknown = {}) => {
+  return await fetch(path, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  }).then(handleApiResponse)
+}
+
 export const getApi = async (path: string) => {
   return await fetch(path, { method: 'GET' }).then(handleApiResponse)
 }
