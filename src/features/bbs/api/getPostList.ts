@@ -6,7 +6,23 @@ type PostListData = {
   apiKey: string
 }
 
-const getPostList = async ({ apiKey }: PostListData) => {
+type NumberString = string
+type DateString = string // yyyy/MM/dd HH:mm
+
+export type Post = {
+  number: NumberString
+  edit: boolean
+  name: string
+  text: string
+  time: DateString
+}
+
+type PostListResponse = {
+  status: boolean
+  list: Post[]
+}
+
+const getPostList = async ({ apiKey }: PostListData): Promise<PostListResponse> => {
   return await fetchApiWithFormData<{ api: string }>(`${API_PATH}/bbs/`, { api: apiKey })
 }
 
