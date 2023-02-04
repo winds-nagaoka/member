@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { CreatePost } from '../components/CreatePost'
 
 export const Post = () => {
   return (
@@ -10,7 +11,7 @@ export const Post = () => {
       ]}
       title="書き込む"
     >
-      Post
+      <CreatePost />
     </Layout>
   )
 }
