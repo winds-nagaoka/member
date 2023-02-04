@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { PostList } from '../components/PostList'
 
 export const Home = () => {
   return (
@@ -9,7 +10,7 @@ export const Home = () => {
       ]}
       title="会員専用掲示板"
     >
-      bbs home
+      <PostList />
     </Layout>
   )
 }

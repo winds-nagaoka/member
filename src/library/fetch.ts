@@ -25,6 +25,20 @@ export const fetchApiNoHeaders = async (path: string, body: unknown = {}) => {
   }).then(handleApiResponse)
 }
 
+export const fetchApiWithFormData = async <FormBody extends object>(path: string, body: FormBody) => {
+  const formData = new FormData()
+  ;(Object.keys(body) as (keyof FormBody)[]).forEach((key) => {
+    const value = body[key] as string
+    if (typeof key === 'string') {
+      formData.append(key, value)
+    }
+  })
+  return await fetch(path, {
+    method: 'POST',
+    body: formData,
+  }).then(handleApiResponse)
+}
+
 export const getApi = async (path: string) => {
   return await fetch(path, { method: 'GET' }).then(handleApiResponse)
 }
