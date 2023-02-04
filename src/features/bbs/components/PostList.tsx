@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ContentsBox, ContentsLoading, Text } from '../../../components/ContentsBox'
+import { ContentsLinks } from '../../../components/Navigations'
 import { useApiKey } from '../api/getApiKey'
 import { Post, usePostList } from '../api/getPostList'
 import { ReactComponent as PlusIcon } from '../../../assets/plus.svg'
@@ -30,7 +31,17 @@ const PostListContents = ({ apiKey }: { apiKey: string }) => {
     return null
   }
 
-  return <PostListDetail postList={postListQuery.data.list} />
+  return (
+    <>
+      <ContentsBox>
+        <ContentsLinks list={[{ path: '/bbs/post', label: '書き込む' }]} />
+      </ContentsBox>
+      <PostListDetail postList={postListQuery.data.list} />
+      <ContentsBox>
+        <ContentsLinks list={[{ path: '/bbs/post', label: '書き込む' }]} />
+      </ContentsBox>
+    </>
+  )
 }
 
 const MORE_COUNT = 5
