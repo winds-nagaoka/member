@@ -17,7 +17,7 @@ export type Post = {
   time: DateString
 }
 
-type PostListResponse = {
+export type PostListResponse = {
   status: boolean
   list: Post[]
 }

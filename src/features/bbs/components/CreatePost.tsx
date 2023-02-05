@@ -2,7 +2,9 @@ import clsx from 'clsx'
 import { ContentsBox, ContentsLoading } from '../../../components/ContentsBox'
 import { Form, Input, Textarea } from '../../../components/Form'
 import { ContentsSubmitButton } from '../../../components/Navigations/ContentsButton'
+import { useNotificationStore } from '../../../stores/notification'
 import { useStyle } from '../../../utilities/useStyle'
+import { useCreatePost } from '../api/createPost'
 import { useApiKey } from '../api/getApiKey'
 import styles from './CreatePost.module.scss'
 
@@ -27,9 +29,18 @@ type PostInput = {
 
 const PostForm = ({ apiKey }: { apiKey: string }) => {
   const pc = useStyle()
+  const createPostMutation = useCreatePost()
+  const { addNotification } = useNotificationStore()
+
+  const onSubmit = (value: PostInput) => {
+    if (value.name === '' || value.text === '') {
+      return addNotification('入力内容を確認してください')
+    }
+    createPostMutation.mutate({ api: apiKey, ...value })
+  }
 
   return (
-    <Form<PostInput> onSubmit={() => console.log('')}>
+    <Form<PostInput> onSubmit={onSubmit}>
       {({ register }) => (
         <>
           <ContentsBox>
