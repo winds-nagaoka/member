@@ -1,13 +1,14 @@
 import clsx from 'clsx'
 import { ContentsBox, ContentsLoading, Text, TitleFrame } from '../../../components/ContentsBox'
 import { ContentsLinks } from '../../../components/Navigations'
-import { ScheduleListApi, useScheduleList } from '../api/api'
+import { ScheduleListApi, useNoticeList, useScheduleList } from '../api/api'
 import styles from './Dashboard.module.scss'
 
 export const Dashboard = () => {
   return (
     <div className={styles.home}>
       <Schedule />
+      <Manager />
     </div>
   )
 }
@@ -78,5 +79,43 @@ const ScheduleNext = ({ schedule }: { schedule: ScheduleListApi }) => {
         <span className={styles.studio}>{studio}</span>
       </div>
     </div>
+  )
+}
+
+const Manager = () => {
+  const managerNoticeListQuery = useNoticeList()
+
+  if (managerNoticeListQuery.isLoading) {
+    return <ContentsLoading />
+  }
+
+  if (!managerNoticeListQuery.data) {
+    return null
+  }
+
+  const manager = managerNoticeListQuery.data
+
+  const date = manager.contents[0].time[0].date === '1970/01/01' ? false : manager.contents[0].time[0].date
+  const text =
+    manager.contents[0].text.split('<br>').slice(0, 3).join('<br>') +
+    (manager.contents[0].text.split('<br>').length > 3 ? '<br>…' : '')
+
+  return (
+    <ContentsBox>
+      <div className={styles['home-manager']}>
+        <TitleFrame title="お知らせ">
+          <Text>
+            <div className={styles['top-notice']}>
+              <div className={styles['top-notice-title']}>
+                <span>{manager.contents[0].title}</span>
+                <span className={styles.date}>{date}</span>
+              </div>
+              <div className={styles['top-notice-text']} dangerouslySetInnerHTML={{ __html: text }}></div>
+            </div>
+          </Text>
+        </TitleFrame>
+        <ContentsLinks list={[{ path: '/manager', label: 'More' }]} />
+      </div>
+    </ContentsBox>
   )
 }
