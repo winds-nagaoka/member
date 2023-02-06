@@ -1,8 +1,10 @@
 import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
 import { ReactComponent as Logo } from '../../assets/hr.svg'
+import { ReactComponent as LogoutIcon } from '../../assets/logout.svg'
 import styles from './MenuContents.module.scss'
 import { useStyle } from '../../utilities/useStyle'
+import { useAuth } from '../../library/auth'
 
 const menuList = [
   { label: 'ホーム', path: '/' },
@@ -16,6 +18,8 @@ const menuList = [
 
 export const MenuContents = ({ onMenuClose }: { onMenuClose?: () => void }) => {
   const pc = useStyle()
+  const { logout } = useAuth()
+
   return (
     <div className={clsx(styles['navigation-menu-contents'], styles[pc])}>
       <div className={styles['app-info']}>
@@ -33,6 +37,16 @@ export const MenuContents = ({ onMenuClose }: { onMenuClose?: () => void }) => {
             </li>
           )
         })}
+      </ol>
+      <ol>
+        <li>
+          <div className={styles.link} onClick={async () => await logout()}>
+            <div>
+              <LogoutIcon />
+              ログアウト
+            </div>
+          </div>
+        </li>
       </ol>
     </div>
   )

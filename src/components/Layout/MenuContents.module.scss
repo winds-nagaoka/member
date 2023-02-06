@@ -115,11 +115,23 @@
           color: #fff;
         }
       }
+
+      div {
+        padding: 0 0 0 1em;
+
+        svg {
+          display: inline-block;
+          width: 40px;
+          fill: #666;
+          font-size: 1.2em;
+          text-align: center;
+        }
+      }
     }
 
     .link {
       display: block;
-      padding: 0 0 0 1em;
+      padding: 0;
       text-decoration: none;
       cursor: pointer;
 
@@ -144,6 +156,26 @@
         }
         &:active {
           background: #3c3c3c;
+        }
+      }
+
+      div {
+        padding: 0 0 0 1em;
+        display: flex;
+
+        svg {
+          width: 24px;
+          font-size: 1.2em;
+          text-align: center;
+
+          & {
+            fill: #666;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              fill: #aaa;
+            }
+          }
         }
       }
     }
