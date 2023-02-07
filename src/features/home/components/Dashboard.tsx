@@ -12,6 +12,7 @@ export const Dashboard = () => {
       <BBS />
       <Archive />
       <Score />
+      <Setting />
     </div>
   )
 }
@@ -194,5 +195,11 @@ const Archive = () => (
 const Score = () => (
   <ContentsBox>
     <ContentsLinks list={[{ path: '/score', label: 'ウィンズスコア' }]} />
+  </ContentsBox>
+)
+
+const Setting = () => (
+  <ContentsBox>
+    <ContentsLinks list={[{ path: '/setting', label: '設定' }]} />
   </ContentsBox>
 )
