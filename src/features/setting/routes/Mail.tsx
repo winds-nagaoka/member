@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { ChangeMail } from '../components/ChangeMail'
 
 export const Mail = () => {
@@ -13,6 +14,7 @@ export const Mail = () => {
       subTitle="連絡先を登録します"
     >
       <ChangeMail />
+      <BackToHome />
     </Layout>
   )
 }

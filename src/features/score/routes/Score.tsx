@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { ScoreList } from '../components/ScoreList'
 
 export const Score = () => {
@@ -12,6 +13,7 @@ export const Score = () => {
       subTitle="ウィンズが所有している楽譜です"
     >
       <ScoreList />
+      <BackToHome />
     </Layout>
   )
 }

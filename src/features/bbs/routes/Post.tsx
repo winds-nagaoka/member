@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { CreatePost } from '../components/CreatePost'
 
 export const Post = () => {
@@ -12,6 +13,7 @@ export const Post = () => {
       title="書き込む"
     >
       <CreatePost />
+      <BackToHome />
     </Layout>
   )
 }

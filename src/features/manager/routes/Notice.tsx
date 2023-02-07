@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { NoticeDetail } from '../components/NoticeDetail'
 
 export const Notice = () => {
@@ -11,6 +12,7 @@ export const Notice = () => {
       title="事務局からのお知らせ"
     >
       <NoticeDetail />
+      <BackToHome />
     </Layout>
   )
 }

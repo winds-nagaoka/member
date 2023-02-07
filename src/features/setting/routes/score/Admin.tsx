@@ -1,4 +1,5 @@
 import { Layout } from '../../../../components/Layout'
+import { BackToHome } from '../../../../components/Navigations'
 import { ChangeScoreAdmin } from '../../components/ChangeScoreAdmin'
 
 export const Admin = () => {
@@ -13,6 +14,7 @@ export const Admin = () => {
       subTitle="楽譜登録情報の追加/編集ができるようになります"
     >
       <ChangeScoreAdmin />
+      <BackToHome />
     </Layout>
   )
 }

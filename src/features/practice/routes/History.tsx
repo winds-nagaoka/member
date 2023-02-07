@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 
 export const History = () => {
   return (
@@ -17,6 +18,7 @@ export const History = () => {
       }
     >
       hisotry
+      <BackToHome />
     </Layout>
   )
 }

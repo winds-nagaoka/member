@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { PostList } from '../components/PostList'
 
 export const Home = () => {
@@ -11,6 +12,7 @@ export const Home = () => {
       title="会員専用掲示板"
     >
       <PostList />
+      <BackToHome />
     </Layout>
   )
 }

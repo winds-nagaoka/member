@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { useConcertList } from '../api/getConcertList'
 import { ConcertNavigation } from '../components/ConcertNavigation'
 import { NavigationLinks } from '../components/NavigationLinks'
@@ -26,6 +27,7 @@ export const Overview = () => {
       <ConcertNavigation />
       <NavigationLinks />
       <OverviewDetail />
+      <BackToHome />
     </Layout>
   )
 }

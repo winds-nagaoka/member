@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { ChangePassword } from '../components/ChangePassword'
 
 export const Password = () => {
@@ -13,6 +14,7 @@ export const Password = () => {
       subTitle="定期的に変えるよりは長くて強固なパスワードがよいとされています"
     >
       <ChangePassword />
+      <BackToHome />
     </Layout>
   )
 }

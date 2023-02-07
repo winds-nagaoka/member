@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { ScoreDetail } from '../components/ScoreDetail'
 
 export const Detail = () => {
@@ -15,6 +16,7 @@ export const Detail = () => {
       subTitle="楽譜詳細情報"
     >
       <ScoreDetail />
+      <BackToHome />
     </Layout>
   )
 }

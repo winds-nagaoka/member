@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { MailValidation as MailValidationComponent } from '../components/MailValidation'
 
 export const MailValidation = () => {
@@ -14,6 +15,7 @@ export const MailValidation = () => {
       title="メールアドレスの確認"
     >
       <MailValidationComponent />
+      <BackToHome />
     </Layout>
   )
 }

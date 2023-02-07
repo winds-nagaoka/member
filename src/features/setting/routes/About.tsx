@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { AboutDetail } from '../components/AboutDetail'
 
 export const About = () => {
@@ -12,6 +13,7 @@ export const About = () => {
       title="このアプリについて"
     >
       <AboutDetail />
+      <BackToHome />
     </Layout>
   )
 }

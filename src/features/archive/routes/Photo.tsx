@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { useConcertList } from '../api/getConcertList'
 import { PhotoList } from '../components/PhotoList'
 
@@ -27,6 +28,7 @@ export const Photo = () => {
       subTitle="過去のウィンズの活動履歴を確認できます"
     >
       <PhotoList />
+      <BackToHome />
     </Layout>
   )
 }

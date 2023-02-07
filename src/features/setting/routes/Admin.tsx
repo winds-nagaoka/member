@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { ChangeAdmin } from '../components/ChangeAdmin'
 
 export const Admin = () => {
@@ -13,6 +14,7 @@ export const Admin = () => {
       subTitle="いろいろできるようになります"
     >
       <ChangeAdmin />
+      <BackToHome />
     </Layout>
   )
 }

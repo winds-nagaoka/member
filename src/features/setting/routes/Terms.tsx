@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { TermsDetail } from '../components/TermsDetail'
 
 export const Terms = () => {
@@ -12,6 +13,7 @@ export const Terms = () => {
       title="ウィンズ会員規約"
     >
       <TermsDetail />
+      <BackToHome />
     </Layout>
   )
 }

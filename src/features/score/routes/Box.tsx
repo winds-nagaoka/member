@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { BoxList } from '../components/BoxList'
 
 export const Box = () => {
@@ -13,6 +14,7 @@ export const Box = () => {
       subTitle="楽譜管理箱の追加および編集はこちら"
     >
       <BoxList />
+      <BackToHome />
     </Layout>
   )
 }

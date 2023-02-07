@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { ConcertList } from '../components/ConcertList'
 
 export const Archive = () => {
@@ -12,6 +13,7 @@ export const Archive = () => {
       subTitle="過去のウィンズの活動履歴を確認できます"
     >
       <ConcertList />
+      <BackToHome />
     </Layout>
   )
 }

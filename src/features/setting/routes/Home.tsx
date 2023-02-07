@@ -1,4 +1,5 @@
 import { Layout } from '../../../components/Layout'
+import { BackToHome } from '../../../components/Navigations'
 import { Menu } from '../components/Menu'
 
 export const Home = () => {
@@ -12,6 +13,7 @@ export const Home = () => {
       subTitle="各種設定はこちらから"
     >
       <Menu />
+      <BackToHome />
     </Layout>
   )
 }
