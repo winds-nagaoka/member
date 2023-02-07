@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
+import { confirmAlert } from 'react-confirm-alert'
 import { ReactComponent as Logo } from '../../assets/hr.svg'
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg'
 import styles from './MenuContents.module.scss'
 import { useStyle } from '../../utilities/useStyle'
 import { useAuth } from '../../library/auth'
+import { LogoutAlert } from '../Logout/LogoutAlert'
 
 const menuList = [
   { label: 'ホーム', path: '/' },
@@ -19,6 +21,12 @@ const menuList = [
 export const MenuContents = ({ onMenuClose }: { onMenuClose?: () => void }) => {
   const pc = useStyle()
   const { logout } = useAuth()
+
+  const onClickLogoutHandler = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => <LogoutAlert onConfirm={async () => await logout()} onClose={onClose} />,
+    })
+  }
 
   return (
     <div className={clsx(styles['navigation-menu-contents'], styles[pc])}>
@@ -40,7 +48,7 @@ export const MenuContents = ({ onMenuClose }: { onMenuClose?: () => void }) => {
       </ol>
       <ol>
         <li>
-          <div className={styles.link} onClick={async () => await logout()}>
+          <div className={styles.link} onClick={onClickLogoutHandler}>
             <div>
               <LogoutIcon />
               ログアウト
