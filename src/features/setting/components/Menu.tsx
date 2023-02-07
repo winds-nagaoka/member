@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { confirmAlert } from 'react-confirm-alert'
 import { ContentsBox } from '../../../components/ContentsBox'
 import { Text } from '../../../components/ContentsBox'
 import { useAuth } from '../../../library/auth'
@@ -11,6 +12,7 @@ import styles from './Menu.module.scss'
 import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { useMediaStore } from '../../../stores/media'
 import { ContentsLinks } from '../../../components/Navigations'
+import { LogoutAlert } from '../../../components/Logout/LogoutAlert'
 
 export const Menu = () => {
   return (
@@ -26,6 +28,8 @@ export const Menu = () => {
       <ScoreSettingList />
 
       <AboutAppList />
+
+      <Logout />
     </>
   )
 }
@@ -182,4 +186,16 @@ const AboutAppList = () => {
       </ContentsBox>
     </>
   )
+}
+
+const Logout = () => {
+  const { logout } = useAuth()
+
+  const onClickLogoutHandler = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => <LogoutAlert onConfirm={async () => await logout()} onClose={onClose} />,
+    })
+  }
+
+  return <ContentsButton onClick={onClickLogoutHandler} label="ログアウト" />
 }
