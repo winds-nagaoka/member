@@ -23,4 +23,15 @@
 
     line-height: 44px;
   }
+
+  &.border-bottom {
+    & {
+      border-bottom: 0.55px solid #cbcbcd;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        border-bottom: 0.55px solid #2d2d2f;
+      }
+    }
+  }
 }

@@ -31,7 +31,7 @@ const Schedule = () => {
   return (
     <ContentsBox>
       <div className={styles['home-schedule']}>
-        <TitleFrame title="次回の練習日">
+        <TitleFrame title="次回の練習日" borderBottom={true}>
           <Text>
             <ScheduleNext schedule={scheduleListQuery.data} />
           </Text>
@@ -107,7 +107,7 @@ const Manager = () => {
   return (
     <ContentsBox>
       <div className={styles['home-manager']}>
-        <TitleFrame title="お知らせ">
+        <TitleFrame title="お知らせ" borderBottom={true}>
           <Text>
             <div className={styles['top-notice']}>
               <div className={styles['top-notice-title']}>
@@ -152,7 +152,7 @@ const BBSContents = ({ apiKey }: { apiKey: string }) => {
   return (
     <ContentsBox>
       <div className={styles['home-bbs']}>
-        <TitleFrame title="会員専用掲示板">
+        <TitleFrame title="会員専用掲示板" borderBottom={true}>
           <Text>
             <div className={styles['home-bbs-list']}>
               {postListQuery.data.list.map((each, i) => {
