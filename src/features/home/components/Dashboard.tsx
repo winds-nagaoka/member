@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ContentsBox, ContentsLoading, Text, TitleFrame } from '../../../components/ContentsBox'
 import { ContentsLinks } from '../../../components/Navigations'
-import { ScheduleListApi, useNoticeList, useScheduleList } from '../api/api'
+import { ScheduleListApi, useApiKey, useNoticeList, usePostList, useScheduleList } from '../api/api'
 import styles from './Dashboard.module.scss'
 
 export const Dashboard = () => {
@@ -9,6 +9,7 @@ export const Dashboard = () => {
     <div className={styles.home}>
       <Schedule />
       <Manager />
+      <BBS />
     </div>
   )
 }
@@ -115,6 +116,68 @@ const Manager = () => {
           </Text>
         </TitleFrame>
         <ContentsLinks list={[{ path: '/manager', label: 'More' }]} />
+      </div>
+    </ContentsBox>
+  )
+}
+
+const BBS = () => {
+  const apiKeyQuery = useApiKey()
+
+  if (apiKeyQuery.isLoading) {
+    return <ContentsLoading />
+  }
+
+  if (!apiKeyQuery.data) {
+    return null
+  }
+
+  return <BBSContents apiKey={apiKeyQuery.data.api} />
+}
+
+const BBSContents = ({ apiKey }: { apiKey: string }) => {
+  const postListQuery = usePostList({ apiKey })
+
+  if (postListQuery.isLoading) {
+    return <ContentsLoading />
+  }
+
+  if (!postListQuery.data) {
+    return null
+  }
+
+  return (
+    <ContentsBox>
+      <div className={styles['home-bbs']}>
+        <TitleFrame title="会員専用掲示板">
+          <Text>
+            <div className={styles['home-bbs-list']}>
+              {postListQuery.data.list.map((each, i) => {
+                if (i >= 3) return false
+                const text = each.text
+                  .replace(/(<br>|<br \/>)/gi, '\n')
+                  .replace(/&gt;/gi, '>')
+                  .replace(/&lt;/gi, '<')
+                return (
+                  <div key={`bbs-${i}`} className={styles['home-bbs-item']}>
+                    <div className={styles['home-bbs-title']}>
+                      <span className={styles.number}>{each.number}</span>
+                      <span className={styles.name}>{each.name}</span>
+                      <span className={styles.time}>{each.time}</span>
+                    </div>
+                    {/* <div className='bbs-text' dangerouslySetInnerHTML={{__html: each.text}}></div> */}
+                    <div className={styles['home-bbs-text']}>
+                      {text.split('\n').map((m, j) => {
+                        return j < 3 ? <p key={'text' + i + j}>{m}</p> : j === 3 ? '…' : false
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </Text>
+        </TitleFrame>
+        <ContentsLinks list={[{ path: '/bbs', label: 'More' }]} />
       </div>
     </ContentsBox>
   )
