@@ -10,6 +10,7 @@ export const Dashboard = () => {
       <Schedule />
       <Manager />
       <BBS />
+      <Archive />
     </div>
   )
 }
@@ -182,3 +183,9 @@ const BBSContents = ({ apiKey }: { apiKey: string }) => {
     </ContentsBox>
   )
 }
+
+const Archive = () => (
+  <ContentsBox>
+    <ContentsLinks list={[{ path: '/archive', label: 'アーカイブ' }]} />
+  </ContentsBox>
+)
