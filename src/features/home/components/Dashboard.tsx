@@ -11,6 +11,7 @@ export const Dashboard = () => {
       <Manager />
       <BBS />
       <Archive />
+      <Score />
     </div>
   )
 }
@@ -187,5 +188,11 @@ const BBSContents = ({ apiKey }: { apiKey: string }) => {
 const Archive = () => (
   <ContentsBox>
     <ContentsLinks list={[{ path: '/archive', label: 'アーカイブ' }]} />
+  </ContentsBox>
+)
+
+const Score = () => (
+  <ContentsBox>
+    <ContentsLinks list={[{ path: '/score', label: 'ウィンズスコア' }]} />
   </ContentsBox>
 )
