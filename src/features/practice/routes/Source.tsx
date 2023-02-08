@@ -1,5 +1,6 @@
 import { Layout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
+import { BackLink } from '../../../components/Navigations/BackLink'
 import { SourceList } from '../components/SourceList'
 
 export const Source = () => {
@@ -14,6 +15,7 @@ export const Source = () => {
       subTitle="直近の演奏会の参考音源です"
     >
       <SourceList />
+      <BackLink path="/practice" />
       <BackToHome />
     </Layout>
   )

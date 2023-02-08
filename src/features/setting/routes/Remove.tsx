@@ -1,5 +1,6 @@
 import { Layout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
+import { BackLink } from '../../../components/Navigations/BackLink'
 import { RemoveAccount } from '../components/RemoveAccount'
 
 export const Remove = () => {
@@ -14,6 +15,7 @@ export const Remove = () => {
       subTitle="ウィンズサーバから関連する全ての情報が削除されます。"
     >
       <RemoveAccount />
+      <BackLink path="/setting" />
       <BackToHome />
     </Layout>
   )

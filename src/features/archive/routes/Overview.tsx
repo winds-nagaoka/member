@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
+import { BackLink } from '../../../components/Navigations/BackLink'
 import { useConcertList } from '../api/getConcertList'
 import { ConcertNavigation } from '../components/ConcertNavigation'
 import { NavigationLinks } from '../components/NavigationLinks'
@@ -27,6 +28,7 @@ export const Overview = () => {
       <ConcertNavigation />
       <NavigationLinks />
       <OverviewDetail />
+      <BackLink path="/archive" label="一覧へ" />
       <BackToHome />
     </Layout>
   )

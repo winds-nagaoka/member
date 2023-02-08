@@ -1,5 +1,6 @@
 import { Layout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
+import { BackLink } from '../../../components/Navigations/BackLink'
 
 export const History = () => {
   return (
@@ -18,6 +19,7 @@ export const History = () => {
       }
     >
       hisotry
+      <BackLink path="/practice" />
       <BackToHome />
     </Layout>
   )

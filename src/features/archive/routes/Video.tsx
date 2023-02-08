@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { Layout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
+import { BackLink } from '../../../components/Navigations/BackLink'
 import { useConcertList } from '../api/getConcertList'
 import { VideoList } from '../components/VideoList'
 
@@ -28,6 +29,7 @@ export const Video = () => {
       subTitle="過去のウィンズの活動履歴を確認できます"
     >
       <VideoList />
+      <BackLink path="/archive" label="一覧へ" />
       <BackToHome />
     </Layout>
   )

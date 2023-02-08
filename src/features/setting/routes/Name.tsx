@@ -1,5 +1,6 @@
 import { Layout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
+import { BackLink } from '../../../components/Navigations/BackLink'
 import { ChangeName } from '../components/ChangeName'
 
 export const Name = () => {
@@ -14,6 +15,7 @@ export const Name = () => {
       subTitle="名前を変える意味はあんまりないです"
     >
       <ChangeName />
+      <BackLink path="/setting" />
       <BackToHome />
     </Layout>
   )

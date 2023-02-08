@@ -1,5 +1,6 @@
 import { Layout } from '../../../components/Layout'
 import { BackToHome } from '../../../components/Navigations'
+import { BackLink } from '../../../components/Navigations/BackLink'
 import { AboutDetail } from '../components/AboutDetail'
 
 export const About = () => {
@@ -13,6 +14,7 @@ export const About = () => {
       title="このアプリについて"
     >
       <AboutDetail />
+      <BackLink path="/setting" />
       <BackToHome />
     </Layout>
   )
