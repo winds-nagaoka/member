@@ -98,7 +98,7 @@ const LeftNavigations = ({
         </>
       )}
       {pc === 'mobile' && !previousPage && (
-        <div className={styles.label} onClick={onMenuOpen}>
+        <div className={clsx(styles.label, styles.menu)} onClick={onMenuOpen}>
           <MenuIcon />
         </div>
       )}
