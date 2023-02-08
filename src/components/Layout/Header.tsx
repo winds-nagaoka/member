@@ -108,8 +108,9 @@ const LeftNavigations = ({
 
 const RightNavigations = () => {
   const pc = useStyle()
+  const isMatch = !!useMatch('/')
 
-  if (pc === 'pc') {
+  if (pc === 'pc' || isMatch) {
     return null
   }
 
