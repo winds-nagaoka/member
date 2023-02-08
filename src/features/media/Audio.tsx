@@ -20,6 +20,7 @@ import { useConcertList } from '../archive/api/getConcertList'
 import { getConcertDetail, getAudioSource, composeSrc } from './utilities'
 import { composePlaylist } from './utilities'
 import { useEffect } from 'react'
+import { useRecordList } from './api/getRecordList'
 
 type AudioState = {
   loading: boolean
@@ -162,18 +163,26 @@ const useAudioApiQuery = () => {
   const sourceListQuery = useSourceList()
   const audioListQuery = useAudioList()
   const concertListQuery = useConcertList()
+  const recordListQuery = useRecordList()
 
   return {
     referenceListQuery,
     sourceListQuery,
     audioListQuery,
     concertListQuery,
+    recordListQuery,
     isLoading:
       referenceListQuery.isLoading ||
       sourceListQuery.isLoading ||
       audioListQuery.isLoading ||
-      concertListQuery.isLoading,
-    isDataBlank: !referenceListQuery.data || !sourceListQuery.data || !audioListQuery.data || !concertListQuery.data,
+      concertListQuery.isLoading ||
+      recordListQuery.isLoading,
+    isDataBlank:
+      !referenceListQuery.data ||
+      !sourceListQuery.data ||
+      !audioListQuery.data ||
+      !concertListQuery.data ||
+      !recordListQuery.data,
   }
 }
 
@@ -191,12 +200,13 @@ export const Audio = () => {
     return null
   }
 
-  const { referenceListQuery, sourceListQuery, audioListQuery, concertListQuery } = apiQueries
+  const { referenceListQuery, sourceListQuery, audioListQuery, concertListQuery, recordListQuery } = apiQueries
   const { data: referenceData } = referenceListQuery
   const { data: sourceData } = sourceListQuery
   const { data: audioData } = audioListQuery
   const { data: concertData } = concertListQuery
-  if (!referenceData || !sourceData || !audioData || !concertData) {
+  const { data: recordData } = recordListQuery
+  if (!referenceData || !sourceData || !audioData || !concertData || !recordData) {
     return null
   }
 

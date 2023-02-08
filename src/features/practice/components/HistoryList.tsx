@@ -2,11 +2,13 @@ import clsx from 'clsx'
 import { ContentsBox, ContentsLoading, Text, TitleFrame } from '../../../components/ContentsBox'
 import { useStyle } from '../../../utilities/useStyle'
 import { useHistoryList } from '../api/getHistoryList'
+import { useMediaStore } from '../../../stores/media'
 import styles from './HistoryList.module.scss'
 
 export const HistoryList = () => {
-  const pc=useStyle()
+  const pc = useStyle()
   const historyListQuery = useHistoryList()
+  const { setTrack } = useMediaStore()
 
   if (historyListQuery.isLoading) {
     return <ContentsLoading />
@@ -25,11 +27,9 @@ export const HistoryList = () => {
               <Text>みつかりませんでした</Text>
             </TitleFrame>
           )}
-          {historyListQuery.data.list.map((historyItem,index) => {
+          {historyListQuery.data.list.map((historyItem, index) => {
             const practice = historyItem.detail
-            const playRequest = practice.recordStatus
-              ? () => {} // this.props.practicePlayRequest(practice.id, 0, 0, true)
-              : () => {}
+            const playRequest = practice.recordStatus ? () => setTrack(0, practice.id, 'practice') : () => {}
             const icon = practice.recordStatus ? (
               <i className="fas fa-play-circle"></i>
             ) : (
@@ -41,7 +41,12 @@ export const HistoryList = () => {
             return (
               <li
                 key={`history-${index}`}
-                className={clsx(styles["each-history"],{[styles["has-audio"]]:practice.recordStatus},{[styles["no-audio"]]:!practice.recordStatus},styles[pc])}
+                className={clsx(
+                  styles['each-history'],
+                  { [styles['has-audio']]: practice.recordStatus },
+                  { [styles['no-audio']]: !practice.recordStatus },
+                  styles[pc]
+                )}
                 onClick={playRequest}
               >
                 <div className={styles.icon}>{icon}</div>
