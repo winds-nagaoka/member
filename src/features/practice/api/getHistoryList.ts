@@ -3,27 +3,31 @@ import { APP_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
 import { getSession } from '../../../utilities/session'
 
-type HistoryListResponse = {
-  status: boolean
-  list: {
-    id: string
-    time: number
-    detail: {
-      id: string
-      recordStatus: boolean
-      time: {
-        timestamp: boolean
-        date: string
-        time: string
-      }
-      place: string[]
-      label: string
-    }
-    _id: string
-  }[]
+export type HistoryDetail = {
+  id: string
+  recordStatus: boolean
+  time: {
+    timestamp: boolean
+    date: string
+    time: string
+  }
+  place: string[]
+  label: string
 }
 
-const getHistoryList = async (): Promise<HistoryListResponse> => {
+type History = {
+  id: string
+  time: number
+  detail: HistoryDetail
+  _id: string
+}
+
+export type HistoryListApi = {
+  status: boolean
+  list: History[]
+}
+
+const getHistoryList = async (): Promise<HistoryListApi> => {
   return await fetchApi(`${APP_API_URL}/api/practice`, { session: getSession() })
 }
 

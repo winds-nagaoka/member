@@ -3,7 +3,7 @@ import { APP_API_URL } from '../../../config'
 import { fetchApi } from '../../../library/fetch'
 import { getSession } from '../../../utilities/session'
 
-type Record = {
+export type AudioRecord = {
   id: string
   time: number
   detail: {
@@ -18,10 +18,10 @@ type Record = {
   _id: string
 }
 
-type RecordListApi = {
+export type RecordListApi = {
   status: boolean
   url: string
-  list: Record[]
+  list: AudioRecord[]
 }
 
 const getRecordList = async (): Promise<RecordListApi> => {

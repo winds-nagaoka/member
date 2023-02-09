@@ -20,7 +20,8 @@ import { useConcertList } from '../archive/api/getConcertList'
 import { getConcertDetail, getAudioSource, composeSrc } from './utilities'
 import { composePlaylist } from './utilities'
 import { useEffect } from 'react'
-import { useRecordList } from './api/getRecordList'
+import { AudioRecord, useRecordList } from './api/getRecordList'
+import { HistoryDetail, useHistoryList } from '../practice/api/getHistoryList'
 
 type AudioState = {
   loading: boolean
@@ -164,6 +165,7 @@ const useAudioApiQuery = () => {
   const audioListQuery = useAudioList()
   const concertListQuery = useConcertList()
   const recordListQuery = useRecordList()
+  const historyListQuery = useHistoryList()
 
   return {
     referenceListQuery,
@@ -171,18 +173,21 @@ const useAudioApiQuery = () => {
     audioListQuery,
     concertListQuery,
     recordListQuery,
+    historyListQuery,
     isLoading:
       referenceListQuery.isLoading ||
       sourceListQuery.isLoading ||
       audioListQuery.isLoading ||
       concertListQuery.isLoading ||
-      recordListQuery.isLoading,
+      recordListQuery.isLoading ||
+      historyListQuery.isLoading,
     isDataBlank:
       !referenceListQuery.data ||
       !sourceListQuery.data ||
       !audioListQuery.data ||
       !concertListQuery.data ||
-      !recordListQuery.data,
+      !recordListQuery.data ||
+      !historyListQuery.data,
   }
 }
 
@@ -200,20 +205,22 @@ export const Audio = () => {
     return null
   }
 
-  const { referenceListQuery, sourceListQuery, audioListQuery, concertListQuery, recordListQuery } = apiQueries
+  const { referenceListQuery, sourceListQuery, audioListQuery, concertListQuery, recordListQuery, historyListQuery } =
+    apiQueries
   const { data: referenceData } = referenceListQuery
   const { data: sourceData } = sourceListQuery
   const { data: audioData } = audioListQuery
   const { data: concertData } = concertListQuery
   const { data: recordData } = recordListQuery
-  if (!referenceData || !sourceData || !audioData || !concertData || !recordData) {
+  const { data: historyData } = historyListQuery
+  if (!referenceData || !sourceData || !audioData || !concertData || !recordData || !historyData) {
     return null
   }
 
-  const concertDetail = getConcertDetail(playType, concertData, sourceData, playId)
-  const audioSource = getAudioSource(playType, audioData, referenceData, playId)
+  const concertDetail = getConcertDetail(playType, concertData, sourceData, historyData, playId)
+  const audioSource = getAudioSource(playType, audioData, referenceData, recordData, playId)
 
-  const src = composeSrc(playType, playTrack, audioSource, audioData, referenceData)
+  const src = composeSrc(playType, playTrack, audioSource, audioData, referenceData, recordData)
 
   const playerClass = { [styles.open]: displayPlayer }
   const displayPlaylistClass = { [styles['list-open']]: displayPlaylist }
@@ -315,8 +322,8 @@ const Playlist = ({
   playTrack: number | null
   playing: boolean
   displayPlaylist: boolean
-  concertDetail: ConcertDetail | null
-  audioSource: AudioSource | null
+  concertDetail: ConcertDetail | HistoryDetail | null
+  audioSource: AudioSource | AudioRecord | null
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
 }) => {
   const pc = useStyle()
@@ -363,31 +370,36 @@ const Title = ({
 }: {
   playType: PlayType | null
   playTrack: number | null
-  concertDetail: ConcertDetail | null
-  audioSource: AudioSource | null
+  concertDetail: ConcertDetail | HistoryDetail | null
+  audioSource: AudioSource | AudioRecord | null
 }) => {
   if (playTrack === null || audioSource === null || concertDetail === null) {
     return null
   }
-  const trackItem = audioSource.list[playTrack]
-  const track = concertDetail.data[trackItem.data]
 
-  const playTypeClass = styles[playType || '']
+  if (playType !== 'practice' && 'baseSrc' in audioSource && 'contents' in concertDetail) {
+    const trackItem = audioSource.list[playTrack]
+    const track = concertDetail.data[trackItem.data]
 
-  const sourcePrefix = playType === 'source' ? '参考音源 - ' : ''
+    const playTypeClass = styles[playType || '']
 
-  return (
-    <div>
-      <span className={playTypeClass}>{playTrack !== null && sourcePrefix + concertDetail.title}</span>
-      <span>
-        <>
-          <MusicalNoteIcon />
-          {track.title}
-          {trackItem.addtitle && ` ${trackItem.addtitle}`}
-        </>
-      </span>
-    </div>
-  )
+    const sourcePrefix = playType === 'source' ? '参考音源 - ' : ''
+
+    return (
+      <div>
+        <span className={playTypeClass}>{playTrack !== null && sourcePrefix + concertDetail.title}</span>
+        <span>
+          <>
+            <MusicalNoteIcon />
+            {track.title}
+            {trackItem.addtitle && ` ${trackItem.addtitle}`}
+          </>
+        </span>
+      </div>
+    )
+  }
+
+  return null
 }
 
 const TrackList = ({
@@ -398,8 +410,8 @@ const TrackList = ({
 }: {
   playType: PlayType | null
   playTrack: number | null
-  concertDetail: ConcertDetail | null
-  audioSource: AudioSource | null
+  concertDetail: ConcertDetail | HistoryDetail | null
+  audioSource: AudioSource | AudioRecord | null
 }) => {
   const { setTrack } = useMediaStore()
 
@@ -407,45 +419,49 @@ const TrackList = ({
     return null
   }
 
-  const playlist = composePlaylist(concertDetail, audioSource)
+  if (playType !== 'practice' && 'baseSrc' in audioSource && 'contents' in concertDetail) {
+    const playlist = composePlaylist(concertDetail, audioSource)
 
-  const playTypeClass = styles[playType || '']
-  return (
-    <>
-      {concertDetail.contents.map((part) => {
-        return (
-          <div key={part.label}>
-            <label>{part.label}</label>
-            {part.music.map((musicKey) => {
-              const trackData = playlist.filter((playItem) => playItem.data === musicKey)
-              return trackData.map((track) => {
-                const playing = playTrack === track.trackNumber
-                const { title, composer, arranger } = track.music
-                return (
-                  <div
-                    key={`track-${track.trackNumber}`}
-                    className={clsx(styles.track, { [styles.playing]: playing }, playTypeClass)}
-                    onClick={() => setTrack(track.trackNumber)}
-                  >
-                    <div className={styles.icon}>
-                      <PlayCircleIcon />
+    const playTypeClass = styles[playType || '']
+    return (
+      <>
+        {concertDetail.contents.map((part) => {
+          return (
+            <div key={part.label}>
+              <label>{part.label}</label>
+              {part.music.map((musicKey) => {
+                const trackData = playlist.filter((playItem) => playItem.data === musicKey)
+                return trackData.map((track) => {
+                  const playing = playTrack === track.trackNumber
+                  const { title, composer, arranger } = track.music
+                  return (
+                    <div
+                      key={`track-${track.trackNumber}`}
+                      className={clsx(styles.track, { [styles.playing]: playing }, playTypeClass)}
+                      onClick={() => setTrack(track.trackNumber)}
+                    >
+                      <div className={styles.icon}>
+                        <PlayCircleIcon />
+                      </div>
+                      <div className={styles.info}>
+                        <span className={styles.title}>
+                          {title}
+                          {track.addtitle && ` ${track.addtitle}`}
+                        </span>
+                        <Composer composer={composer || null} arranger={arranger || null} />
+                      </div>
                     </div>
-                    <div className={styles.info}>
-                      <span className={styles.title}>
-                        {title}
-                        {track.addtitle && ` ${track.addtitle}`}
-                      </span>
-                      <Composer composer={composer || null} arranger={arranger || null} />
-                    </div>
-                  </div>
-                )
-              })
-            })}
-          </div>
-        )
-      })}
-    </>
-  )
+                  )
+                })
+              })}
+            </div>
+          )
+        })}
+      </>
+    )
+  }
+
+  return null
 }
 
 const Composer = ({ composer, arranger }: { composer: string | null; arranger: string | null }) => {
