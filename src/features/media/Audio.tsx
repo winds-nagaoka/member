@@ -397,6 +397,16 @@ const Title = ({
         </span>
       </div>
     )
+  } else if (playType === 'practice' && 'detail' in audioSource) {
+    return (
+      <div>
+        <span className={styles.practice}>練習の録音</span>
+        <span>
+          <MusicalNoteIcon />
+          {concertDetail.time.date}
+        </span>
+      </div>
+    )
   }
 
   return null
