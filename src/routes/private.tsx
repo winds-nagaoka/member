@@ -13,6 +13,7 @@ import { ScoreBoxModal } from '../features/score/components/BoxModal'
 import { SettingRoutes } from '../features/setting'
 import { ManagerRoutes } from '../features/manager'
 import { BBSRoutes } from '../features/bbs'
+import { Tutorial } from '../features/tutorial'
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
       <ScoreModal />
       <ScoreEditModal />
       <ScoreBoxModal />
+      <Tutorial />
     </Suspense>
   )
 }

@@ -29,3 +29,18 @@ export const getBrowserName = (userAgent: string) => {
   }
   return 'Unknown'
 }
+
+export const getUserAgentType = () => {
+  const ua = ['iPod', 'iPad', 'iPhone', 'Android']
+  let result: string | null = null
+  for (let i = 0; i < ua.length; i++) {
+    if (getUserAgent().indexOf(ua[i]) > 0) {
+      result = ua[i]
+    }
+  }
+  return result ? result : 'other'
+}
+
+export const getIsStandAlone = (): boolean => {
+  return window.matchMedia('(display-mode: standalone)').matches ? true : false
+}
