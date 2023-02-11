@@ -3,6 +3,8 @@ import { ContentsBox, ContentsLoading, Text, TitleFrame } from '../../../compone
 import { useStyle } from '../../../utilities/useStyle'
 import { useHistoryList } from '../api/getHistoryList'
 import { useMediaStore } from '../../../stores/media'
+import { ReactComponent as PlayIcon } from '../../../assets/play-circle.svg'
+import { ReactComponent as NoPlayIcon } from '../../../assets/close-circle.svg'
 import styles from './HistoryList.module.scss'
 
 export const HistoryList = () => {
@@ -18,7 +20,7 @@ export const HistoryList = () => {
     return null
   }
 
-  const historyList=[...historyListQuery.data.list].reverse()
+  const historyList = [...historyListQuery.data.list].reverse()
 
   return (
     <ContentsBox>
@@ -32,11 +34,7 @@ export const HistoryList = () => {
           {historyList.map((historyItem, index) => {
             const practice = historyItem.detail
             const playRequest = practice.recordStatus ? () => setTrack(0, practice.id, 'practice') : () => {}
-            const icon = practice.recordStatus ? (
-              <i className="fas fa-play-circle"></i>
-            ) : (
-              <i className="far fa-times-circle"></i>
-            )
+            const icon = practice.recordStatus ? <PlayIcon /> : <NoPlayIcon />
             const date = 'date' in practice.time ? <div className={styles.date}>{practice.time.date}</div> : false
             const place = 'place' in practice ? <div className={styles.place}>{practice.place}</div> : false
             const label = 'label' in practice ? <label>{practice.label}</label> : false
