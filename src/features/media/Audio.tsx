@@ -4,6 +4,8 @@ import { useStyle } from '../../utilities/useStyle'
 import { ReactComponent as PlayIcon } from '../../assets/play.svg'
 import { ReactComponent as PauseIcon } from '../../assets/pause.svg'
 import { ReactComponent as StopIcon } from '../../assets/stop.svg'
+import { ReactComponent as BackwardIcon } from '../../assets/backward.svg'
+import { ReactComponent as ForwardIcon } from '../../assets/forward.svg'
 import { ReactComponent as OpenIcon } from '../../assets/up.svg'
 import { ReactComponent as CloseIcon } from '../../assets/down.svg'
 import { ReactComponent as PlayCircleIcon } from '../../assets/play-circle.svg'
@@ -79,6 +81,18 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
       setState(initialState)
     }
     onPause()
+  }
+
+  const audioBackward = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = audioRef.current.currentTime - 10
+    }
+  }
+
+  const audioForward = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = audioRef.current.currentTime + 10
+    }
   }
 
   const playUpdate = (currentTime: number | null, duration: number | null) => {
@@ -159,6 +173,8 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
     onPlay,
     onPause,
     onStop,
+    audioBackward,
+    audioForward,
 
     audioFunctions: {
       onLoadStart,
@@ -213,7 +229,8 @@ export const Audio = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
-  const { state, playPercent, playCurrentTime, onPlay, onPause, onStop, audioFunctions } = useAudio(audioRef)
+  const { state, playPercent, playCurrentTime, onPlay, onPause, onStop, audioBackward, audioForward, audioFunctions } =
+    useAudio(audioRef)
   const apiQueries = useAudioApiQuery()
 
   if (apiQueries.isLoading) {
@@ -260,7 +277,14 @@ export const Audio = () => {
   return (
     <div className={clsx(styles.audio, styles[pc])}>
       <div className={clsx(styles.player, playerClass)}>
-        {/* {prevButton} */}
+        {playType === 'practice' && (
+          <div
+            className={clsx(styles.control, styles.prev, playStatusClass, playTypeClass, displayPlaylistClass)}
+            onClick={audioBackward}
+          >
+            <BackwardIcon />
+          </div>
+        )}
         <div
           className={clsx(styles.control, styles.play, playStatusClass, playTypeClass, displayPlaylistClass)}
           onClick={playing ? onPause : onPlay}
@@ -273,7 +297,14 @@ export const Audio = () => {
         >
           <StopIcon />
         </div>
-        {/* {nextButton} */}
+        {playType === 'practice' && (
+          <div
+            className={clsx(styles.control, styles.next, playStatusClass, playTypeClass, displayPlaylistClass)}
+            onClick={audioForward}
+          >
+            <ForwardIcon />
+          </div>
+        )}
         <div
           className={clsx(styles['audio-progress'], playStatusClass, playTypeClass, displayPlaylistClass)}
           style={playProgress}
