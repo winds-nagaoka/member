@@ -12,7 +12,11 @@ export type AudioRecord = {
     file: { label: string; path: string }[]
     contents: {
       file: number
-      list: { time: string; label: string }[]
+      list: {
+        time: string
+        label: string
+        contents?: { time: string; label: string }[]
+      }[]
     }[]
   }
   _id: string

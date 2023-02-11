@@ -1082,7 +1082,9 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
               }
             }
             .more {
-              color: $base-play-color;
+              svg {
+                color: $base-play-color;
+              }
             }
             & ~ .add {
               & {
@@ -1133,14 +1135,23 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
               width: 16px;
               height: 16px;
               fill: #ccc;
+              color: #ccc;
               text-align: center;
               font-size: 16px;
             }
           }
 
           .more {
+            display: flex;
+            align-items: center;
             margin-left: 8px;
             color: #ccc;
+
+            svg {
+              width: 16px;
+              height: 16px;
+              color: #ccc;
+            }
           }
 
           .time {
@@ -1162,16 +1173,20 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
           &.playing {
             .icon svg {
               fill: $base-play-color;
+              color: $base-play-color;
             }
 
             &.main .icon svg {
               fill: $main-play-color;
+              color: $main-play-color;
             }
             &.mini .icon svg {
               fill: $mini-play-color;
+              color: $mini-play-color;
             }
             &.other .icon svg {
               fill: $other-play-color;
+              color: $other-play-color;
             }
           }
         }

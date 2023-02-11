@@ -8,6 +8,8 @@ import { ReactComponent as OpenIcon } from '../../assets/up.svg'
 import { ReactComponent as CloseIcon } from '../../assets/down.svg'
 import { ReactComponent as PlayCircleIcon } from '../../assets/play-circle.svg'
 import { ReactComponent as MusicalNoteIcon } from '../../assets/musical-note.svg'
+import { ReactComponent as ListIcon } from '../../assets/list.svg'
+import { ReactComponent as PlayCircleOutlineIcon } from '../../assets/play-circle-outline.svg'
 import { useMediaStore } from '../../stores/media'
 import { AudioSource, useReferenceList } from './api/getReferenceList'
 import { useSourceList } from '../practice/api/getSourceList'
@@ -17,7 +19,7 @@ import styles from './Audio.module.scss'
 import { formatPlayTime } from '../../utilities/format'
 import { useAudioList } from './api/getAudioList'
 import { useConcertList } from '../archive/api/getConcertList'
-import { getConcertDetail, getAudioSource, composeSrc } from './utilities'
+import { getConcertDetail, getAudioSource, composeSrc, getTimeSecond } from './utilities'
 import { composePlaylist } from './utilities'
 import { useEffect } from 'react'
 import { AudioRecord, useRecordList } from './api/getRecordList'
@@ -141,6 +143,7 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
     state,
     playPercent:
       state.duration && state.currentTime ? Math.round((state.currentTime / state.duration) * 1000) / 10 : null,
+    playCurrentTime: state.currentTime,
     onPlay,
     onPause,
     onStop,
@@ -198,7 +201,7 @@ export const Audio = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
   const audioProgress = useRef<HTMLDivElement>(null)
   const audioLoadProgress = useRef<HTMLDivElement>(null)
-  const { state, playPercent, onPlay, onPause, onStop, audioFunctions } = useAudio(audioRef)
+  const { state, playPercent, playCurrentTime, onPlay, onPause, onStop, audioFunctions } = useAudio(audioRef)
   const apiQueries = useAudioApiQuery()
 
   if (apiQueries.isLoading) {
@@ -286,6 +289,7 @@ export const Audio = () => {
       <Playlist
         playType={playType}
         playTrack={playTrack}
+        playCurrentTime={playCurrentTime}
         playing={playing}
         displayPlaylist={displayPlaylist}
         concertDetail={concertDetail}
@@ -312,6 +316,7 @@ const PlayTime = ({ currentTime, duration }: { currentTime: number | null; durat
 const Playlist = ({
   playType,
   playTrack,
+  playCurrentTime,
   playing,
   displayPlaylist,
   concertDetail,
@@ -320,6 +325,7 @@ const Playlist = ({
 }: {
   playType: PlayType | null
   playTrack: number | null
+  playCurrentTime: number | null
   playing: boolean
   displayPlaylist: boolean
   concertDetail: ConcertDetail | HistoryDetail | null
@@ -351,6 +357,7 @@ const Playlist = ({
             <TrackList
               playType={playType}
               playTrack={playTrack}
+              playCurrentTime={playCurrentTime}
               concertDetail={concertDetail}
               audioSource={audioSource}
             />
@@ -415,15 +422,17 @@ const Title = ({
 const TrackList = ({
   playType,
   playTrack,
+  playCurrentTime,
   concertDetail,
   audioSource,
 }: {
   playType: PlayType | null
   playTrack: number | null
+  playCurrentTime: number | null
   concertDetail: ConcertDetail | HistoryDetail | null
   audioSource: AudioSource | AudioRecord | null
 }) => {
-  const { setTrack } = useMediaStore()
+  const { setTrack, setTrackAndTime } = useMediaStore()
 
   if (audioSource === null || concertDetail === null) {
     return null
@@ -464,6 +473,107 @@ const TrackList = ({
                   )
                 })
               })}
+            </div>
+          )
+        })}
+      </>
+    )
+  } else if (playType === 'practice' && 'label' in concertDetail && 'detail' in audioSource) {
+    return (
+      <>
+        {audioSource.detail.contents.map((item, i) => {
+          let headPlayClass = ''
+          if (playTrack === i && playCurrentTime) {
+            if (item.list.length > 0) {
+              if (Math.ceil(playCurrentTime) < getTimeSecond(item.list[0].time) - 1) {
+                headPlayClass = styles.playing
+              }
+            } else {
+              headPlayClass = styles.playing
+            }
+          }
+
+          const trackList = item.list.map((each, j) => {
+            let playClass = ''
+            if (playTrack === i && playCurrentTime) {
+              if (Math.ceil(playCurrentTime) >= getTimeSecond(each.time) - 1) {
+                if (item.list.length !== j + 1) {
+                  if (Math.ceil(playCurrentTime) < getTimeSecond(item.list[j + 1].time) - 1) {
+                    playClass = styles.playing
+                  }
+                } else {
+                  playClass = styles.playing
+                }
+              }
+            }
+            const moreLabel =
+              'contents' in each ? (
+                <div className={styles.more}>
+                  <ListIcon />
+                </div>
+              ) : (
+                false
+              )
+            const addTrackList =
+              'contents' in each && playClass === styles.playing
+                ? each.contents &&
+                  each.contents.map((addEach, k) => {
+                    let addPlayClass = ''
+                    if (playTrack === i && playCurrentTime && playClass !== '') {
+                      if (Math.ceil(playCurrentTime) >= getTimeSecond(addEach.time) - 1) {
+                        if (each.contents && each.contents.length !== k + 1) {
+                          if (Math.ceil(playCurrentTime) < getTimeSecond(each.contents[k + 1].time) - 1) {
+                            addPlayClass = styles.playing
+                          }
+                        } else {
+                          addPlayClass = styles.playing
+                        }
+                      }
+                    }
+                    return (
+                      <div
+                        key={`list-${i}-${j}-${k}`}
+                        className={clsx(styles.list, styles.add, addPlayClass)}
+                        onClick={() => setTrackAndTime(i, getTimeSecond(addEach.time), audioSource.detail.id)}
+                      >
+                        <div className={styles.icon}>
+                          <PlayCircleOutlineIcon />
+                        </div>
+                        <div>{addEach.label}</div>
+                        <div className={styles.time}>{addEach.time}</div>
+                      </div>
+                    )
+                  })
+                : false
+            return (
+              <div key={`list-${i}-${j}`}>
+                <div
+                  className={clsx(styles.list, playClass)}
+                  onClick={() => setTrackAndTime(i, getTimeSecond(each.time), audioSource.detail.id)}
+                >
+                  <div className={styles.icon}>
+                    <PlayCircleIcon />
+                  </div>
+                  <div>{each.label}</div>
+                  {moreLabel}
+                  <div className={styles.time}>{each.time}</div>
+                </div>
+                {addTrackList}
+              </div>
+            )
+          })
+          return (
+            <div key={`list-${i}`}>
+              <div
+                className={clsx(styles.list, headPlayClass)}
+                onClick={() => setTrackAndTime(i, getTimeSecond('00:00'), audioSource.detail.id)}
+              >
+                <div className={styles.icon}>
+                  <PlayCircleIcon />
+                </div>
+                <div>{audioSource.detail.file[i].label || '録音開始'}</div>
+              </div>
+              {trackList}
             </div>
           )
         })}

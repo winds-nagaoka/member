@@ -16,6 +16,7 @@ type MediaStore = {
   toggleDisplayPlayer: (displayPlayer: boolean) => void
   toggleDisplayPlaylist: (displayPlaylist: boolean) => void
   setTrack: (playTrack: number, playId?: string, playType?: PlayType) => void
+  setTrackAndTime: (playTrack: number, playTime: number, playId?: string, playType?: PlayType) => void
   setPlaying: (playing: boolean) => void
   resetTrack: () => void
   // video
@@ -72,6 +73,21 @@ export const useMediaStore = create<MediaStore>((set) => ({
       playId: playId !== undefined ? playId : state.playId,
       playType: playType !== undefined ? playType : state.playType,
     }))
+  },
+  setTrackAndTime: (playTrack, playTime, playId, playType) => {
+    set((state) => {
+      if (state.playing && state.audioRef?.current) {
+        state.audioRef.current.currentTime = playTime
+      }
+      return {
+        ...state,
+        displayPlayer: true,
+        playint: true,
+        playTrack,
+        playId: playId !== undefined ? playId : state.playId,
+        playType: playType !== undefined ? playType : state.playType,
+      }
+    })
   },
   setPlaying: (playing) => set((state) => ({ ...state, playing })),
   resetTrack: () => set((state) => ({ ...state, playTrack: null })),

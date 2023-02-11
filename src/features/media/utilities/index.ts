@@ -71,3 +71,11 @@ export const composePlaylist = (concertDetail: ConcertDetail, audioSource: Audio
     return { trackNumber: index, ...audioItem, music, part }
   })
 }
+
+export const getTimeSecond = (timeString: string): number => {
+  const time = timeString.split(':').reverse()
+  const sec = time[0] ? Number(time[0]) : 0
+  const min = time[1] ? Number(time[1]) * 60 : 0
+  const hour = time[2] ? Number(time[2]) * 3600 : 0
+  return hour + min + sec
+}
