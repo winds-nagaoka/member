@@ -7,6 +7,7 @@ import { ReactComponent as WindsIcon } from '../../../assets/hr.svg'
 import { ReactComponent as LeftIcon } from '../../../assets/left.svg'
 import { ReactComponent as RightIcon } from '../../../assets/right.svg'
 import { getUserAgentType, getIsStandAlone } from '../../../utilities/userAgent'
+import { useTutorialStore } from '../../../stores/tutorial'
 import styles from './Tutorial.module.scss'
 
 import 'swiper/css'
@@ -16,9 +17,7 @@ import 'swiper/css/lazy'
 
 export const Tutorial = () => {
   const pc = useStyle()
-  const displayTutorial = false
-
-  const setDisplayTutorial = (isOpen: boolean) => console.log('setDisplayTutorial')
+  const { isOpen: displayTutorial, onClose } = useTutorialStore()
 
   return (
     <div className={styles['tutorial-modal']}>
@@ -28,7 +27,7 @@ export const Tutorial = () => {
           <div className={styles.logo}>
             <WindsLogo />
           </div>
-          <div className={clsx(styles.skip, styles[pc])} onClick={() => setDisplayTutorial(false)}>
+          <div className={clsx(styles.skip, styles[pc])} onClick={onClose}>
             スキップ
           </div>
         </div>
@@ -55,7 +54,7 @@ type TutorialContent = {
 
 const FirstTutorial = () => {
   const pc = useStyle()
-  const setDisplayTutorial = (isOpen: boolean) => console.log('setDisplayTutorial')
+  const { onClose } = useTutorialStore()
 
   const standaloneTutorial: TutorialContent[] = [
     {
@@ -121,7 +120,7 @@ const FirstTutorial = () => {
     const subtitle = each.subtitle ? <h3>{each.subtitle}</h3> : false
     const contents = each.contents ? each.contents.map((text, i) => <p key={'contents' + i}>{text}</p>) : false
     const button = each.button ? (
-      <div className={styles['start-button']} onClick={() => setDisplayTutorial(false)}>
+      <div className={styles['start-button']} onClick={onClose}>
         スタート
       </div>
     ) : (
