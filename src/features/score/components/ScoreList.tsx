@@ -94,7 +94,7 @@ const ScoreListComponent = ({
         }
         const composer = scoreItem.composer.length === 0 ? '' : scoreItem.composer.join(', ')
         const arranger = scoreItem.arranger.length === 0 ? '' : scoreItem.arranger.join(', ')
-        const bar = composer === '' || arranger === '' ? '' : <span className="bar">/</span>
+        const bar = composer === '' || arranger === '' ? '' : <span className={styles.bar}>/</span>
 
         return (
           <div

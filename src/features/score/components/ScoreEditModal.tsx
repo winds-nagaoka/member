@@ -450,7 +450,7 @@ const Info = ({
                   checked={input.scoreStatus === '2'}
                   onChange={(e) => setValue(e.target.value, 'scoreStatus')}
                 />
-                <label htmlFor="scoreStatusLend" className="highlight-high">
+                <label htmlFor="scoreStatusLend" className={styles['highlight-high']}>
                   <span>貸出中</span>
                 </label>
                 <input
@@ -461,7 +461,7 @@ const Info = ({
                   checked={input.scoreStatus === '1'}
                   onChange={(e) => setValue(e.target.value, 'scoreStatus')}
                 />
-                <label htmlFor="scoreStatusUsing" className="highlight-low">
+                <label htmlFor="scoreStatusUsing" className={styles['highlight-low']}>
                   <span>使用中</span>
                 </label>
                 <input
@@ -485,7 +485,7 @@ const Info = ({
                       checked={input.scoreStatus === '-1'}
                       onChange={(e) => setValue(e.target.value, 'scoreStatus')}
                     />
-                    <label htmlFor="scoreStatusRemove" className="highlight-high">
+                    <label htmlFor="scoreStatusRemove" className={styles['highlight-high']}>
                       <span>削除</span>
                     </label>
                   </>

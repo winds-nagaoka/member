@@ -48,12 +48,12 @@ export const ScheduleList = () => {
 }
 
 const ScheduleNext = ({ scheduleList }: { scheduleList: ScheduleListApi }) => {
-  const today = scheduleList.today ? <span className="today">本日</span> : ''
+  const today = scheduleList.today ? <span className={styles.today}>本日</span> : ''
   const next = scheduleList.next
   const date = next.date.split('-')
   const month = date[1].match(/0[0-9]/) ? date[1].replace(/^0/g, '') : date[1]
   const day = date[2].match(/0[0-9]/) ? date[2].replace(/^0/g, '') : date[2]
-  const memo = next.memo ? <span className="memo">{next.memo}</span> : ''
+  const memo = next.memo ? <span className={styles.memo}>{next.memo}</span> : ''
   const studio = next.studio.match(/第[1-9]スタジオ/) ? (
     <span>
       第<span>{next.studio.replace('第', '').replace('スタジオ', '')}</span>スタジオ
@@ -102,7 +102,7 @@ const ScheduleAfter = ({ scheduleList }: { scheduleList: ScheduleListApi }) => {
         const list = scheduleList.schedule[scheduleItemKey].map((each, j) => {
           const date = each.date.split('-')
           const day = date[2].match(/0[0-9]/) ? date[2].replace(/^0/g, '') : date[2]
-          const memo = each.memo ? <span className="memo">{each.memo}</span> : ''
+          const memo = each.memo ? <span className={styles.memo}>{each.memo}</span> : ''
           const studio = each.studio.match(/第[1-9]スタジオ/) ? (
             <span>
               第<span>{each.studio.replace('第', '').replace('スタジオ', '')}</span>スタジオ

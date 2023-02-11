@@ -51,7 +51,7 @@ export const BoxList = () => {
                 className={clsx(styles['score-box'], { [styles.disabled]: !box.status })}
                 onClick={() => onOpen(box)}
               >
-                <div className="label">
+                <div className={styles.label}>
                   <span>{box.label}</span>
                 </div>
                 <BoxIcon />
