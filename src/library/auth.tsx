@@ -5,6 +5,7 @@ import { authStorage } from '../utilities/storage'
 import { useNotificationStore } from '../stores/notification'
 import { getLoginRequestBody, getRegisterRequestBody, getSession } from '../utilities/session'
 import { FullScreenLoading } from '../components/ContentsBox'
+import { useTutorialStore } from '../stores/tutorial'
 
 export const USER_QUERY_KEY = 'user'
 
@@ -43,6 +44,7 @@ const registerFn = async (inputs: RegisterInputs): Promise<User | null> => {
   const response = await register(requestBody)
   if (response.status) {
     useNotificationStore.getState().addNotification('登録しました')
+    useTutorialStore.getState().onOpen()
     return handleUserResponse(response)
   } else {
     useNotificationStore.getState().addNotification('登録できませんでした')

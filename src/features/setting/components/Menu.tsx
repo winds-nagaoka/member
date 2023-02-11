@@ -13,6 +13,7 @@ import { ContentsButton } from '../../../components/Navigations/ContentsButton'
 import { useMediaStore } from '../../../stores/media'
 import { ContentsLinks } from '../../../components/Navigations'
 import { LogoutAlert } from '../../../components/Logout/LogoutAlert'
+import { useTutorialStore } from '../../../stores/tutorial'
 
 export const Menu = () => {
   return (
@@ -170,6 +171,7 @@ const ScoreSettingList = () => {
 
 const AboutAppList = () => {
   const pc = useStyle()
+  const { onOpen } = useTutorialStore()
 
   return (
     <>
@@ -179,7 +181,7 @@ const AboutAppList = () => {
           list={[
             { path: 'terms', label: 'ウィンズ会員規約' },
             { path: 'about', label: 'このアプリについて' },
-            // { path: 'tutorial', label: 'チュートリアルを開く' },
+            { label: 'チュートリアルを開く', onClick: onOpen },
             { path: 'license', label: 'ライセンス情報' },
           ]}
         />
