@@ -18,16 +18,18 @@ export const HistoryList = () => {
     return null
   }
 
+  const historyList=[...historyListQuery.data.list].reverse()
+
   return (
     <ContentsBox>
       <div className={styles.history}>
         <ul>
-          {historyListQuery.data.list.length === 0 && (
+          {historyList.length === 0 && (
             <TitleFrame>
               <Text>みつかりませんでした</Text>
             </TitleFrame>
           )}
-          {historyListQuery.data.list.map((historyItem, index) => {
+          {historyList.map((historyItem, index) => {
             const practice = historyItem.detail
             const playRequest = practice.recordStatus ? () => setTrack(0, practice.id, 'practice') : () => {}
             const icon = practice.recordStatus ? (
