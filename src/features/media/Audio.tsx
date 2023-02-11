@@ -41,7 +41,15 @@ const initialState = {
 
 const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   const [state, setState] = useState<AudioState>(initialState)
-  const { audioRef: storedAudioRef, setAudioRef, playing, setPlaying, resetTrack } = useMediaStore()
+  const {
+    audioRef: storedAudioRef,
+    setAudioRef,
+    toggleDisplayPlayer,
+    toggleDisplayPlaylist,
+    playing,
+    setPlaying,
+    resetTrack,
+  } = useMediaStore()
 
   useEffect(() => {
     if (audioRef && !storedAudioRef) {
@@ -64,9 +72,13 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   }
 
   const onStop = () => {
+    if (audioRef.current?.paused) {
+      toggleDisplayPlaylist(false)
+      toggleDisplayPlayer(false)
+      resetTrack()
+      setState(initialState)
+    }
     onPause()
-    setState(initialState)
-    resetTrack()
   }
 
   const playUpdate = (currentTime: number | null, duration: number | null) => {
