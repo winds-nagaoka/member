@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { ContentsBox, ContentsLoading, Text, TitleFrame } from '../../../components/ContentsBox'
 import { ContentsLinks } from '../../../components/Navigations'
+import { getBrowserName, getUserAgent } from '../../../utilities/userAgent'
 import { useStyle } from '../../../utilities/useStyle'
 import { ScheduleListApi, useScheduleList } from '../api/getScheduleList'
 import styles from './ScheduleList.module.scss'
@@ -35,6 +36,8 @@ export const ScheduleList = () => {
           </TitleFrame>
         </div>
       </ContentsBox>
+
+      <ScheduleSync />
 
       <ContentsBox>
         <ContentsLinks list={[{ path: '/practice/source', label: '参考音源' }]} />
@@ -149,5 +152,19 @@ const ScheduleAfter = ({ scheduleList }: { scheduleList: ScheduleListApi }) => {
         )
       })}
     </>
+  )
+}
+
+const ScheduleSync = () => {
+  const pc = useStyle()
+  if (getBrowserName(getUserAgent()) !== 'iPhone') {
+    return null
+  }
+  return (
+    <ContentsBox>
+      <div className={clsx(styles.button, styles[pc])}>
+        <a href="webcal://api.winds-n.com/schedule/cal.ics">カレンダーアプリと同期する</a>
+      </div>
+    </ContentsBox>
   )
 }
