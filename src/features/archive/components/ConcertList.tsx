@@ -8,6 +8,7 @@ import { ReactComponent as CloseIcon } from '../../../assets/close-circle.svg'
 import { ReactComponent as PlayIcon } from '../../../assets/play-circle.svg'
 import { ReactComponent as VideoIcon } from '../../../assets/video.svg'
 import { ReactComponent as VideoOffIcon } from '../../../assets/video-off.svg'
+import { ReactComponent as ArrowUp } from '../../../assets/arrow-up.svg'
 import styles from './ConcertList.module.scss'
 import { useState } from 'react'
 import { escapeReg } from '../../../utilities/escape'
@@ -66,6 +67,11 @@ export const ConcertList = () => {
               </Link>
             )
           })}
+        <Notice
+          searchQuery={searchQuery}
+          concertList={concertList}
+          selectConcertType={displayMain || displayMini || displayOther}
+        />
       </div>
     </ContentsBox>
   )
@@ -228,4 +234,43 @@ const ConcertSwitch = ({
       </div>
     </div>
   )
+}
+
+const Notice = ({
+  searchQuery,
+  concertList,
+  selectConcertType,
+}: {
+  searchQuery: string
+  concertList: ConcertItem[]
+  selectConcertType: boolean
+}) => {
+  if (searchQuery) {
+    const searchResult = search(searchQuery, concertList)
+    const hasResult = searchResult?.some((item) => item !== null)
+
+    if (hasResult) {
+      return (
+        <div className={styles.notice}>
+          <span>これ以上はありません</span>
+        </div>
+      )
+    } else {
+      return (
+        <div className={styles.notice}>
+          <span>みつかりませんでした</span>
+        </div>
+      )
+    }
+  }
+  if (!selectConcertType) {
+    return (
+      <div className={styles.notice}>
+        <ArrowUp />
+        <span>どれか選んでください</span>
+      </div>
+    )
+  } else {
+    return null
+  }
 }

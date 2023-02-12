@@ -442,7 +442,9 @@ $other-play-color-half-light: hsl(0, 0%, 60%);
     align-items: center;
     flex-direction: column;
 
-    i {
+    svg {
+      width: 20px;
+      height: 20px;
       margin-bottom: 16px;
       color: #aaa;
     }
