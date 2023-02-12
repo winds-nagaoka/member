@@ -1,10 +1,13 @@
+import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { ReactComponent as RightIcon } from '../../assets/right.svg'
+import { useStyle } from '../../utilities/useStyle'
 import styles from './ContentsLinks.module.scss'
 
 type LinkItem = { path?: string; label: string; isDisabled?: boolean; onClick?: () => void }
 
 export const ContentsLinks = ({ list }: { list: LinkItem[] }) => {
+  const pc = useStyle()
   return (
     <div className={styles.link}>
       <ul>
@@ -22,7 +25,7 @@ export const ContentsLinks = ({ list }: { list: LinkItem[] }) => {
                 )}
                 {!link.isDisabled && (
                   <Link to={link.path}>
-                    <div className={styles.inner}>
+                    <div className={clsx(styles.inner, styles[pc])}>
                       <span>{link.label}</span>
                       <RightIcon />
                     </div>
