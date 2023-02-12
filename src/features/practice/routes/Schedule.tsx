@@ -11,6 +11,7 @@ export const Schedule = () => {
       ]}
       title="練習について"
       subTitle="今後の練習予定です"
+      mobileTitle="練習日程"
     >
       <ScheduleList />
       <BackToHome />

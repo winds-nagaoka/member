@@ -27,6 +27,7 @@ export const Photo = () => {
       ]}
       title="アーカイブ"
       subTitle="過去のウィンズの活動履歴を確認できます"
+      mobileTitle="写真"
     >
       <PhotoList />
       <BackLink path="/archive" label="一覧へ" />

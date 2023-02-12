@@ -19,14 +19,16 @@ type LayoutProps = {
   breadList: BreadItem[]
   title: string
   subTitle?: string | ReactNode
+  mobileTitle?: string | null
   children: ReactNode
 }
 
 export const Layout = (props: LayoutProps) => {
   const pc = useStyle()
+  const { mobileTitle, title } = props
   return (
     <div className={styles.auth}>
-      <Header />
+      <Header title={mobileTitle !== null ? mobileTitle || title : null} />
       <div className={clsx(styles.contents, styles[pc])}>
         <div className={clsx(styles['contents-inner'], styles[pc])}>
           <div className={clsx({ [styles['flex-frame']]: pc === 'pc' })}>

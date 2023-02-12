@@ -15,6 +15,7 @@ export const Detail = () => {
       ]}
       title="ウィンズスコア"
       subTitle="楽譜詳細情報"
+      mobileTitle="詳細情報"
     >
       <ScoreDetail />
       <BackLink path="/score" label="楽譜一覧へ" />

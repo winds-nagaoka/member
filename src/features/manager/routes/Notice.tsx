@@ -10,6 +10,7 @@ export const Notice = () => {
         { path: '/manager', label: 'お知らせ' },
       ]}
       title="事務局からのお知らせ"
+      mobileTitle="お知らせ"
     >
       <NoticeDetail />
       <BackToHome />

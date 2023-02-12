@@ -27,6 +27,7 @@ export const Video = () => {
       ]}
       title="アーカイブ"
       subTitle="過去のウィンズの活動履歴を確認できます"
+      mobileTitle="映像"
     >
       <VideoList />
       <BackLink path="/archive" label="一覧へ" />

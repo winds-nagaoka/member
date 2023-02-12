@@ -14,7 +14,7 @@ type PreviousPage = {
   path: string
 }
 
-export const Header = () => {
+export const Header = ({ title }: { title: string | null }) => {
   const pc = useStyle()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -57,9 +57,12 @@ export const Header = () => {
   return (
     <div className={styles['navigation-header']}>
       <div className={clsx(styles.header, styles[pc])}>
-        <div className={styles.logo}>
-          <WindsLogo />
-        </div>
+        {title && <div className={styles['title-text']}>{title}</div>}
+        {!title && (
+          <div className={styles.logo}>
+            <WindsLogo />
+          </div>
+        )}
         <LeftNavigations previousPage={previousPage} onMenuOpen={() => setMenuOpen(true)} />
         <RightNavigations />
       </div>
