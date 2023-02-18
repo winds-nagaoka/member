@@ -162,7 +162,9 @@ const useAudio = (audioRef: RefObject<HTMLAudioElement>) => {
   }
 
   const onEnded = () => {
-    // playNext()
+    if (playTrack !== null) {
+      setTrack(playTrack + 1)
+    }
   }
 
   return {
