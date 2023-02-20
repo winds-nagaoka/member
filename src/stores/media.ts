@@ -1,5 +1,6 @@
 import { RefObject } from 'react'
 import create from 'zustand'
+import { audioStorage } from '../utilities/audioStorage'
 
 export type PlayType = 'archive' | 'source' | 'practice'
 
@@ -52,15 +53,57 @@ const initialVideoStore = {
   videoLoadingPercent: null,
 }
 
+const getInitialStateFromStorage = (): {
+  displayPlayer: boolean
+  playTrack: number | null
+  playId: string | null
+  playType: PlayType | null
+} => {
+  const displayPlayer = audioStorage.getDisplayPlayer()
+  const concertId = audioStorage.getPlayerConcertId()
+  const concertNumber = audioStorage.getPlayerNumber()
+  const sourceId = audioStorage.getPlayerSourceId()
+  const sourceNumber = audioStorage.getPlayerSourceNumber()
+  const practiceId = audioStorage.getPlayerPracticeId()
+  const practiceFile = audioStorage.getPlayerPracticeFile()
+  if (concertId) {
+    return {
+      displayPlayer,
+      playType: 'archive',
+      playId: concertId,
+      playTrack: Number(concertNumber),
+    }
+  }
+  if (sourceId) {
+    return {
+      displayPlayer,
+      playType: 'source',
+      playId: sourceId,
+      playTrack: Number(sourceNumber),
+    }
+  }
+  if (practiceId) {
+    return {
+      displayPlayer,
+      playType: 'practice',
+      playId: practiceId,
+      playTrack: Number(practiceFile),
+    }
+  }
+  return {
+    displayPlayer: false,
+    playType: null,
+    playId: null,
+    playTrack: null,
+  }
+}
+
 export const useMediaStore = create<MediaStore>((set) => ({
   // audio
   audioRef: null,
-  displayPlayer: false,
   displayPlaylist: false,
   playing: false,
-  playTrack: null,
-  playId: null,
-  playType: null,
+  ...getInitialStateFromStorage(),
   setAudioRef: (audioRef) => set((state) => ({ ...state, audioRef })),
   toggleDisplayPlayer: (displayPlayer) => set((state) => ({ ...state, displayPlayer })),
   toggleDisplayPlaylist: (displayPlaylist) => set((state) => ({ ...state, displayPlaylist })),
