@@ -1,0 +1,309 @@
+.archive-overview {
+  font-size: 13px;
+  line-height: 14px;
+
+  // .loading {
+  //   padding: 28px 0;
+  // }
+
+  .article {
+    padding: 0;
+
+    .concert-detail {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      // margin: 12px 0 0;
+      margin: 0;
+      padding: 0 0 8px 0;
+      border-radius: 0 0 2px 2px;
+      // border-radius: 2px;
+
+      @media (max-width: 767px) {
+        & {
+          flex-direction: column;
+        }
+      }
+
+      .poster {
+        flex: 1;
+        order: 1;
+        padding: 1em 0px 1em 2em;
+        font-size: 1em;
+
+        @media (max-width: 767px) {
+          & {
+            flex: 1;
+            order: 2;
+            margin: 0 8px 0;
+            padding: 0;
+          }
+        }
+
+        img {
+          width: calc(100% - 6px);
+          padding: 2px;
+          border: 0.55px solid rgba(180, 180, 180, 1);
+
+          @media (max-width: 767px) {
+            & {
+              height: 125vw;
+            }
+          }
+        }
+      }
+
+      .no-poster {
+        position: relative;
+        width: 100%;
+
+        z-index: 4;
+
+        & {
+          background: #eee;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            background: #333;
+          }
+        }
+
+        @media (max-width: 767px) {
+          & {
+            display: none;
+          }
+        }
+
+        &:before {
+          content: '';
+          display: block;
+          padding-top: 140%;
+        }
+
+        div {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+
+          svg {
+            width: 60%;
+            & {
+              fill: #ddd;
+            }
+            @media (prefers-color-scheme: dark) {
+              & {
+                fill: #555;
+              }
+            }
+          }
+
+          span {
+            display: block;
+            padding: 0 0 0 0;
+            // font-family: "source-han-sans-japanese",sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+
+            & {
+              color: #ccc;
+            }
+            @media (prefers-color-scheme: dark) {
+              & {
+                color: #666;
+              }
+            }
+          }
+        }
+      }
+
+      .overview-detail {
+        flex: 1.5;
+        order: 2;
+        margin: 12px 24px;
+
+        @media (max-width: 767px) {
+          & {
+            flex: 2;
+            order: 1;
+            margin: 0;
+            // font-size: .8em;
+          }
+        }
+
+        label.sticky-label {
+          position: -webkit-sticky;
+          position: sticky;
+          // top: 37px;
+          // top: 44px;
+          top: 0px;
+          display: block;
+          width: calc(100% - 12px);
+          padding: 8px 0 8px 12px;
+          // border-bottom: .55px solid #d3d3d3;
+          // background: #fff;
+          font-size: 16px;
+          // font-family: "kan48typos-std",sans-serif;
+          // font-weight: 200;
+
+          & {
+            color: #333;
+            background: #f0f0f0;
+          }
+          @media (prefers-color-scheme: dark) {
+            & {
+              color: #ccc;
+              background: #383838;
+            }
+          }
+
+          &.pc {
+            // top: 44px;
+            top: 0px;
+          }
+        }
+
+        & > div > div {
+          margin: 0;
+          padding: 8px 12px;
+
+          span:first-child {
+            display: inline-block;
+            margin-bottom: 4px;
+            color: #888;
+            font-size: 13px;
+            // font-family: "source-han-sans-japanese",sans-serif;
+            font-weight: 200;
+          }
+          span:last-child {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 15px;
+            // font-family: "kan48typos-std",sans-serif;
+          }
+        }
+
+        & > ol {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        .music-list > li {
+          // margin-bottom: .5em;
+
+          label.sticky-label {
+            letter-spacing: 0.25em;
+
+            &.other {
+              letter-spacing: 0;
+            }
+          }
+
+          ol {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            // font-family: "tbchibirgothicplusk-pro",sans-serif;
+            // border-top: 1px solid #ccc;
+
+            li {
+              padding: 8px 12px;
+              font-size: 14px;
+              // border-bottom: 1px solid #ccc;
+            }
+          }
+
+          li.track {
+            // margin-left: 4px;
+            min-height: 28px;
+            letter-spacing: -0.001em;
+
+            // display: flex;
+            // // justify-content: center;
+            // align-items: center;
+
+            display: flex;
+            align-items: center;
+
+            &.has-audio {
+              cursor: pointer;
+
+              &:hover {
+                background: #e6e5eb;
+              }
+              &:active {
+                background: #e6e5eb;
+              }
+              @media (prefers-color-scheme: dark) {
+                &:hover {
+                  background: #2c2c2e;
+                }
+                &:active {
+                  background: #2c2c2e;
+                }
+              }
+
+              // no Audio icon
+              // i {
+              //   color: #ccc;
+              // }
+            }
+
+            div:first-child {
+              // has Audio icon
+              svg {
+                width: 16px;
+                height: 16px;
+                margin: 0 12px 0 0;
+                fill: #ccc;
+              }
+            }
+
+            div {
+              display: flex;
+              flex-direction: column;
+
+              span {
+                display: block;
+                margin: 2px 0;
+                font-size: 14px;
+
+                &.composer {
+                  // margin: 2px 0;
+                  color: #888;
+                  font-size: 12px;
+                  line-height: 12px;
+                  // font-family: "source-han-sans-japanese",sans-serif;
+                  font-weight: 200;
+
+                  span {
+                    display: inline-block;
+                    margin: 0 0.2em;
+                  }
+                }
+              }
+            }
+
+            ol {
+              margin: 2px 0;
+
+              li {
+                margin: 0;
+                padding: 2px 8px;
+                font-size: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

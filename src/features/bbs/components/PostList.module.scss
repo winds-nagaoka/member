@@ -1,0 +1,111 @@
+.bbs-list {
+  .bbs-item {
+    padding: 12px;
+    & {
+      background: #f6f6f6;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #333;
+      }
+    }
+
+    &:not(:first-child) {
+      margin-top: 12px;
+    }
+
+    .bbs-title {
+      display: flex;
+      align-items: center;
+
+      .number {
+        min-width: 20px;
+        min-height: 20px;
+        border-radius: 5px;
+        padding: 4px 6px;
+        text-align: center;
+        line-height: 20px;
+        font-size: 1em;
+        font-weight: bold;
+
+        & {
+          background: rgba(150, 150, 150, 1);
+          color: rgba(255, 255, 255, 1);
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            background: rgba(80, 80, 80, 1);
+            color: rgba(150, 150, 150, 1);
+          }
+        }
+      }
+
+      .name {
+        padding-left: 8px;
+        font-size: 0.8rem;
+      }
+
+      .time {
+        margin-left: auto;
+        font-size: 0.8rem;
+        color: #aaa;
+      }
+    }
+
+    .bbs-text {
+      margin-top: 8px;
+      font-size: 0.9rem;
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .more {
+    margin: 12px 0 0;
+    padding: 12px 0;
+    font-size: 13px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    & {
+      color: #333;
+      &:hover {
+        color: #666;
+        svg {
+          fill: #666;
+        }
+      }
+      svg {
+        display: block;
+        margin: 0 auto;
+        width: 20px;
+        height: 20px;
+        fill: #666;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        color: #ccc;
+        &:hover {
+          color: #eee;
+          svg {
+            fill: #eee;
+          }
+        }
+        svg {
+          fill: #aaa;
+        }
+      }
+    }
+
+    i {
+      display: block;
+
+      font-size: 18px;
+    }
+  }
+}

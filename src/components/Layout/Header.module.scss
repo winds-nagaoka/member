@@ -1,0 +1,182 @@
+.navigation-header {
+  width: 100%;
+
+  .header {
+    position: fixed;
+    height: 44px;
+    width: 100%;
+    border-bottom: 0.5px solid #cbcbcd;
+    text-align: center;
+    z-index: 20;
+
+    & {
+      background: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #1c1c1e;
+        border-color: #2d2d2f;
+      }
+    }
+
+    &.pc {
+      height: 60px;
+    }
+
+    &.no-border {
+      border: 0;
+    }
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .title-text {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .logo {
+      width: calc(100% - 44px);
+      height: 36px;
+      overflow: hidden;
+
+      svg {
+        width: calc(100% - 44px);
+        height: 36px;
+        overflow: hidden;
+        fill: #b60005;
+      }
+    }
+  }
+
+  .label {
+    position: fixed;
+    left: 0;
+    width: 44px;
+    height: 44px;
+    color: #b60005;
+    z-index: 21;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.menu {
+      svg {
+        width: 26px;
+        height: 26px;
+      }
+    }
+
+    &.back {
+      width: auto;
+
+      a {
+        color: #b60005;
+        text-decoration: none;
+
+        display: flex;
+        align-items: center;
+
+        i {
+          margin-right: 0.1em;
+          font-size: 1.6em;
+        }
+
+        .back-icon {
+          svg {
+            display: block;
+            width: 32px;
+            height: 32px;
+            fill: #b60005;
+          }
+        }
+
+        span {
+          position: relative;
+          left: -6px;
+          font-size: 17px;
+        }
+      }
+    }
+
+    &.home-navigation {
+      left: auto;
+      right: 0;
+
+      a {
+        width: 44px;
+        height: 44px;
+        color: inherit;
+        text-decoration: none;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+          width: 16px;
+          fill: #b60005;
+        }
+      }
+    }
+  }
+
+  .menu-background {
+    display: none;
+    position: fixed;
+    z-index: 51;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+
+    &.open {
+      display: block; /*カバーを表示*/
+      opacity: 0.35;
+      animation: menu-background-show 0.3s ease-in-out 0s;
+    }
+
+    @keyframes menu-background-show {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 0.35;
+      }
+    }
+  }
+
+  .menu-content {
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 52;
+    width: 80%;
+    max-width: 240px;
+    height: 100%;
+    background: #fff;
+    transition: transform 0.3s ease-in-out;
+    -webkit-transform: translate3d(-105%, 0, 0);
+    transform: translate3d(-105%, 0, 0);
+    -webkit-overflow-scrolling: touch;
+
+    &.open {
+      -webkit-transform: translate3d(0%, 0, 0);
+      transform: translate3d(0%, 0, 0);
+      box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
+    }
+  }
+}

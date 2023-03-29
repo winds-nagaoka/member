@@ -1,0 +1,59 @@
+.notification {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
+
+  .message {
+    margin: 16px;
+    font-size: 13px;
+
+    b {
+      font-weight: 600;
+    }
+  }
+
+  .close {
+    width: 13px;
+    height: 13px;
+    margin-left: auto;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      fill: #fff;
+    }
+  }
+
+  &.show {
+    animation: opacity-show 0.5s ease 0s forwards;
+  }
+
+  &.hide {
+    animation: opacity-hide 0.5s ease 0s forwards;
+  }
+}
+
+@keyframes opacity-show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacity-hide {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

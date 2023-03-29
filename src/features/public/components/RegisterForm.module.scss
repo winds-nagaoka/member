@@ -1,0 +1,68 @@
+.links {
+  margin: 36px 0 12px;
+  display: flex;
+  align-items: center;
+
+  .link {
+    flex: 2;
+
+    a {
+      text-decoration: none;
+      font-size: 14px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      & {
+        color: #666;
+        &:hover {
+          color: #333;
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          color: #aaa;
+          &:hover {
+            color: #ccc;
+          }
+        }
+      }
+    }
+  }
+
+  .button {
+    flex: 1;
+  }
+}
+
+.form {
+  h2 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: normal;
+
+    &.pc {
+      margin: 0 0 36px 0;
+    }
+  }
+
+  .text {
+    margin: 24px 0;
+    font-size: 14px;
+
+    p {
+      margin: 0;
+      padding: 0;
+
+      .red {
+        margin: 0 2px;
+        padding: 0 2px;
+        border-radius: 2px;
+        background: rgba(255, 59, 48, 0.8);
+        color: #fff;
+        // color: rgba(255,59,48,1);
+      }
+    }
+  }
+}

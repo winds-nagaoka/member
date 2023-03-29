@@ -1,0 +1,37 @@
+.title-frame {
+  & > label {
+    display: block;
+    padding: 0 12px;
+    font-size: 18px;
+    letter-spacing: 0.1rem;
+
+    &.pc {
+      padding: 8px 16px;
+      font-size: 20px;
+    }
+
+    & {
+      background: #fff;
+      border-bottom: 0.55px solid #cbcbcd;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: #1c1c1e;
+        border-bottom: 0.55px solid #2d2d2f;
+      }
+    }
+
+    line-height: 44px;
+  }
+
+  &.border-bottom {
+    & {
+      border-bottom: 0.55px solid #cbcbcd;
+    }
+    @media (prefers-color-scheme: dark) {
+      & {
+        border-bottom: 0.55px solid #2d2d2f;
+      }
+    }
+  }
+}

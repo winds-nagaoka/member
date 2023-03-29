@@ -1,0 +1,226 @@
+.link {
+  font-size: 1rem;
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      list-style: none;
+
+      & {
+        border-top: 0.55px solid #cbcbcd;
+      }
+      @media (prefers-color-scheme: dark) {
+        & {
+          border-top: 0.55px solid #2d2d2f;
+        }
+      }
+
+      &:first-child {
+        border-top: 0;
+      }
+
+      .disabled-link {
+        display: block;
+        margin: 0;
+
+        text-decoration: none;
+
+        & {
+          color: #ccc;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #333;
+          }
+        }
+
+        .inner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: default;
+
+          &.pc {
+            padding-left: 16px;
+          }
+
+          span {
+            // margin: 11px 8px 11px 0;
+            line-height: 44px;
+            font-size: 16px;
+          }
+
+          svg {
+            width: 20px;
+            height: 20px;
+            padding-right: 12px;
+            font-size: 1.2rem;
+          }
+
+          svg {
+            fill: #eee;
+            path {
+              stroke: #eee;
+            }
+          }
+          @media (prefers-color-scheme: dark) {
+            svg {
+              fill: #333;
+              path {
+                stroke: #333;
+              }
+            }
+          }
+        }
+      }
+
+      a {
+        display: block;
+        margin: 0;
+
+        text-decoration: none;
+
+        & {
+          color: #333;
+
+          &:hover {
+            background: #e6e5eb;
+          }
+
+          &:active {
+            background: #e6e5eb;
+          }
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #ccc;
+
+            &:hover {
+              background: #2c2c2e;
+            }
+
+            &:active {
+              background: #2c2c2e;
+            }
+          }
+        }
+      }
+
+      &.link {
+        cursor: pointer;
+      }
+
+      .inner {
+        padding-left: 12px;
+        cursor: pointer;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &.pc {
+          padding-left: 16px;
+        }
+
+        span {
+          line-height: 44px;
+          font-size: 16px;
+        }
+
+        svg {
+          width: 20px;
+          height: 20px;
+          padding-right: 12px;
+          color: #c8c7cc;
+        }
+      }
+
+      .disabled-link {
+        display: block;
+        margin: 0;
+
+        text-decoration: none;
+
+        & {
+          color: #ccc;
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #333;
+          }
+        }
+
+        .inner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: default;
+
+          span {
+            // margin: 11px 8px 11px 0;
+            line-height: 44px;
+            font-size: 16px;
+          }
+
+          i {
+            padding-right: 12px;
+            color: #eee;
+            font-size: 1.2rem;
+          }
+
+          svg {
+            fill: #eee;
+
+            & {
+              fill: #eee;
+            }
+            @media (prefers-color-scheme: dark) {
+              & {
+                fill: #333;
+              }
+            }
+          }
+        }
+      }
+
+      .link-button {
+        cursor: pointer;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & {
+          color: #333;
+
+          &:hover {
+            background: #e6e5eb;
+          }
+
+          &:active {
+            background: #e6e5eb;
+          }
+        }
+        @media (prefers-color-scheme: dark) {
+          & {
+            color: #ccc;
+
+            &:hover {
+              background: #2c2c2e;
+            }
+
+            &:active {
+              background: #2c2c2e;
+            }
+          }
+        }
+        span {
+          line-height: 44px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
