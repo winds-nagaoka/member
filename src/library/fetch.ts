@@ -42,3 +42,7 @@ export const fetchApiWithFormData = async <FormBody extends object>(path: string
 export const getApi = async (path: string) => {
   return await fetch(path, { method: 'GET' }).then(handleApiResponse)
 }
+
+export const getTextApi = async (path: string) => {
+  return await fetch(path, { method: 'GET' }).then((response) => response.text())
+}
